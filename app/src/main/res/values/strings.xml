@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SecureHomeAutomation</string>
+    <string name="leavingMsg">Are you sure you want to exit the app</string>
+    <string name="leavingTitle">Leaving?</string>
 </resources>
