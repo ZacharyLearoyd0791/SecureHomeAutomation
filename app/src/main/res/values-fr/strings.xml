@@ -2,7 +2,7 @@
     Authors/Std.#/Section:
     Zachary Learoyd (LRDZ0002) - CENG-322-0NC
     Akash Muhundhan (N01420118) - CENG-322-0NA
-    Harpreet Cheema (???) - CENG-322-???
+    Harpreet Cheema (???) - CENG-322-0NA
     Krushang Parekh (???) - CENG-322-???
 -->
 
@@ -16,4 +16,7 @@
     <string name="No">No</string>
     <string name="settings">Settings</string>
     <string name="door">Door</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="here_we_will_add_temperature_method">Here we will add Temperature method</string>
+    <string name="here_we_will_implement_lights_method">Here we will implement lights method</string>
 </resources>
