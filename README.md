@@ -1,10 +1,10 @@
 # Secure Home Automation
 
 ## Authors/Std.#/Section:
-Zachary Learoyd (LRDZ0002) - CENG-322-0NC
-Akash Muhundhan (N01420118) - CENG-322-???
-Harpreet Cheema (???) - CENG-322-???
-Krushang Parekh (???) - CENG-322-???
+* Zachary Learoyd (LRDZ0002) - CENG-322-0NC
+* Akash Muhundhan (N01420118) - CENG-322-???
+* Harpreet Cheema (???) - CENG-322-???
+* Krushang Parekh (???) - CENG-322-???
 
 ##  Description
 A simple app that connects with the Secure Home Automation
