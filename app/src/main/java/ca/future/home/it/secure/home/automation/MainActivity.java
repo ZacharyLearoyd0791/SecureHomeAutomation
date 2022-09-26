@@ -12,13 +12,43 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Bottom navigation and fragment views
+    private BottomNavigationView bottomNavigationView;
+    private HomeFragment homeFragment;
+    private SettingsFragment settingsFragment;
+    private DoorFragment doorFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        homeFragment = new HomeFragment();
+        settingsFragment = new SettingsFragment();
+        doorFragment = new DoorFragment();
+
+        //Sets initial startup screen to homeFragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
+
+        //Switch between screens/fragments using bottom navigation view
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch(item.getItemId()){
+                case R.id.settings:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
+                    return true;
+                case R.id.door:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, doorFragment).commit();
+                    return true;
+                default:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
+                    return true;
+            }
+        });
     }
     public void onBackPressed() {
 
