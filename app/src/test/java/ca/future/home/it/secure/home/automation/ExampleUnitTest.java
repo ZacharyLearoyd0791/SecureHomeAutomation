@@ -1,3 +1,11 @@
+/*
+Authors/Std.#/Section:
+Zachary Learoyd (LRDZ0002) - CENG-322-0NC
+Akash Muhundhan (N01420118) - CENG-322-???
+Harpreet Cheema (???) - CENG-322-???
+Krushang Parekh (???) - CENG-322-???
+*/
+
 package ca.future.home.it.secure.home.automation;
 
 import org.junit.Test;

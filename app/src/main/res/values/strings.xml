@@ -1,7 +1,17 @@
+<!--
+    Authors/Std.#/Section:
+    Zachary Learoyd (LRDZ0002) - CENG-322-0NC
+    Akash Muhundhan (N01420118) - CENG-322-0NA
+    Harpreet Cheema (???) - CENG-322-???
+    Krushang Parekh (???) - CENG-322-???
+-->
+
 <resources>
-    <string name="app_name">SecureHomeAutomation</string>
+    <string name="app_name">Secure Home Automation</string>
     <string name="leavingMsg">Are you sure you want to exit the app</string>
     <string name="leavingTitle">Leaving?</string>
     <string name="home">Home</string>
     <string name="todo">TODO</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
 </resources>

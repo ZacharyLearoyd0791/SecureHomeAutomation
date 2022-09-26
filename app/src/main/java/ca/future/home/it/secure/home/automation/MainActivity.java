@@ -1,3 +1,11 @@
+/*
+Authors/Std.#/Section:
+Zachary Learoyd (LRDZ0002) - CENG-322-0NC
+Akash Muhundhan (N01420118) - CENG-322-0NA
+Harpreet Cheema (???) - CENG-322-???
+Krushang Parekh (???) - CENG-322-???
+*/
+
 package ca.future.home.it.secure.home.automation;
 
 import androidx.appcompat.app.AlertDialog;
@@ -27,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
         builder
                 .setPositiveButton(
-                        "Yes",
+                        R.string.Yes,
                         (dialog, which) -> finish());
 
         builder
                 .setNegativeButton(
-                        "No",
+                        R.string.No,
                         (dialog, which) -> dialog.cancel());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
