@@ -8,7 +8,7 @@ Harpreet Cheema (???) - CENG-322-???
 Krushang Parekh (???) - CENG-322-???
 ---
 
-#  Description
+##  Description
 A simple app that connects with the Secure Home Automation
 device, allowing for control of various sensors and smart
 systems for the home. Project is planned to support scheduled
