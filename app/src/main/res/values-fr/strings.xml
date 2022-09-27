@@ -19,4 +19,7 @@
     <string name="hello_blank_fragment">Bonjour fragment vierge</string>
     <string name="here_we_will_add_temperature_method">Ici, nous ajouterons la méthode de température</string>
     <string name="here_we_will_implement_lights_method">Ici, nous allons implémenter la méthode des lumières</string>
+    <string name="select_language">Choisir la langue</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
 </resources>

@@ -11,8 +11,15 @@ package ca.future.home.it.secure.home.automation;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Locale;
+
+import ca.future.home.it.secure.home.automation.Application.SharedPref;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,15 +32,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocal(this);
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         homeFragment = new HomeFragment();
         settingsFragment = new SettingsFragment();
         doorFragment = new DoorFragment();
-
         //Sets initial startup screen to homeFragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
+        if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
+        }
 
         //Switch between screens/fragments using bottom navigation view
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -74,5 +83,16 @@ public class MainActivity extends AppCompatActivity {
                         (dialog, which) -> dialog.cancel());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    //Language setup code
+    public  void setLocal(Activity activity){
+        String langCode = SharedPref.read(SharedPref.KEY_LANGUAGE,getString(R.string.en_code));
+        Locale locale = new Locale(langCode);
+        locale.setDefault(locale);
+        Resources resources = activity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config,resources.getDisplayMetrics());
     }
 }

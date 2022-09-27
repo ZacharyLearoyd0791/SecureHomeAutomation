@@ -20,4 +20,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="here_we_will_add_temperature_method">Here we will add Temperature method</string>
     <string name="here_we_will_implement_lights_method">Here we will implement lights method</string>
+    <string name="select_language">Select Language</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="en_code" translatable="false">en</string>
+    <string name="fr_code" translatable="false">fr</string>
+    <string name="recreated" translatable="false">recreated</string>
 </resources>
