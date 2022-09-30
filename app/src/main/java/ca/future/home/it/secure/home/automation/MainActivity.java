@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
     private DoorFragment doorFragment;
+    private TempFragment tempFragment;
+    private LightFragment lightFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         settingsFragment = new SettingsFragment();
         doorFragment = new DoorFragment();
+        tempFragment = new TempFragment();
+        lightFragment = new LightFragment();
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
@@ -52,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.door:
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, doorFragment).commit();
+                    return true;
+                case R.id.temp:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, tempFragment).commit();
+                    return true;
+                case R.id.light:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, lightFragment).commit();
                     return true;
                 default:
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();

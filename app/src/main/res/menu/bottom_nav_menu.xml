@@ -4,10 +4,19 @@
         android:id="@+id/home"
         android:title="@string/home"
         android:icon="@drawable/ic_home"/>
+
     <item
         android:id="@+id/door"
         android:title="@string/door"
         android:icon="@drawable/ic_lock"/>
+    <item
+        android:id="@+id/temp"
+        android:title="@string/temperature"
+        android:icon="@drawable/thermostat_icon"/>
+    <item
+        android:id="@+id/light"
+        android:title="@string/lights"
+        android:icon="@drawable/ic_light_icon"/>
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
