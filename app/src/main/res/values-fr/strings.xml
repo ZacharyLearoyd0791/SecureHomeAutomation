@@ -8,18 +8,24 @@
 
 <resources>
     <string name="app_name">Secure Home Automation</string>
-    <string name="leavingMsg">Êtes-vous sûr de vouloir quitter l\'application</string>
-    <string name="leavingTitle">En quittant?</string>
-    <string name="home">Maison</string>
-    <string name="todo">FAIRE</string>
-    <string name="Yes">Oui</string>
-    <string name="No">Non</string>
-    <string name="settings">Réglages</string>
-    <string name="door">Porte</string>
-    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
-    <string name="here_we_will_add_temperature_method">Ici, nous ajouterons la méthode de température</string>
-    <string name="here_we_will_implement_lights_method">Ici, nous allons implémenter la méthode des lumières</string>
-    <string name="select_language">Choisir la langue</string>
+    <string name="leavingMsg">Are you sure you want to exit the app</string>
+    <string name="leavingTitle">Leaving?</string>
+    <string name="home">Home</string>
+    <string name="todo">TODO</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="settings">Settings</string>
+    <string name="door">Door</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="here_we_will_add_temperature_method">Here we will add Temperature method</string>
+    <string name="here_we_will_implement_lights_method">Here we will implement lights method</string>
+    <string name="select_language">Select Language</string>
     <string name="english">English</string>
     <string name="french">French</string>
+    <string name="en_code" translatable="false">en</string>
+    <string name="fr_code" translatable="false">fr</string>
+    <string name="recreated" translatable="false">recreated</string>
+    <string name="temperature">Temperature</string>
+    <string name="lights">Lights</string>
 </resources>

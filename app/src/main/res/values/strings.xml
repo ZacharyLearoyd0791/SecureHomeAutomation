@@ -23,9 +23,9 @@
     <string name="select_language">Select Language</string>
     <string name="english">English</string>
     <string name="french">French</string>
-    <string name="en_code" translatable="false">en</string>
-    <string name="fr_code" translatable="false">fr</string>
-    <string name="recreated" translatable="false">recreated</string>
+    <string name="en_code">en</string>
+    <string name="fr_code">fr</string>
+    <string name="recreated">recreated</string>
     <string name="temperature">Temperature</string>
     <string name="lights">Lights</string>
 </resources>
