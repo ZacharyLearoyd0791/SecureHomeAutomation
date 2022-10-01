@@ -33,4 +33,9 @@
     <string name="lightinfo" translatable="false">LightInfo</string>
     <string name="sensorsim" translatable="false">SensorSim</string>
     <string name="bottomnav" translatable="false">BottomNav</string>
+    <string name="tempbtn" translatable="false">TempBtn</string>
+    <string name="lockbtn" translatable="false">Lockbtn</string>
+    <string name="lightbtn" translatable="false">LightBtn</string>
+    <string name="homeBackGround" translatable="false">TODO</string>
+    <string name="mainHomeIcon" translatable="false">TODO</string>
 </resources>
