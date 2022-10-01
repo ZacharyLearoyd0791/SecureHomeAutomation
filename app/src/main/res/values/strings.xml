@@ -28,4 +28,9 @@
     <string name="recreated" translatable="false">recreated</string>
     <string name="temperature">Temperature</string>
     <string name="lights">Lights</string>
+    <string name="doorinfo" translatable="false">DoorInfo</string>
+    <string name="tempinfo" translatable="false">TempInfo</string>
+    <string name="lightinfo" translatable="false">LightInfo</string>
+    <string name="sensorsim" translatable="false">SensorSim</string>
+    <string name="bottomnav" translatable="false">BottomNav</string>
 </resources>

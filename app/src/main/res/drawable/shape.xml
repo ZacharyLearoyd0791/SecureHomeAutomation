@@ -5,7 +5,7 @@
         android:width="1dp"
         android:color="#FFFFFF" />
 
-    <corners android:radius="100dp" />
+    <corners android:radius="25dp" />
 
     <gradient
         android:angle="0"
@@ -13,6 +13,6 @@
         android:endColor="#0096FF"
         android:startColor="#ADD8E6" />
     <size
-        android:height="15dp"
-        android:width="45dp"/>
+        android:height="165dp"
+        android:width="165dp"/>
 </shape>
