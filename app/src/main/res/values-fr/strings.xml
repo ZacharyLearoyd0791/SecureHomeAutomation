@@ -21,5 +21,7 @@
     <string name="here_we_will_implement_lights_method">Ici, nous allons implémenter la méthode des lumières</string>
     <string name="select_language">Choisir la langue</string>
     <string name="english">English</string>
-    <string name="french">French</string>
+    <string name="french">Français</string>
+    <string name="temperature">Température</string>
+    <string name="lights">Lumières</string>
 </resources>
