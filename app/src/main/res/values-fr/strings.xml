@@ -24,4 +24,5 @@
     <string name="french">Français</string>
     <string name="temperature">Température</string>
     <string name="lights">Lumières</string>
+    <string name="name_of_user">Hello, Name Of User!</string>
 </resources>
