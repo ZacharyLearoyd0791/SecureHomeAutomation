@@ -66,8 +66,6 @@ public class HomeFragment extends Fragment {
             greetingsText.setText(R.string.greetingNight);
 
         }
-
-
     }
 
 
