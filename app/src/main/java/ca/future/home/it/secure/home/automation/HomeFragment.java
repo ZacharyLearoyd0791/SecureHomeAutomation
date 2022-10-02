@@ -15,8 +15,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
+    TextView textView;
+    View view;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -25,7 +32,25 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        textView=view.findViewById(R.id.Greetings);
+        String greeting = null;
+
+        if (hour >= 12 && hour < 17) {
+            Toast.makeText(getActivity(), "Good Afternoon", Toast.LENGTH_LONG).show();
+
+        } else if (hour >= 17 && hour < 21) {
+            Toast.makeText(getActivity(), "Good Evening", Toast.LENGTH_LONG).show();
+        } else if (hour >= 21 && hour < 24) {
+            Toast.makeText(getActivity(), "Good Night", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getActivity(), "Good Morning", Toast.LENGTH_LONG).show();
+        }
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
 }
