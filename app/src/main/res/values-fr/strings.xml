@@ -25,4 +25,8 @@
     <string name="temperature">Température</string>
     <string name="lights">Lumières</string>
     <string name="name_of_user">Hello, Name Of User!</string>
+    <string name="greetingMorning">Bonjour</string>
+    <string name="greetingAfternoon">Bonne après-midi</string>
+    <string name="greetingEvening">Bonsoir</string>
+    <string name="greetingNight">Bonne nuit</string>
 </resources>

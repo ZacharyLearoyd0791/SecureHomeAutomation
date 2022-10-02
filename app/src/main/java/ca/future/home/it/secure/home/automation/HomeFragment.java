@@ -15,42 +15,60 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class HomeFragment extends Fragment {
-    TextView textView;
-    View view;
 
+    TextView greetingsText;
     public HomeFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated (View view,
+                               Bundle savedInstanceState){
+
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        textView=view.findViewById(R.id.Greetings);
-        String greeting = null;
+        greetingsText =view.findViewById(R.id.Greetings);
 
-        if (hour >= 12 && hour < 17) {
-            Toast.makeText(getActivity(), "Good Afternoon", Toast.LENGTH_LONG).show();
-
-        } else if (hour >= 17 && hour < 21) {
-            Toast.makeText(getActivity(), "Good Evening", Toast.LENGTH_LONG).show();
-        } else if (hour >= 21 && hour < 24) {
-            Toast.makeText(getActivity(), "Good Night", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getActivity(), "Good Morning", Toast.LENGTH_LONG).show();
+        if(hour>=6 && hour<12){
+            Toast.makeText(getActivity(), R.string.greetingMorning, Toast.LENGTH_LONG).show();
+            greetingsText.setText(R.string.greetingMorning);
         }
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        else if(hour>= 12 && hour < 17){
+            Toast.makeText(getActivity(), R.string.greetingAfternoon, Toast.LENGTH_LONG).show();
+            greetingsText.setText(R.string.greetingAfternoon);
+        }
+        else if(hour >= 17 && hour < 21){
+            Toast.makeText(getActivity(), R.string.greetingEvening, Toast.LENGTH_LONG).show();
+            greetingsText.setText(R.string.greetingEvening);
+        }
+        else
+        {
+            Toast.makeText(getActivity(), R.string.greetingNight, Toast.LENGTH_LONG).show();
+            greetingsText.setText(R.string.greetingNight);
+
+        }
+
+
     }
+
 
 }
