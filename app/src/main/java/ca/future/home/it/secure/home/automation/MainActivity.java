@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private DoorFragment doorFragment;
     private TempFragment tempFragment;
     private LightFragment lightFragment;
+    private WindowFragment windowFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         doorFragment = new DoorFragment();
         tempFragment = new TempFragment();
         lightFragment = new LightFragment();
+        windowFragment = new WindowFragment();
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
