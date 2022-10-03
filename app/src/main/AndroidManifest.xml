@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ca.future.home.it.secure.home.automation">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Application.App"
         android:allowBackup="true"

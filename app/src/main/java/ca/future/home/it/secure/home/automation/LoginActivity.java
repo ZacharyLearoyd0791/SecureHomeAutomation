@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                     boolean emailValidation = validateEmailInput(emailAddress);
                     if (emailValidation == true) {
                         loginUser(emailInput, passwordInput);
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                       // startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     }
                 }
             }
@@ -104,8 +104,11 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
 
+
+
+
+    }
 
 
 }
