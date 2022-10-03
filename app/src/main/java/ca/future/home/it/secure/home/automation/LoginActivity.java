@@ -1,5 +1,6 @@
 package ca.future.home.it.secure.home.automation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
@@ -21,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private TextView createAccount;
     private TextView forgotPassword;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_page_login_button);
         createAccount = findViewById(R.id.loginCreateAccountHereTextClickable);
         forgotPassword = findViewById(R.id.loginForgotPassword);
-
+        mAuth = FirebaseAuth.getInstance();
         //Login button functionality
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,13 +55,18 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     boolean emailValidation = validateEmailInput(emailAddress);
                     if (emailValidation == true) {
-                      //  loginUser(emailInput, passwordInput);
+                        loginUser(emailInput, passwordInput);
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     }
                 }
+            }
 
 
-
+        });
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
             }
         });
 
@@ -71,4 +83,29 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
+    //Login User
+    private void loginUser(String emailInput, String passwordInput) {
+        mAuth.signInWithEmailAndPassword(emailInput,passwordInput)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            if(mAuth.getCurrentUser().isEmailVerified()){
+                                Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+                                //Starting main activity
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                            }else{
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }else{
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
+
 }

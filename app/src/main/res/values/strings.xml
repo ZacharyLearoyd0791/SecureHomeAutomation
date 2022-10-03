@@ -43,5 +43,12 @@
     <string name="greetingAfternoon">Good Afternoon</string>
     <string name="greetingEvening">Good Evening</string>
     <string name="greetingNight">Good Night</string>
+    <string name="done">Done</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_your_email_address">Enter your Email address</string>
+    <string name="full_name">Full name</string>
+    <string name="registration">Registration</string>
+    <string name="welcome_to_our_app">Welcome to our app</string>
 
 </resources>

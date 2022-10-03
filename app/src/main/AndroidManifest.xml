@@ -15,9 +15,16 @@
         android:theme="@style/Theme.SecureHomeAutomation"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/noActionBarStyle"
+            android:name=".RegistrationActivity"
             android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/noActionBarStyle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
