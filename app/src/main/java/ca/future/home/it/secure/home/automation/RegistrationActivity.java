@@ -59,25 +59,25 @@ public class RegistrationActivity extends AppCompatActivity {
         //Checking if fields are empty or not
         if(fillChecker==1){
             if(nameInput.isEmpty()){
-                fullName.setError("Enter your name");
+                fullName.setError(getString(R.string.enter_name));
                 fullName.requestFocus();
             }
             if(emailInput.isEmpty()){
-                emailAddress.setError("Enter your Email address");
+                emailAddress.setError(getString(R.string.email_address_enter));
             }
             if(passwordInput.isEmpty()){
-                password.setError("Enter a password");
+                password.setError(getString(R.string.password_enter));
             }
             if(passwordInput.length()<8){
-                password.setError("Must have minimum 8 character");
+                password.setError(getString(R.string.minimum_eight_character));
                 password.requestFocus();
             }
             if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
-                emailAddress.setError("Enter valid Email Address");
+                emailAddress.setError(getString(R.string.enter_valid_email));
                 emailAddress.requestFocus();
             }
             if(!passwordInput.matches(confirmPasswordInput)){
-                confirmPassword.setError("Password does not match!");
+                confirmPassword.setError(getString(R.string.password_no_match));
                 confirmPassword.requestFocus();
             }
             fillChecker = 0;
@@ -97,7 +97,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()){
-                                                    Toast.makeText(RegistrationActivity.this, "Please check your email...", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(RegistrationActivity.this, R.string.email_check, Toast.LENGTH_SHORT).show();
                                                 }else{
                                                     Toast.makeText(RegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                 }

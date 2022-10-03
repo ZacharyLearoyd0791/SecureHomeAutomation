@@ -12,7 +12,7 @@
         android:id="@+id/textView"
         android:layout_width="232dp"
         android:layout_height="45dp"
-        android:text="Settings"
+        android:text="@string/settings_title"
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="587dp"
-        android:text="Sign out"
+        android:text="@string/sign_out"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

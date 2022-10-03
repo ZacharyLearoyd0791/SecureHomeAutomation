@@ -50,5 +50,26 @@
     <string name="full_name">Full name</string>
     <string name="registration">Registration</string>
     <string name="welcome_to_our_app">Welcome to our app</string>
+    <string name="enter_your_email">Enter your Email</string>
+    <string name="enter_your_password">Enter your Password</string>
+    <string name="login">Login</string>
+    <string name="login_btn">Login</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register_here">Register Here</string>
+    <string name="sign_out">Sign out</string>
+    <string name="settings_title">Settings</string>
+    <string name="login_success">login successful</string>
+    <string name="email_valid">Enter Valid Email!</string>
+    <string name="enterpassword">Please enter password</string>
+    <string name="enter_email">Please enter email</string>
+    <string name="enter_something">Please enter something!</string>
+    <string name="email_check">Please check your email...</string>
+    <string name="password_no_match">Password does not match!</string>
+    <string name="enter_valid_email">Enter valid Email Address</string>
+    <string name="minimum_eight_character">Must have minimum 8 character</string>
+    <string name="password_enter">Enter a password</string>
+    <string name="email_address_enter">Enter your Email address</string>
+    <string name="enter_name">Enter your name</string>
 
 </resources>

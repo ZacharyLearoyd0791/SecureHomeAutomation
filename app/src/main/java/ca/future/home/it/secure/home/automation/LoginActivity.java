@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
                 String emailInput = emailAddress.getText().toString();
                 String passwordInput = password.getText().toString();
                 if(emailInput.isEmpty() && passwordInput.isEmpty()){
-                    Toast.makeText(LoginActivity.this, "Please enter something!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.enter_something, Toast.LENGTH_SHORT).show();
                 } else if (emailInput.isEmpty() && !passwordInput.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Please enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.enter_email, Toast.LENGTH_SHORT).show();
                 } else if (!emailInput.isEmpty() && passwordInput.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Please enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.enterpassword, Toast.LENGTH_SHORT).show();
                 } else {
                     boolean emailValidation = validateEmailInput(emailAddress);
                     if (emailValidation == true) {
@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             emailAddress.setTextColor(Color.BLACK);
             return true;
         } else{
-            Toast.makeText(this, "Enter Valid Email!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.email_valid, Toast.LENGTH_SHORT).show();
             emailAddress.setTextColor(Color.RED);
             return false;
         }
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             if(mAuth.getCurrentUser().isEmailVerified()){
-                                Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_SHORT).show();
                                 //Starting main activity
                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
