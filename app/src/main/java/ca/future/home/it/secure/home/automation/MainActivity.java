@@ -17,9 +17,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Locale;
-
-import ca.future.home.it.secure.home.automation.Application.SharedPref;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLocal(this);
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -97,14 +93,4 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    //Language setup code
-    public  void setLocal(Activity activity){
-        String langCode = SharedPref.read(SharedPref.KEY_LANGUAGE,getString(R.string.en_code));
-        Locale locale = new Locale(langCode);
-        locale.setDefault(locale);
-        Resources resources = activity.getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config,resources.getDisplayMetrics());
-    }
 }
