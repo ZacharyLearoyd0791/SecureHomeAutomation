@@ -29,4 +29,6 @@
     <string name="greetingAfternoon">Bonne après-midi</string>
     <string name="greetingEvening">Bonsoir</string>
     <string name="greetingNight">Bonne nuit</string>
+    <string name="closedDoor">Closed Door</string>
+    <string name="openDoor">Door Open</string>
 </resources>

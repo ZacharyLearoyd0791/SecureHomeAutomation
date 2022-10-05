@@ -71,5 +71,7 @@
     <string name="password_enter">Enter a password</string>
     <string name="email_address_enter">Enter your Email address</string>
     <string name="enter_name">Enter your name</string>
+    <string name="closedDoor">Closed Door</string>
+    <string name="openDoor">Door Open</string>
 
 </resources>
