@@ -37,21 +37,24 @@
 
     <TextView
         android:id="@+id/login_page_login_button"
-        android:layout_width="386dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="392dp"
+        android:layout_width="377dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="412dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/splash_bg_gradient"
         android:clickable="true"
+        android:focusable="true"
         android:gravity="center_vertical"
         android:text="@string/login_btn"
         android:textAlignment="center"
-        android:textSize="20sp"
         android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlCompat"
-        android:focusable="true" />
+        tools:ignore="RtlCompat" />
 
     <TextView
         android:id="@+id/loginForgotPassword"
@@ -81,25 +84,25 @@
 
     <TextView
         android:id="@+id/loginCreateAccountHereTextClickable"
-        android:layout_width="392dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="356dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/splash_bg_gradient"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/register_here"
         android:textAlignment="center"
-        android:background="@drawable/splash_bg_gradient"
         android:textColor="#FFFFFF"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TouchTargetSizeCheck"
-        android:focusable="true" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout4"
-        android:layout_width="418dp"
-        android:layout_height="157dp"
+        android:layout_width="413dp"
+        android:layout_height="195dp"
         android:background="@drawable/splash_bg_gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,8 +112,8 @@
             android:id="@+id/Login_page_title"
             android:layout_width="260dp"
             android:layout_height="45dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="92dp"
             android:text="@string/login"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
@@ -123,7 +126,7 @@
             android:id="@+id/textView3"
             android:layout_width="175dp"
             android:layout_height="39dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/login_in_to_continue"
             android:textColor="#FFFFFF"
@@ -133,8 +136,8 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="127dp"
-            android:layout_height="52dp"
+            android:layout_width="139dp"
+            android:layout_height="68dp"
             android:layout_marginTop="4dp"
             app:layout_constraintEnd_toStartOf="@+id/Login_page_title"
             app:layout_constraintHorizontal_bias="0.0"
