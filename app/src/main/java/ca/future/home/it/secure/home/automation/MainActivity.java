@@ -9,7 +9,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,26 +35,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/*
+        /*
 
-//This is for testing purposes only. To test crashlytics
-Button crashButton = new Button(this);
-crashButton.setText("Test Crash");
-crashButton.setOnClickListener(new View.OnClickListener() {
-   public void onClick(View view) {
-       throw new RuntimeException("Test Crash"); // Force a crash
-   }
-});
-
-
-addContentView(crashButton, new ViewGroup.LayoutParams(
-       ViewGroup.LayoutParams.MATCH_PARENT,
-       ViewGroup.LayoutParams.WRAP_CONTENT));
-*/
+        //This is for testing purposes only. To test crashlytics
+        Button crashButton = new Button(this);
+        crashButton.setText("Test Crash");
+        crashButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                throw new RuntimeException("Test Crash"); // Force a crash
+            }
+        });
 
 
-
-
+        addContentView(crashButton, new ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT));
+        */
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         homeFragment = new HomeFragment();
@@ -60,6 +59,7 @@ addContentView(crashButton, new ViewGroup.LayoutParams(
         tempFragment = new TempFragment();
         lightFragment = new LightFragment();
         windowFragment = new WindowFragment();
+
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
@@ -86,6 +86,26 @@ addContentView(crashButton, new ViewGroup.LayoutParams(
             }
         });
     }
+
+    //inflate action bar on first time opening app
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //action bar menu options
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        switch (item.getItemId()){
+            case R.id.ab_settings:
+                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void onBackPressed() {
 
         AlertDialog.Builder builder
