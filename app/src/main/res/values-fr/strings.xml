@@ -24,6 +24,14 @@
     <string name="french">Français</string>
     <string name="temperature">Température</string>
     <string name="lights">Lumières</string>
+    <string name="doorinfo">DoorInfo</string>
+    <string name="tempinfo">TempInfo</string>
+    <string name="lightinfo">LightInfo</string>
+    <string name="sensorsim">SensorSim</string>
+    <string name="bottomnav">BottomNav</string>
+    <string name="tempbtn">TempBtn</string>
+    <string name="lockbtn">Lockbtn</string>
+    <string name="lightbtn">LightBtn</string>
     <string name="name_of_user">Hello, Name Of User!</string>
     <string name="greetingMorning">Bonjour</string>
     <string name="greetingAfternoon">Bonne après-midi</string>

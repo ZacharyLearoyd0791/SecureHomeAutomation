@@ -1,19 +1,17 @@
 package ca.future.home.it.secure.home.automation;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -41,12 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.Registration_page_confirm_password_text);
         mAuth = FirebaseAuth.getInstance();
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginProcess();
-            }
-        });
+        registerButton.setOnClickListener(view -> loginProcess());
     }
 
     private void loginProcess(){
@@ -88,25 +81,22 @@ public class RegistrationActivity extends AppCompatActivity {
     public void registrationProcess(int CheckerId){
         if(CheckerId == 0){
             mAuth.createUserWithEmailAndPassword(emailInput,passwordInput)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                mAuth.getCurrentUser().sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()){
-                                                    Toast.makeText(RegistrationActivity.this, R.string.email_check, Toast.LENGTH_SHORT).show();
-                                                }else{
-                                                    Toast.makeText(RegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            mAuth.getCurrentUser().sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                Toast.makeText(RegistrationActivity.this, R.string.email_check, Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                Toast.makeText(RegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                             }
-                                        });
-                                startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
-                            }else{
-                                Toast.makeText(RegistrationActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                                        }
+                                    });
+                            startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
+                        }else{
+                            Toast.makeText(RegistrationActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }

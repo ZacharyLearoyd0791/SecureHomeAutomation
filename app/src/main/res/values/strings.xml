@@ -28,14 +28,14 @@
     <string name="recreated" translatable="false">recreated</string>
     <string name="temperature">Temperature</string>
     <string name="lights">Lights</string>
-    <string name="doorinfo" translatable="false">DoorInfo</string>
-    <string name="tempinfo" translatable="false">TempInfo</string>
-    <string name="lightinfo" translatable="false">LightInfo</string>
-    <string name="sensorsim" translatable="false">SensorSim</string>
-    <string name="bottomnav" translatable="false">BottomNav</string>
-    <string name="tempbtn" translatable="false">TempBtn</string>
-    <string name="lockbtn" translatable="false">Lockbtn</string>
-    <string name="lightbtn" translatable="false">LightBtn</string>
+    <string name="doorinfo">DoorInfo</string>
+    <string name="tempinfo">TempInfo</string>
+    <string name="lightinfo">LightInfo</string>
+    <string name="sensorsim">SensorSim</string>
+    <string name="bottomnav">BottomNav</string>
+    <string name="tempbtn">TempBtn</string>
+    <string name="lockbtn">Lockbtn</string>
+    <string name="lightbtn">LightBtn</string>
     <string name="homeBackGround" translatable="false">TODO</string>
     <string name="mainHomeIcon" translatable="false">TODO</string>
     <string name="name_of_user">Hello, Name Of User!</string>
