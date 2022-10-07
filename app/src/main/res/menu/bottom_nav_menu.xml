@@ -18,8 +18,8 @@
         android:title="@string/lights"
         android:icon="@drawable/ic_light_icon"/>
     <item
-        android:id="@+id/settings"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_settings"/>
+        android:id="@+id/window"
+        android:title="@string/windows"
+        android:icon="@drawable/ic_window"/>
 
 </menu>

@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         //Switch between screens/fragments using bottom navigation view
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch(item.getItemId()){
-                case R.id.settings:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
+                case R.id.window:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, windowFragment).commit();
                     return true;
                 case R.id.door:
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, doorFragment).commit();

@@ -83,5 +83,6 @@
     <string name="lights_btn">Lights</string>
     <string name="door_btn">Door</string>
     <string name="refresh">Refresh</string>
+    <string name="windows">Windows</string>
 
 </resources>

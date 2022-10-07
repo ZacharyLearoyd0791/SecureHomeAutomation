@@ -6,7 +6,7 @@
         android:id="@+id/ab_refresh"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_refresh"/>
+        android:icon="@drawable/ic_refresh_white"/>
     <!--
     <item android:title="search"
         android:id="@+id/search"
