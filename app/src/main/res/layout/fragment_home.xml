@@ -57,10 +57,10 @@
 
         <ImageButton
             android:id="@+id/Lockbtn"
-            android:layout_width="66dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="164dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="168dp"
             android:contentDescription="@string/lockbtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -68,25 +68,36 @@
 
         <ImageButton
             android:id="@+id/TempBtn"
-            android:layout_width="66dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="218dp"
-            android:layout_marginTop="164dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="168dp"
+            android:layout_marginEnd="16dp"
             android:contentDescription="@string/tempbtn"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/thermostat_icon" />
 
         <ImageButton
             android:id="@+id/LightBtn"
-            android:layout_width="66dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="361dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="360dp"
             android:contentDescription="@string/lightbtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_light_icon" />
+
+        <ImageButton
+            android:id="@+id/windowBtn"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="364dp"
+            android:layout_marginEnd="19dp"
+            android:contentDescription="@string/windows"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_window" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -107,6 +118,7 @@
             android:layout_width="27dp"
             android:layout_height="15dp"
             android:layout_marginStart="176dp"
+            android:layout_marginTop="11dp"
             android:contentDescription="@string/mainHomeIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
