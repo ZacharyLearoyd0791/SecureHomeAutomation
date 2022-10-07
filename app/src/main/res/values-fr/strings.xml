@@ -59,4 +59,5 @@
     <string name="enter_name">Entrez votre nom</string>
     <string name="closedDoor">Porte fermée</string>
     <string name="openDoor">Porte ouverte</string>
+    <string name="login_in_to_continue">Login in to continue</string>
 </resources>
