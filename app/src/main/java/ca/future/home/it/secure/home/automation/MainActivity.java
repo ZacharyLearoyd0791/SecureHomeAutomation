@@ -9,9 +9,6 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,12 +42,12 @@ crashButton.setOnClickListener(new View.OnClickListener() {
        throw new RuntimeException("Test Crash"); // Force a crash
    }
 });
-*/
+
 
 addContentView(crashButton, new ViewGroup.LayoutParams(
        ViewGroup.LayoutParams.MATCH_PARENT,
        ViewGroup.LayoutParams.WRAP_CONTENT));
-
+*/
 
 
 
