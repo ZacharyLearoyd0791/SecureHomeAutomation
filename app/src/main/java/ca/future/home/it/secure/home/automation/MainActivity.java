@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+/*
 
-
+//This is for testing purposes only. To test crashlytics
 Button crashButton = new Button(this);
 crashButton.setText("Test Crash");
 crashButton.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +45,7 @@ crashButton.setOnClickListener(new View.OnClickListener() {
        throw new RuntimeException("Test Crash"); // Force a crash
    }
 });
+*/
 
 addContentView(crashButton, new ViewGroup.LayoutParams(
        ViewGroup.LayoutParams.MATCH_PARENT,
