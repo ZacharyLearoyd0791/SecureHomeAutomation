@@ -43,7 +43,7 @@
     <string name="full_name">Nom et prénom</string>
     <string name="enter_your_email_address">Entrez votre adresse email</string>
     <string name="registration">Inscription</string>
-    <string name="welcome_to_our_app">Bienvenue sur notre application</string>
+    <string name="welcome_to_our_app">Home Automation</string>
     <string name="enter_your_email">Entrez votre adresse email</string>
     <string name="enter_your_password">Entrer le mot de passe</string>
     <string name="login">Connexion</string>
