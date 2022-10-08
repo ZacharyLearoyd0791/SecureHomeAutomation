@@ -85,5 +85,8 @@
     <string name="refresh">Refresh</string>
     <string name="windows">Windows</string>
     <string name="emailverify">Please verify your email address</string>
+    <string name="_forgot">Enter your email address</string>
+    <string name="enter_your_email_address_forgot">Enter your email address</string>
+    <string name="send_me_email">Send me email</string>
 
 </resources>
