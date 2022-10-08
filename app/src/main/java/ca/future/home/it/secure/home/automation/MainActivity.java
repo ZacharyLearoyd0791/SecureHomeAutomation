@@ -8,10 +8,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -22,8 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Bottom navigation and fragment views
-    private BottomNavigationView bottomNavigationView;
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
     private DoorFragment doorFragment;
@@ -31,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private LightFragment lightFragment;
     private WindowFragment windowFragment;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup.LayoutParams.WRAP_CONTENT));
         */
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        //Bottom navigation and fragment views
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         homeFragment = new HomeFragment();
         settingsFragment = new SettingsFragment();
         doorFragment = new DoorFragment();
@@ -98,11 +98,8 @@ public class MainActivity extends AppCompatActivity {
     //action bar menu options
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
-        switch (item.getItemId()){
-            case R.id.ab_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
-                break;
-
+        if (item.getItemId() == R.id.ab_settings) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
         }
         return super.onOptionsItemSelected(item);
     }
