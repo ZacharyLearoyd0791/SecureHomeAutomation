@@ -45,10 +45,11 @@ public class LoginActivity extends AppCompatActivity {
                 boolean emailValidation = validateEmailInput(emailAddress);
                 if (emailValidation) {
                     loginUser(emailInput, passwordInput);
-                   // startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 }
             }
         });
+
+        //For opening Registration page
         createAccount.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), RegistrationActivity.class)));
 
     }
@@ -69,17 +70,17 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(emailInput,passwordInput)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        if(Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified()){
-                            Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_SHORT).show();
+                        if(mAuth.getCurrentUser().isEmailVerified()){
+                            Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_LONG).show();
                             //Starting main activity
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
                         }else{
-                            Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.emailverify, Toast.LENGTH_LONG).show();
                         }
 
                     }else{
-                        Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
 
