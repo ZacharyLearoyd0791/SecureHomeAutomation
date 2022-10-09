@@ -88,5 +88,6 @@
     <string name="_forgot">Enter your email address</string>
     <string name="enter_your_email_address_forgot">Enter your email address</string>
     <string name="send_me_email">Send me email</string>
+    <string name="account">account</string>
 
 </resources>

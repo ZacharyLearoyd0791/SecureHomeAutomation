@@ -7,13 +7,13 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_refresh_white"/>
-    <!--
-    <item android:title="search"
-        android:id="@+id/search"
+
+    <item android:title="@string/account"
+        android:id="@+id/ab_account"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/search_icon"/>
--->
+        android:icon="@drawable/ic_account"/>
+
     <item android:title="@string/settings"
         android:id="@+id/ab_settings"
         android:orderInCategory="100"

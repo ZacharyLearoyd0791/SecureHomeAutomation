@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TempFragment tempFragment;
     private LightFragment lightFragment;
     private WindowFragment windowFragment;
+    private AccountFragment accountFragment;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         tempFragment = new TempFragment();
         lightFragment = new LightFragment();
         windowFragment = new WindowFragment();
+        accountFragment = new AccountFragment();
 
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
@@ -98,8 +100,18 @@ public class MainActivity extends AppCompatActivity {
     //action bar menu options
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         if (item.getItemId() == R.id.ab_settings) {
+
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
+        }
+        if (item.getItemId() == R.id.ab_account) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, accountFragment).commit();
+        }
+        if (item.getItemId() == R.id.ab_refresh) {
+            bottomNav.setSelectedItemId(R.id.home);
+            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
         }
         return super.onOptionsItemSelected(item);
     }

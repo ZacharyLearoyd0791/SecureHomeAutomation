@@ -8,17 +8,16 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.os.Bundle;
-import pl.bclogic.pulsator4droid.library.PulsatorLayout;
+
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+public class AccountFragment extends Fragment {
 
-public class WindowFragment extends Fragment {
-
-    public WindowFragment() {
+    public AccountFragment() {
         // Required empty public constructor
     }
 
@@ -26,15 +25,6 @@ public class WindowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_window, container, false);
-        PulsatorLayout pulsator = (PulsatorLayout) view.findViewById(R.id.pulsator);
-        pulsator.start();
-        pulsator.setCount(4);
-        pulsator.setDuration(2000);
-
-
-
-
-        return view;
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
 }
