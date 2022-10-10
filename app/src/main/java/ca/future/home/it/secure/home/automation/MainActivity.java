@@ -102,11 +102,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         if (item.getItemId() == R.id.ab_settings) {
-
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
         }
         if (item.getItemId() == R.id.ab_account) {
-
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, accountFragment).commit();
         }
         if (item.getItemId() == R.id.ab_refresh) {

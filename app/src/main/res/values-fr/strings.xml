@@ -82,5 +82,9 @@
     <string name="_forgot">Enter your email address</string>
     <string name="enter_your_email_address_forgot">Enter your email address</string>
     <string name="send_me_email">Send me email</string>
-    <string name="account">account</string>
+    <string name="account">Account</string>
+    <string name="bold_text">Bold-Text</string>
+    <string name="app_colour">App Colour</string>
+    <string name="off_on">Off/On</string>
+    <string name="quick_access">Quick Access</string>
 </resources>
