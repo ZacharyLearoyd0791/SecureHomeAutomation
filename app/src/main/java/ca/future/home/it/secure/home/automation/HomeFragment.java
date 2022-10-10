@@ -8,6 +8,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +30,7 @@ import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
+    public View view;
 
     //Switches
 
@@ -36,16 +40,20 @@ public class HomeFragment extends Fragment {
     public static Switch windowSwitch;
 
     //Buttons
-    public ImageButton lockBtn;
-    public ImageButton tempBtn;
-    public ImageButton lightBtn;
-    public ImageButton windowBtn;
-
-    public View view;
+    public static ImageButton lockBtn;
+    public static ImageButton tempBtn;
+    public static ImageButton lightBtn;
+    public static ImageButton windowBtn;
 
     //Text View
     public static TextView greetingsText;
     public static TextView quickAcc;
+
+    //ImageView
+    public static ImageView doorView;
+    public static ImageView tempView;
+    public static ImageView lightView;
+    public static ImageView windowView;
 
     public HomeFragment() {
     }
@@ -137,7 +145,53 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //ImageView Objects
+        doorView = view.findViewById(R.id.doorInfo);
+        tempView = view.findViewById(R.id.tempInfo);
+        lightView = view.findViewById(R.id.lightInfo);
+        windowView = view.findViewById(R.id.windowInfo);
+
+        //Switches selected
+        //lock switch
+        lockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    doorView.setVisibility(View.INVISIBLE);
+                } else {
+                    doorView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        //temperature switch
+        tempSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tempView.setVisibility(View.INVISIBLE);
+                } else {
+                    tempView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        //light switch
+        lightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    lightView.setVisibility(View.INVISIBLE);
+                } else {
+                    lightView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        //window switch
+        windowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    windowView.setVisibility(View.INVISIBLE);
+                } else {
+                    windowView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
-
-
 }
