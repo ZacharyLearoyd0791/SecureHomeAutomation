@@ -12,68 +12,30 @@
         android:padding="16dp"
         tools:context=".HomeFragment">
 
-        <ImageView
-            android:id="@+id/DoorInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="152dp"
-            android:contentDescription="@string/doorinfo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shape"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageView
-            android:id="@+id/TempInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="344dp"
-            android:contentDescription="@string/tempinfo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shape"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageView
-            android:id="@+id/LightInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="152dp"
-            android:contentDescription="@string/lightinfo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shape"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageView
-            android:id="@+id/SensorSim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="344dp"
-            android:contentDescription="@string/sensorsim"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shape" />
-
         <ImageButton
             android:id="@+id/Lockbtn"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="376dp"
+            android:background="@drawable/splash_bg_gradient"
             android:contentDescription="@string/lockbtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_lock" />
+            app:srcCompat="@drawable/ic_lock"
+            tools:ignore="ImageContrastCheck" />
 
         <ImageButton
             android:id="@+id/TempBtn"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_marginTop="168dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="219dp"
+            android:layout_marginTop="376dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/splash_bg_gradient"
             android:contentDescription="@string/tempbtn"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/thermostat_icon" />
 
@@ -81,8 +43,9 @@
             android:id="@+id/LightBtn"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="360dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="208dp"
+            android:background="@drawable/splash_bg_gradient"
             android:contentDescription="@string/lightbtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -92,10 +55,13 @@
             android:id="@+id/windowBtn"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_marginTop="364dp"
-            android:layout_marginEnd="19dp"
+            android:layout_marginStart="219dp"
+            android:layout_marginTop="208dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/splash_bg_gradient"
             android:contentDescription="@string/windows"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_window" />
 
