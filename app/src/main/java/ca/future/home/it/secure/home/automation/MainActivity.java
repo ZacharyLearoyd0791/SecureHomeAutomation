@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static LightFragment lightFragment;
     public static WindowFragment windowFragment;
     private AccountFragment accountFragment;
+    public static BottomNavigationView bottomNav;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     //action bar menu options
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+        bottomNav = findViewById(R.id.bottomNavigationView);
         if (item.getItemId() == R.id.ab_settings) {
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, settingsFragment).commit();
         }

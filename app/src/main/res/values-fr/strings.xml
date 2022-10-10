@@ -33,10 +33,10 @@
     <string name="lockbtn">Lockbtn</string>
     <string name="lightbtn">LightBtn</string>
     <string name="name_of_user">Hello, Name Of User!</string>
-    <string name="greetingMorning">Bonjour</string>
-    <string name="greetingAfternoon">Bonne après-midi</string>
-    <string name="greetingEvening">Bonsoir</string>
-    <string name="greetingNight">Bonne nuit</string>
+    <string name="greetingMorning">Bonjour...</string>
+    <string name="greetingAfternoon">Bonne après-midi...</string>
+    <string name="greetingEvening">Bonsoir...</string>
+    <string name="greetingNight">Bonne nuit...</string>
     <string name="done">Fait</string>
     <string name="confirm_your_password">Confirmer votre mot de passe</string>
     <string name="enter_password">Entrer le mot de passe</string>
