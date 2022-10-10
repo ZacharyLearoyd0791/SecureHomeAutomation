@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
     public ImageButton lightBtn;
     public ImageButton windowBtn;
 
-    private View view;
+    public View view;
 
     //Text View
     public static TextView greetingsText;
@@ -103,6 +103,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view)
             {
                 getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit();
+                //MainActivity.bottomNav.setSelectedItemId(R.id.door);
             }
         });
 
@@ -112,6 +113,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view)
             {
                 getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit();
+                //MainActivity.bottomNav.setSelectedItemId(R.id.temp);
             }
         });
 
@@ -121,6 +123,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view)
             {
                 getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit();
+                //MainActivity.bottomNav.setSelectedItemId(R.id.light);
             }
         });
 
@@ -130,6 +133,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view)
             {
                 getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit();
+                //MainActivity.bottomNav.setSelectedItemId(R.id.window);
             }
         });
 
