@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity">
+
+
+    <EditText
+        android:id="@+id/Registration_page_full_name_text"
+        android:layout_width="450dp"
+        android:layout_height="48dp"
+        android:textColorHint="#757575"
+        android:layout_below="@id/header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/full_name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/Registration_page_email_text"
+        android:layout_width="450dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/Registration_page_full_name_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/enter_your_email_address"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#757575" />
+
+
+
+    <EditText
+        android:id="@+id/Registration_page_password_text"
+        android:layout_width="224dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/Registration_page_email_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:layout_alignLeft="@id/Registration_page_email_text"
+        android:hint="@string/enter_password"
+        android:inputType="textPassword"
+        android:textColorHint="#757575" />
+
+    <EditText
+        android:id="@+id/Registration_page_confirm_password_text"
+        android:layout_width="224dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/Registration_page_email_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:autofillHints=""
+       android:layout_toEndOf="@id/Registration_page_password_text"
+        android:ems="10"
+        android:hint="@string/confirm_your_password"
+        android:inputType="textPassword"
+        android:textColorHint="#757575" />
+
+    <Button
+        android:id="@+id/Registration_page_done_button"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/splash_bg_gradient"
+        android:text="@string/done"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/splash_bg_gradient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/Registration_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="4dp"
+
+            android:text="@string/welcome_to_our_app"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/Registration_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Registration_title1"
+
+            android:layout_toStartOf="@id/Registration_title1"
+            android:text="@string/registration"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</RelativeLayout>

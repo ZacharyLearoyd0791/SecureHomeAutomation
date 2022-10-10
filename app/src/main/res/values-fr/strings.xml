@@ -38,7 +38,7 @@
     <string name="greetingEvening">Bonsoir...</string>
     <string name="greetingNight">Bonne nuit...</string>
     <string name="done">Fait</string>
-    <string name="confirm_your_password">Confirmer votre mot de passe</string>
+    <string name="confirm_your_password">Confirmez le mot de passe</string>
     <string name="enter_password">Entrer le mot de passe</string>
     <string name="full_name">Nom et prénom</string>
     <string name="enter_your_email_address">Entrez votre adresse email</string>
