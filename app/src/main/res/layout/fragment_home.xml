@@ -14,33 +14,69 @@
 
         <ImageView
             android:id="@+id/greenDoor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="150dp"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="164dp"
+            android:contentDescription="@string/doorinfo"
             android:src="@drawable/green_gradient"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/greenLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/lightinfo"
+            android:id="@+id/greenTemp"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginTop="164dp"
+            android:layout_marginEnd="25dp"
+            android:contentDescription="@string/g_temp_info"
+            android:src="@drawable/green_gradient"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/greenLight"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="82dp"
+            android:contentDescription="@string/g_light_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/green_gradient"
             tools:ignore="ImageContrastCheck" />
 
         <ImageView
+            android:id="@+id/greenWindow"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="81dp"
+            android:contentDescription="@string/g_window_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/green_gradient"
+            tools:ignore="ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/tempInfo"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginTop="164dp"
+            android:layout_marginEnd="25dp"
+            android:contentDescription="@string/r_temp_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/red_gradient"
+            tools:ignore="ImageContrastCheck" />
+
+        <ImageView
             android:id="@+id/doorInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="150dp"
-            android:contentDescription="@string/doorinfo"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="164dp"
+            android:contentDescription="@string/r_door_info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/red_gradient"
@@ -48,11 +84,11 @@
 
         <ImageView
             android:id="@+id/lightInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="67dp"
-            android:contentDescription="@string/tempinfo"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="82dp"
+            android:contentDescription="@string/r_light_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/red_gradient"
@@ -64,48 +100,36 @@
             android:layout_height="130dp"
             android:layout_marginStart="27dp"
             android:layout_marginBottom="83dp"
+            android:background="@null"
             android:contentDescription="@string/lightbtn"
             android:scaleType="fitCenter"
-            android:background="@null"
+            android:src="@drawable/light_custom"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_light_icon" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/windowInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="67dp"
-            android:contentDescription="@string/sensorsim"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="81dp"
+            android:contentDescription="@string/r_window_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/red_gradient" />
-
-        <ImageView
-            android:id="@+id/tempInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/lightinfo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/red_gradient"
-            tools:ignore="ImageContrastCheck" />
 
         <ImageButton
             android:id="@+id/window_Btn"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:background="@null"
             android:layout_marginEnd="27dp"
             android:layout_marginBottom="83dp"
+            android:background="@null"
             android:contentDescription="@string/windows"
             android:scaleType="fitCenter"
+            android:src="@drawable/window_custom"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_window_icon" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageButton
             android:id="@+id/temp_Btn"
@@ -113,12 +137,12 @@
             android:layout_height="130dp"
             android:layout_marginTop="168dp"
             android:layout_marginEnd="27dp"
-            android:contentDescription="@string/tempbtn"
             android:background="@null"
+            android:contentDescription="@string/tempbtn"
             android:scaleType="fitCenter"
+            android:src="@drawable/temp_custom"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/thermostat_icon" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -152,10 +176,9 @@
             android:background="@null"
             android:contentDescription="@string/lockbtn"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_lock"
+            android:src="@drawable/lock_custom"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_lock" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/Greetings"
@@ -233,6 +256,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

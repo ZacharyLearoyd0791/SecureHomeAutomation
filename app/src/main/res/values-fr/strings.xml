@@ -91,4 +91,15 @@
     <string name="_settings">Use fingerprint to sign in</string>
     <string name="save">Save</string>
     <string name="Bold_text">Bold Text</string>
+    <string name="off_on">off/on</string>
+    <string name="app_color">App color</string>
+    <string name="enable_fingerprint_login">Enable fingerprint login</string>
+    <string name="g_door_info">green door info</string>
+    <string name="g_temp_info">green temp info</string>
+    <string name="r_door_info">red door info</string>
+    <string name="r_light_info">red light info</string>
+    <string name="r_temp_info">red temp info</string>
+    <string name="g_light_info">green light info</string>
+    <string name="g_window_info">green window info</string>
+    <string name="r_window_info">red window info</string>
 </resources>
