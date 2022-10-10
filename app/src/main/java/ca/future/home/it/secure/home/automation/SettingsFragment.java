@@ -36,8 +36,6 @@ public class SettingsFragment extends Fragment {
     private View view;
     private TextView tvBold;
     private TextView tvColour;
-    private ToggleButton doorToggle;
-    private TextView tvGreetings;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -67,12 +65,15 @@ public class SettingsFragment extends Fragment {
                     tvColour.setTypeface(null, Typeface.BOLD);
                     boldSwitch.setTypeface(null, Typeface.BOLD);
                     colourSwitch.setTypeface(null, Typeface.BOLD);
+                    HomeFragment.windowSwitch.setTypeface(null, Typeface.BOLD);
 
                 } else {
                     tvBold.setTypeface(null, Typeface.NORMAL);
                     tvColour.setTypeface(null, Typeface.NORMAL);
                     boldSwitch.setTypeface(null, Typeface.NORMAL);
                     colourSwitch.setTypeface(null, Typeface.NORMAL);
+                    HomeFragment.windowSwitch.setTypeface(null, Typeface.NORMAL);
+
                 }
             }
         });

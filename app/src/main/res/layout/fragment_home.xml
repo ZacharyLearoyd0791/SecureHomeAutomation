@@ -26,19 +26,18 @@
             tools:ignore="ImageContrastCheck" />
 
         <ImageButton
-            android:id="@+id/LightBtn"
+            android:id="@+id/light_Btn"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginStart="27dp"
             android:layout_marginBottom="83dp"
-
             android:contentDescription="@string/lightbtn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_light_icon" />
 
         <ImageView
-            android:id="@+id/SensorSim"
+            android:id="@+id/windowInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -49,7 +48,7 @@
             app:srcCompat="@drawable/shape" />
 
         <ImageView
-            android:id="@+id/DoorInfo"
+            android:id="@+id/doorInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -61,7 +60,7 @@
             tools:ignore="ImageContrastCheck" />
 
         <ImageView
-            android:id="@+id/LightInfo"
+            android:id="@+id/lightInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
@@ -73,7 +72,7 @@
             tools:ignore="ImageContrastCheck" />
 
         <ImageButton
-            android:id="@+id/windowBtn"
+            android:id="@+id/window_Btn"
             android:layout_width="130dp"
             android:layout_height="130dp"
 
@@ -85,7 +84,7 @@
             app:srcCompat="@drawable/ic_window" />
 
         <ImageButton
-            android:id="@+id/Lockbtn"
+            android:id="@+id/lock_Btn"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginStart="27dp"
@@ -97,7 +96,7 @@
             app:srcCompat="@drawable/ic_lock" />
 
         <ImageButton
-            android:id="@+id/TempBtn"
+            android:id="@+id/temp_Btn"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginTop="168dp"

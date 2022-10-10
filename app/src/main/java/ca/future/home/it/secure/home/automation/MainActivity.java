@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
-    private DoorFragment doorFragment;
-    private TempFragment tempFragment;
-    private LightFragment lightFragment;
-    private WindowFragment windowFragment;
+    public static DoorFragment doorFragment;
+    public static TempFragment tempFragment;
+    public static LightFragment lightFragment;
+    public static WindowFragment windowFragment;
     private AccountFragment accountFragment;
 
     @SuppressLint("NonConstantResourceId")
