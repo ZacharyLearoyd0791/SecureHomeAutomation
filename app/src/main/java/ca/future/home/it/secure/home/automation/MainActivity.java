@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
     public static DoorFragment doorFragment;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     public static LightFragment lightFragment;
     public static WindowFragment windowFragment;
     private AccountFragment accountFragment;
+    public static AddDeviceFragment addDeviceFragment;
+
+    //Bottom Navigation
     public static BottomNavigationView bottomNav;
 
     @SuppressLint("NonConstantResourceId")
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         lightFragment = new LightFragment();
         windowFragment = new WindowFragment();
         accountFragment = new AccountFragment();
+        addDeviceFragment = new AddDeviceFragment();
 
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
@@ -111,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.ab_refresh) {
             bottomNav.setSelectedItemId(R.id.home);
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
+        }
+        if (item.getItemId() == R.id.ab_add) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, addDeviceFragment).commit();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -102,4 +102,7 @@
     <string name="g_light_info">green light info</string>
     <string name="g_window_info">green window info</string>
     <string name="r_window_info">red window info</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="lock_portrait_mode">Lock portrait mode</string>
+    <string name="add_device">Add Device</string>
 </resources>
