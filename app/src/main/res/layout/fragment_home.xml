@@ -23,7 +23,31 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/tempInfo"
+            android:id="@+id/greenLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/lightinfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/green_gradient"
+            tools:ignore="ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/doorInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="150dp"
+            android:contentDescription="@string/doorinfo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/red_gradient"
+            tools:ignore="ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/lightInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -45,7 +69,7 @@
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/light_custom" />
+            app:srcCompat="@drawable/ic_light_icon" />
 
         <ImageView
             android:id="@+id/windowInfo"
@@ -59,19 +83,7 @@
             app:srcCompat="@drawable/red_gradient" />
 
         <ImageView
-            android:id="@+id/doorInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="150dp"
-            android:contentDescription="@string/doorinfo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/red_gradient"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageView
-            android:id="@+id/lightInfo"
+            android:id="@+id/tempInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
@@ -93,21 +105,7 @@
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/window_custom" />
-
-        <ImageButton
-            android:id="@+id/lock_Btn"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="168dp"
-            android:background="@null"
-            android:contentDescription="@string/lockbtn"
-            android:scaleType="fitCenter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lock_custom"
-            tools:srcCompat="@drawable/lock_custom" />
+            app:srcCompat="@drawable/ic_window_icon" />
 
         <ImageButton
             android:id="@+id/temp_Btn"
@@ -120,7 +118,7 @@
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/temp_custom" />
+            app:srcCompat="@drawable/thermostat_icon" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -144,6 +142,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_home" />
+
+        <ImageButton
+            android:id="@+id/lock_Btn"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="168dp"
+            android:background="@null"
+            android:contentDescription="@string/lockbtn"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_lock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_lock" />
 
         <TextView
             android:id="@+id/Greetings"
