@@ -88,9 +88,16 @@
     <string name="enter_your_email_address_forgot">Enter your email address</string>
     <string name="send_me_email">Send me email</string>
     <string name="account">Account</string>
-    <string name="bold_text">Bold-Text</string>
     <string name="app_colour">App Colour</string>
-    <string name="off_on">Off/On</string>
+    <string name="Bold_text">Bold Text</string>
     <string name="quick_access">Quick Access</string>
+    <string name="waiting_for_the_device_to_connect">Waiting for the device to connect…</string>
+    <string name="use_fingerprint_to_sign_in">Use Fingerprint to Sign in</string>
+    <string name="dark_app_theme">Dark app Theme</string>
+    <string name="_settings">Use fingerprint to sign in</string>
+    <string name="save">Save</string>
+    <string name="off_on">off/on</string>
+    <string name="app_color">App color</string>
+    <string name="enable_fingerprint_login">Enable fingerprint login</string>
 
 </resources>

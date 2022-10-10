@@ -33,10 +33,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+
 }
 
 dependencies {
     implementation 'pl.bclogic:pulsator4droid:1.0.3'        //For pulse animation
+    implementation 'androidx.biometric:biometric:1.0.1'     //For fingerprint sign in
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
