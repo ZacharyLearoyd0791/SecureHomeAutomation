@@ -15,13 +15,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class DoorFragment extends Fragment {
 
     ToggleButton doorLock;
-    View view;
+
 
     public DoorFragment() {
         // Required empty public constructor
@@ -45,12 +45,14 @@ public class DoorFragment extends Fragment {
         doorLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 doorLock.setBackgroundColor(android.graphics.Color.parseColor("#00FF00"));
+                Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
 
             } else {
                 doorLock.setBackgroundColor(android.graphics.Color.parseColor("#FF0000"));
+                Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
 
             }
         });
-          //  doorLock.setBackgroundColor(android.graphics.Color.parseColor("#738b28"));
+          
         }
     }

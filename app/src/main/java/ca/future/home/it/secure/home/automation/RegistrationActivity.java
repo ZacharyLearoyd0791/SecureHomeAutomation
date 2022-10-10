@@ -1,32 +1,32 @@
+/*
+Authors/Std.#/Section:
+Zachary Learoyd (LRDZ0002) - CENG-322-0NC
+Akash Muhundhan (N01420118) - CENG-322-0NA
+Harpreet Cheema (???) - CENG-322-0NA
+Krushang Parekh (N01415355) - CENG-322-0NC
+*/
 package ca.future.home.it.secure.home.automation;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class RegistrationActivity extends AppCompatActivity {
-   //Declaration
-    private Button registerButton;
     private EditText fullName;
     private EditText emailAddress;
     private EditText password;
     private EditText confirmPassword;
     private String emailInput;
-    private String nameInput;
     private String passwordInput;
-    private String confirmPasswordInput;
     private FirebaseAuth mAuth;
     private int fillChecker= 1;
     @Override
@@ -34,27 +34,23 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         //Referencing
-        registerButton = findViewById(R.id.Registration_page_done_button);
+        //Declaration
+        Button registerButton = findViewById(R.id.Registration_page_done_button);
         fullName = findViewById(R.id.Registration_page_full_name_text);
         emailAddress = findViewById(R.id.Registration_page_email_text);
         password = findViewById(R.id.Registration_page_password_text);
         confirmPassword = findViewById(R.id.Registration_page_confirm_password_text);
         mAuth = FirebaseAuth.getInstance();
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginProcess();
-            }
-        });
+        registerButton.setOnClickListener(view -> loginProcess());
     }
 
     private void loginProcess(){
         //Assigning Values
-        nameInput = fullName.getText().toString();
+        String nameInput = fullName.getText().toString();
         emailInput = emailAddress.getText().toString();
         passwordInput = password.getText().toString();
-        confirmPasswordInput = confirmPassword.getText().toString();
+        String confirmPasswordInput = confirmPassword.getText().toString();
 
         //Checking if fields are empty or not
         if(fillChecker==1){
@@ -88,25 +84,19 @@ public class RegistrationActivity extends AppCompatActivity {
     public void registrationProcess(int CheckerId){
         if(CheckerId == 0){
             mAuth.createUserWithEmailAndPassword(emailInput,passwordInput)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                mAuth.getCurrentUser().sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()){
-                                                    Toast.makeText(RegistrationActivity.this, R.string.email_check, Toast.LENGTH_SHORT).show();
-                                                }else{
-                                                    Toast.makeText(RegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                                startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
-                            }else{
-                                Toast.makeText(RegistrationActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification()
+                                    .addOnCompleteListener(task1 -> {
+                                        if(task1.isSuccessful()){
+                                            Toast.makeText(RegistrationActivity.this, R.string.email_check, Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(RegistrationActivity.this, Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                            startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
+                        }else{
+                            Toast.makeText(RegistrationActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }

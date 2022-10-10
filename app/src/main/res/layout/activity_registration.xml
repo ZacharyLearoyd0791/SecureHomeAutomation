@@ -6,52 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity">
 
-    <TextView
-        android:id="@+id/Registration_title1"
-        android:layout_width="314dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="29dp"
-        android:text="@string/welcome_to_our_app"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/Registration_title2"
-        android:layout_width="150dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="130dp"
-        android:text="@string/registration"
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Registration_title1" />
 
     <EditText
         android:id="@+id/Registration_page_full_name_text"
         android:layout_width="300dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="168dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/full_name"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Registration_title2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/Registration_page_email_text"
         android:layout_width="308dp"
         android:layout_height="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/enter_your_email_address"
         android:inputType="textEmailAddress"
+        android:textColorHint="#757575"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Registration_page_full_name_text" />
 
@@ -59,11 +38,13 @@
         android:id="@+id/Registration_page_password_text"
         android:layout_width="307dp"
         android:layout_height="53dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/enter_password"
         android:inputType="textPassword"
+        android:textColorHint="#757575"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Registration_page_email_text" />
 
@@ -71,21 +52,65 @@
         android:id="@+id/Registration_page_confirm_password_text"
         android:layout_width="306dp"
         android:layout_height="55dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/confirm_your_password"
         android:inputType="textPassword"
+        android:textColorHint="#757575"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Registration_page_password_text" />
 
     <Button
         android:id="@+id/Registration_page_done_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="380dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/done"
+        android:textColor="@color/white"
+        android:background="@drawable/splash_bg_gradient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Registration_page_confirm_password_text" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="412dp"
+        android:layout_height="168dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/splash_bg_gradient">
+
+
+        <TextView
+            android:id="@+id/Registration_title1"
+            android:layout_width="302dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/welcome_to_our_app"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/Registration_title2"
+            android:layout_width="166dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="4dp"
+            android:text="@string/registration"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Registration_title1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

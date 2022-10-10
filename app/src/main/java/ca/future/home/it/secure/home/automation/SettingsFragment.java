@@ -9,24 +9,34 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-
 public class SettingsFragment extends Fragment {
-    private Button signOutButton;
-    View view;
+
+    private Switch boldSwitch;
+    private Switch colourSwitch;
+    private View view;
+    private TextView tvBold;
+    private TextView tvColour;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -42,14 +52,29 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        signOutButton = view.findViewById(R.id.Settings_signOut_button);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
+
+        boldSwitch = view.findViewById(R.id.bold_switch);
+        colourSwitch = view.findViewById(R.id.colour_switch);
+        tvBold = view.findViewById(R.id.tv_bold);
+        tvColour = view.findViewById(R.id.tv_colour);
+
+        boldSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tvBold.setTypeface(null, Typeface.BOLD);
+                    tvColour.setTypeface(null, Typeface.BOLD);
+                    boldSwitch.setTypeface(null, Typeface.BOLD);
+                    colourSwitch.setTypeface(null, Typeface.BOLD);
+                    HomeFragment.windowSwitch.setTypeface(null, Typeface.BOLD);
+
+                } else {
+                    tvBold.setTypeface(null, Typeface.NORMAL);
+                    tvColour.setTypeface(null, Typeface.NORMAL);
+                    boldSwitch.setTypeface(null, Typeface.NORMAL);
+                    colourSwitch.setTypeface(null, Typeface.NORMAL);
+                    HomeFragment.windowSwitch.setTypeface(null, Typeface.NORMAL);
+
+                }
             }
         });
     }
