@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/Homefrag"
+    android:padding="16dp"
     tools:context=".HomeFragment">
 
     <RelativeLayout
@@ -49,14 +51,14 @@
 
                 <ImageButton
                     android:id="@+id/lock_Btn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="12dp"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:layout_marginLeft="7dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
                     android:contentDescription="@string/lightbtn"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_lock" />
+                    app:srcCompat="@drawable/lock_custom" />
 
                 <Switch
                     android:id="@+id/sw_lock"
@@ -98,15 +100,15 @@
 
                 <ImageButton
                     android:id="@+id/light_Btn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="50dp"
                     android:background="@null"
                     android:contentDescription="@string/lightbtn"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_light_icon" />
+                    app:srcCompat="@drawable/light_custom" />
 
                 <Switch
                     android:id="@+id/sw_light"
@@ -141,14 +143,14 @@
 
                 <ImageButton
                     android:id="@+id/window_Btn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="9dp"
                     android:background="@null"
                     android:contentDescription="@string/lightbtn"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_window_icon" />
+                    app:srcCompat="@drawable/window_custom" />
 
                 <Switch
                     android:id="@+id/sw_window"
@@ -181,15 +183,15 @@
 
                 <ImageButton
                     android:id="@+id/temp_Btn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="50dp"
                     android:background="@null"
                     android:contentDescription="@string/lightbtn"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/thermostat_icon" />
+                    app:srcCompat="@drawable/temp_custom" />
 
                 <Switch
                     android:id="@+id/sw_temp"
