@@ -15,12 +15,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class DoorFragment extends Fragment {
 
     ToggleButton doorLock;
+    private ImageView unlocked;
+    private ImageView locked;
 
 
     public DoorFragment() {
@@ -42,17 +45,22 @@ public class DoorFragment extends Fragment {
                                Bundle savedInstanceState){
 
         doorLock=view.findViewById(R.id.DoorToggle);
+        unlocked=view.findViewById(R.id.iv_unlocked);
+        locked=view.findViewById(R.id.iv_locked);
+
         doorLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 doorLock.setBackgroundColor(android.graphics.Color.parseColor("#00FF00"));
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
+                unlocked.setVisibility(View.VISIBLE);
+                locked.setVisibility(View.INVISIBLE);
 
             } else {
                 doorLock.setBackgroundColor(android.graphics.Color.parseColor("#FF0000"));
                 Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
-
+                unlocked.setVisibility(View.INVISIBLE);
+                locked.setVisibility(View.VISIBLE);
             }
         });
-          
         }
     }
