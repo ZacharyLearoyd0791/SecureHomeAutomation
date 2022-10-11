@@ -124,5 +124,7 @@
     <string name="temp_configuration">Temp Configuration</string>
     <string name="window_configuration">Window Configuration</string>
     <string name="currenttemp">Current Temperature:</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
 
 </resources>

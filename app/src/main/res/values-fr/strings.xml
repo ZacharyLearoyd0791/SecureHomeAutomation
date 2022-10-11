@@ -119,4 +119,6 @@
     <string name="temp_configuration">Configuration de la température</string>
     <string name="window_configuration">Configuration de la fenêtre</string>
     <string name="currenttemp">Température actuelle</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
 </resources>
