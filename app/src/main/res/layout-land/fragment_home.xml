@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:context=".HomeFragment">
+
+
+        <LinearLayout
+            android:id="@+id/container1"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_quick_acc">
+
+            <RelativeLayout
+                android:id="@+id/btn3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/greenDoor"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/green_gradient"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/doorInfo"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:contentDescription="@string/tempinfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/red_gradient"
+                    tools:ignore="ImageContrastCheck" />
+
+                <ImageButton
+                    android:id="@+id/lock_Btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:contentDescription="@string/lightbtn"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_lock" />
+
+                <Switch
+                    android:id="@+id/sw_lock"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/doorInfo"
+                    android:layout_marginLeft="6dp"
+                    android:text="@string/off_on"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+
+                android:id="@+id/btn1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/greenLight"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+
+                    android:contentDescription="@string/lightinfo"
+                    app:srcCompat="@drawable/green_gradient"
+                    tools:ignore="ImageContrastCheck" />
+
+                <ImageView
+                    android:id="@+id/lightInfo"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:contentDescription="@string/tempinfo"
+                    app:srcCompat="@drawable/red_gradient"
+                    tools:ignore="ImageContrastCheck" />
+
+                <ImageButton
+                    android:id="@+id/light_Btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@null"
+                    android:contentDescription="@string/lightbtn"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_light_icon" />
+
+                <Switch
+                    android:id="@+id/sw_light"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/lightInfo"
+                    android:layout_marginLeft="6dp"
+                    android:text="@string/off_on"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/btn2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/windowInfo"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:contentDescription="@string/tempinfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/red_gradient"
+                    tools:ignore="ImageContrastCheck" />
+
+                <ImageButton
+                    android:id="@+id/window_Btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@null"
+                    android:contentDescription="@string/lightbtn"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_window_icon" />
+
+                <Switch
+                    android:id="@+id/sw_window"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/windowInfo"
+                    android:layout_marginLeft="6dp"
+                    android:text="@string/off_on"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/btn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/tempInfo"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:contentDescription="@string/tempinfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/red_gradient"
+                    tools:ignore="ImageContrastCheck" />
+
+                <ImageButton
+                    android:id="@+id/temp_Btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@null"
+                    android:contentDescription="@string/lightbtn"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/thermostat_icon" />
+
+                <Switch
+                    android:id="@+id/sw_temp"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/tempInfo"
+                    android:layout_marginLeft="6dp"
+                    android:text="@string/off_on"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="51dp"
+            android:layout_height="51dp"
+            android:visibility="invisible"
+            android:contentDescription="@string/homeBackGround"
+            app:srcCompat="@drawable/icon_background"
+            tools:ignore="ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="40dp"
+            android:padding="4dp"
+            android:layout_marginRight="10dp"
+
+            android:layout_height="41dp"
+            android:background="@drawable/icon_background"
+            android:contentDescription="@string/mainHomeIcon"
+            app:srcCompat="@drawable/ic_home" />
+
+
+
+        <TextView
+            android:id="@+id/Greetings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"
+            android:textStyle="italic" />
+
+
+
+
+        <TextView
+            android:id="@+id/tv_quick_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_toEndOf="@id/imageView3"
+            android:text="@string/quick_access"
+            android:textColor="#000000"
+            android:textSize="26sp"
+            android:layout_alignTop="@id/imageView3"
+            android:layout_alignBottom="@id/imageView3"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</FrameLayout>
