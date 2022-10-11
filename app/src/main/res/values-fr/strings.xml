@@ -105,4 +105,10 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="lock_portrait_mode">Lock portrait mode</string>
     <string name="add_device">Add Device</string>
+    <string name="timer">Timer</string>
+    <string name="scheduler">Scheduler</string>
+    <string name="light_icon">light_icon</string>
+    <string name="window_icon">window_icon</string>
+    <string name="set_max_temperature">Set max temperature:</string>
+    <string name="set_minimum_temperature">Set minimum temperature:</string>
 </resources>

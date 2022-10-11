@@ -7,14 +7,62 @@
     android:layout_height="match_parent"
     tools:context=".LightFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="115dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="260dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_timer"
+        android:contentDescription="@string/timer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="115dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="248dp"
+        android:layout_marginTop="260dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_scheduler"
+        android:contentDescription="@string/scheduler"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="111dp"
+        android:layout_height="119dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_light_icon"
+        android:contentDescription="@string/light_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="255dp"
-        android:layout_height="356dp"
-        android:text="@string/here_we_will_implement_lights_method"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="224dp"
+        android:text="@string/timer"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="224dp"
+        android:text="@string/scheduler"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

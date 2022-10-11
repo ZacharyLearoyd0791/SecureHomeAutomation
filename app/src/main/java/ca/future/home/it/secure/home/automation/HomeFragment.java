@@ -11,6 +11,7 @@ package ca.future.home.it.secure.home.automation;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -192,6 +193,5 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
     }
 }

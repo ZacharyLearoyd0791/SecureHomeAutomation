@@ -7,16 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".WindowFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <TextView
         android:id="@+id/textView8"
         android:layout_width="300dp"
         android:layout_height="55dp"
         android:text="@string/waiting_for_the_device_to_connect"
         android:textAlignment="center"
-        android:textStyle="normal"
         android:textSize="15sp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -49,6 +47,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </pl.bclogic.pulsator4droid.library.PulsatorLayout>
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="120dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/ic_window"
+        android:contentDescription="@string/window_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
