@@ -147,22 +147,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="57dp"
-            android:layout_height="53dp"
-            android:layout_marginStart="310dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_background"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageView
             android:id="@+id/iv_home_icon"
             android:layout_width="57dp"
             android:layout_height="53dp"
             android:layout_marginStart="310dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_home" />
