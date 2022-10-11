@@ -35,26 +35,26 @@ public class HomeFragment extends Fragment {
 
     //Switches
 
-    public static Switch lockSwitch;
-    public static Switch tempSwitch;
-    public static Switch lightSwitch;
-    public static Switch windowSwitch;
+    public Switch lockSwitch;
+    public Switch tempSwitch;
+    public Switch lightSwitch;
+    public Switch windowSwitch;
 
     //Buttons
-    public static ImageButton lockBtn;
-    public static ImageButton tempBtn;
-    public static ImageButton lightBtn;
-    public static ImageButton windowBtn;
+    public ImageButton lockBtn;
+    public ImageButton tempBtn;
+    public ImageButton lightBtn;
+    public ImageButton windowBtn;
 
     //Text View
-    public static TextView greetingsText;
-    public static TextView quickAcc;
+    public TextView greetingsText;
+    public TextView quickAcc;
 
     //ImageView
-    public static ImageView doorView;
-    public static ImageView tempView;
-    public static ImageView lightView;
-    public static ImageView windowView;
+    public ImageView doorView;
+    public ImageView tempView;
+    public ImageView lightView;
+    public ImageView windowView;
 
     public HomeFragment() {
     }
