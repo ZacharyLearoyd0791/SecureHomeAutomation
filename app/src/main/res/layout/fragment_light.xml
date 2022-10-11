@@ -13,9 +13,9 @@
         android:layout_height="100dp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="260dp"
+        android:contentDescription="@string/timer"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_timer"
-        android:contentDescription="@string/timer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,20 +25,20 @@
         android:layout_height="100dp"
         android:layout_marginStart="248dp"
         android:layout_marginTop="260dp"
+        android:contentDescription="@string/scheduler"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_scheduler"
-        android:contentDescription="@string/scheduler"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="111dp"
-        android:layout_height="119dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_light_icon"
+        android:layout_width="57dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="328dp"
+        android:layout_marginTop="28dp"
         android:contentDescription="@string/light_icon"
+        android:src="@drawable/ic_light_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,6 +63,19 @@
         android:text="@string/scheduler"
         android:textColor="#000000"
         android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_light_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/light_configuration"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

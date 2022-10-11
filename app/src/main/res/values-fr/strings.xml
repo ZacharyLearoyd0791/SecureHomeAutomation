@@ -115,4 +115,7 @@
     <string name="lock_configuration">Lock Configuration</string>
     <string name="door_status">Door status:</string>
     <string name="lock_unlock_door">Lock/Unlock Door:</string>
+    <string name="light_configuration">Light Configuration</string>
+    <string name="temp_configuration">Temp Configuration</string>
+    <string name="window_configuration">Window Configuration</string>
 </resources>
