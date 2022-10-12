@@ -19,42 +19,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/statusofDoor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="168dp"
-        android:text="@string/lock_unlock_door"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageButton
         android:id="@+id/ib_add_card"
         android:layout_width="140dp"
         android:layout_height="96dp"
-        android:layout_marginTop="520dp"
-        android:layout_marginEnd="136dp"
+        android:layout_marginTop="492dp"
+        android:layout_marginEnd="144dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_add_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="484dp"
-        android:text="@string/add_new_key_card"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_lock_title"
@@ -71,11 +47,36 @@
 
     <ToggleButton
         android:id="@+id/doorLockBtn"
-        android:layout_width="290dp"
-        android:layout_height="264dp"
-        android:layout_marginStart="56.5dp"
-        android:layout_marginTop="208dp"
+        android:layout_width="260dp"
+        android:layout_height="261dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="160dp"
         android:textOff="@string/check_status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/statusofDoor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="112dp"
+        android:text="@string/door_status"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="460dp"
+        android:text="@string/add_new_key_card"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

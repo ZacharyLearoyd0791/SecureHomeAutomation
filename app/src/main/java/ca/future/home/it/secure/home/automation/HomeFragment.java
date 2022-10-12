@@ -8,13 +8,20 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.KEYCODE_0;
+import static java.lang.Thread.sleep;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,6 +62,10 @@ public class HomeFragment extends Fragment {
     public ImageView tempView;
     public ImageView lightView;
     public ImageView windowView;
+    public ImageView pressLock;
+    public ImageView pressTemp;
+
+    final Handler handler = new Handler();
 
     public HomeFragment() {
     }
@@ -106,12 +117,27 @@ public class HomeFragment extends Fragment {
         lightBtn = view.findViewById(R.id.light_Btn);
         windowBtn = view.findViewById(R.id.window_Btn);
 
+        //ImageView
+        pressLock = view.findViewById(R.id.iv_press_lock);
+        pressLock.setVisibility(View.INVISIBLE);
+        pressTemp = view.findViewById(R.id.iv_press_temp);
+        pressTemp.setVisibility(View.INVISIBLE);
+
         //Lock button
         lockBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
-                getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit();
+                lockBtn.setVisibility(View.INVISIBLE);
+                pressLock.setVisibility(View.VISIBLE);
+
+                //simulate button pressed
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit();
+                    }
+                }, 300);
                 //MainActivity.bottomNav.setSelectedItemId(R.id.door);
             }
         });
@@ -121,7 +147,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit();
+                tempBtn.setVisibility(View.INVISIBLE);
+                pressTemp.setVisibility(View.VISIBLE);
+
+                //simulate button pressed
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit();
+                    }
+                }, 300);
                 //MainActivity.bottomNav.setSelectedItemId(R.id.temp);
             }
         });
