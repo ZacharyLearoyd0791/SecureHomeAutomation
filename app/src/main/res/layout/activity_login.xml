@@ -74,8 +74,8 @@
         android:id="@+id/loginDoNotHaveAccountText"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginStart="136dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginBottom="52dp"
         android:gravity="center"
         android:text="@string/don_t_have_an_account"
         android:textSize="13sp"
@@ -149,14 +149,15 @@
 
     <ImageView
         android:id="@+id/google_logo"
-        android:layout_width="35dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="188dp"
+        android:layout_width="63dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="172dp"
         android:layout_marginTop="100dp"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/loginDoNotHaveAccountText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_page_login_button"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/google_logo" />
 
     <TextView

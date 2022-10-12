@@ -6,23 +6,19 @@ Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC*/
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,6 +28,8 @@ import java.util.List;
 public class AddDeviceFragment extends Fragment {
 
     private static final int MY_PERMISSIONS_REQUEST_BLUETOOTH = 5;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
 
     public AddDeviceFragment() {
         // Required empty public constructor
@@ -73,15 +71,17 @@ public class AddDeviceFragment extends Fragment {
     }
 
 
-
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_BLUETOOTH: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // granted
-                    Snackbar.make(getView(),"Permission is granted",Snackbar.LENGTH_LONG).show();
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+
+                        // granted
+                        Snackbar.make(getView(), "Permission is granted", Snackbar.LENGTH_LONG).show();
+                    }
 
                 } else {
                     // denied
