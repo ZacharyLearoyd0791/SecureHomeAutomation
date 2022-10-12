@@ -126,5 +126,7 @@
     <string name="currenttemp">Current Temperature:</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
+    <string name="unlock">UnLocked!</string>
+    <string name="lock">Locked!</string>
 
 </resources>

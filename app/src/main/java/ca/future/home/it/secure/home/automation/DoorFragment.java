@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -20,7 +21,7 @@ import androidx.fragment.app.Fragment;
 public class DoorFragment extends Fragment {
 
     ToggleButton doorLock;
-
+    TextView status;
 
 
     public DoorFragment() {
@@ -42,18 +43,22 @@ public class DoorFragment extends Fragment {
                                Bundle savedInstanceState){
 
         doorLock=view.findViewById(R.id.doorLockBtn);
-
+        status=view.findViewById(R.id.statusofDoor);
 
         doorLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 doorLock.setBackgroundColor(android.graphics.Color.parseColor("#00FF00"));
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
                 doorLock.setBackgroundResource(R.drawable.ic_lock);
+                status.setText(R.string.unlock);
+
 
             } else {
                 doorLock.setBackgroundColor(android.graphics.Color.parseColor("#FF0000"));
                 Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
                 doorLock.setBackgroundResource(R.drawable.ic_lock_closed);
+                status.setText(R.string.lock);
+
             }
         });
         }
