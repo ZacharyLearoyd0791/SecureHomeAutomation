@@ -84,15 +84,19 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch(item.getItemId()){
                 case R.id.window:
+                    //bottomNav.setSelectedItemId(R.id.window);
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, windowFragment).commit();
                     return true;
                 case R.id.door:
+                    //bottomNav.setSelectedItemId(R.id.door);
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, doorFragment).commit();
                     return true;
                 case R.id.temp:
+                    //bottomNav.setSelectedItemId(R.id.temp);
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, tempFragment).commit();
                     return true;
                 case R.id.light:
+                    //bottomNav.setSelectedItemId(R.id.light);
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, lightFragment).commit();
                     return true;
                 default:

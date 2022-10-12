@@ -32,9 +32,6 @@ public class WindowFragment extends Fragment {
         pulsator.setCount(4);
         pulsator.setDuration(2000);
 
-
-
-
         return view;
     }
 }
