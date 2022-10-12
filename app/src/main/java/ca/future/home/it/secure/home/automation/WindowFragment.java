@@ -27,10 +27,10 @@ public class WindowFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_window, container, false);
-        PulsatorLayout pulsator = (PulsatorLayout) view.findViewById(R.id.pulsator);
-        pulsator.start();
-        pulsator.setCount(4);
-        pulsator.setDuration(2000);
+//        PulsatorLayout pulsator = (PulsatorLayout) view.findViewById(R.id.pulsator);
+//        pulsator.start();
+//        pulsator.setCount(4);
+//        pulsator.setDuration(2000);
 
         return view;
     }

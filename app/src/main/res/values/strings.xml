@@ -131,5 +131,6 @@
     <string name="check_status">Check Status</string>
     <string name="space" translatable="false"> </string>
     <string name="google_signin_error">Something went wrong!</string>
+    <string name="work_under_construction">Work under construction</string>
 
 </resources>
