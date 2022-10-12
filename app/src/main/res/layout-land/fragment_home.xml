@@ -50,6 +50,14 @@
                     tools:ignore="ImageContrastCheck" />
 
 
+                <ImageView
+                    android:id="@+id/iv_press_lock"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/lock_button_pressed" />
+
                 <ImageButton
                     android:id="@+id/lock_Btn"
                     android:layout_width="115dp"
@@ -57,7 +65,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
-                    android:contentDescription="@string/lightbtn"
+                    android:contentDescription="@string/lockbtn"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/lock_custom" />
 
@@ -188,8 +196,8 @@
                     android:layout_height="130dp"
                     android:contentDescription="@string/g_temp_info"
                     android:src="@drawable/green_gradient"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/tempInfo"
@@ -201,6 +209,16 @@
                     app:srcCompat="@drawable/red_gradient"
                     tools:ignore="ImageContrastCheck" />
 
+
+                <ImageView
+                    android:id="@+id/iv_press_temp"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/temp_button_pressed" />
+
                 <ImageButton
                     android:id="@+id/temp_Btn"
                     android:layout_width="115dp"
@@ -209,7 +227,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="50dp"
                     android:background="@null"
-                    android:contentDescription="@string/lightbtn"
+                    android:contentDescription="@string/tempbtn"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/temp_custom" />
 
@@ -230,23 +248,15 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="51dp"
-            android:layout_height="51dp"
-            android:visibility="invisible"
-            android:contentDescription="@string/homeBackGround"
-            app:srcCompat="@drawable/icon_background"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageView
             android:id="@+id/imageView3"
             android:layout_width="40dp"
-            android:padding="4dp"
+            android:layout_height="41dp"
             android:layout_marginRight="10dp"
 
-            android:layout_height="41dp"
             android:background="@drawable/icon_background"
             android:contentDescription="@string/mainHomeIcon"
+            android:padding="4dp"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_home" />
 
 
