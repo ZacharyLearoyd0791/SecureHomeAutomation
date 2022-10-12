@@ -7,17 +7,29 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -26,6 +38,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailAddress;
     private EditText password;
     private FirebaseAuth mAuth;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +51,14 @@ public class LoginActivity extends AppCompatActivity {
         emailAddress = findViewById(R.id.login_page_email_textBox);
         password = findViewById(R.id.login_page_password_textBox);
         //Declarations
+        ImageView googleLogoButton = findViewById(R.id.google_logo);
         TextView loginButton = findViewById(R.id.login_page_login_button);
         TextView createAccount = findViewById(R.id.loginCreateAccountHereTextClickable);
         TextView forgotPassword = findViewById(R.id.loginForgotPassword);
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();         //Getting firebase instance
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this,gso);
+
         //Login button functionality
         loginButton.setOnClickListener(view -> {
             String emailInput = emailAddress.getText().toString();
@@ -63,6 +83,13 @@ public class LoginActivity extends AppCompatActivity {
         //For opening Forgot password page
         forgotPassword.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
 
+        //For google sign in process
+        googleLogoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleSignInProcess();
+            }
+        });
     }
     //Validating Email address
     private boolean validateEmailInput(EditText email) {
@@ -100,5 +127,31 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+   // Google Sign in process
+    public void googleSignInProcess(){
+        Intent googleSignInIntent = gsc.getSignInIntent();
+        startActivityForResult(googleSignInIntent,1000);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1000){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                changingActivity();
+            } catch (ApiException e) {
+                Log.d("Exeception: ", String.valueOf(e));
+                Toast.makeText(this, R.string.google_signin_error, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+    }
+    public void changingActivity(){
+        finish();
+        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+    }
 }

@@ -124,4 +124,5 @@
     <string name="unlock">UnLocked!</string>
     <string name="lock">Locked!</string>
     <string name="check_status">Check Status</string>
+    <string name="google_signin_error">Something went wrong!</string>
 </resources>

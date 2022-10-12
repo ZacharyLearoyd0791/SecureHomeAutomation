@@ -147,4 +147,29 @@
             tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/google_logo"
+        android:layout_width="35dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginTop="100dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/loginDoNotHaveAccountText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_page_login_button"
+        app:srcCompat="@drawable/google_logo" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="66dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="25dp"
+        android:text="---or---"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_page_login_button"
+        app:layout_constraintVertical_bias="0.169" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
