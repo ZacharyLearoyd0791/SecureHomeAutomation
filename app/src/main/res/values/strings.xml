@@ -119,7 +119,7 @@
     <string name="add_new_key_card">Add new key card:</string>
     <string name="lock_configuration">Lock Configuration</string>
     <string name="door_status">Door status:</string>
-    <string name="lock_unlock_door">Lock/Unlock Door:</string>
+    <string name="lock_unlock_door">Status</string>
     <string name="light_configuration">Light Configuration</string>
     <string name="temp_configuration">Temp Configuration</string>
     <string name="window_configuration">Window Configuration</string>
@@ -128,5 +128,7 @@
     <string name="closed">Closed</string>
     <string name="unlock">UnLocked!</string>
     <string name="lock">Locked!</string>
+    <string name="check_status">Check Status</string>
+    <string name="space" translatable="false"> </string>
 
 </resources>
