@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
     public ImageView windowView;
     public ImageView pressLock;
     public ImageView pressTemp;
+    public ImageView pressLight;
 
     final Handler handler = new Handler();
 
@@ -119,9 +120,12 @@ public class HomeFragment extends Fragment {
 
         //ImageView
         pressLock = view.findViewById(R.id.iv_press_lock);
-        pressLock.setVisibility(View.INVISIBLE);
         pressTemp = view.findViewById(R.id.iv_press_temp);
+        pressLight = view.findViewById(R.id.iv_press_light);
+
+        pressLock.setVisibility(View.INVISIBLE);
         pressTemp.setVisibility(View.INVISIBLE);
+        pressLight.setVisibility(View.INVISIBLE);
 
         //Lock button
         lockBtn.setOnClickListener(new View.OnClickListener(){
@@ -166,7 +170,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit();
+                lightBtn.setVisibility(View.INVISIBLE);
+                pressLight.setVisibility(View.VISIBLE);
+
+                //simulate button pressed
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit();
+                    }
+                }, 300);
+
                 //MainActivity.bottomNav.setSelectedItemId(R.id.light);
             }
         });
