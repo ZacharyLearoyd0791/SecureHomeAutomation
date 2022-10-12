@@ -118,18 +118,18 @@ public class HomeFragment extends Fragment {
         windowBtn = view.findViewById(R.id.window_Btn);
 
         //ImageView
-       // pressLock = view.findViewById(R.id.iv_press_lock);
-       // pressLock.setVisibility(View.INVISIBLE);
-        //pressTemp = view.findViewById(R.id.iv_press_temp);
-       // pressTemp.setVisibility(View.INVISIBLE);
+        pressLock = view.findViewById(R.id.iv_press_lock);
+        //pressLock.setVisibility(View.INVISIBLE);
+        pressTemp = view.findViewById(R.id.iv_press_temp);
+        //pressTemp.setVisibility(View.INVISIBLE);
 
         //Lock button
         lockBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
-      //          lockBtn.setVisibility(View.INVISIBLE);
-//                pressLock.setVisibility(View.VISIBLE);
+                //lockBtn.setVisibility(View.INVISIBLE);
+                //pressLock.setVisibility(View.VISIBLE);
 
                 //simulate button pressed
                 handler.postDelayed(new Runnable() {
@@ -147,8 +147,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-  //              tempBtn.setVisibility(View.INVISIBLE);
-//                pressTemp.setVisibility(View.VISIBLE);
+                //tempBtn.setVisibility(View.INVISIBLE);
+                //pressTemp.setVisibility(View.VISIBLE);
 
                 //simulate button pressed
                 handler.postDelayed(new Runnable() {

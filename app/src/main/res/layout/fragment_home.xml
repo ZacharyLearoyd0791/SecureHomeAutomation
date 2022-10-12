@@ -96,19 +96,6 @@
             app:srcCompat="@drawable/red_gradient"
             tools:ignore="ImageContrastCheck" />
 
-        <ImageButton
-            android:id="@+id/light_Btn"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginStart="27dp"
-            android:layout_marginBottom="83dp"
-            android:background="@null"
-            android:contentDescription="@string/lightbtn"
-            android:scaleType="fitCenter"
-            android:src="@drawable/light_custom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <ImageView
             android:id="@+id/windowInfo"
             android:layout_width="135dp"
@@ -119,6 +106,36 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/red_gradient" />
+
+        <ImageView
+            android:id="@+id/iv_press_temp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="168dp"
+            android:layout_marginEnd="27dp"
+            android:src="@drawable/temp_button_pressed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_home_icon"
+            android:layout_width="57dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="310dp"
+            android:layout_marginTop="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_home" />
+
+        <ImageView
+            android:id="@+id/iv_press_lock"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="168dp"
+            android:src="@drawable/lock_button_pressed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/window_Btn"
@@ -134,6 +151,19 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageButton
+            android:id="@+id/light_Btn"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginBottom="83dp"
+            android:background="@null"
+            android:contentDescription="@string/lightbtn"
+            android:scaleType="fitCenter"
+            android:src="@drawable/light_custom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
             android:id="@+id/temp_Btn"
             android:layout_width="130dp"
             android:layout_height="130dp"
@@ -145,16 +175,6 @@
             android:src="@drawable/temp_custom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_home_icon"
-            android:layout_width="57dp"
-            android:layout_height="53dp"
-            android:layout_marginStart="310dp"
-            android:layout_marginTop="14dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_home" />
 
         <ImageButton
             android:id="@+id/lock_Btn"
@@ -245,27 +265,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_press_lock"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="168dp"
-            android:src="@drawable/lock_button_pressed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_press_temp"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="168dp"
-            android:layout_marginEnd="27dp"
-            android:src="@drawable/temp_button_pressed"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

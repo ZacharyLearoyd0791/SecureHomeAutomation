@@ -49,6 +49,7 @@
                     app:srcCompat="@drawable/red_gradient"
                     tools:ignore="ImageContrastCheck" />
 
+
                 <ImageButton
                     android:id="@+id/lock_Btn"
                     android:layout_width="115dp"
@@ -132,6 +133,16 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/greenWindow"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:contentDescription="@string/g_window_info"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/green_gradient"
+                    tools:ignore="ImageContrastCheck" />
+
+                <ImageView
                     android:id="@+id/windowInfo"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
@@ -170,6 +181,15 @@
                 android:id="@+id/btn4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/greenTemp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:contentDescription="@string/g_temp_info"
+                    android:src="@drawable/green_gradient"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
                     android:id="@+id/tempInfo"
