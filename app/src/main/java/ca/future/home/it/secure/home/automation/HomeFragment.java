@@ -33,6 +33,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -66,6 +71,11 @@ public class HomeFragment extends Fragment {
     public ImageView pressTemp;
     public ImageView pressLight;
 
+    //Google declarations
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+
+
     final Handler handler = new Handler();
 
     public HomeFragment() {
@@ -80,29 +90,53 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
-
+        //Assigning
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(getContext(),gso);
+        GoogleSignInAccount accountInfo = GoogleSignIn.getLastSignedInAccount(getContext());
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         greetingsText = view.findViewById(R.id.Greetings);
-
+        String personName = accountInfo.getDisplayName();
         if(hour>=6 && hour<12){
+            if(accountInfo!=null){
+                Toast.makeText(getActivity(), "Good Morning..."+personName, Toast.LENGTH_SHORT).show();
+                greetingsText.setText("Good Morning "+personName);
+            }else{
             Toast.makeText(getActivity(), R.string.greetingMorning, Toast.LENGTH_LONG).show();
             greetingsText.setText(R.string.greetingMorning);
+            }
         }
         else if(hour>= 12 && hour < 17){
-            Toast.makeText(getActivity(), R.string.greetingAfternoon, Toast.LENGTH_LONG).show();
-            greetingsText.setText(R.string.greetingAfternoon);
+            if(accountInfo!=null){
+                Toast.makeText(getActivity(), "Good Afternoon..."+personName, Toast.LENGTH_SHORT).show();
+                greetingsText.setText("Good Afternoon "+personName);
+            }else {
+                Toast.makeText(getActivity(), R.string.greetingAfternoon, Toast.LENGTH_LONG).show();
+                greetingsText.setText(R.string.greetingAfternoon);
+            }
         }
         else if(hour >= 17 && hour < 21){
-            Toast.makeText(getActivity(), R.string.greetingEvening, Toast.LENGTH_LONG).show();
-            greetingsText.setText(R.string.greetingEvening);
+            if(accountInfo!=null){
+                Toast.makeText(getActivity(), "Good Evening "+personName, Toast.LENGTH_SHORT).show();
+                greetingsText.setText("Good Evening "+personName);
+            }else {
+                Toast.makeText(getActivity(), R.string.greetingEvening, Toast.LENGTH_LONG).show();
+                greetingsText.setText(R.string.greetingEvening);
+            }
         }
         else
         {
-            Toast.makeText(getActivity(), R.string.greetingNight, Toast.LENGTH_LONG).show();
-            greetingsText.setText(R.string.greetingNight);
+            if(accountInfo!=null){
+                Toast.makeText(getActivity(), "Good Night..."+personName, Toast.LENGTH_SHORT).show();
+                greetingsText.setText("Good Night "+personName);
+
+            }else {
+                Toast.makeText(getActivity(), R.string.greetingNight, Toast.LENGTH_LONG).show();
+                greetingsText.setText(R.string.greetingNight);
+            }
 
         }
 
@@ -242,5 +276,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
     }
+
 }
