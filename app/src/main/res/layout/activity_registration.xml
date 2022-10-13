@@ -66,22 +66,22 @@
         android:id="@+id/Registration_page_done_button"
         android:layout_width="380dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/splash_bg_gradient"
         android:text="@string/done"
         android:textColor="@color/white"
-        android:background="@drawable/splash_bg_gradient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Registration_page_confirm_password_text" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="412dp"
         android:layout_height="168dp"
+        android:background="@drawable/splash_bg_gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/splash_bg_gradient">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
@@ -92,9 +92,9 @@
             android:layout_marginTop="16dp"
             android:text="@string/welcome_to_our_app"
             android:textAlignment="center"
+            android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,12 +105,51 @@
             android:layout_marginStart="4dp"
             android:text="@string/registration"
             android:textAlignment="center"
-            android:textSize="25sp"
             android:textColor="@color/white"
+            android:textSize="25sp"
 
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Registration_title1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="177dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="19dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/Registration_page_done_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Registration_page_confirm_password_text"
+        app:layout_constraintVertical_bias="1.0">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="91dp"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:text="Select your gender"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/radioGroup"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Registration_page_confirm_password_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
