@@ -102,8 +102,7 @@ public class HomeFragment extends Fragment {
         String personName = accountInfo.getDisplayName();
         if(hour>=6 && hour<12){
             if(accountInfo!=null) {
-                Toast.makeText(getActivity(), "Good Morning..." + personName, Toast.LENGTH_SHORT).show();
-                greetingsText.setText("Good Morning, " + personName);
+                greetingsText.setText(getString(R.string.morningUsr) + personName);
             }else{
             Toast.makeText(getActivity(), R.string.greetingMorning, Toast.LENGTH_LONG).show();
             greetingsText.setText(R.string.greetingMorning);
@@ -111,8 +110,7 @@ public class HomeFragment extends Fragment {
         }
         else if(hour>= 12 && hour < 17){
             if(accountInfo!=null){
-                Toast.makeText(getActivity(), "Good Afternoon..."+personName, Toast.LENGTH_SHORT).show();
-                greetingsText.setText("Good Afternoon "+personName);
+                greetingsText.setText(getString(R.string.noonUsr) + personName);
             }else {
                 Toast.makeText(getActivity(), R.string.greetingAfternoon, Toast.LENGTH_LONG).show();
                 greetingsText.setText(R.string.greetingAfternoon);
@@ -120,8 +118,7 @@ public class HomeFragment extends Fragment {
         }
         else if(hour >= 17 && hour < 21){
             if(accountInfo!=null){
-                Toast.makeText(getActivity(), "Good Evening "+personName, Toast.LENGTH_SHORT).show();
-                greetingsText.setText("Good Evening "+personName);
+                greetingsText.setText(getString(R.string.eveningUsr) + personName);
             }else {
                 Toast.makeText(getActivity(), R.string.greetingEvening, Toast.LENGTH_LONG).show();
                 greetingsText.setText(R.string.greetingEvening);
@@ -130,8 +127,7 @@ public class HomeFragment extends Fragment {
         else
         {
             if(accountInfo!=null){
-                Toast.makeText(getActivity(), "Good Night..."+personName, Toast.LENGTH_SHORT).show();
-                greetingsText.setText("Good Night "+personName);
+                greetingsText.setText(getString(R.string.nightUsr) + personName);
 
             }else {
                 Toast.makeText(getActivity(), R.string.greetingNight, Toast.LENGTH_LONG).show();

@@ -82,7 +82,7 @@ public class AccountFragment extends Fragment {
             Uri personPhoto = acct.getPhotoUrl();
 
 
-            Toast.makeText(getActivity(), personName, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity(), personName, Toast.LENGTH_SHORT).show();
             nameAcc = view.findViewById(R.id.Name);
             emailAcc = view.findViewById(R.id.Email);
             String name = getString(R.string.name);
