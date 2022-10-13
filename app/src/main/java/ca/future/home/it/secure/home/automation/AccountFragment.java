@@ -18,12 +18,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {
-
+    private TextView personName;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
     private Button signOutButton;
     View view;
 
@@ -42,7 +49,19 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //Declarations
+        GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(getContext());
+        String googlePersonName = googleAccount.getDisplayName();
+        String googleImageUrl;
+        //Assigning Values
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
+        personName = view.findViewById(R.id.tv_account_person_name);
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(getContext(),gso);
+
+        personName.setText(googlePersonName);
+        //googleImageUrl = googleAccount.getPhotoUrl();
+
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
