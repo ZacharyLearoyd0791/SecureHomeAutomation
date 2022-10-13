@@ -125,6 +125,11 @@
     <string name="lock">Locked!</string>
     <string name="check_status">Check Status</string>
     <string name="google_signin_error">Something went wrong!</string>
+    <string name="work_under_construction">Work under construction</string>
     <string name="name">"Name: "</string>
     <string name="email">"Email: "</string>
+    <string name="morningUsr">"Good Morning, "</string>
+    <string name="noonUsr">"Good Afternoon, "</string>
+    <string name="eveningUsr">"Good Evening, "</string>
+    <string name="nightUsr">"Good Night, "</string>
 </resources>
