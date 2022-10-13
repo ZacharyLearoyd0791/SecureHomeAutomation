@@ -132,5 +132,7 @@
     <string name="space" translatable="false"> </string>
     <string name="google_signin_error">Something went wrong!</string>
     <string name="work_under_construction">Work under construction</string>
+    <string name="name">"Name: "</string>
+    <string name="email">"Email: "</string>
 
 </resources>

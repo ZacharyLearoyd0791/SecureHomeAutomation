@@ -8,23 +8,12 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.KEYCODE_0;
-import static java.lang.Thread.sleep;
-
-import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -32,6 +21,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -85,6 +75,16 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+
+        }
         return view;
     }
 
@@ -101,9 +101,9 @@ public class HomeFragment extends Fragment {
         greetingsText = view.findViewById(R.id.Greetings);
         String personName = accountInfo.getDisplayName();
         if(hour>=6 && hour<12){
-            if(accountInfo!=null){
-                Toast.makeText(getActivity(), "Good Morning..."+personName, Toast.LENGTH_SHORT).show();
-                greetingsText.setText("Good Morning "+personName);
+            if(accountInfo!=null) {
+                Toast.makeText(getActivity(), "Good Morning..." + personName, Toast.LENGTH_SHORT).show();
+                greetingsText.setText("Good Morning, " + personName);
             }else{
             Toast.makeText(getActivity(), R.string.greetingMorning, Toast.LENGTH_LONG).show();
             greetingsText.setText(R.string.greetingMorning);
