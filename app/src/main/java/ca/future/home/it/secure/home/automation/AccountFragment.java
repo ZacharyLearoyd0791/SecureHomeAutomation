@@ -8,18 +8,19 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,6 +34,8 @@ public class AccountFragment extends Fragment {
     private GoogleSignInClient gsc;
     private Button signOutButton;
     View view;
+    ImageView imgAcc;
+    TextView nameAcc, emailAcc;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -55,11 +58,8 @@ public class AccountFragment extends Fragment {
         String googleImageUrl;
         //Assigning Values
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
-        personName = view.findViewById(R.id.tv_account_person_name);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(getContext(),gso);
-
-        personName.setText(googlePersonName);
         //googleImageUrl = googleAccount.getPhotoUrl();
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -71,5 +71,26 @@ public class AccountFragment extends Fragment {
                 Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+
+
+            Toast.makeText(getActivity(), personName, Toast.LENGTH_SHORT).show();
+            nameAcc = view.findViewById(R.id.Name);
+            emailAcc = view.findViewById(R.id.Email);
+            String name = getString(R.string.name);
+            String email = getString(R.string.email);
+
+            nameAcc.setText(name + personName);
+            emailAcc.setText(email + personEmail);
+
+        }
     }
 }
