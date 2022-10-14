@@ -6,23 +6,17 @@ Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC*/
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,7 +25,7 @@ import java.util.List;
 
 public class AddDeviceFragment extends Fragment {
 
-    private static final int MY_PERMISSIONS_REQUEST_BLUETOOTH = 5;
+    private static final int LOCATION_PERMISSION = 1;
 
     public AddDeviceFragment() {
         // Required empty public constructor
@@ -47,49 +41,42 @@ public class AddDeviceFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bluetoothPermissionChecker();
+        LocationCheck();
 
     }
 
-    private  boolean bluetoothPermissionChecker() {
-        int bluetoothScan = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.BLUETOOTH_SCAN);
-        int bluetoothConnect = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.BLUETOOTH_CONNECT);
+    private boolean LocationCheck() {
+        int location = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
 
         List<String> listPermissionsNeeded = new ArrayList<>();
 
-        if (bluetoothScan != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.BLUETOOTH_SCAN);
+        if (location != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (bluetoothConnect != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.BLUETOOTH_CONNECT);
-        }
-
         if (!listPermissionsNeeded.isEmpty()) {
             requestPermissions(listPermissionsNeeded.toArray
-                    (new String[listPermissionsNeeded.size()]), MY_PERMISSIONS_REQUEST_BLUETOOTH);
+                    (new String[listPermissionsNeeded.size()]), LOCATION_PERMISSION);
             return false;
         }
         return true;
+
     }
 
-
-
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_BLUETOOTH: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // granted
-                    Snackbar.make(getView(),"Permission is granted",Snackbar.LENGTH_LONG).show();
-
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Snackbar.make(getView(), "Permission is granted", Snackbar.LENGTH_LONG).show();
+                    }
                 } else {
-                    // denied
-                    Snackbar.make(getView(),"Permission is denied",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Permission is denied", Snackbar.LENGTH_LONG).show();
                 }
                 return;
             }
-
         }
     }
 }
