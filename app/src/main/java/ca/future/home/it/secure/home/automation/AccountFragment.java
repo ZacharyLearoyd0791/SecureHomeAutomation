@@ -96,9 +96,13 @@ public class AccountFragment extends Fragment {
             Log.d(TAG, "onComplete: currentUserDisplayName---->" + currentFirebaseUser.getDisplayName());
             if (currentFirebaseUser.getDisplayName() == null) {
                 nameAcc.append(getString(R.string.noVal));
+            } else {
+                nameAcc.append(currentFirebaseUser.getDisplayName());
             }
             if (currentFirebaseUser.getEmail() == null) {
                 emailAcc.append(getString(R.string.noVal));
+            } else {
+                emailAcc.append(currentFirebaseUser.getEmail());
             }
 
 

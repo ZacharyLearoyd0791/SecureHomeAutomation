@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment {
 
         greetingsText = view.findViewById(R.id.Greetings);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        greetingsText.setText(null);
 
 
         if (hour >= 6 && hour < 12) {
@@ -104,7 +105,12 @@ public class HomeFragment extends Fragment {
             String personEmail = acct.getEmail();
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
-            greetingsText.append(personGivenName);
+
+        }
+        if (acct.getGivenName() != null) {
+            greetingsText.append(" " + acct.getGivenName());
+        } else {
+
         }
 
 
