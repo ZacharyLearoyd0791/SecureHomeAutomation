@@ -19,14 +19,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -61,11 +58,6 @@ public class HomeFragment extends Fragment {
     public ImageView pressTemp;
     public ImageView pressLight;
 
-    //Google declarations
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-
-
     final Handler handler = new Handler();
 
     public HomeFragment() {
@@ -75,7 +67,36 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated (View view, Bundle savedInstanceState){
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+
+        greetingsText = view.findViewById(R.id.Greetings);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+
+
+        if (hour >= 6 && hour < 12) {
+
+            greetingsText.setText(R.string.greetingMorning);
+
+        } else if (hour >= 12 && hour < 17) {
+
+            greetingsText.setText(R.string.greetingAfternoon);
+        } else if (hour >= 17 && hour < 21) {
+
+            greetingsText.setText(R.string.greetingEvening);
+        } else {
+
+            greetingsText.setText(R.string.greetingNight);
+        }
         if (acct != null) {
             String personName = acct.getDisplayName();
             String personGivenName = acct.getGivenName();
@@ -83,58 +104,9 @@ public class HomeFragment extends Fragment {
             String personEmail = acct.getEmail();
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
+            greetingsText.append(personGivenName);
+        }
 
-        }
-        return view;
-    }
-
-    @Override
-    public void onViewCreated (View view, Bundle savedInstanceState){
-        //Assigning
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(getContext(),gso);
-        GoogleSignInAccount accountInfo = GoogleSignIn.getLastSignedInAccount(getContext());
-        Date date = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        greetingsText = view.findViewById(R.id.Greetings);
-        String personName = accountInfo.getDisplayName();
-        if(hour>=6 && hour<12){
-            if(accountInfo!=null) {
-                greetingsText.setText(getString(R.string.morningUsr) + personName);
-            }else{
-            Toast.makeText(getActivity(), R.string.greetingMorning, Toast.LENGTH_LONG).show();
-            greetingsText.setText(R.string.greetingMorning);
-            }
-        }
-        else if(hour>= 12 && hour < 17){
-            if(accountInfo!=null){
-                greetingsText.setText(getString(R.string.noonUsr) + personName);
-            }else {
-                Toast.makeText(getActivity(), R.string.greetingAfternoon, Toast.LENGTH_LONG).show();
-                greetingsText.setText(R.string.greetingAfternoon);
-            }
-        }
-        else if(hour >= 17 && hour < 21){
-            if(accountInfo!=null){
-                greetingsText.setText(getString(R.string.eveningUsr) + personName);
-            }else {
-                Toast.makeText(getActivity(), R.string.greetingEvening, Toast.LENGTH_LONG).show();
-                greetingsText.setText(R.string.greetingEvening);
-            }
-        }
-        else
-        {
-            if(accountInfo!=null){
-                greetingsText.setText(getString(R.string.nightUsr) + personName);
-
-            }else {
-                Toast.makeText(getActivity(), R.string.greetingNight, Toast.LENGTH_LONG).show();
-                greetingsText.setText(R.string.greetingNight);
-            }
-
-        }
 
         //Switches
         lockSwitch = view.findViewById(R.id.sw_lock);
@@ -272,7 +244,5 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
     }
-
 }

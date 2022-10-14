@@ -132,4 +132,5 @@
     <string name="noonUsr">"Good Afternoon, "</string>
     <string name="eveningUsr">"Good Evening, "</string>
     <string name="nightUsr">"Good Night, "</string>
+    <string name="noVal">Not found</string>
 </resources>
