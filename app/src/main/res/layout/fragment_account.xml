@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountFragment">
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
+        app:lottie_renderMode="automatic"
         app:lottie_rawRes="@raw/profile_animation"
         app:lottie_speed="0.65" />
 
@@ -66,10 +68,10 @@
 
     <ImageView
         android:id="@+id/imgAcc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="22dp"
+        android:layout_width="155dp"
+        android:layout_height="142dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
