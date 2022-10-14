@@ -38,10 +38,10 @@
     <string name="homeBackGround" translatable="false">TODO</string>
     <string name="mainHomeIcon" translatable="false">TODO</string>
     <string name="name_of_user">Hello, Name Of User!</string>
-    <string name="greetingMorning">Good Morning…</string>
-    <string name="greetingAfternoon">Good Afternoon…</string>
-    <string name="greetingEvening">Good Evening…</string>
-    <string name="greetingNight">Good Night…</string>
+    <string name="greetingMorning">Good Morning, </string>
+    <string name="greetingAfternoon">Good Afternoon, </string>
+    <string name="greetingEvening">Good Evening, </string>
+    <string name="greetingNight">Good Night, </string>
     <string name="done">Done</string>
     <string name="confirm_your_password">Confirm password</string>
     <string name="enter_password">Enter Password</string>
