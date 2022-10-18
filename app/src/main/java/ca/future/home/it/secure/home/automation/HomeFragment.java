@@ -107,11 +107,11 @@ public class HomeFragment extends Fragment {
             Uri personPhoto = acct.getPhotoUrl();
 
         }
-        if (acct.getGivenName() != null) {
-            greetingsText.append(" " + acct.getGivenName());
-        } else {
-
-        }
+//        if (acct.getGivenName() != null) {
+//            greetingsText.append(" " + acct.getGivenName());
+//        } else {
+//
+//        }
 
 
         //Switches
