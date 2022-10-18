@@ -15,6 +15,8 @@ import static androidx.core.content.ContextCompat.getSystemService;
 import android.app.NotificationChannel;
 
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
@@ -23,6 +25,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.provider.AlarmClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +38,8 @@ public class WindowFragment extends Fragment {
 
     //Declarations
     Button notificationButton;
+    Button alarmButton;
+    Vibrator vibrator;
     public WindowFragment() {
         // Required empty public constructor
     }
@@ -43,6 +50,8 @@ public class WindowFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_window, container, false);
         //NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),CHANNEL_ID);
+       vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        alarmButton = view.findViewById(R.id.AlarmButton);
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel("WindowBreak","windows", NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription("Notification to be sent when window is broken");
@@ -56,6 +65,13 @@ public class WindowFragment extends Fragment {
                 sendNotificationProcess();
             }
         });
+
+        alarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alarmProcess();
+            }
+        });
         return view;
     }
     public void sendNotificationProcess(){
@@ -67,5 +83,13 @@ public class WindowFragment extends Fragment {
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         NotificationManagerCompat mangerCompat = NotificationManagerCompat.from(getContext());
         mangerCompat.notify(1,builder.build());
+    }
+    public void alarmProcess(){
+        VibrationEffect vibrationEffect;
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+            vibrationEffect = VibrationEffect.createOneShot(10000,VibrationEffect.EFFECT_HEAVY_CLICK);
+            vibrator.cancel();
+            vibrator.vibrate(vibrationEffect);
+        }
     }
 }
