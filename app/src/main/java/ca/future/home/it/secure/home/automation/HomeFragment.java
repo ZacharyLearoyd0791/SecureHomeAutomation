@@ -60,6 +60,8 @@ public class HomeFragment extends Fragment {
 
     final Handler handler = new Handler();
 
+
+
     public HomeFragment() {
     }
 

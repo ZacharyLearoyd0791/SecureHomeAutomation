@@ -62,5 +62,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-inappmessaging-display'
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'   //For facebook login
+
 
 }
