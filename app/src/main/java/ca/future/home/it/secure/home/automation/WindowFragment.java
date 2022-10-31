@@ -12,10 +12,12 @@ package ca.future.home.it.secure.home.automation;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +34,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class WindowFragment extends Fragment {
@@ -40,6 +45,7 @@ public class WindowFragment extends Fragment {
     Button notificationButton;
     Button alarmButton;
     Vibrator vibrator;
+    View view;
     public WindowFragment() {
         // Required empty public constructor
     }
@@ -48,7 +54,7 @@ public class WindowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_window, container, false);
+        view = inflater.inflate(R.layout.fragment_window, container, false);
         //NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),CHANNEL_ID);
        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         alarmButton = view.findViewById(R.id.AlarmButton);
@@ -58,13 +64,13 @@ public class WindowFragment extends Fragment {
             NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-        notificationButton = view.findViewById(R.id.Notification_button);
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendNotificationProcess();
-            }
-        });
+//        notificationButton = view.findViewById(R.id.Notification_button);
+//        notificationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                sendNotificationProcess();
+//            }
+//        });
 
         alarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +80,10 @@ public class WindowFragment extends Fragment {
         });
         return view;
     }
-    public void sendNotificationProcess(){
+    public void sendNotificationProcess(String notificationTitle, String notificationText){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),"WindowBreak");
-        builder.setContentTitle("Window Sensor Activated!")
-                .setContentText("There is a window break in the house")
+        builder.setContentTitle(notificationTitle)
+                .setContentText(notificationText)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
@@ -85,11 +91,37 @@ public class WindowFragment extends Fragment {
         mangerCompat.notify(1,builder.build());
     }
     public void alarmProcess(){
+        String notificationTitle = "Window Sensor on Test!";
+        String notificationText = "Window Sensor is Activated for Testing, don't panic :)";
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Do you want to test this device?")
+                .setMessage("Clicking Yes will activate the alarm system which can detect windows break. Alarm will be activated for 15 s ")
+                .setPositiveButton("Yes",(DialogInterface.OnClickListener)(dialog, which) ->{
+                    sendNotificationProcess(notificationTitle,notificationText);
+                    createSnackBar();
+                })
+                .setNegativeButton("No",(DialogInterface.OnClickListener)(dialog,which)->{
+                    dialog.cancel();
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+
         VibrationEffect vibrationEffect;
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
             vibrationEffect = VibrationEffect.createOneShot(10000,VibrationEffect.EFFECT_HEAVY_CLICK);
             vibrator.cancel();
             vibrator.vibrate(vibrationEffect);
         }
+    }
+    public void createSnackBar(){
+        Snackbar snackbar = Snackbar.make(view.findViewById(R.id.frameLayout5),"Do you want to Turn Off the alarm?",Snackbar.LENGTH_LONG)
+                .setAction("Off", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getContext(), "Alarm test terminated!", Toast.LENGTH_LONG).show();
+                    }
+                });
+        snackbar.show();
     }
 }
