@@ -8,6 +8,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -24,7 +25,17 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                  startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
-                 finish();
+                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+                boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+                if(hasLoggedIn){
+                    Intent intent = new Intent(SplashScreenActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                    finish();
+                }
+
             }
         },3000);
     }

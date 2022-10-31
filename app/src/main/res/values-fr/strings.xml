@@ -133,4 +133,10 @@
     <string name="eveningUsr">"Good Evening, "</string>
     <string name="nightUsr">"Good Night, "</string>
     <string name="noVal">Not found</string>
+
+    <string name="facebook_app_id">1234</string>
+
+    <string name="facebook_client_token">56789</string>
+
+
 </resources>

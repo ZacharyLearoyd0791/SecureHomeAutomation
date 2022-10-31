@@ -103,7 +103,7 @@
         android:id="@+id/frameLayout4"
         android:layout_width="413dp"
         android:layout_height="195dp"
-        android:background="@drawable/splash_bg_gradient"
+        android:background="@drawable/splash_bg_gradient2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -158,6 +158,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_page_login_button"
         app:srcCompat="@drawable/google_logo" />
+
+    <ImageView
+        android:id="@+id/facebook_logo"
+        android:layout_width="57dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="100dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/loginDoNotHaveAccountText"
+        app:layout_constraintEnd_toStartOf="@+id/google_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_page_login_button"
+        app:srcCompat="@drawable/facebook_logo" />
 
     <TextView
         android:id="@+id/textView9"
