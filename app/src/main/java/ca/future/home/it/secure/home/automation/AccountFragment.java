@@ -7,12 +7,16 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.app.Activity.RESULT_OK;
 import static com.google.firebase.crashlytics.internal.Logger.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,23 +31,41 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class AccountFragment extends Fragment {
     private TextView personName;
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
     private Button signOutButton;
+    private SharedPreferences sharedPreferencesEmail;
+    private SharedPreferences sharedPreferencesGoogle;
+    private SharedPreferences sharedPreferencesFacebook;
+    private boolean loggedInMethodEmail;
+    private boolean loggedInMethodGoogle;
+    private boolean loggedInMethodFacebook;
+    private ImageView editProfile;
+    int SELECT_PHOTO = 1;
+    Uri uri;
     View view;
     ImageView imgAcc;
     TextView nameAcc, emailAcc;
     final Handler handler = new Handler();
+
+
+
 
 
     public AccountFragment() {
@@ -72,24 +94,68 @@ public class AccountFragment extends Fragment {
         //Declarations
         String name = getString(R.string.name);
         String email = getString(R.string.email);
+        imgAcc = view.findViewById(R.id.imgAcc);
         nameAcc = view.findViewById(R.id.Name);
         emailAcc = view.findViewById(R.id.Email);
         nameAcc.setText(name);
         emailAcc.setText(email);
 
+        editProfile = view.findViewById(R.id.profile_image_edit);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentEditProfile = new Intent(Intent.ACTION_PICK);
+                intentEditProfile.setType("image/*");
+                startActivityForResult(intentEditProfile, SELECT_PHOTO);
+            }
+        });
+
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+        gsc = GoogleSignIn.getClient(getContext(),gso);
+
+        sharedPreferencesEmail = getContext().getSharedPreferences(LoginActivity.LOGGED_IN_METHOD_EMAIL,0);
+        sharedPreferencesGoogle = getContext().getSharedPreferences(LoginActivity.LOGGED_IN_METHOD_GOOGLE,0);
+        sharedPreferencesFacebook = getContext().getSharedPreferences(LoginActivity.LOGGED_IN_METHOD_FACEBOOK,0);
+        loggedInMethodEmail = sharedPreferencesEmail.getBoolean("LoggedInMethodEmail",false);
+        loggedInMethodGoogle = sharedPreferencesGoogle.getBoolean("LoggedInMethodGoogle",false);
+        loggedInMethodFacebook = sharedPreferencesFacebook.getBoolean("LoggedInMethodFacebook",false);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
+
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
+                if(loggedInMethodEmail) {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getContext(), "Signed out with Email", Toast.LENGTH_SHORT).show();
+                }
+                else if(loggedInMethodGoogle){
+                    gsc.signOut()
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(getContext(), "Signed out with Google", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                else if (loggedInMethodFacebook){
+                    LoginManager.getInstance().logOut();
+                    Toast.makeText(getContext(), "Signed out with Facebook", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getContext(), "Signed out with Email", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentFirebaseUser != null) {
 
             Log.d(TAG, "onComplete: currentUserEmail---->" + currentFirebaseUser.getEmail());
@@ -129,22 +195,24 @@ public class AccountFragment extends Fragment {
 
 
                 ImageView imgAcc = view.findViewById(R.id.imgAcc);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        LottieAnimationView animationView
-                                = view.findViewById(R.id.animationView);
-                        animationView.setVisibility(View.INVISIBLE);
-
-                        Picasso.get().load(personPhoto).into(imgAcc);
-                    }
-                }, 3000);
-
-
             }
-            Log.d(TAG, "onComplete: currentUserUid is null");
+        }
+    }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SELECT_PHOTO && resultCode == RESULT_OK && data != null && data.getData() != null){
+            uri = data.getData();
+            try{
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
+              //  bitmap = getContext().getCircularBitmap(bitmap);
+                imgAcc.setImageBitmap(bitmap);
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
 }

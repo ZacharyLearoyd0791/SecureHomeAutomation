@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountFragment">
-
+    <!--
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
         android:layout_width="match_parent"
@@ -16,55 +16,126 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:lottie_renderMode="automatic"
         app:lottie_rawRes="@raw/profile_animation"
+        app:lottie_renderMode="automatic"
         app:lottie_speed="0.65" />
+        -->
 
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="388dp"
+        android:layout_height="397dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:paddingRight="30dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:cardMaxElevation="10dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgAcc">
+
+        <ImageView
+            android:id="@+id/NameIcon"
+            android:layout_width="62dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="9dp"
+            android:paddingStart="3dp"
+            android:src="@drawable/ic_person_name_icon" />
+
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="232dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="79dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="314dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="47dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgAcc" />
+
+        <ImageView
+            android:id="@+id/EmailIcon"
+            android:layout_width="62dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="59dp"
+            android:paddingStart="3dp"
+            android:src="@drawable/ic_email_icon" />
+
+        <TextView
+            android:id="@+id/Email"
+            android:layout_width="232dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="79dp"
+            android:layout_marginTop="59dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Name" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="314dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="97dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgAcc" />
+
+        <ImageView
+            android:id="@+id/PhoneIcon"
+            android:layout_width="62dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="109dp"
+            android:paddingStart="3dp"
+            android:src="@drawable/ic_phone_number_icon" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="314dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="147dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgAcc" />
+
+        <TextView
+            android:id="@+id/PhoneNumber"
+            android:layout_width="232dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="79dp"
+            android:layout_marginTop="109dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Name" />
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/Settings_signOut_button"
-        android:layout_width="163dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="44dp"
+        android:layout_width="109dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="286dp"
+        android:layout_marginTop="20dp"
         android:text="@string/sign_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_account_person_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="196dp"
-        android:text=""
-        android:textColor="#000000"
-        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <TextView
-        android:id="@+id/Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="188dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/Email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="17dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Name" />
+
 
     <ImageView
         android:id="@+id/imgAcc"
@@ -74,7 +145,27 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@drawable/ic_profile_image" />
+
+    <ImageView
+        android:id="@+id/profile_image_edit"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="148dp"
+        android:clickable="true"
+        android:src="@drawable/edit_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAcc"
+        app:layout_constraintStart_toStartOf="@+id/imgAcc" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="364dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgAcc" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

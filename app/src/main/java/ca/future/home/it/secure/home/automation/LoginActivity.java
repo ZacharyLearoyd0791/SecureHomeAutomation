@@ -19,6 +19,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private FirebaseAuth mAuth;
     public static String PREFS_NAME = "LoggedInFile";
+    public static String LOGGED_IN_METHOD_EMAIL = "LoggedInMethodEmail";
+    public static String LOGGED_IN_METHOD_GOOGLE = "LoggedInMethodGoogle";
+    public static String LOGGED_IN_METHOD_FACEBOOK= "LoggedInMethodFacebook";
+    Switch fingerPrintSwitch;
+    protected boolean loggedInWithCutomEmail = false;
+    protected boolean loggedInWithGoogle = false;
+    protected boolean loggedInWithFacebook = false;
     //Google login
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
@@ -59,11 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView facebookButton;
     CallbackManager callbackManager;
 
-
-
-
-
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         //Creating references
         emailAddress = findViewById(R.id.login_page_email_textBox);
         password = findViewById(R.id.login_page_password_textBox);
+        fingerPrintSwitch = findViewById(R.id.fingerprint_switch);
+//        fingerPrintSwitch.setChecked(false);
         //Declarations
         ImageView googleLogoButton = findViewById(R.id.google_logo);
         TextView loginButton = findViewById(R.id.login_page_login_button);
@@ -124,57 +130,53 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Login via fingerprint
-        BiometricManager biometricManager= BiometricManager.from(this);
-        switch(biometricManager.canAuthenticate()){
-            case BiometricManager.BIOMETRIC_SUCCESS:
-                Toast.makeText(this, "You can use the fingerprint sensor to login", Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                Toast.makeText(this, "This device don't have fingerprint sensor", Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                Toast.makeText(this, "Biometric sensor currently unavailable", Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                Toast.makeText(this, "No fingerprint found!", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-
-        Executor executor = ContextCompat.getMainExecutor(this);
-        final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-            }
-
-            // THIS METHOD IS CALLED WHEN AUTHENTICATION IS SUCCESS
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-
-            }
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-            }
-        });
-        // creating a variable for our promptInfo
-        // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("GFG")
-                .setDescription("Use your fingerprint to login ")
-
-                .setNegativeButtonText("Cancel").build();
-
-        biometricPrompt.authenticate(promptInfo);
-//        loginbutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                biometricPrompt.authenticate(promptInfo);
-//
+//        if(fingerPrintSwitch.isChecked()) {
+//            BiometricManager biometricManager= BiometricManager.from(this);
+//            switch(biometricManager.canAuthenticate()){
+//                case BiometricManager.BIOMETRIC_SUCCESS:
+//                    Toast.makeText(this, "You can use the fingerprint sensor to login", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+//                    Toast.makeText(this, "This device don't have fingerprint sensor", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+//                    Toast.makeText(this, "Biometric sensor currently unavailable", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+//                    Toast.makeText(this, "No fingerprint found!", Toast.LENGTH_SHORT).show();
+//                    break;
 //            }
-//        });
+//
+//            Executor executor = ContextCompat.getMainExecutor(this);
+//            final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+//                @Override
+//                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+//                    super.onAuthenticationError(errorCode, errString);
+//                }
+//
+//                // THIS METHOD IS CALLED WHEN AUTHENTICATION IS SUCCESS
+//                @Override
+//                public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+//                    super.onAuthenticationSucceeded(result);
+//                    Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//
+//                }
+//
+//                @Override
+//                public void onAuthenticationFailed() {
+//                    super.onAuthenticationFailed();
+//                }
+//            });
+//            // creating a variable for our promptInfo
+//            // BIOMETRIC DIALOG
+//            final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("GFG")
+//                    .setDescription("Use your fingerprint to login ")
+//
+//                    .setNegativeButtonText("Cancel").build();
+//
+//            biometricPrompt.authenticate(promptInfo);
+//        }
 
         //Login via facebook
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -182,6 +184,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        loggedInWithFacebook = true;
+                        SharedPreferences sharedPreferencesFacebook = getSharedPreferences(LoginActivity.LOGGED_IN_METHOD_FACEBOOK,0);
+                        SharedPreferences.Editor editorF = sharedPreferencesFacebook.edit();
+                        editorF.putBoolean("LoggedInMethodFacebook",loggedInWithFacebook);
                         finish();
                     }
 
@@ -226,6 +232,10 @@ public class LoginActivity extends AppCompatActivity {
                         if(mAuth.getCurrentUser().isEmailVerified()){
                             Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_LONG).show();
                             //Starting main activity
+                            loggedInWithCutomEmail = true;
+                            SharedPreferences sharedPreferencesEmail = getSharedPreferences(LoginActivity.LOGGED_IN_METHOD_EMAIL,0);
+                            SharedPreferences.Editor editorE = sharedPreferencesEmail.edit();
+                            editorE.putBoolean("LoggedInMethodEmail",loggedInWithCutomEmail);
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
                         }else{
@@ -268,7 +278,12 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void changingActivity(){
         finish();
+        loggedInWithGoogle =true;
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        loggedInWithGoogle =true;
+        SharedPreferences sharedPreferencesGoogle = getSharedPreferences(LoginActivity.LOGGED_IN_METHOD_GOOGLE,0);
+        SharedPreferences.Editor editorG = sharedPreferencesGoogle.edit();
+        editorG.putBoolean("LoggedInMethodGoogle",loggedInWithGoogle);
     }
 
 

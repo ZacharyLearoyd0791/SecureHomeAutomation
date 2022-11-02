@@ -123,5 +123,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //fingerprint switch enable/disable
+
+
     }
 }
