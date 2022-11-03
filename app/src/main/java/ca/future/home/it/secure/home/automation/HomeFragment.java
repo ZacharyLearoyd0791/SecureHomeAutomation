@@ -69,12 +69,14 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
+
         return view;
     }
 
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
 
+        View layout = view.findViewById(R.layout.fragment_home);
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -89,16 +91,24 @@ public class HomeFragment extends Fragment {
         if (hour >= 6 && hour < 12) {
 
             greetingsText.setText(R.string.greetingMorning);
+            view.setBackgroundResource(R.drawable.morning);
+
 
         } else if (hour >= 12 && hour < 17) {
 
             greetingsText.setText(R.string.greetingAfternoon);
+            view.setBackgroundResource(R.drawable.afternoon);
+
         } else if (hour >= 17 && hour < 21) {
 
             greetingsText.setText(R.string.greetingEvening);
+            view.setBackgroundResource(R.drawable.evening);
+
         } else {
 
             greetingsText.setText(R.string.greetingNight);
+            view.setBackgroundResource(R.drawable.night);
+
         }
         if (acct != null) {
             String personName = acct.getDisplayName();
