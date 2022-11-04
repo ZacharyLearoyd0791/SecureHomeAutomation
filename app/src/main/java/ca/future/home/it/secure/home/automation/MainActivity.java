@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getFCM();
+
         /*
 
         //This is for testing purposes only. To test crashlytics

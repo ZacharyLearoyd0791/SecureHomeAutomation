@@ -8,13 +8,11 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -70,13 +68,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
         return view;
     }
+
 
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
 
-        View layout = view.findViewById(R.layout.fragment_home);
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -92,6 +91,7 @@ public class HomeFragment extends Fragment {
 
             greetingsText.setText(R.string.greetingMorning);
             view.setBackgroundResource(R.drawable.morning);
+
 
 
         } else if (hour >= 12 && hour < 17) {
@@ -110,20 +110,11 @@ public class HomeFragment extends Fragment {
             view.setBackgroundResource(R.drawable.night);
 
         }
-        if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
-            String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
 
+
+        if (acct.getGivenName() != null) {
+            greetingsText.append(" " + acct.getGivenName());
         }
-//        if (acct.getGivenName() != null) {
-//            greetingsText.append(" " + acct.getGivenName());
-//        } else {
-//
-//        }
 
 
         //Switches
@@ -148,71 +139,40 @@ public class HomeFragment extends Fragment {
         pressLight.setVisibility(View.INVISIBLE);
 
         //Lock button
-        lockBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                lockBtn.setVisibility(View.INVISIBLE);
-                pressLock.setVisibility(View.VISIBLE);
+        lockBtn.setOnClickListener(view14 -> {
+            lockBtn.setVisibility(View.INVISIBLE);
+            pressLock.setVisibility(View.VISIBLE);
 
-                //simulate button pressed
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit();
-                    }
-                }, 300);
-                //MainActivity.bottomNav.setSelectedItemId(R.id.door);
-            }
+            //simulate button pressed
+            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit(), 300);
+            //MainActivity.bottomNav.setSelectedItemId(R.id.door);
         });
 
         //Temperature button
-        tempBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                tempBtn.setVisibility(View.INVISIBLE);
-                pressTemp.setVisibility(View.VISIBLE);
+        tempBtn.setOnClickListener(view13 -> {
+            tempBtn.setVisibility(View.INVISIBLE);
+            pressTemp.setVisibility(View.VISIBLE);
 
-                //simulate button pressed
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit();
-                    }
-                }, 300);
-                //MainActivity.bottomNav.setSelectedItemId(R.id.temp);
-            }
+            //simulate button pressed
+            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit(), 300);
+            //MainActivity.bottomNav.setSelectedItemId(R.id.temp);
         });
 
         //Light button
-        lightBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                lightBtn.setVisibility(View.INVISIBLE);
-                pressLight.setVisibility(View.VISIBLE);
+        lightBtn.setOnClickListener(view12 -> {
+            lightBtn.setVisibility(View.INVISIBLE);
+            pressLight.setVisibility(View.VISIBLE);
 
-                //simulate button pressed
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit();
-                    }
-                }, 300);
+            //simulate button pressed
+            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit(), 300);
 
-                //MainActivity.bottomNav.setSelectedItemId(R.id.light);
-            }
+            //MainActivity.bottomNav.setSelectedItemId(R.id.light);
         });
 
         //Window button
-        windowBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view)
-            {
-                getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit();
-                //MainActivity.bottomNav.setSelectedItemId(R.id.window);
-            }
+        windowBtn.setOnClickListener(view1 -> {
+            getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit();
+            //MainActivity.bottomNav.setSelectedItemId(R.id.window);
         });
 
         //ImageView Objects
@@ -223,43 +183,35 @@ public class HomeFragment extends Fragment {
 
         //Switches selected
         //lock switch
-        lockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    doorView.setVisibility(View.INVISIBLE);
-                } else {
-                    doorView.setVisibility(View.VISIBLE);
-                }
+        lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                doorView.setVisibility(View.INVISIBLE);
+            } else {
+                doorView.setVisibility(View.VISIBLE);
             }
         });
         //temperature switch
-        tempSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    tempView.setVisibility(View.INVISIBLE);
-                } else {
-                    tempView.setVisibility(View.VISIBLE);
-                }
+        tempSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                tempView.setVisibility(View.INVISIBLE);
+            } else {
+                tempView.setVisibility(View.VISIBLE);
             }
         });
         //light switch
-        lightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    lightView.setVisibility(View.INVISIBLE);
-                } else {
-                    lightView.setVisibility(View.VISIBLE);
-                }
+        lightSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                lightView.setVisibility(View.INVISIBLE);
+            } else {
+                lightView.setVisibility(View.VISIBLE);
             }
         });
         //window switch
-        windowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    windowView.setVisibility(View.INVISIBLE);
-                } else {
-                    windowView.setVisibility(View.VISIBLE);
-                }
+        windowSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                windowView.setVisibility(View.INVISIBLE);
+            } else {
+                windowView.setVisibility(View.VISIBLE);
             }
         });
     }
