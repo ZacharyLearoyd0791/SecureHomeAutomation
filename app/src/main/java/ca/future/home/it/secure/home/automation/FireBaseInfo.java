@@ -36,6 +36,7 @@ public class FireBaseInfo extends Fragment {
     }
 
     public String getpersonName() {
+        acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         personName = acct.getDisplayName();
         return personName;
     }
