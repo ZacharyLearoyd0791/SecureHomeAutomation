@@ -17,11 +17,11 @@ public class FireBaseInfo extends Fragment {
             personFamilyName,
             personEmail,
             personId;
-
+    GoogleSignInAccount acct;
     Uri personPhoto;
 
     public void accountInfo() {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         if (acct != null) {
             personName = acct.getDisplayName();
             personGivenName = acct.getGivenName();
@@ -36,9 +36,10 @@ public class FireBaseInfo extends Fragment {
     }
 
     public String getpersonName() {
-
+        personName = acct.getDisplayName();
         return personName;
     }
+
 
     public String getGivenName() {
 

@@ -139,11 +139,13 @@ public class HomeFragment extends Fragment {
         }
 
         name = fireBaseInfo.getGivenName();
-        Log.d(TAG, name);
+        //Log.d(TAG, name);
         if (name != null) {
             greetingsText.append(" " + name);
             Log.d(TAG, name);
         } else {
+            greetingsText.append(" " + "No name");
+
             Log.d(TAG, "No name");
         }
 
