@@ -137,6 +137,8 @@
     <string name="facebook_app_id">1234</string>
 
     <string name="facebook_client_token">56789</string>
+    <string name="ultrasonicSensor">Ultrasonic Sensor Distance:</string>
+    <string name="minutes">minutes</string>
 
 
 </resources>
