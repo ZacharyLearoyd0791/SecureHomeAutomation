@@ -37,35 +37,22 @@ android {
 }
 
 dependencies {
-
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.google.android.gms:play-services-auth:20.3.0' //For google sign in
     implementation 'pl.bclogic:pulsator4droid:1.0.3'        //For pulse animation
-    implementation 'androidx.biometric:biometric:1.1.0'     //For fingerprint sign in
+    implementation 'androidx.biometric:biometric:1.0.1'     //For fingerprint sign in
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.annotation:annotation:1.5.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'com.google.firebase:firebase-auth:21.1.0'
-    implementation platform('com.google.firebase:firebase-bom:31.0.0')
+    implementation 'androidx.annotation:annotation:1.3.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'com.google.firebase:firebase-auth:21.0.5'
+    implementation platform('com.google.firebase:firebase-bom:30.5.0')
     implementation 'com.google.firebase:firebase-perf'
-    implementation 'androidx.work:work-runtime:2.7.1'
-    implementation 'com.google.firebase:firebase-database:20.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
-    def lottieVersion = '5.2.0'
+    def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-inappmessaging-display'
-    implementation 'com.google.firebase:firebase-database:19.6.0'
-    implementation 'com.facebook.android:facebook-android-sdk:latest.release'   //For facebook login
-   //State progress bar
-
-
 }

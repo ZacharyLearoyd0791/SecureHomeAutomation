@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".AccountFragment">
 
+
+    <Button
+        android:id="@+id/Settings_signOut_button"
+        android:layout_width="163dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="76dp"
+        android:text="@string/sign_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
         android:layout_width="match_parent"
@@ -16,65 +30,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:lottie_renderMode="automatic"
         app:lottie_rawRes="@raw/profile_animation"
         app:lottie_speed="0.65" />
 
-
-    <Button
-        android:id="@+id/Settings_signOut_button"
-        android:layout_width="163dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="44dp"
-        android:text="@string/sign_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
-        android:id="@+id/tv_account_person_name"
+        android:id="@+id/tv_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="196dp"
-        android:text=""
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="160dp"
+        android:text="@string/account"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="188dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/Email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="17dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Name" />
-
-    <ImageView
-        android:id="@+id/imgAcc"
-        android:layout_width="155dp"
-        android:layout_height="142dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
