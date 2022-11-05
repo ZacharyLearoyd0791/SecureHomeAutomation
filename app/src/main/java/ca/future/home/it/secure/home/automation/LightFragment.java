@@ -52,14 +52,14 @@ public class LightFragment extends Fragment {
     }
 
     public void popTimePicker() {
-        //timerTV.setText("testing");
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
 
             hour = selectedHour;
             minute = selectedMinute;
             String timeout = (String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
             Log.d(TAG, timeout);
-            timerTV.setText(getString(R.string.timeSet) + timeout);
+            String timeOut = getString(R.string.timeSet) + timeout;
+            timerTV.setText(timeOut);
 
             int hourmilli = hour * 600000;
             int minmilli = minute * 60000;
