@@ -59,7 +59,7 @@ public class LightFragment extends Fragment {
             minute = selectedMinute;
             String timeout = (String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
             Log.d(TAG, timeout);
-            timerTV.setText("Time you set in\n" + timeout);
+            timerTV.setText(getString(R.string.timeSet) + timeout);
 
             int hourmilli = hour * 600000;
             int minmilli = minute * 60000;
@@ -73,7 +73,7 @@ public class LightFragment extends Fragment {
                 }
 
                 public void onFinish() {
-                    timerTV.setText("Lights OFF!!");
+                    timerTV.setText(R.string.lightOff);
                     Log.d(TAG, "Finished");
 
                 }

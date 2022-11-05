@@ -145,6 +145,8 @@
     <string name="facebook_client_token">56789</string>
     <string name="ultrasonicSensor">Ultrasonic Sensor Distance:</string>
     <string name="minutes">minutes</string>
+    <string name="lightOff">Lights OFF!!</string>
+    <string name="timeSet">Time you set in\n</string>
 
 
 </resources>
