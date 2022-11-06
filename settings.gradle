@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "SecureHomeAutomation"
-include ':app'
+include ':SecureHomeAutomation'

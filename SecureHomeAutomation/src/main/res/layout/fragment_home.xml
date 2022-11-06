@@ -114,6 +114,7 @@
             android:layout_marginTop="168dp"
             android:layout_marginEnd="27dp"
             android:src="@drawable/temp_button_pressed"
+            android:contentDescription="@string/temppress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -124,6 +125,7 @@
             android:layout_marginStart="27dp"
             android:layout_marginTop="168dp"
             android:src="@drawable/lock_button_pressed"
+            android:contentDescription="@string/lockpress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,9 +135,24 @@
             android:layout_height="53dp"
             android:layout_marginStart="310dp"
             android:layout_marginTop="14dp"
+            android:contentDescription="@string/homeicon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_home" />
+
+        <ImageButton
+            android:id="@+id/iv_press_window"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginEnd="27dp"
+            android:layout_marginBottom="83dp"
+            android:background="@null"
+            android:contentDescription="@string/windowspressed"
+            android:scaleType="fitCenter"
+            android:src="@drawable/window_button_pressed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="DuplicateClickableBoundsCheck" />
 
         <ImageButton
             android:id="@+id/window_Btn"
@@ -156,9 +173,10 @@
             android:layout_height="130dp"
             android:layout_marginStart="27dp"
             android:layout_marginBottom="83dp"
+            android:contentDescription="@string/lightpressed"
+            android:src="@drawable/light_button_pressed"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/light_button_pressed"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/light_Btn"
@@ -222,7 +240,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
 
         <Switch
             android:id="@+id/sw_temp"
@@ -275,6 +293,8 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

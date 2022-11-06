@@ -58,6 +58,7 @@ public class HomeFragment extends Fragment {
     private ImageView pressLock;
     private ImageView pressTemp;
     private ImageView pressLight;
+    private ImageView pressWindow;
 
     final Handler handler = new Handler();
 
@@ -97,6 +98,7 @@ public class HomeFragment extends Fragment {
         pressLock = view.findViewById(R.id.iv_press_lock);
         pressTemp = view.findViewById(R.id.iv_press_temp);
         pressLight = view.findViewById(R.id.iv_press_light);
+        pressWindow = view.findViewById(R.id.iv_press_window);
 
         //Textview
         greetingsText = view.findViewById(R.id.Greetings);
@@ -156,10 +158,11 @@ public class HomeFragment extends Fragment {
 
         //Switches
 
-
+        //Simulate button press - visibility starts invisible
         pressLock.setVisibility(View.INVISIBLE);
         pressTemp.setVisibility(View.INVISIBLE);
         pressLight.setVisibility(View.INVISIBLE);
+        pressWindow.setVisibility(View.INVISIBLE);
 
         //Lock button
         lockBtn.setOnClickListener(view14 -> {
@@ -168,7 +171,6 @@ public class HomeFragment extends Fragment {
 
             //simulate button pressed
             handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit(), 300);
-            //MainActivity.bottomNav.setSelectedItemId(R.id.door);
         });
 
         //Temperature button
@@ -178,7 +180,6 @@ public class HomeFragment extends Fragment {
 
             //simulate button pressed
             handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit(), 300);
-            //MainActivity.bottomNav.setSelectedItemId(R.id.temp);
         });
 
         //Light button
@@ -188,14 +189,15 @@ public class HomeFragment extends Fragment {
 
             //simulate button pressed
             handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit(), 300);
-
-            //MainActivity.bottomNav.setSelectedItemId(R.id.light);
         });
 
         //Window button
         windowBtn.setOnClickListener(view1 -> {
-            getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit();
-            //MainActivity.bottomNav.setSelectedItemId(R.id.window);
+            windowBtn.setVisibility(View.INVISIBLE);
+            pressWindow.setVisibility(View.VISIBLE);
+
+            //simulate button pressed
+            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit(), 300);
         });
 
 

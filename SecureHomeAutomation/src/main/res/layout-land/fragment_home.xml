@@ -170,6 +170,17 @@
                     tools:ignore="ImageContrastCheck" />
 
                 <ImageButton
+                    android:id="@+id/iv_press_window"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@null"
+                    android:contentDescription="@string/windowspressed"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/window_button_pressed" />
+
+                <ImageButton
                     android:id="@+id/window_Btn"
                     android:layout_width="115dp"
                     android:layout_height="115dp"
