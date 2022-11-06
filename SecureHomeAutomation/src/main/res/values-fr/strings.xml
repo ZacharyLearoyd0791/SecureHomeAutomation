@@ -145,6 +145,16 @@
     <string name="lockpress">LockPress</string>
     <string name="temppress">TempPress</string>
     <string name="homeicon">HomeIcon</string>
+    <string name="history">History:</string>
+    <string name="manage_keys">Manage Keys:</string>
+    <string name="setup">Setup</string>
+    <string name="vacation_mode">Vacation Mode:</string>
+    <string name="door_configuration">Door Configuration</string>
+    <string name="add_key">Add Key</string>
+    <string name="remove_key">Remove Key</string>
+    <string name="sample_1">SAMPLE - Unauthorized Key Attempt</string>
+    <string name="sample_2">SAMPLE - Door Locked 8:22AM</string>
+    <string name="sample_3">SAMPLE - Door Unlocked 4:58PM</string>
 
 
 </resources>

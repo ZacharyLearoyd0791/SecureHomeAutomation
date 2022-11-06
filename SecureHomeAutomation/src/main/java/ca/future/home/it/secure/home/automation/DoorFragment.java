@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -25,6 +26,8 @@ public class DoorFragment extends Fragment {
     ToggleButton doorLock;
     TextView status;
 
+    ImageView locked;
+    ImageView unlocked;
 
     public DoorFragment() {
         // Required empty public constructor
@@ -46,22 +49,26 @@ public class DoorFragment extends Fragment {
 
         doorLock=view.findViewById(R.id.doorLockBtn);
         status=view.findViewById(R.id.statusofDoor);
+        locked=view.findViewById(R.id.iv_locked);
+        unlocked=view.findViewById(R.id.iv_unlocked);
+        locked.setVisibility(View.INVISIBLE);
+        unlocked.setVisibility(View.INVISIBLE);
 
         doorLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                doorLock.setBackgroundColor(android.graphics.Color.parseColor("#00FF00"));
-                Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
-                doorLock.setBackgroundResource(R.drawable.ic_lock);
-                status.setText(R.string.unlock);
-                doorLock.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
+                status.setText(R.string.lock);
+                locked.setVisibility(View.VISIBLE);
+                unlocked.setVisibility(View.INVISIBLE);
+                doorLock.setBackgroundResource(R.drawable.lock_border_green);
                 doorLock.setTextOff(getString(R.string.space));
                 doorLock.setTextOn(getString(R.string.space));
             } else {
-                doorLock.setBackgroundColor(android.graphics.Color.parseColor("#FF0000"));
-                Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
-                doorLock.setBackgroundResource(R.drawable.ic_lock_closed);
-                status.setText(R.string.lock);
-                doorLock.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1AFF00")));
+                Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
+                status.setText(R.string.unlock);
+                unlocked.setVisibility(View.VISIBLE);
+                locked.setVisibility(View.INVISIBLE);
+                doorLock.setBackgroundResource(R.drawable.lock_border_red);
                 doorLock.setTextOff(getString(R.string.space));
                 doorLock.setTextOn(getString(R.string.space));
             }
