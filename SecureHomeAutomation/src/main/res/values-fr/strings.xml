@@ -157,6 +157,15 @@
     <string name="sample_3">SAMPLE - Door Unlocked 4:58PM</string>
     <string name="startTimeSelect">Select Start time</string>
     <string name="endTimeSelect">Select the end time</string>
+    <string name="saved">Saved!</string>
+    <string name="endSmall">Please make sure that the Start time must be smaller than end time</string>
+    <string name="logDataSaved">end is more than start, Saved</string>
+    <string name="logDataEndSmall">end is equal than start, or end is less than start, bad</string>
+    <string name="startTimemsg">\"Start time saved: \"</string>
+    <string name="endTimemsg">\" End time saved :\"</string>
+    <string name="startorendnull">Null Values in Start time or End Time</string>
+    <string name="DatabaseStr">\"Database: \"</string>
+    <string name="Timer">Timer</string>
 
 
 </resources>

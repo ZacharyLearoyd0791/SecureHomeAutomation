@@ -26,7 +26,7 @@ public class SchedulerActivity extends AppCompatActivity {
     ImageButton back;
     Button start, end, save;
     int hour, minute;
-    String endtimeout, Starttimeout, nullVal = "00:00";
+    String endtimeout, Starttimeout;
     private Date mStartTime, mEndTime;
     ;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
@@ -87,7 +87,7 @@ public class SchedulerActivity extends AppCompatActivity {
             hour = selectedHour;
             minute = selectedMinute;
 
-            Starttimeout = (String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+            Starttimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
 
             String timeOut = getString(R.string.timeSet) + Starttimeout;
             Log.d(TAG, timeOut);
@@ -113,7 +113,7 @@ public class SchedulerActivity extends AppCompatActivity {
             hour = selectedHour;
             minute = selectedMinute;
 
-            endtimeout = (String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+            endtimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
             String timeOut = getString(R.string.timeSet) + endtimeout;
             Log.d(TAG, timeOut);
 
@@ -131,42 +131,29 @@ public class SchedulerActivity extends AppCompatActivity {
 
     private void saveTime() throws ParseException {
 
-        String timeSaved = "Start time saved: " + Starttimeout + " End time saved :" + endtimeout;
+        String timeSaved = getString(R.string.startTimemsg) + Starttimeout + getString(R.string.endTimemsg) + endtimeout;
         Log.d(TAG, timeSaved);
-        if ((Starttimeout != null) || endtimeout != null) {
+        if ((Starttimeout == null) || endtimeout == null) {
+            Toast.makeText(this, R.string.startorendnull, Toast.LENGTH_SHORT).show();
 
-
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            Date d1 = sdf.parse(null);
-            try {
-                d1 = sdf.parse(Starttimeout);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Date d2 = sdf.parse(null);
-            try {
-                d2 = sdf.parse(endtimeout);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (d1 != null || d2 != null) {
-                long elapsed = d2.getTime() - d1.getTime();
-
-                if (d2.getTime() > d1.getTime()) {
-                    Log.d(TAG, "end is more than start");
-                } else if (d2.getTime() < d1.getTime()) {
-                    Log.d(TAG, "end is less than start");
-                } else {
-                    Log.d(TAG, "end is equal than start");
-                }
-            } else {
-                Log.d(TAG, "NULL d1 and d2, error might occur");
-
-            }
         } else {
-            Toast.makeText(this, "Null Values in Start time or End Time", Toast.LENGTH_SHORT).show();
+            SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.hourmin));
+            Date d1 = sdf.parse(Starttimeout);
+
+            Date d2 = sdf.parse(endtimeout);
+
+            long elapsed = d2.getTime() - d1.getTime();
+
+            if (d2.getTime() > d1.getTime()) {
+                Log.d(TAG, getString(R.string.logDataSaved));
+                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+
+            } else {
+                Log.d(TAG, getString(R.string.logDataEndSmall));
+                Toast.makeText(this, R.string.endSmall, Toast.LENGTH_SHORT).show();
+
+            }
         }
-
-
     }
 }
+

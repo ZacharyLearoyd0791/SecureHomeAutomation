@@ -87,7 +87,7 @@ public class LightFragment extends Fragment {
 
         });
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("test");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
         String name = ultrasonicET.getText().toString();
 
         databaseReference.setValue(name);
@@ -99,7 +99,7 @@ public class LightFragment extends Fragment {
                 if (snapshot.exists()) {
                     String test = snapshot.getValue().toString();
 
-                    strOut = "Database: " + test;
+                    strOut = getString(R.string.DatabaseStr) + test;
                     ultrasonicTV.setText(strOut);
                 }
             }
@@ -124,7 +124,7 @@ public class LightFragment extends Fragment {
             hour = selectedHour;
             minute = selectedMinute;
 
-            String timeout = (String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+            String timeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
             Log.d(TAG, timeout);
             String timeOut = getString(R.string.timeSet) + timeout;
             timerTV.setText(timeOut);
@@ -156,7 +156,7 @@ public class LightFragment extends Fragment {
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), style, onTimeSetListener, hour, minute, true);
 
-        timePickerDialog.setTitle("Timer");
+        timePickerDialog.setTitle(getString(R.string.Timer));
         timePickerDialog.show();
 
     }
