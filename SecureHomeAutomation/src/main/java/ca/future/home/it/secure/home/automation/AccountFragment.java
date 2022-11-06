@@ -49,14 +49,6 @@ public class AccountFragment extends Fragment {
     public AccountFragment() {
         // Required empty public constructor
     }
-    /*@Override
-    public void onStart(){
-        super.onStart();
-        nameAcc = view.findViewById(R.id.Name);
-        emailAcc = view.findViewById(R.id.Email);
-        nameAcc.setText(null);
-        emailAcc.setText(null);
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,14 +70,11 @@ public class AccountFragment extends Fragment {
         emailAcc.setText(email);
 
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
-            }
+        signOutButton.setOnClickListener(view1 -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
         });
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
 

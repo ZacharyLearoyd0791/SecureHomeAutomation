@@ -64,7 +64,7 @@ public class FireBaseInfo extends AppCompatActivity {
         String names = "Logging the name to test==" + "No name";
 
 
-        return name;
+        return names;
     }
 
 }

@@ -7,9 +7,6 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -43,7 +40,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,10 +54,6 @@ public class LoginActivity extends AppCompatActivity {
     //Facebook login
     private ImageView facebookButton;
     CallbackManager callbackManager;
-
-
-
-
 
 
     @Override

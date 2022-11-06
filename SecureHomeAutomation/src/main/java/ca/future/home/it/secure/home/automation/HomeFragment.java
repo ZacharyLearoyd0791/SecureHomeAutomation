@@ -8,8 +8,11 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,7 +144,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
 
-    /*    name = fireBaseInfo.getName();
+        name = fireBaseInfo.getName();
 
 
         String testing="Logging the name to test the code"+name;
@@ -154,7 +157,7 @@ public class HomeFragment extends Fragment {
             greetingsText.append(" " + "No name");
 
             Log.d(TAG, "No name");
-        }*/
+        }
 
         //Switches
 
