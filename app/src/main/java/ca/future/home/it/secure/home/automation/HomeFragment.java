@@ -20,45 +20,46 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
 import java.util.Calendar;
 import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
-    public View view;
+    public Date date;
+
 
     //Switches
+    public Calendar cal;
+    public int hour;
+    public FireBaseInfo fireBaseInfo = new FireBaseInfo();
 
-    public Switch lockSwitch;
-    public Switch tempSwitch;
-    public Switch lightSwitch;
-    public Switch windowSwitch;
+    private View view;
+    private String name;
+    private Switch lockSwitch;
+    private Switch tempSwitch;
+    private Switch lightSwitch;
+    private Switch windowSwitch;
 
     //Buttons
-    public ImageButton lockBtn;
-    public ImageButton tempBtn;
-    public ImageButton lightBtn;
-    public ImageButton windowBtn;
+    private ImageButton lockBtn;
+    private ImageButton tempBtn;
+    private ImageButton lightBtn;
+    private ImageButton windowBtn;
 
     //Text View
-    public TextView greetingsText;
-    public TextView quickAcc;
+    private TextView greetingsText;
+    private TextView quickAcc;
 
     //ImageView
-    public ImageView doorView;
-    public ImageView tempView;
-    public ImageView lightView;
-    public ImageView windowView;
-    public ImageView pressLock;
-    public ImageView pressTemp;
-    public ImageView pressLight;
+    private ImageView doorView;
+    private ImageView tempView;
+    private ImageView lightView;
+    private ImageView windowView;
+    private ImageView pressLock;
+    private ImageView pressTemp;
+    private ImageView pressLight;
 
     final Handler handler = new Handler();
-
-
 
     public HomeFragment() {
     }
@@ -68,22 +69,45 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
+        init();
+        greetings();
         return view;
     }
 
+    public void init() {
+        //ImageView Objects
+        doorView = view.findViewById(R.id.doorInfo);
+        tempView = view.findViewById(R.id.tempInfo);
+        lightView = view.findViewById(R.id.lightInfo);
+        windowView = view.findViewById(R.id.windowInfo);
 
-    @Override
-    public void onViewCreated (View view, Bundle savedInstanceState){
+        //Switch
+        lockSwitch = view.findViewById(R.id.sw_lock);
+        tempSwitch = view.findViewById(R.id.sw_temp);
+        lightSwitch = view.findViewById(R.id.sw_light);
+        windowSwitch = view.findViewById(R.id.sw_window);
 
-        Date date = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        //Buttons
+        lockBtn = view.findViewById(R.id.lock_Btn);
+        tempBtn = view.findViewById(R.id.temp_Btn);
+        lightBtn = view.findViewById(R.id.light_Btn);
+        windowBtn = view.findViewById(R.id.window_Btn);
 
+        //ImageView
+        pressLock = view.findViewById(R.id.iv_press_lock);
+        pressTemp = view.findViewById(R.id.iv_press_temp);
+        pressLight = view.findViewById(R.id.iv_press_light);
 
+        //Textview
         greetingsText = view.findViewById(R.id.Greetings);
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+    }
+
+    public void greetings() {
+        date = new Date();
+        cal = Calendar.getInstance();
+        cal.setTime(date);
+        hour = cal.get(Calendar.HOUR_OF_DAY);
+
         greetingsText.setText(null);
 
 
@@ -91,7 +115,6 @@ public class HomeFragment extends Fragment {
 
             greetingsText.setText(R.string.greetingMorning);
             view.setBackgroundResource(R.drawable.morning);
-
 
 
         } else if (hour >= 12 && hour < 17) {
@@ -110,29 +133,29 @@ public class HomeFragment extends Fragment {
             view.setBackgroundResource(R.drawable.night);
 
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
 
-        if (acct.getGivenName() != null) {
-            greetingsText.append(" " + acct.getGivenName());
-        }
+    /*    name = fireBaseInfo.getName();
 
+
+        String testing="Logging the name to test the code"+name;
+
+        Log.d(TAG, testing);
+        if (name != null) {
+            greetingsText.append(" " + name);
+            Log.d(TAG, name);
+        } else {
+            greetingsText.append(" " + "No name");
+
+            Log.d(TAG, "No name");
+        }*/
 
         //Switches
-        lockSwitch = view.findViewById(R.id.sw_lock);
-        tempSwitch = view.findViewById(R.id.sw_temp);
-        lightSwitch = view.findViewById(R.id.sw_light);
-        windowSwitch = view.findViewById(R.id.sw_window);
 
-        //Buttons
-        lockBtn = view.findViewById(R.id.lock_Btn);
-        tempBtn = view.findViewById(R.id.temp_Btn);
-        lightBtn = view.findViewById(R.id.light_Btn);
-        windowBtn = view.findViewById(R.id.window_Btn);
-
-        //ImageView
-        pressLock = view.findViewById(R.id.iv_press_lock);
-        pressTemp = view.findViewById(R.id.iv_press_temp);
-        pressLight = view.findViewById(R.id.iv_press_light);
 
         pressLock.setVisibility(View.INVISIBLE);
         pressTemp.setVisibility(View.INVISIBLE);
@@ -175,11 +198,6 @@ public class HomeFragment extends Fragment {
             //MainActivity.bottomNav.setSelectedItemId(R.id.window);
         });
 
-        //ImageView Objects
-        doorView = view.findViewById(R.id.doorInfo);
-        tempView = view.findViewById(R.id.tempInfo);
-        lightView = view.findViewById(R.id.lightInfo);
-        windowView = view.findViewById(R.id.windowInfo);
 
         //Switches selected
         //lock switch
