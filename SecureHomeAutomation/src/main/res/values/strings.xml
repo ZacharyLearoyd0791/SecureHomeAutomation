@@ -139,7 +139,6 @@
     <string name="eveningUsr">"Good Evening, "</string>
     <string name="nightUsr">"Good Night, "</string>
     <string name="noVal">Not found</string>
-
     <string name="facebook_app_id">1234</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1234</string>
     <string name="facebook_client_token">56789</string>
@@ -148,6 +147,11 @@
     <string name="lightOff">Lights OFF!!</string>
     <string name="timeSet">Time you set in\n</string>
     <string name="data_in">Data to Database</string>
+    <string name="lightpressed">LightPressed</string>
+    <string name="windowspressed">WindowsPressed</string>
+    <string name="lockpress">LockPress</string>
+    <string name="temppress">TempPress</string>
+    <string name="homeicon">HomeIcon</string>
 
 
 </resources>
