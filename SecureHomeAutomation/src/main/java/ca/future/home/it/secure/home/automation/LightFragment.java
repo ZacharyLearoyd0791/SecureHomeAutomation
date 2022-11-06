@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,8 @@ public class LightFragment extends Fragment {
     public int counter;
     TextView timerTV, ultrasonicTV;
     String dist;
-    Button timerBTN, schedulerBTN;
+    EditText ultrasonicET;
+    Button timerBTN, schedulerBTN, saveBtn;
     int hour, minute;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -54,6 +56,7 @@ public class LightFragment extends Fragment {
         ultrasonicTV = view.findViewById(R.id.distanceOut);
         timerBTN = view.findViewById(R.id.timerButton);
         schedulerBTN = view.findViewById(R.id.schedulerButton);
+        ultrasonicET = view.findViewById(R.id.Ultrasonic);
         return view;
     }
 
@@ -62,8 +65,26 @@ public class LightFragment extends Fragment {
 
 
         timerBTN.setOnClickListener(v -> popTimePicker());
+        saveBtn = view.findViewById(R.id.save);
+        // Attaching OnClick listener to the submit button
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                String name = ultrasonicET.getText().toString();
+//                ultrasonicTV.setText("Database: \t" + name );
+                databaseReference.setValue(name);
+
+            }
+        });
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("test");
+        String name = ultrasonicET.getText().toString();
+
+        databaseReference.setValue(name);
+
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
