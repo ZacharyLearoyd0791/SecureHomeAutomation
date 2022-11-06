@@ -162,6 +162,8 @@
     <string name="sample_1">SAMPLE - Unauthorized Key Attempt</string>
     <string name="sample_2">SAMPLE - Door Locked 8:22AM</string>
     <string name="sample_3">SAMPLE - Door Unlocked 4:58PM</string>
+    <string name="startTimeSelect">Select Start time</string>
+    <string name="endTimeSelect">Select the end time</string>
 
 
 </resources>
