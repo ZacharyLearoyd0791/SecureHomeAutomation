@@ -12,6 +12,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -34,12 +36,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 public class LightFragment extends Fragment {
+
     public int counter;
-    TextView timerTV, ultrasonicTV;
-    String dist;
+    TextView timerTV, testing, ultrasonicTV;
+    String dist, strOut;
     EditText ultrasonicET;
     Button timerBTN, schedulerBTN, saveBtn;
     int hour, minute;
+    DatePicker simpleDatePicker;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -57,26 +61,30 @@ public class LightFragment extends Fragment {
         timerBTN = view.findViewById(R.id.timerButton);
         schedulerBTN = view.findViewById(R.id.schedulerButton);
         ultrasonicET = view.findViewById(R.id.Ultrasonic);
+        testing = view.findViewById(R.id.testing);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-
+        //timer and scheduler
         timerBTN.setOnClickListener(v -> popTimePicker());
-        saveBtn = view.findViewById(R.id.save);
-        // Attaching OnClick listener to the submit button
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-
+        schedulerBTN.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                String name = ultrasonicET.getText().toString();
-//                ultrasonicTV.setText("Database: \t" + name );
-                databaseReference.setValue(name);
-
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
+                getActivity().startActivity(myIntent);
             }
+        });
+
+
+        saveBtn = view.findViewById(R.id.save);
+        saveBtn.setOnClickListener(v -> {
+
+            String name = ultrasonicET.getText().toString();
+            databaseReference.setValue(name);
+
         });
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("test");
@@ -91,8 +99,8 @@ public class LightFragment extends Fragment {
                 if (snapshot.exists()) {
                     String test = snapshot.getValue().toString();
 
-
-                    ultrasonicTV.setText(test);
+                    strOut = "Database: " + test;
+                    ultrasonicTV.setText(strOut);
                 }
             }
 
@@ -103,6 +111,7 @@ public class LightFragment extends Fragment {
         });
 
     }
+
     public void popTimePicker() {
         hour = 0;
         minute = 0;
@@ -152,5 +161,13 @@ public class LightFragment extends Fragment {
 
     }
 
+/*
+    public void schedulerLight() {
+
+        Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
+        getActivity().startActivity(myIntent);
+
+    }
+*/
 
 }

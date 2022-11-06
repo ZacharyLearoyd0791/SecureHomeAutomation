@@ -23,8 +23,8 @@
         android:id="@+id/schedulerButton"
         android:layout_width="94dp"
         android:layout_height="92dp"
-        android:layout_marginStart="260dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="264dp"
         android:background="@drawable/green_gradient"
         android:contentDescription="@string/scheduler"
         android:scaleType="fitCenter"
@@ -59,8 +59,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="260dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="232dp"
         android:text="@string/scheduler"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -122,5 +122,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/testing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="377dp"
+        android:layout_marginEnd="102dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fFragment"
+        android:layout_width="417dp"
+        android:layout_height="663dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
