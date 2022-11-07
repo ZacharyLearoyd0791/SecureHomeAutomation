@@ -176,6 +176,7 @@
     <string name="key">test</string>
     <string name="Timer">Timer</string>
     <string name="hourmin">HH:mm</string>
+    <string name="sample_4">SAMPLE - Door Unlocked 6:48PM</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="thursday">Thursday</string>

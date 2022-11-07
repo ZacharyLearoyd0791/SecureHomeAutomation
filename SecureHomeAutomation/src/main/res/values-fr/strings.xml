@@ -164,8 +164,12 @@
     <string name="startTimemsg">\"Start time saved: \"</string>
     <string name="endTimemsg">\" End time saved :\"</string>
     <string name="startorendnull">Null Values in Start time or End Time</string>
+    <string name="timeFormat">%02d:%02d</string>
     <string name="DatabaseStr">\"Database: \"</string>
+    <string name="key">test</string>
     <string name="Timer">Timer</string>
+    <string name="hourmin">HH:mm</string>
+    <string name="sample_4">SAMPLE - Door Unlocked 6:48PM</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="thursday">Thursday</string>
