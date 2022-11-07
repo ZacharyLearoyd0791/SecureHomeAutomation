@@ -27,7 +27,7 @@ public class SchedulerActivity extends AppCompatActivity {
     TextView startTV, endTv;
     Button start, end, saveTime;
     int hour, minute, checking;
-    String endtimeout, Starttimeout, checkBoxChoices, dayspick, daySelected;
+    String endtimeout, Starttimeout, daySelected;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
 
@@ -76,89 +76,73 @@ public class SchedulerActivity extends AppCompatActivity {
         saveTime.setOnClickListener(view -> {
             checking = 0;
             if (monday.isChecked()) {
-                checkBoxChoices += monday.getText().toString() + "\tYES";
                 isMonday = true;
                 checking = 0;
 
             } else {
-                checkBoxChoices += monday.getText().toString() + "\tNO";
                 checking = checking + 1;
                 isMonday = false;
             }
             if (tuesday.isChecked()) {
-                checkBoxChoices += tuesday.getText().toString() + "\tYES";
                 checking = 0;
                 isTuesday = true;
 
 
             } else {
-                checkBoxChoices += tuesday.getText().toString() + "\tNO";
                 checking = checking + 1;
                 isTuesday = false;
 
 
             }
             if (wednesday.isChecked()) {
-                checkBoxChoices += wednesday.getText().toString() + "\tYES";
                 checking = 0;
                 isWednesday = true;
 
             } else {
-                checkBoxChoices += wednesday.getText().toString() + "\tNO";
                 checking = checking + 1;
                 isWednesday = false;
 
             }
 
             if (thursday.isChecked()) {
-                checkBoxChoices += thursday.getText().toString() + "\tYES";
                 checking = 0;
                 isThursday = true;
             } else {
-                checkBoxChoices += thursday.getText().toString() + "\tNO";
                 checking = checking + 1;
                 isThursday = false;
 
             }
             if (friday.isChecked()) {
-                checkBoxChoices += friday.getText().toString() + "\tYES";
                 checking = 0;
                 isFriday = true;
 
             } else {
-                checkBoxChoices += friday.getText().toString() + "\tNO";
                 checking = checking + 1;
                 isFriday = false;
 
             }
             if (saturday.isChecked()) {
-                checkBoxChoices += saturday.getText().toString() + "\tYES";
                 checking = 0;
                 isSaturday = true;
 
             } else {
-                checkBoxChoices += saturday.getText().toString() + "\tNO";
                 checking = checking + 1;
                 isSaturday = false;
             }
             if (sunday.isChecked()) {
-                checkBoxChoices += sunday.getText().toString() + "\tYES";
                 checking = 0;
                 isSunday = true;
             } else {
-                checkBoxChoices += sunday.getText().toString() + "\tNO";
                 checking = checking + 1;
                 isSunday = false;
             }
             checkDays();
-            dayspick = getString(R.string.pickedDays) + checkBoxChoices;
             String num = getString(R.string.checkboxNum) + checking;
             Log.d(TAG, num);
             if (checking == 7) {
                 Log.d(TAG, getString(R.string.mustpickday));
                 Toast.makeText(this, mustpickday, Toast.LENGTH_SHORT).show();
             } else {
-                Log.d(TAG, dayspick);
                 try {
                     saveTime();
                 } catch (ParseException e) {
@@ -194,31 +178,31 @@ public class SchedulerActivity extends AppCompatActivity {
     }
 
     private void checkDays() {
-
+        daySelected = "";
         if (isMonday) {
-            daySelected = "Monday ";
+            daySelected = getString(R.string.Monday);
         }
         if (isTuesday) {
-            daySelected += "Tuesday ";
+            daySelected = getString(R.string.Tuesday);
         }
         if (isWednesday) {
-            daySelected += "Wednesday ";
+            daySelected += getString(R.string.Wednesday);
 
         }
         if (isThursday) {
-            daySelected += "Thursday ";
+            daySelected += getString(R.string.Thursday);
 
         }
         if (isFriday) {
-            daySelected += "Friday ";
+            daySelected += getString(R.string.Friday);
 
         }
         if (isSaturday) {
-            daySelected += "Saturday ";
+            daySelected += getString(R.string.Saturday);
 
         }
         if (isSunday) {
-            daySelected += "Sunday ";
+            daySelected += getString(R.string.Sunday);
 
         }
     }
@@ -234,7 +218,6 @@ public class SchedulerActivity extends AppCompatActivity {
 
             endtimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
             String timeOut = getString(R.string.timeSet) + endtimeout;
-            Log.d(TAG, timeOut);
             endTv.setText(timeOut);
 
 
@@ -252,7 +235,6 @@ public class SchedulerActivity extends AppCompatActivity {
 
         String timeSaved = getString(R.string.startTimemsg) + Starttimeout + getString(R.string.endTimemsg) + endtimeout;
         Log.d(TAG, timeSaved);
-        Log.d(TAG, dayspick);
 
         if ((Starttimeout == null) || endtimeout == null) {
             Toast.makeText(this, R.string.startorendnull, Toast.LENGTH_SHORT).show();
@@ -267,10 +249,8 @@ public class SchedulerActivity extends AppCompatActivity {
             assert d2 != null;
 
             if (d2.getTime() > d1.getTime() || checking != 7) {
-                Log.d(TAG, getString(R.string.logDataSaved));
-                Log.d(TAG, daySelected);
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                String timeday = "Day picked: " + daySelected + "\nTime selected :" + Starttimeout + " to " + endtimeout;
+                String timeday = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + Starttimeout + getString(R.string.to) + endtimeout;
                 Log.d(TAG, timeday);
 
 
