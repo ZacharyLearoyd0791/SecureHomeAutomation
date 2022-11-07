@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         // creating a variable for our promptInfo
         // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("GFG")
+        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle(getString(pl.bclogic.pulsator4droid.library.R.string.app_name))
                 .setDescription("Use your fingerprint to login ")
 
                 .setNegativeButtonText("Cancel").build();
