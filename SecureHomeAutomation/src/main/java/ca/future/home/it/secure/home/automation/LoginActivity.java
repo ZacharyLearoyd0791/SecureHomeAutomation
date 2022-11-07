@@ -38,6 +38,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 import java.util.concurrent.Executor;
@@ -54,6 +59,11 @@ public class LoginActivity extends AppCompatActivity {
     //Facebook login
     private ImageView facebookButton;
     CallbackManager callbackManager;
+    //Biometric login
+    BiometricPrompt biometricPrompt;
+    BiometricPrompt.PromptInfo promptInfo;
+    //Fingerprint
+
 
 
     @Override
@@ -73,7 +83,14 @@ public class LoginActivity extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this,gso);
         facebookButton = findViewById(R.id.facebook_logo);
         callbackManager = CallbackManager.Factory.create();
+        //For fingerprint login
+        //mLoginLayout = findViewById(R.id.Login_Layout);
+        //fingerprintSwitch = findViewById(R.id.fingerprint_switch);
 
+        //Fingerprint Login functionality
+
+        BiometricManager biometricManager = BiometricManager.from(this);
+        //switch (biom)
 
         //Login button functionality
         loginButton.setOnClickListener(view -> {
@@ -116,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Login via fingerprint
-        BiometricManager biometricManager= BiometricManager.from(this);
+
         switch(biometricManager.canAuthenticate()){
             case BiometricManager.BIOMETRIC_SUCCESS:
                 Toast.makeText(this, "You can use the fingerprint sensor to login", Toast.LENGTH_SHORT).show();

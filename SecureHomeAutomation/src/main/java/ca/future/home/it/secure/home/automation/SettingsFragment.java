@@ -30,7 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SettingsFragment extends Fragment {
 
@@ -50,6 +54,9 @@ public class SettingsFragment extends Fragment {
     private TextView tvFinger;
     private TextView tvPortrait;
 
+    //Firebase database
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
     MainActivity mainAct = new MainActivity();
 
     public SettingsFragment() {
@@ -119,6 +126,39 @@ public class SettingsFragment extends Fragment {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+
+        //Fingerprint enable/disable
+        databaseReference = FirebaseDatabase.getInstance().getReference("Settings");
+        fingerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(fingerSwitch.isChecked()){
+                    databaseReference.child("Fingerprint").setValue("On").addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getContext(), "Fingerprint Enabled successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    databaseReference.child("Fingerprint").setValue("Off").addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getContext(), "Fingerprint Disabled successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
