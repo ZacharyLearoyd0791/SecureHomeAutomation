@@ -4,13 +4,18 @@ import static android.content.ContentValues.TAG;
 import static ca.future.home.it.secure.home.automation.R.string.hourmin;
 import static ca.future.home.it.secure.home.automation.R.string.mustpickday;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,15 +27,17 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class SchedulerActivity extends AppCompatActivity {
+public class SchedulerActivity extends Activity {
+
     ImageButton back;
     TextView startTV, endTv;
     Button start, end, saveTime;
     int hour, minute, checking;
-    String endtimeout, Starttimeout, daySelected;
+    String endtimeout, Starttimeout, daySelected, timeday;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
-
+    LinearLayout linearLayout;
+    ScrollView scroll;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +63,7 @@ public class SchedulerActivity extends AppCompatActivity {
         onButtonClick();
 
     }
+
 
 
     private void backButton() {
@@ -250,8 +258,10 @@ public class SchedulerActivity extends AppCompatActivity {
 
             if (d2.getTime() > d1.getTime() || checking != 7) {
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                String timeday = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + Starttimeout + getString(R.string.to) + endtimeout;
+                timeday = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + Starttimeout + getString(R.string.to) + endtimeout;
                 Log.d(TAG, timeday);
+                logging();
+
 
 
             } else {
@@ -260,6 +270,27 @@ public class SchedulerActivity extends AppCompatActivity {
 
             }
         }
+    }
+    private void logging(){
+
+        scroll=findViewById(R.id.scheduleLog);
+
+        linearLayout=scroll.findViewById(R.id.liner_schedule);
+
+        addHistory(timeday);
+
+    }
+
+    private void addHistory(String string) {
+        TextView textView = new TextView(getApplicationContext());
+        textView.setText(string);
+        textView.setBackgroundResource(R.drawable.scroll_view_item_border);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(0xFF000000);
+        textView.setTextSize(14);
+        textView.setFontFeatureSettings("sans-serif");
+        textView.setPadding(10,19,10,19);
+        linearLayout.addView(textView);
     }
 }
 

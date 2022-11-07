@@ -5,6 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:id="@+id/scheduleLog"
+        android:layout_width="411dp"
+        android:layout_height="196dp"
+        android:fillViewport="true"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:id="@+id/liner_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+    </ScrollView>
 
     <ImageButton
         android:id="@+id/backbtn"
@@ -23,10 +40,10 @@
         android:id="@+id/saveScheduler"
         android:layout_width="397dp"
         android:layout_height="65dp"
-        android:layout_marginTop="452dp"
-        android:background="@drawable/green_gradient"
+        android:layout_marginTop="432dp"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +63,6 @@
         android:layout_height="80dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="304dp"
-        android:background="@drawable/green_gradient"
         android:text="@string/start"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +73,6 @@
         android:layout_height="80dp"
         android:layout_marginTop="304dp"
         android:layout_marginEnd="56dp"
-        android:background="@drawable/green_gradient"
         android:text="@string/end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -150,6 +165,7 @@
         android:text="@string/saturday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <CheckBox
         android:id="@+id/sunday"
         android:layout_width="wrap_content"
@@ -158,6 +174,21 @@
         android:layout_marginTop="80dp"
         android:text="@string/sunday"
 
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/scheduleTVLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="512dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="192dp"
+        android:text="@string/scheduler"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
