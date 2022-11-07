@@ -25,7 +25,7 @@ import java.util.Locale;
 public class SchedulerActivity extends AppCompatActivity {
     ImageButton back;
     TextView startTV, endTv;
-    Button start, end, saveTime, saveDate;
+    Button start, end, saveTime;
     int hour, minute, checking;
     String endtimeout, Starttimeout, checkBoxChoices, dayspick, daySelected;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
@@ -193,35 +193,34 @@ public class SchedulerActivity extends AppCompatActivity {
 
     }
 
-    private String checkDays() {
+    private void checkDays() {
 
         if (isMonday) {
-            daySelected += "\nMonday is selected\n";
+            daySelected = "Monday ";
         }
         if (isTuesday) {
-            daySelected += "\nTuesday is selected\n";
+            daySelected += "Tuesday ";
         }
         if (isWednesday) {
-            daySelected += "\nWednesday is selected\n";
+            daySelected += "Wednesday ";
 
         }
         if (isThursday) {
-            daySelected += "\nThursday is selected\n";
+            daySelected += "Thursday ";
 
         }
         if (isFriday) {
-            daySelected += "\nFriday is selected\n";
+            daySelected += "Friday ";
 
         }
         if (isSaturday) {
-            daySelected += "\nSaturday is selected\n";
+            daySelected += "Saturday ";
 
         }
         if (isSunday) {
-            daySelected += "\nSunday is selected\n";
+            daySelected += "Sunday ";
 
         }
-        return daySelected;
     }
 
     private void endTime() {
@@ -271,6 +270,8 @@ public class SchedulerActivity extends AppCompatActivity {
                 Log.d(TAG, getString(R.string.logDataSaved));
                 Log.d(TAG, daySelected);
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+                String timeday = "Day picked: " + daySelected + "\nTime selected :" + Starttimeout + " to " + endtimeout;
+                Log.d(TAG, timeday);
 
 
             } else {
