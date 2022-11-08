@@ -18,13 +18,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,7 +36,6 @@ public class SchedulerActivity extends Activity {
     Button start, end, saveTime;
     int hour, minute, checking,counter;
     String endtimeout, Starttimeout, daySelected, timeday,check,count,dbDate,dbTime;
-    String []arr;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     LinearLayout linearLayout;
