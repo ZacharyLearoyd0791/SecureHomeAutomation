@@ -7,8 +7,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,18 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
-import androidx.core.content.ContextCompat;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,31 +31,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.Arrays;
-import java.util.concurrent.Executor;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    //Custom login
     private EditText emailAddress;
     private EditText password;
     private FirebaseAuth mAuth;
-    public static String PREFS_NAME = "LoggedInFile";
-    //Google login
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
-    //Facebook login
-    private ImageView facebookButton;
-    CallbackManager callbackManager;
-    //Biometric login
-    BiometricPrompt biometricPrompt;
-    BiometricPrompt.PromptInfo promptInfo;
-    //Fingerprint
 
 
 
@@ -81,27 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();         //Getting firebase instance
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
-        facebookButton = findViewById(R.id.facebook_logo);
-        callbackManager = CallbackManager.Factory.create();
-        //For fingerprint login
-        //mLoginLayout = findViewById(R.id.Login_Layout);
-        //fingerprintSwitch = findViewById(R.id.fingerprint_switch);
-
-        //Fingerprint Login functionality
-
-        BiometricManager biometricManager = BiometricManager.from(this);
-        //switch (biom)
 
         //Login button functionality
         loginButton.setOnClickListener(view -> {
-            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME,0);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("hasLoggedIn",true);
-            editor.commit();
-
-
-
-
             String emailInput = emailAddress.getText().toString();
             String passwordInput = password.getText().toString();
             if(emailInput.isEmpty() && passwordInput.isEmpty()){
@@ -131,89 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                 googleSignInProcess();
             }
         });
-
-        //Login via fingerprint
-
-        switch(biometricManager.canAuthenticate()){
-            case BiometricManager.BIOMETRIC_SUCCESS:
-                Toast.makeText(this, "You can use the fingerprint sensor to login", Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                Toast.makeText(this, "This device don't have fingerprint sensor", Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                Toast.makeText(this, "Biometric sensor currently unavailable", Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                Toast.makeText(this, "No fingerprint found!", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-
-        Executor executor = ContextCompat.getMainExecutor(this);
-        final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-            }
-
-            // THIS METHOD IS CALLED WHEN AUTHENTICATION IS SUCCESS
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-
-            }
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-            }
-        });
-        // creating a variable for our promptInfo
-        // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle(getString(pl.bclogic.pulsator4droid.library.R.string.app_name))
-                .setDescription("Use your fingerprint to login ")
-
-                .setNegativeButtonText("Cancel").build();
-
-        biometricPrompt.authenticate(promptInfo);
-//        loginbutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                biometricPrompt.authenticate(promptInfo);
-//
-//            }
-//        });
-
-        //Login via facebook
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                        finish();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Toast.makeText(LoginActivity.this, "Error: "+exception.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        facebookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile"));
-            }
-        });
-
-
     }
     //Validating Email address
     private boolean validateEmailInput(EditText email) {
@@ -251,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-   // Google Sign in process
+    // Google Sign in process
     public void googleSignInProcess(){
         Intent googleSignInIntent = gsc.getSignInIntent();
         startActivityForResult(googleSignInIntent,1000);
@@ -260,7 +136,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);    //used for facebook
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1000){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -279,6 +154,4 @@ public class LoginActivity extends AppCompatActivity {
         finish();
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
     }
-
-
 }
