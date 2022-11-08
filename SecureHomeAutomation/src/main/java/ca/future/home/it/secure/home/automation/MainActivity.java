@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public static TempFragment tempFragment;
     public static LightFragment lightFragment;
     public static WindowFragment windowFragment;
+    public static ProfileEditFragment profileEditFragment;
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         windowFragment = new WindowFragment();
         accountFragment = new AccountFragment();
         addDeviceFragment = new AddDeviceFragment();
+        profileEditFragment = new ProfileEditFragment();
 
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {

@@ -10,6 +10,8 @@ package ca.future.home.it.secure.home.automation;
 import static com.google.firebase.crashlytics.internal.Logger.TAG;
 
 import android.animation.Animator;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -49,6 +52,10 @@ public class AccountFragment extends Fragment {
     TextView  emailAcc;
     ImageView profileImage;
     final Handler handler = new Handler();
+    Animation fadeInAnimation;
+
+    //Edit profile
+    FloatingActionButton editProfileButton;
 
 
     public AccountFragment() {
@@ -74,6 +81,7 @@ public class AccountFragment extends Fragment {
 //        nameAcc.setText(name);
         emailAcc.setText(email);
         profileImage = view.findViewById(R.id.profile_image);
+
         LottieAnimationView animationView
                 = view.findViewById(R.id.animationView);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
@@ -135,31 +143,28 @@ public class AccountFragment extends Fragment {
                     }
                 }, 3000);
 
-                Animation fadeInAnimation = new AlphaAnimation(0.00f,1.00f);
-                fadeInAnimation.setDuration(3000);
-                fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
 
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        profileImage.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-                profileImage.startAnimation(fadeInAnimation);
 
             }
             Log.d(TAG, "onComplete: currentUserUid is null");
+            imageAnimation();
+            //Opening profile edit frag
+            editProfileButton = view.findViewById(R.id.editProfileIcon);
+            editProfileButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                handler.postDelayed(()-> getParentFragmentManager().beginTransaction().replace(R.id.flFragment,MainActivity.profileEditFragment).commit(),300);
 
+                }
+            });
 
 
         }
+    }
+    public void imageAnimation(){
+        profileImage.setVisibility(View.VISIBLE);
+        fadeInAnimation = AnimationUtils.loadAnimation(getContext(),R.anim.profile_image_anim);
+        profileImage.startAnimation(fadeInAnimation);
+
     }
 }
