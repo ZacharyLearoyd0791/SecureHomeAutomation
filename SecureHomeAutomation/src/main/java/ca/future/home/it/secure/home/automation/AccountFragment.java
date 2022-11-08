@@ -9,6 +9,7 @@ package ca.future.home.it.secure.home.automation;
 
 import static com.google.firebase.crashlytics.internal.Logger.TAG;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,8 +45,9 @@ public class AccountFragment extends Fragment {
     private GoogleSignInClient gsc;
     private Button signOutButton;
     View view;
-    ImageView imgAcc;
+//    ImageView imgAcc;
     TextView  emailAcc;
+    ImageView profileImage;
     final Handler handler = new Handler();
 
 
@@ -68,7 +73,9 @@ public class AccountFragment extends Fragment {
         emailAcc = view.findViewById(R.id.Email);
 //        nameAcc.setText(name);
         emailAcc.setText(email);
-
+        profileImage = view.findViewById(R.id.profile_image);
+        LottieAnimationView animationView
+                = view.findViewById(R.id.animationView);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
         signOutButton.setOnClickListener(view1 -> {
             FirebaseAuth.getInstance().signOut();
@@ -118,20 +125,39 @@ public class AccountFragment extends Fragment {
 
 
                 //ImageView imgAcc = view.findViewById(R.id.imgAcc);
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        LottieAnimationView animationView
-                                = view.findViewById(R.id.animationView);
-                        animationView.setVisibility(View.INVISIBLE);
 
-                        Picasso.get().load(personPhoto).into(imgAcc);
+                       animationView.setVisibility(View.INVISIBLE);
+                        Picasso.get().load(personPhoto).into(profileImage);
                     }
                 }, 3000);
 
+                Animation fadeInAnimation = new AlphaAnimation(0.00f,1.00f);
+                fadeInAnimation.setDuration(3000);
+                fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        profileImage.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                profileImage.startAnimation(fadeInAnimation);
 
             }
             Log.d(TAG, "onComplete: currentUserUid is null");
+
 
 
         }
