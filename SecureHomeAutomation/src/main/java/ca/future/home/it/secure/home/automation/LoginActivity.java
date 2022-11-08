@@ -7,6 +7,9 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -38,13 +41,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,10 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     //Facebook login
     private ImageView facebookButton;
     CallbackManager callbackManager;
-    //Biometric login
-    BiometricPrompt biometricPrompt;
-    BiometricPrompt.PromptInfo promptInfo;
-    //Fingerprint
+
+
+
 
 
 
@@ -83,14 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this,gso);
         facebookButton = findViewById(R.id.facebook_logo);
         callbackManager = CallbackManager.Factory.create();
-        //For fingerprint login
-        //mLoginLayout = findViewById(R.id.Login_Layout);
-        //fingerprintSwitch = findViewById(R.id.fingerprint_switch);
 
-        //Fingerprint Login functionality
-
-        BiometricManager biometricManager = BiometricManager.from(this);
-        //switch (biom)
 
         //Login button functionality
         loginButton.setOnClickListener(view -> {
@@ -133,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Login via fingerprint
-
+        BiometricManager biometricManager= BiometricManager.from(this);
         switch(biometricManager.canAuthenticate()){
             case BiometricManager.BIOMETRIC_SUCCESS:
                 Toast.makeText(this, "You can use the fingerprint sensor to login", Toast.LENGTH_SHORT).show();
@@ -171,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         // creating a variable for our promptInfo
         // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle(getString(pl.bclogic.pulsator4droid.library.R.string.app_name))
+        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("GFG")
                 .setDescription("Use your fingerprint to login ")
 
                 .setNegativeButtonText("Cancel").build();
@@ -251,7 +242,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-   // Google Sign in process
+    // Google Sign in process
     public void googleSignInProcess(){
         Intent googleSignInIntent = gsc.getSignInIntent();
         startActivityForResult(googleSignInIntent,1000);

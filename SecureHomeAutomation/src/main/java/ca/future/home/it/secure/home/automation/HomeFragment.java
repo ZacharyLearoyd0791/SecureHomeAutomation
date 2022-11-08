@@ -8,14 +8,13 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -23,47 +22,45 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import java.util.Calendar;
 import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
-    public Date date;
-
+    public View view;
 
     //Switches
-    public Calendar cal;
-    public int hour;
-    public FireBaseInfo fireBaseInfo = new FireBaseInfo();
 
-    private View view;
-    private String name;
-    private Switch lockSwitch;
-    private Switch tempSwitch;
-    private Switch lightSwitch;
-    private Switch windowSwitch;
+    public Switch lockSwitch;
+    public Switch tempSwitch;
+    public Switch lightSwitch;
+    public Switch windowSwitch;
 
     //Buttons
-    private ImageButton lockBtn;
-    private ImageButton tempBtn;
-    private ImageButton lightBtn;
-    private ImageButton windowBtn;
+    public ImageButton lockBtn;
+    public ImageButton tempBtn;
+    public ImageButton lightBtn;
+    public ImageButton windowBtn;
 
     //Text View
-    private TextView greetingsText;
-    private TextView quickAcc;
+    public TextView greetingsText;
+    public TextView quickAcc;
 
     //ImageView
-    private ImageView doorView;
-    private ImageView tempView;
-    private ImageView lightView;
-    private ImageView windowView;
-    private ImageView pressLock;
-    private ImageView pressTemp;
-    private ImageView pressLight;
-    private ImageView pressWindow;
+    public ImageView doorView;
+    public ImageView tempView;
+    public ImageView lightView;
+    public ImageView windowView;
+    public ImageView pressLock;
+    public ImageView pressTemp;
+    public ImageView pressLight;
 
     final Handler handler = new Handler();
+
+
 
     public HomeFragment() {
     }
@@ -73,46 +70,21 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        init();
-        greetings();
         return view;
     }
 
-    public void init() {
-        //ImageView Objects
-        doorView = view.findViewById(R.id.doorInfo);
-        tempView = view.findViewById(R.id.tempInfo);
-        lightView = view.findViewById(R.id.lightInfo);
-        windowView = view.findViewById(R.id.windowInfo);
+    @Override
+    public void onViewCreated (View view, Bundle savedInstanceState){
 
-        //Switch
-        lockSwitch = view.findViewById(R.id.sw_lock);
-        tempSwitch = view.findViewById(R.id.sw_temp);
-        lightSwitch = view.findViewById(R.id.sw_light);
-        windowSwitch = view.findViewById(R.id.sw_window);
-
-        //Buttons
-        lockBtn = view.findViewById(R.id.lock_Btn);
-        tempBtn = view.findViewById(R.id.temp_Btn);
-        lightBtn = view.findViewById(R.id.light_Btn);
-        windowBtn = view.findViewById(R.id.window_Btn);
-
-        //ImageView
-        pressLock = view.findViewById(R.id.iv_press_lock);
-        pressTemp = view.findViewById(R.id.iv_press_temp);
-        pressLight = view.findViewById(R.id.iv_press_light);
-        pressWindow = view.findViewById(R.id.iv_press_window);
-
-        //Textview
-        greetingsText = view.findViewById(R.id.Greetings);
-    }
-
-    public void greetings() {
-        date = new Date();
-        cal = Calendar.getInstance();
+        View layout = view.findViewById(R.layout.fragment_home);
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        hour = cal.get(Calendar.HOUR_OF_DAY);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
 
+
+        greetingsText = view.findViewById(R.id.Greetings);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         greetingsText.setText(null);
 
 
@@ -138,103 +110,156 @@ public class HomeFragment extends Fragment {
             view.setBackgroundResource(R.drawable.night);
 
         }
-    }
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
-
-        name = fireBaseInfo.getName();
-
-
-        String testing="Logging the name to test the code"+name;
-
-        Log.d(TAG, testing);
-        if (name != null) {
-            greetingsText.append(" " + name);
-            Log.d(TAG, name);
-        } else {
-            greetingsText.append(" " + "No name");
-
-            Log.d(TAG, "No name");
         }
+//        if (acct.getGivenName() != null) {
+//            greetingsText.append(" " + acct.getGivenName());
+//        } else {
+//
+//        }
+
 
         //Switches
+        lockSwitch = view.findViewById(R.id.sw_lock);
+        tempSwitch = view.findViewById(R.id.sw_temp);
+        lightSwitch = view.findViewById(R.id.sw_light);
+        windowSwitch = view.findViewById(R.id.sw_window);
 
-        //Simulate button press - visibility starts invisible
+        //Buttons
+        lockBtn = view.findViewById(R.id.lock_Btn);
+        tempBtn = view.findViewById(R.id.temp_Btn);
+        lightBtn = view.findViewById(R.id.light_Btn);
+        windowBtn = view.findViewById(R.id.window_Btn);
+
+        //ImageView
+        pressLock = view.findViewById(R.id.iv_press_lock);
+        pressTemp = view.findViewById(R.id.iv_press_temp);
+        pressLight = view.findViewById(R.id.iv_press_light);
+
         pressLock.setVisibility(View.INVISIBLE);
         pressTemp.setVisibility(View.INVISIBLE);
         pressLight.setVisibility(View.INVISIBLE);
-        pressWindow.setVisibility(View.INVISIBLE);
 
         //Lock button
-        lockBtn.setOnClickListener(view14 -> {
-            lockBtn.setVisibility(View.INVISIBLE);
-            pressLock.setVisibility(View.VISIBLE);
+        lockBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                lockBtn.setVisibility(View.INVISIBLE);
+                pressLock.setVisibility(View.VISIBLE);
 
-            //simulate button pressed
-            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit(), 300);
+                //simulate button pressed
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.doorFragment).commit();
+                    }
+                }, 300);
+                //MainActivity.bottomNav.setSelectedItemId(R.id.door);
+            }
         });
 
         //Temperature button
-        tempBtn.setOnClickListener(view13 -> {
-            tempBtn.setVisibility(View.INVISIBLE);
-            pressTemp.setVisibility(View.VISIBLE);
+        tempBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                tempBtn.setVisibility(View.INVISIBLE);
+                pressTemp.setVisibility(View.VISIBLE);
 
-            //simulate button pressed
-            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit(), 300);
+                //simulate button pressed
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.tempFragment).commit();
+                    }
+                }, 300);
+                //MainActivity.bottomNav.setSelectedItemId(R.id.temp);
+            }
         });
 
         //Light button
-        lightBtn.setOnClickListener(view12 -> {
-            lightBtn.setVisibility(View.INVISIBLE);
-            pressLight.setVisibility(View.VISIBLE);
+        lightBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                lightBtn.setVisibility(View.INVISIBLE);
+                pressLight.setVisibility(View.VISIBLE);
 
-            //simulate button pressed
-            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit(), 300);
+                //simulate button pressed
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.lightFragment).commit();
+                    }
+                }, 300);
+
+                //MainActivity.bottomNav.setSelectedItemId(R.id.light);
+            }
         });
 
         //Window button
-        windowBtn.setOnClickListener(view1 -> {
-            windowBtn.setVisibility(View.INVISIBLE);
-            pressWindow.setVisibility(View.VISIBLE);
-
-            //simulate button pressed
-            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit(), 300);
+        windowBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit();
+                //MainActivity.bottomNav.setSelectedItemId(R.id.window);
+            }
         });
 
+        //ImageView Objects
+        doorView = view.findViewById(R.id.doorInfo);
+        tempView = view.findViewById(R.id.tempInfo);
+        lightView = view.findViewById(R.id.lightInfo);
+        windowView = view.findViewById(R.id.windowInfo);
 
         //Switches selected
         //lock switch
-        lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                doorView.setVisibility(View.INVISIBLE);
-            } else {
-                doorView.setVisibility(View.VISIBLE);
+        lockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    doorView.setVisibility(View.INVISIBLE);
+                } else {
+                    doorView.setVisibility(View.VISIBLE);
+                }
             }
         });
         //temperature switch
-        tempSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                tempView.setVisibility(View.INVISIBLE);
-            } else {
-                tempView.setVisibility(View.VISIBLE);
+        tempSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tempView.setVisibility(View.INVISIBLE);
+                } else {
+                    tempView.setVisibility(View.VISIBLE);
+                }
             }
         });
         //light switch
-        lightSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                lightView.setVisibility(View.INVISIBLE);
-            } else {
-                lightView.setVisibility(View.VISIBLE);
+        lightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    lightView.setVisibility(View.INVISIBLE);
+                } else {
+                    lightView.setVisibility(View.VISIBLE);
+                }
             }
         });
         //window switch
-        windowSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                windowView.setVisibility(View.INVISIBLE);
-            } else {
-                windowView.setVisibility(View.VISIBLE);
+        windowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    windowView.setVisibility(View.INVISIBLE);
+                } else {
+                    windowView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
