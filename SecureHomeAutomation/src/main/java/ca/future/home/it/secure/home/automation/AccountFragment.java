@@ -42,7 +42,7 @@ public class AccountFragment extends Fragment {
     private Button signOutButton;
     View view;
     ImageView imgAcc;
-    TextView nameAcc, emailAcc;
+    TextView  emailAcc;
     final Handler handler = new Handler();
 
 
@@ -64,9 +64,9 @@ public class AccountFragment extends Fragment {
         //Declarations
         String name = getString(R.string.name);
         String email = getString(R.string.email);
-        nameAcc = view.findViewById(R.id.Name);
+        //nameAcc = view.findViewById(R.id.Name);
         emailAcc = view.findViewById(R.id.Email);
-        nameAcc.setText(name);
+//        nameAcc.setText(name);
         emailAcc.setText(email);
 
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
@@ -84,9 +84,9 @@ public class AccountFragment extends Fragment {
             Log.d(TAG, "onComplete: currentUserEmail---->" + currentFirebaseUser.getEmail());
             Log.d(TAG, "onComplete: currentUserDisplayName---->" + currentFirebaseUser.getDisplayName());
             if (currentFirebaseUser.getDisplayName() == null) {
-                nameAcc.append(getString(R.string.noVal));
+                //nameAcc.append(getString(R.string.noVal));
             } else {
-                nameAcc.append(currentFirebaseUser.getDisplayName());
+               // nameAcc.append(currentFirebaseUser.getDisplayName());
             }
             if (currentFirebaseUser.getEmail() == null) {
                 emailAcc.append(getString(R.string.noVal));
@@ -113,11 +113,11 @@ public class AccountFragment extends Fragment {
                 Log.d(TAG, "onComplete: personId---->" + personId);
                 Log.d(TAG, "onComplete: personPhoto---->" + personPhoto);
 
-                nameAcc.setText(name + personName);
+                //nameAcc.setText(name + personName);
                 emailAcc.setText(email + personEmail);
 
 
-                ImageView imgAcc = view.findViewById(R.id.imgAcc);
+                //ImageView imgAcc = view.findViewById(R.id.imgAcc);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

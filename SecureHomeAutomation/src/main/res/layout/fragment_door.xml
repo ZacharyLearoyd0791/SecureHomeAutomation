@@ -107,12 +107,12 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/add_key_btn"
                 android:layout_width="110dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="37dp"
-                android:background="@null"
+                android:background="#BDBDBD"
                 android:contentDescription="@string/add_key"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_add_card"
@@ -120,12 +120,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/remove_key_btn"
                 android:layout_width="110dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="37dp"
                 android:layout_marginEnd="48dp"
-                android:background="@null"
+                android:background="#BDBDBD"
                 android:contentDescription="@string/remove_key"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_remove_card"
