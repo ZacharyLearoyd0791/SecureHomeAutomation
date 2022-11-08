@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -29,6 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String passwordInput;
     private FirebaseAuth mAuth;
     private int fillChecker= 1;
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +85,15 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
     public void registrationProcess(int CheckerId){
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         if(CheckerId == 0){
             mAuth.createUserWithEmailAndPassword(emailInput,passwordInput)
                     .addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
+
+                            //databaseReference.child("Email").setValue(fullName);
+
                             Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification()
                                     .addOnCompleteListener(task1 -> {
                                         if(task1.isSuccessful()){
