@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -19,12 +18,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class SchedulerActivity extends Activity {
@@ -32,12 +34,15 @@ public class SchedulerActivity extends Activity {
     ImageButton back;
     TextView startTV, endTv;
     Button start, end, saveTime;
-    int hour, minute, checking;
-    String endtimeout, Starttimeout, daySelected, timeday;
+    int hour, minute, checking,counter;
+    String endtimeout, Starttimeout, daySelected, timeday,check,count,dbDate,dbTime;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     LinearLayout linearLayout;
     ScrollView scroll;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,31 +191,31 @@ public class SchedulerActivity extends Activity {
     }
 
     private void checkDays() {
-        daySelected = "";
+        daySelected = getString(R.string.empty);
         if (isMonday) {
-            daySelected = getString(R.string.Monday);
+            daySelected = getString(R.string.monday);
         }
         if (isTuesday) {
-            daySelected = getString(R.string.Tuesday);
+            daySelected = getString(R.string.tuesday);
         }
         if (isWednesday) {
-            daySelected += getString(R.string.Wednesday);
+            daySelected += getString(R.string.wednesday);
 
         }
         if (isThursday) {
-            daySelected += getString(R.string.Thursday);
+            daySelected += getString(R.string.thursday);
 
         }
         if (isFriday) {
-            daySelected += getString(R.string.Friday);
+            daySelected += getString(R.string.friday);
 
         }
         if (isSaturday) {
-            daySelected += getString(R.string.Saturday);
+            daySelected += getString(R.string.saturday);
 
         }
         if (isSunday) {
-            daySelected += getString(R.string.Sunday);
+            daySelected += getString(R.string.sunday);
 
         }
     }
@@ -256,12 +261,21 @@ public class SchedulerActivity extends Activity {
             assert d1 != null;
             assert d2 != null;
 
-            if (d2.getTime() > d1.getTime() || checking != 7) {
+            if (counter ==0){
+                Log.d(TAG,getString(R.string.FirstCheck));
+            }
+            else{
+                count= getString(R.string.Check)+ counter;
+                Log.d(TAG,count);
+            }
+
+            if (d2.getTime() > d1.getTime() && checking != 7) {
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
                 timeday = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + Starttimeout + getString(R.string.to) + endtimeout;
                 Log.d(TAG, timeday);
                 logging();
-
+                check=daySelected;
+                counter=counter+1;
 
 
             } else {
@@ -269,6 +283,8 @@ public class SchedulerActivity extends Activity {
                 Toast.makeText(this, R.string.endSmall, Toast.LENGTH_SHORT).show();
 
             }
+            toDatabase();
+
         }
     }
     private void logging(){
@@ -285,12 +301,42 @@ public class SchedulerActivity extends Activity {
         TextView textView = new TextView(getApplicationContext());
         textView.setText(string);
         textView.setBackgroundResource(R.drawable.scroll_view_item_border);
-        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTypeface(null, Typeface.BOLD_ITALIC);
         textView.setTextColor(0xFF000000);
         textView.setTextSize(14);
         textView.setFontFeatureSettings("sans-serif");
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
+    }
+
+    private void toDatabase(){
+        String timeMsg=Starttimeout+getString(R.string.to)+endtimeout;
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.dayKey)));
+
+        dbDate = daySelected;
+        databaseReference.setValue(dbDate);
+        databaseReference.setValue(dbTime);
+        Map<String, Object> day = new HashMap<>();
+        for (int i =0; i<counter;i++){
+            String dateC=getString(R.string.Day)+i;
+            day.put(dateC, daySelected);
+        }
+        databaseReference.updateChildren(day);
+
+        dbTime=Starttimeout+getString(R.string.to)+endtimeout;
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.timeKey)));
+        databaseReference.setValue(dbTime);
+        Map<String, Object> time = new HashMap<>();
+        for (int i =0; i<counter;i++){
+            String dateC=getString(R.string.Time)+i;
+            time.put(dateC, timeMsg);
+        }
+        databaseReference.updateChildren(time);
+
+
+
+
     }
 }
 
