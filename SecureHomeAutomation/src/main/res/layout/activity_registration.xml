@@ -35,11 +35,24 @@
         app:layout_constraintTop_toBottomOf="@+id/Registration_page_full_name_text" />
 
     <EditText
+        android:id="@+id/Registration_page_phone_number_text"
+        android:layout_width="308dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/enter_your_phone_number"
+        android:inputType="phone"
+        android:textColorHint="#757575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Registration_page_email_text" />
+
+    <EditText
         android:id="@+id/Registration_page_password_text"
         android:layout_width="307dp"
         android:layout_height="53dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="56dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/enter_password"

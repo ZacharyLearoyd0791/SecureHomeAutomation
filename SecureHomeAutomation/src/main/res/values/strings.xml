@@ -207,6 +207,7 @@
     <string name="FirstCheck">First Check</string>
     <string name="Check">\"Check: \"</string>
     <string name="dayKey" translatable="false">/Schedule/Day</string>
+    <string name="enter_your_phone_number">Enter your Phone number</string>
 
 
 </resources>
