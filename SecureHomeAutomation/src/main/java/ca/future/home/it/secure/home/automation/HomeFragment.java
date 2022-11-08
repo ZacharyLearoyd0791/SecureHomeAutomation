@@ -76,7 +76,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
 
-        View layout = view.findViewById(R.layout.fragment_home);
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -110,20 +109,12 @@ public class HomeFragment extends Fragment {
             view.setBackgroundResource(R.drawable.night);
 
         }
-        if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
-            String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
+
+        if (acct.getGivenName() != null) {
+            greetingsText.append(" " + acct.getGivenName());
+        } else {
 
         }
-//        if (acct.getGivenName() != null) {
-//            greetingsText.append(" " + acct.getGivenName());
-//        } else {
-//
-//        }
 
 
         //Switches
