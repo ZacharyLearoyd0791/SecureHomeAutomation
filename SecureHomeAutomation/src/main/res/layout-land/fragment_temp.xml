@@ -35,12 +35,12 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="456dp"
+        android:layout_marginTop="244dp"
         android:text="@string/set_minimum_temperature"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -59,11 +59,11 @@
         android:id="@+id/imageButton4"
         android:layout_width="100dp"
         android:layout_height="89dp"
-        android:layout_marginStart="155dp"
-        android:layout_marginTop="506dp"
+        android:layout_marginTop="291dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_cool_temp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton3"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
