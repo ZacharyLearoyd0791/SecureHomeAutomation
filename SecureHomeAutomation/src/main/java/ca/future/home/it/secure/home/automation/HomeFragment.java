@@ -110,6 +110,7 @@ public class HomeFragment extends Fragment {
 
         }
 
+
 //        if (acct.getGivenName() != null) {
 //            greetingsText.append(" " + acct.getGivenName());
 //        } else {
