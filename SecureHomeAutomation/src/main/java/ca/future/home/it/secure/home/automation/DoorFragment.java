@@ -8,13 +8,19 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static java.lang.Thread.sleep;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -35,6 +41,9 @@ public class DoorFragment extends Fragment {
 
     //Manage keys
     CardView cardView;
+    ImageButton addKey;
+    ImageButton removeKey;
+    Handler handler = new Handler();
 
     //Door history
     ScrollView scrollView;
@@ -59,6 +68,8 @@ public class DoorFragment extends Fragment {
         //Manage keys
         cardView=view.findViewById(R.id.cv_keys);
         cardView.setBackgroundResource(R.drawable.cardview_border);
+        addKey=view.findViewById(R.id.add_key_btn);
+        removeKey=view.findViewById(R.id.remove_key_btn);
 
         //Door status unlocked by default for testing
         locked.setVisibility(View.INVISIBLE);
@@ -92,6 +103,57 @@ public class DoorFragment extends Fragment {
                 doorLock.setBackgroundResource(R.drawable.lock_border_red);
             }
         });
+
+        //Add key
+        addKey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(R.string.place_key);
+                builder.setTitle(R.string.add_key);
+
+                //Cancel
+                builder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener)
+                        (dialog, which) -> {
+                    dialog.cancel();
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        //Remove key
+        removeKey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder removeBuilder = new AlertDialog.Builder(getContext());
+                removeBuilder.setMessage(R.string.place_key_remove);
+                removeBuilder.setTitle(R.string.remove_key);
+
+                //Cancel
+                removeBuilder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener) (dialog, which) -> {
+                    dialog.cancel();
+                });
+/*
+                try {
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                    builder1.setMessage(R.string.success);
+                    builder1.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    AlertDialog removeSuccess = builder1.create();
+                    removeSuccess.show();
+                    sleep(3000);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+*/
+                AlertDialog removeAlert = removeBuilder.create();
+                removeAlert.show();
+            }
+        });
     }
 
     public void addHistory(String info){
@@ -105,4 +167,5 @@ public class DoorFragment extends Fragment {
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
     }
+
 }
