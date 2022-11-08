@@ -18,10 +18,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class SchedulerActivity extends Activity {
@@ -29,13 +39,15 @@ public class SchedulerActivity extends Activity {
     ImageButton back;
     TextView startTV, endTv;
     Button start, end, saveTime;
-    int hour, minute, checking,i,counter;
-    String endtimeout, Starttimeout, daySelected, timeday,check,count;
+    int hour, minute, checking,counter;
+    String endtimeout, Starttimeout, daySelected, timeday,check,count,dbDate,dbTime;
     String []arr;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     LinearLayout linearLayout;
     ScrollView scroll;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,7 +197,7 @@ public class SchedulerActivity extends Activity {
     }
 
     private void checkDays() {
-        daySelected = "";
+        daySelected = getString(R.string.empty);
         if (isMonday) {
             daySelected = getString(R.string.monday);
         }
@@ -256,37 +268,11 @@ public class SchedulerActivity extends Activity {
             assert d2 != null;
 
             if (counter ==0){
-                Log.d(TAG,"first check");
+                Log.d(TAG,getString(R.string.FirstCheck));
             }
             else{
-                count= "Check: "+ counter;
+                count= getString(R.string.Check)+ counter;
                 Log.d(TAG,count);
-
-                for (i=0;i<counter;i++){
-                    arr= new String[100];
-                    arr[counter-1]=check;
-                    String temp="Checking array"+ arr[counter-1];
-                    Log.d(TAG, temp);
-                    Log.d(TAG,daySelected);
-
-                    Log.d(TAG,"------------------------------------------------------------------");
-                    Log.d(TAG,daySelected);
-                    Log.d(TAG,arr[counter-1]);
-                }
-                Log.d(TAG,daySelected);
-                Log.d(TAG,arr[counter-1]);
-                if (arr[counter-1]==daySelected){
-                    Log.d(TAG,"Same string");
-                       /* Log.d(TAG,daySelected);
-                        Log.d(TAG,arr[counter-1]);*/
-                }
-                else{
-                    Log.d(TAG,"Not Same string");
-
-                    Log.d(TAG,"------------------------------------------------------------------");
-                    Log.d(TAG,daySelected);
-                    Log.d(TAG,arr[counter-1]);
-                }
             }
 
             if (d2.getTime() > d1.getTime() && checking != 7) {
@@ -303,6 +289,8 @@ public class SchedulerActivity extends Activity {
                 Toast.makeText(this, R.string.endSmall, Toast.LENGTH_SHORT).show();
 
             }
+            toDatabase();
+
         }
     }
     private void logging(){
@@ -325,6 +313,36 @@ public class SchedulerActivity extends Activity {
         textView.setFontFeatureSettings("sans-serif");
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
+    }
+
+    private void toDatabase(){
+        String timeMsg=Starttimeout+getString(R.string.to)+endtimeout;
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.dayKey)));
+
+        dbDate = daySelected;
+        databaseReference.setValue(dbDate);
+        databaseReference.setValue(dbTime);
+        Map<String, Object> day = new HashMap<>();
+        for (int i =0; i<counter;i++){
+            String dateC=getString(R.string.Day)+i;
+            day.put(dateC, daySelected);
+        }
+        databaseReference.updateChildren(day);
+
+        dbTime=Starttimeout+getString(R.string.to)+endtimeout;
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.timeKey)));
+        databaseReference.setValue(dbTime);
+        Map<String, Object> time = new HashMap<>();
+        for (int i =0; i<counter;i++){
+            String dateC=getString(R.string.Time)+i;
+            time.put(dateC, timeMsg);
+        }
+        databaseReference.updateChildren(time);
+
+
+
+
     }
 }
 

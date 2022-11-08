@@ -194,12 +194,19 @@
     <string name="mustpickday">Need to pick at least 1 day</string>
     <string name="dayspickedMsg">\"Day picked: \"</string>
     <string name="timeSelectedmsg">\nTime selected :</string>
-    <string name="to">\" to \"</string>
+    <string name="to"> to </string>
     <string name="place_key">Place key card you wish to add on the RIFD reader...</string>
     <string name="cancel">Cancel</string>
     <string name="place_key_remove">Place the key you wish to remove on the RFID reader...</string>
     <string name="success">Success!</string>
     <string name="close">Close</string>
+    <string name="Time">"Time "</string>
+    <string name="Day">"Day "</string>
+    <string name="timeKey" translatable="false">/Schedule/Time</string>
+    <string name="empty" translatable="false" />
+    <string name="FirstCheck">First Check</string>
+    <string name="Check">\"Check: \"</string>
+    <string name="dayKey" translatable="false">/Schedule/Day</string>
 
 
 </resources>

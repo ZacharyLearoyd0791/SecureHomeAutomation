@@ -193,6 +193,10 @@
     <string name="place_key_remove">Place the key you wish to remove on the RFID reader...</string>
     <string name="success">Success!</string>
     <string name="close">Close</string>
+    <string name="Time">"Time "</string>
+    <string name="Day">"Day "</string>
+    <string name="FirstCheck">First Check</string>
+    <string name="Check">\"Check: \"</string>
 
 
 </resources>

@@ -43,7 +43,6 @@ public class LightFragment extends Fragment {
     EditText ultrasonicET;
     Button timerBTN, schedulerBTN, saveBtn;
     int hour, minute;
-    DatePicker simpleDatePicker;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -78,6 +77,8 @@ public class LightFragment extends Fragment {
             }
         });
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
 
         saveBtn = view.findViewById(R.id.save);
         saveBtn.setOnClickListener(v -> {
@@ -86,8 +87,6 @@ public class LightFragment extends Fragment {
             databaseReference.setValue(name);
 
         });
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
         String name = ultrasonicET.getText().toString();
 
         databaseReference.setValue(name);
