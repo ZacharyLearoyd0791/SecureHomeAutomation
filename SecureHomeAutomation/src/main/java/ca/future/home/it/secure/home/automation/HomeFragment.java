@@ -8,6 +8,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -20,20 +21,19 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
+    UserInfo userInfo=new UserInfo();
+    StringBuilder stringBuilder;
     public View view;
-    GoogleSignInAccount acct;
+    String morning,afternoon,evening,night;
     Date date;
     Calendar cal;
     int hour;
-
     //Switches
 
     public Switch lockSwitch;
@@ -72,8 +72,25 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         init();
         timeOfDay();
+        userinfo();
         greeting();
+
         return view;
+    }
+
+    private void userinfo() {
+
+        userInfo.typeAccount();
+        if (userInfo.localName!=null){
+            stringBuilder= new StringBuilder(userInfo.localName);
+        }
+       if (userInfo.nameInfo!=null){
+            stringBuilder= new StringBuilder(userInfo.nameInfo);
+        }
+       else{
+           stringBuilder=new StringBuilder(getString(R.string.empty));
+        }
+
     }
 
     private void init(){
@@ -94,6 +111,7 @@ public class HomeFragment extends Fragment {
         pressTemp = view.findViewById(R.id.iv_press_temp);
         pressLight = view.findViewById(R.id.iv_press_light);
     }
+
     private void timeOfDay(){
         date = new Date();
         cal = Calendar.getInstance();
@@ -102,22 +120,26 @@ public class HomeFragment extends Fragment {
     }
     private void greeting(){
         greetingsText = view.findViewById(R.id.Greetings);
-        acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         greetingsText.setText(null);
 
+        morning=getString(R.string.greetingMorning)+getString(R.string.empty)+stringBuilder;
+        afternoon=getString(R.string.greetingAfternoon)+getString(R.string.empty)+stringBuilder;
+        evening=getString(R.string.greetingEvening)+getString(R.string.empty)+stringBuilder;
+        night=getString(R.string.greetingNight)+getString(R.string.empty)+stringBuilder;
 
         if (hour >= 6 && hour < 12) {
-            greetingsText.setText(R.string.greetingMorning);
+            greetingsText.setText(morning);
         }
         else if (hour >= 12 && hour < 17) {
-            greetingsText.setText(R.string.greetingAfternoon);
+            greetingsText.setText(afternoon);
         }
         else if (hour >= 17 && hour < 21) {
-            greetingsText.setText(R.string.greetingEvening);
+            greetingsText.setText(evening);
         }
         else {
-            greetingsText.setText(R.string.greetingNight);
+            greetingsText.setText(night);
         }
+
     }
 
     @Override
