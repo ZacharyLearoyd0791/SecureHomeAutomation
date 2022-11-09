@@ -145,6 +145,8 @@
     <string name="ultrasonicSensor">Ultrasonic Sensor Distance:</string>
     <string name="minutes">minutes</string>
     <string name="lightOff">Lights OFF!!</string>
+    <string name="lightOn">Lights ON!!</string>
+
     <string name="timeSet">Time you set in\n</string>
     <string name="data_in">Data to Database</string>
     <string name="lightpressed">LightPressed</string>

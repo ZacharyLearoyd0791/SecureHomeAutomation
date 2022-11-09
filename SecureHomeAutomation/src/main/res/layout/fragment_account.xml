@@ -26,8 +26,9 @@
         android:id="@+id/profile_frag_bg"
         android:layout_width="413dp"
         android:layout_height="263dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="467dp"
+        android:src="@drawable/profile_frag_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,8 +139,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="609dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_edit_profile_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,8 @@ public class LightFragment extends Fragment {
     TextView timerTV, testing, ultrasonicTV;
     String dist, strOut;
     EditText ultrasonicET;
-    Button timerBTN, schedulerBTN, saveBtn;
+    ImageButton timerBTN, schedulerBTN;
+    Button saveBtn;
     int hour, minute;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
