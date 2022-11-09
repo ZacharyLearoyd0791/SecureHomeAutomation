@@ -32,6 +32,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
+
     //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getFCM();
-
         /*
 
         //This is for testing purposes only. To test crashlytics
