@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -17,9 +18,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserInfo extends Fragment {
     private GoogleSignInAccount acct;
     private FirebaseUser user;
-    String infoName,name,email,uid,str,personName,personId,infoLocalName;
-    String idInfo,nameInfo,userId,localName;
+    String infoID,infoName,name,email,uid,str,photos,personName,personId,infoLocalName,personEmail,infoEmail,infoLocalEmail;
+    String idInfo,nameInfo,userId,localName,localEmail,emailInfo;
     static Context context;
+    Uri personPhoto,photOut;
 
 
 
@@ -54,6 +56,11 @@ public class UserInfo extends Fragment {
             Log.d(TAG,infoLocalName);
             returnLocalName();
         }
+        if (email!=null){
+            infoLocalEmail="Email is "+email;
+            Log.d(TAG,infoLocalEmail);
+            returnLocalEmail();
+        }
         else{
             Log.d(TAG,"name is null");
 
@@ -67,18 +74,25 @@ public class UserInfo extends Fragment {
     private void googleLoginUsers(){
         personName = acct.getDisplayName();
         personId=acct.getId();
+        personEmail= acct.getEmail();
+        personPhoto = acct.getPhotoUrl();
 
         if (personName!=null){
             infoName="Name is "+personName;
             Log.d(TAG,infoName);
             returnName();
         }
+        if (personEmail!=null){
+            infoEmail="Email is "+personEmail;
+            Log.d(TAG,infoEmail);
+            returnEmail();
+        }
         else{
             Log.d(TAG,"name is null");
 
     }
         if (personId!=null){
-            infoName="Id of user is "+personId;
+            infoID="Id of user is "+personId;
 
             Log.d(TAG,infoName);
             returnId();
@@ -87,8 +101,33 @@ public class UserInfo extends Fragment {
             Log.d(TAG,"Id is null");
 
         }
+        if (personPhoto!=null){
+            photos="Person Photo is Available ";
+
+            Log.d(TAG,photos);
+            returnPhoto();
+        }
+        else{
+            Log.d(TAG,"Id is null");
+
+        }
 
     }
+
+    private String returnEmail() {
+        emailInfo=personEmail;
+        return emailInfo;
+    }
+    private String returnLocalEmail() {
+        localEmail=email;
+        return localEmail;
+    }
+
+    private Uri returnPhoto() {
+        photOut=personPhoto;
+        return photOut;
+    }
+
     private String returnLocalName() {
         localName=infoLocalName;
         return localName;

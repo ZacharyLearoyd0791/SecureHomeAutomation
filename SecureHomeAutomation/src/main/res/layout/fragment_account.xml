@@ -9,30 +9,18 @@
     tools:context=".AccountFragment">
 
 
-    <TextView
-        android:id="@+id/tv_account_person_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="196dp"
-        android:text=""
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <ImageView
         android:id="@+id/profile_frag_bg"
         android:layout_width="413dp"
         android:layout_height="263dp"
-        android:layout_marginTop="0dp"
         android:layout_marginBottom="467dp"
         android:src="@drawable/profile_frag_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/profile_title"
@@ -96,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="@string/email"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="48dp"
-            android:text="Name: "
+            android:text="@string/name"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -118,9 +106,27 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="88dp"
-            android:text="Phone number: "
+            android:text="@string/phone"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_account_person_name"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="48dp"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_account_person_email"
+            android:layout_width="278dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#000000"
+            android:textSize="20sp" />
 
     </androidx.cardview.widget.CardView>
 

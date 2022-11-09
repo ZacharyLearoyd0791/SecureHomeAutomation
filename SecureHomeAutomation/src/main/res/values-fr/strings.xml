@@ -200,6 +200,8 @@
     <string name="Check">\"Check: \"</string>
     <string name="enter_your_phone_number">Enter your Phone number</string>
     <string name="phone_number_error_message">Must be at least 10 numbers</string>
+    <string name="phone">Phone</string>
+    <string name="noInfo">No Info</string>
 
 
 </resources>
