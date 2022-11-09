@@ -12,7 +12,7 @@
         android:orientation="vertical">
         <TextView
             android:layout_gravity="center"
-            android:id="@+id/textView1"
+            android:id="@+id/Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Temperature"
@@ -20,7 +20,7 @@
             android:textStyle="bold"
             />
         <EditText
-            android:id="@+id/etEntryBalance"
+            android:id="@+id/TemperatureValue"
             android:layout_width="match_parent"
             android:inputType="number"
             android:textSize="28sp"
