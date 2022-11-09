@@ -138,6 +138,7 @@
     <string name="ultrasonicSensor">Ultrasonic Sensor Distance:</string>
     <string name="minutes">minutes</string>
     <string name="lightOff">Lights OFF!!</string>
+    <string name="lightOn">Lights ON!!</string>
     <string name="timeSet">Time you set in\n</string>
     <string name="data_in">Data to Database</string>
     <string name="lightpressed">LightPressed</string>
@@ -197,6 +198,10 @@
     <string name="Day">"Day "</string>
     <string name="FirstCheck">First Check</string>
     <string name="Check">\"Check: \"</string>
+    <string name="enter_your_phone_number">Enter your Phone number</string>
+    <string name="phone_number_error_message">Must be at least 10 numbers</string>
+    <string name="phone">Phone</string>
+    <string name="noInfo">No Info</string>
 
 
 </resources>

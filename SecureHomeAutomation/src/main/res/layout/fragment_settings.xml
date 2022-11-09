@@ -34,12 +34,34 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="303dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="552dp"
+        android:text="@string/save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/portrait_switch"
+        android:layout_width="122dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="428dp"
+        android:text="@string/off_on"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
     <Switch
         android:id="@+id/bold_switch"
         android:layout_width="122dp"
         android:layout_height="55dp"
-        android:layout_marginStart="264dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="216dp"
         android:text="@string/off_on"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +73,7 @@
         android:layout_width="122dp"
         android:layout_height="55dp"
         android:layout_marginStart="264dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp"
         android:text="@string/off_on"
         android:textSize="20sp"
@@ -65,30 +87,20 @@
         android:id="@+id/fingerprint_switch"
         android:layout_width="122dp"
         android:layout_height="55dp"
-        android:layout_marginStart="264dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="8dp"
         android:text="@string/off_on"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/colour_switch"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="556dp"
-        android:text="@string/save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tv_bold"
         android:layout_width="110dp"
         android:layout_height="35dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="232dp"
         android:text="@string/Bold_text"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -99,8 +111,8 @@
         android:id="@+id/tv_colour"
         android:layout_width="110dp"
         android:layout_height="35dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="300dp"
         android:text="@string/dark_mode"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -111,8 +123,8 @@
         android:id="@+id/tv_finger"
         android:layout_width="216dp"
         android:layout_height="35dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="268dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="368dp"
         android:text="@string/enable_fingerprint_login"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -123,25 +135,13 @@
         android:id="@+id/tv_Portrait"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="342dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="444dp"
         android:text="@string/lock_portrait_mode"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Switch
-        android:id="@+id/portrait_switch"
-        android:layout_width="122dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="264dp"
-        android:layout_marginTop="328dp"
-        android:text="@string/off_on"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

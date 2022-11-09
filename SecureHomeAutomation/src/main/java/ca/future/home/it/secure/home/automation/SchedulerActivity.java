@@ -333,10 +333,6 @@ public class SchedulerActivity extends Activity {
             time.put(dateC, timeMsg);
         }
         databaseReference.updateChildren(time);
-
-
-
-
     }
 }
 

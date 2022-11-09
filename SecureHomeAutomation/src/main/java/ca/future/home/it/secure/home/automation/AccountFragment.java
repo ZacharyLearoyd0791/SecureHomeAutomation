@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -43,9 +44,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class AccountFragment extends Fragment {
+    UserInfo userInfo=new UserInfo();
+    String name;
     private TextView personName;
-    private GoogleSignInOptions gso;
-    private GoogleSignInClient gsc;
+
     private Button signOutButton;
     View view;
 //    ImageView imgAcc;
@@ -53,7 +55,8 @@ public class AccountFragment extends Fragment {
     ImageView profileImage;
     final Handler handler = new Handler();
     Animation fadeInAnimation;
-
+    LottieAnimationView animationView;
+    Uri userImage;
     //Edit profile
     FloatingActionButton editProfileButton;
 
@@ -67,89 +70,65 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_account, container, false);
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //Declarations
-        String name = getString(R.string.name);
-        String email = getString(R.string.email);
-        //nameAcc = view.findViewById(R.id.Name);
-        emailAcc = view.findViewById(R.id.Email);
-//        nameAcc.setText(name);
-        emailAcc.setText(email);
-        profileImage = view.findViewById(R.id.profile_image);
+        init();
+        userinfo();
+        btnSteps();
+        imageHandler();
 
-        LottieAnimationView animationView
-                = view.findViewById(R.id.animationView);
+    }
+    private void init() {
+        personName=view.findViewById(R.id.tv_account_person_name);
+        emailAcc = view.findViewById(R.id.tv_account_person_email);
+        profileImage = view.findViewById(R.id.profile_image);
+        animationView = view.findViewById(R.id.animationView);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
+        editProfileButton = view.findViewById(R.id.editProfileIcon);
+
+    }
+    private void btnSteps() {
+
+
+
         signOutButton.setOnClickListener(view1 -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getContext(), LoginActivity.class);
             startActivity(intent);
             Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
         });
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
-
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentFirebaseUser != null) {
-
-            Log.d(TAG, "onComplete: currentUserEmail---->" + currentFirebaseUser.getEmail());
-            Log.d(TAG, "onComplete: currentUserDisplayName---->" + currentFirebaseUser.getDisplayName());
-            if (currentFirebaseUser.getDisplayName() == null) {
-                //nameAcc.append(getString(R.string.noVal));
-            } else {
-               // nameAcc.append(currentFirebaseUser.getDisplayName());
-            }
-            if (currentFirebaseUser.getEmail() == null) {
-                emailAcc.append(getString(R.string.noVal));
-            } else {
-                emailAcc.append(currentFirebaseUser.getEmail());
-            }
-
-
-        } else {
-            if (acct != null) {
-                String personName = acct.getDisplayName();
-                String personGivenName = acct.getGivenName();
-                String personFamilyName = acct.getFamilyName();
-                String personEmail = acct.getEmail();
-                String personId = acct.getId();
-                Uri personPhoto = acct.getPhotoUrl();
-
-
-                // Toast.makeText(getActivity(), personName, Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onComplete: personName---->" + personName);
-                Log.d(TAG, "onComplete: personGivenName---->" + personGivenName);
-                Log.d(TAG, "onComplete: personFamilyName---->" + personFamilyName);
-                Log.d(TAG, "onComplete: personEmail---->" + personEmail);
-                Log.d(TAG, "onComplete: personId---->" + personId);
-                Log.d(TAG, "onComplete: personPhoto---->" + personPhoto);
-
-                //nameAcc.setText(name + personName);
-                emailAcc.setText(email + personEmail);
-
-
-                //ImageView imgAcc = view.findViewById(R.id.imgAcc);
+    }
+    private void imageHandler(){
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-                       animationView.setVisibility(View.INVISIBLE);
-                        Picasso.get().load(personPhoto).into(profileImage);
+                        if (userImage!=null){
+                            animationView.setVisibility(View.INVISIBLE);
+
+                            Picasso.get().load(userImage).into(profileImage);
+
+                        }
+                        else {
+                            animationView.setVisibility(View.VISIBLE);
+                        }
+
+
                     }
                 }, 3000);
 
 
 
-            }
+
             Log.d(TAG, "onComplete: currentUserUid is null");
             imageAnimation();
             //Opening profile edit frag
-            editProfileButton = view.findViewById(R.id.editProfileIcon);
             editProfileButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -160,6 +139,36 @@ public class AccountFragment extends Fragment {
 
 
         }
+
+    private void userinfo() {
+
+        userInfo.typeAccount();
+
+        if (userInfo.localEmail!=null){
+            emailAcc.setText(userInfo.localEmail);
+        }
+        if (userInfo.personEmail!=null){
+            emailAcc.setText(userInfo.emailInfo);
+        }
+        else
+            emailAcc.setText(R.string.noInfo);
+
+        if (userInfo.localName!=null){
+            personName.setText(userInfo.localName);
+        }
+        if (userInfo.nameInfo!=null){
+            personName.setText(userInfo.nameInfo);
+            if(userInfo.personPhoto!=null) {
+                userImage=userInfo.personPhoto;
+            }
+            else {
+                userImage=null;
+            }
+        }
+        else{
+            personName.setText(R.string.noInfo);
+        }
+        imageHandler();
     }
     public void imageAnimation(){
         profileImage.setVisibility(View.VISIBLE);
