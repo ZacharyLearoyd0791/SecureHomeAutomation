@@ -7,6 +7,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -25,10 +26,13 @@ import java.util.Objects;
 public class RegistrationActivity extends AppCompatActivity {
     private EditText fullName;
     private EditText emailAddress;
+    private EditText phoneNumber;
     private EditText password;
     private EditText confirmPassword;
     private String emailInput;
+    private String phoneNumberInput;
     private String passwordInput;
+    private String nameInput;
     private FirebaseAuth mAuth;
     private int fillChecker= 1;
     DatabaseReference databaseReference;
@@ -43,6 +47,7 @@ public class RegistrationActivity extends AppCompatActivity {
         emailAddress = findViewById(R.id.Registration_page_email_text);
         password = findViewById(R.id.Registration_page_password_text);
         confirmPassword = findViewById(R.id.Registration_page_confirm_password_text);
+        phoneNumber = findViewById(R.id.Registration_page_phone_number_text);
         mAuth = FirebaseAuth.getInstance();
 
         registerButton.setOnClickListener(view -> loginProcess());
@@ -50,10 +55,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void loginProcess(){
         //Assigning Values
-        String nameInput = fullName.getText().toString();
+        nameInput = fullName.getText().toString();
         emailInput = emailAddress.getText().toString();
         passwordInput = password.getText().toString();
         String confirmPasswordInput = confirmPassword.getText().toString();
+        phoneNumberInput = phoneNumber.getText().toString();
 
         //Checking if fields are empty or not
         if(fillChecker==1){
@@ -71,6 +77,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 password.setError(getString(R.string.minimum_eight_character));
                 password.requestFocus();
             }
+            if(phoneNumberInput.length()<10){
+                phoneNumber.setError(getString(R.string.phone_number_error_message));
+            }
             if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
                 emailAddress.setError(getString(R.string.enter_valid_email));
                 emailAddress.requestFocus();
@@ -86,7 +95,9 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     public void registrationProcess(int CheckerId){
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference("User Details");
+        UserHelperClass helperClass = new UserHelperClass(nameInput,emailInput,phoneNumberInput,passwordInput);
+        databaseReference.child(phoneNumberInput).setValue(helperClass);
         if(CheckerId == 0){
             mAuth.createUserWithEmailAndPassword(emailInput,passwordInput)
                     .addOnCompleteListener(task -> {
@@ -97,6 +108,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification()
                                     .addOnCompleteListener(task1 -> {
                                         if(task1.isSuccessful()){
+
                                             Toast.makeText(RegistrationActivity.this, R.string.email_check, Toast.LENGTH_SHORT).show();
                                         }else{
                                             Toast.makeText(RegistrationActivity.this, Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
