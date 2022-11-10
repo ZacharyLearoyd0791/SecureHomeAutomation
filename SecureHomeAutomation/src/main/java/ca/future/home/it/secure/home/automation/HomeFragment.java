@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -36,6 +37,7 @@ public class HomeFragment extends Fragment {
     int hour;
     //Switches
 
+    AlphaAnimation fadeIn,fadeOut;
     public Switch lockSwitch;
     public Switch tempSwitch;
     public Switch lightSwitch;
@@ -128,7 +130,9 @@ public class HomeFragment extends Fragment {
         night=getString(R.string.greetingNight)+getString(R.string.empty)+stringBuilder;
 
         if (hour >= 6 && hour < 12) {
+
             greetingsText.setText(morning);
+
         }
         else if (hour >= 12 && hour < 17) {
             greetingsText.setText(afternoon);
