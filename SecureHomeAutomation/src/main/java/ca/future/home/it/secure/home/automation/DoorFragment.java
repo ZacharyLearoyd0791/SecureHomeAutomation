@@ -31,6 +31,12 @@ import android.widget.ToggleButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class DoorFragment extends Fragment {
 
     //Door status
@@ -48,6 +54,10 @@ public class DoorFragment extends Fragment {
     //Door history
     ScrollView scrollView;
     LinearLayout linearLayout;
+
+    //Database
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     public DoorFragment() {
     }
@@ -95,12 +105,14 @@ public class DoorFragment extends Fragment {
                 locked.setVisibility(View.VISIBLE);
                 unlocked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_green);
+                toDatabase(getString(R.string.lock_status));
             } else {
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
                 status.setText(R.string.unlock);
                 unlocked.setVisibility(View.VISIBLE);
                 locked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_red);
+                toDatabase(getString(R.string.unlocked_status));
             }
         });
 
@@ -109,16 +121,14 @@ public class DoorFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addKey();
-            }
-        });
+            }});
 
         //Remove key
         removeKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeKey();
-            }
-        });
+            }});
     }
 
     public void addHistory(String info){
@@ -181,6 +191,17 @@ public class DoorFragment extends Fragment {
         //Remove alert
         AlertDialog removeAlert = removeBuilder.create();
         removeAlert.show();
+    }
+
+    private void toDatabase(String status){
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(("/Door/Status"));
+
+        databaseReference.setValue(status);
+        Map<String, Object> updateStatus = new HashMap<>();
+        updateStatus.put(getString(R.string.status),status);
+
+        databaseReference.updateChildren(updateStatus);
     }
 
 }

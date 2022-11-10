@@ -201,6 +201,8 @@
     <string name="phone_number_error_message">Must be at least 10 numbers</string>
     <string name="phone">Phone</string>
     <string name="noInfo">No Info</string>
-
+    <string name="status">\"Status: \"</string>
+    <string name="lock_status">locked</string>
+    <string name="unlocked_status">unlocked</string>
 
 </resources>
