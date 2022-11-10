@@ -41,12 +41,13 @@ public class LightFragment extends Fragment {
     TextView timerTV, testing, ultrasonicTV;
     Double distance;
     String dist,value;
-    Boolean LightStatus;
+    Boolean LightStatus,cancelTimer;
     TextView ultrasonicET;
     ImageButton timerBTN, schedulerBTN;
     int hour, minute;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    Button lightsOff,lightsOn;
 
     public LightFragment() {
 
@@ -63,20 +64,51 @@ public class LightFragment extends Fragment {
         schedulerBTN = view.findViewById(R.id.schedulerButton);
         ultrasonicET = view.findViewById(R.id.Ultrasonic);
         testing = view.findViewById(R.id.testing);
+        lightsOff=view.findViewById(R.id.offLights);
+        lightsOn=view.findViewById(R.id.onLights);
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("/Ultrasonic Sensor/distance");
         //timer and scheduler
+        cancelTimer=true;
+
         timerBTN.setOnClickListener(v -> popTimePicker());
         schedulerBTN.setOnClickListener(view1 -> {
             Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
             getActivity().startActivity(myIntent);
         });
+        lightsOff.setOnClickListener(view13 -> {
+            LightStatus = false;
+            lightHandler();
+        });
+        lightsOn.setOnClickListener(view12 -> {
+            LightStatus = true;
+            lightHandler();});
 
         SensorDB();
+
+
+    }
+    private void lightHandler() {
+
+        if (LightStatus) {
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+            databaseReference.setValue("On");
+            cancelTimer=true;
+        }
+        else{
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+            databaseReference.setValue("Off");
+            cancelTimer=false;
+
+        }
     }
 
     private void SensorDB(){
