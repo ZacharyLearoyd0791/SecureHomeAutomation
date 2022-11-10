@@ -108,17 +108,7 @@ public class DoorFragment extends Fragment {
         addKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage(R.string.place_key);
-                builder.setTitle(R.string.add_key);
-
-                //Cancel
-                builder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener)
-                        (dialog, which) -> {
-                    dialog.cancel();
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                addKey();
             }
         });
 
@@ -126,32 +116,7 @@ public class DoorFragment extends Fragment {
         removeKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder removeBuilder = new AlertDialog.Builder(getContext());
-                removeBuilder.setMessage(R.string.place_key_remove);
-                removeBuilder.setTitle(R.string.remove_key);
-
-                //Cancel
-                removeBuilder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener) (dialog, which) -> {
-                    dialog.cancel();
-                });
-/*
-                try {
-
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-                    builder1.setMessage(R.string.success);
-                    builder1.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
-                        dialog.cancel();
-                    });
-                    AlertDialog removeSuccess = builder1.create();
-                    removeSuccess.show();
-                    sleep(3000);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-*/
-                AlertDialog removeAlert = removeBuilder.create();
-                removeAlert.show();
+                removeKey();
             }
         });
     }
@@ -166,6 +131,56 @@ public class DoorFragment extends Fragment {
         textView.setFontFeatureSettings("sans-serif");
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
+    }
+
+    public void addKey(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(R.string.place_key);
+        builder.setTitle(R.string.add_key);
+
+        //Cancel
+        builder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener)
+                (dialog, which) -> {
+                    dialog.cancel();
+                });
+
+        //On successful add
+        AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
+        successBuilder.setMessage(R.string.success);
+        successBuilder.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog addSuccess = successBuilder.create();
+        addSuccess.show();
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void removeKey(){
+
+        AlertDialog.Builder removeBuilder = new AlertDialog.Builder(getContext());
+        removeBuilder.setMessage(R.string.place_key_remove);
+        removeBuilder.setTitle(R.string.remove_key);
+
+        //Cancel
+        removeBuilder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        //On successful removal
+        AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
+        successBuilder.setMessage(R.string.success);
+        successBuilder.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog removeSuccess = successBuilder.create();
+        removeSuccess.show();
+
+        //Remove alert
+        AlertDialog removeAlert = removeBuilder.create();
+        removeAlert.show();
     }
 
 }
