@@ -71,12 +71,9 @@ public class LightFragment extends Fragment {
 
         //timer and scheduler
         timerBTN.setOnClickListener(v -> popTimePicker());
-        schedulerBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
-                getActivity().startActivity(myIntent);
-            }
+        schedulerBTN.setOnClickListener(view1 -> {
+            Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
+            getActivity().startActivity(myIntent);
         });
 
         SensorDB();
@@ -160,14 +157,21 @@ public class LightFragment extends Fragment {
 
             new CountDownTimer(milli, second) {
                 public void onTick(long millisUntilFinished) {
-                    Log.d(TAG, String.valueOf(counter));
+                    String count="Counter is on :"+counter;
+                    Log.d(TAG, String.valueOf(count));
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
 
+                    databaseReference.setValue("On");
                     counter++;
                 }
 
                 public void onFinish() {
                     timerTV.setText(R.string.lightOff);
                     //Log.d(TAG, getString(R.string.lightOff));
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+                    databaseReference.setValue("Off");
                     counter = 0;
                     hour = 0;
                     minute = 0;
