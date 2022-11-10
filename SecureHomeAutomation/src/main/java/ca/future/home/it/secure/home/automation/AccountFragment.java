@@ -118,8 +118,6 @@ public class AccountFragment extends Fragment {
                         else {
                             animationView.setVisibility(View.VISIBLE);
                         }
-
-
                     }
                 }, 3000);
 
