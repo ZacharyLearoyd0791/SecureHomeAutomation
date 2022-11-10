@@ -20,8 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -34,16 +32,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 public class LightFragment extends Fragment {
 
     public int counter;
     TextView timerTV, testing, ultrasonicTV;
-    String dist, strOut;
-    EditText ultrasonicET;
+    Double distance;
+    String dist,value;
+    Boolean LightStatus;
+    TextView ultrasonicET;
     ImageButton timerBTN, schedulerBTN;
-    Button saveBtn;
     int hour, minute;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -79,29 +79,54 @@ public class LightFragment extends Fragment {
             }
         });
 
+        SensorDB();
+    }
+
+    private void SensorDB(){
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-
-        saveBtn = view.findViewById(R.id.save);
-        saveBtn.setOnClickListener(v -> {
-
-            String name = ultrasonicET.getText().toString();
-            databaseReference.setValue(name);
-
-        });
-        String name = ultrasonicET.getText().toString();
-
-        databaseReference.setValue(name);
-
-
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("/Ultrasonic Sensor/distance");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String test = snapshot.getValue().toString();
+                if (snapshot.exists()){
 
-                    strOut = getString(R.string.DatabaseStr) + test;
-                    ultrasonicTV.setText(strOut);
+                    dist=snapshot.getValue().toString();
+                    value="Distance reading from Ultrasonic sensor :"+dist+" cm";
+                    Log.d(TAG,value);
+                    ultrasonicTV.setText(dist);
+                    try
+                    {
+                        Double.parseDouble(dist);
+                        distance=Double.parseDouble(dist);
+                        if (distance<20){
+                            String value="Sensor has detected movement! Lights turning on!";
+                            Log.d(TAG,value);
+                            ultrasonicTV.setText(value);
+                            LightStatus=true;
+                        }
+                        else{
+                            String value="Sensor reads no movement within 20 cm. Current distance is "+distance+"cm";
+                            Log.d(TAG,value);
+                            LightStatus=false;
+                        }
+                        if (LightStatus) {
+                            firebaseDatabase = FirebaseDatabase.getInstance();
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+                            databaseReference.setValue("On");
+                        }
+                        else{
+                            firebaseDatabase = FirebaseDatabase.getInstance();
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+                            databaseReference.setValue("Off");
+                        }
+                    }
+
+                    catch(NumberFormatException e)
+                    {
+                        Log.d(TAG,"value is not a double");
+                        ultrasonicTV.setText(dist);
+                    }
+
                 }
             }
 
@@ -110,7 +135,6 @@ public class LightFragment extends Fragment {
 
             }
         });
-
     }
 
     public void popTimePicker() {
