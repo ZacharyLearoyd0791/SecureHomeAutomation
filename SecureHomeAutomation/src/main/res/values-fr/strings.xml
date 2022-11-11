@@ -274,4 +274,6 @@
     <string name="LightStatus">LightStatus</string>
     <string name="channelDesc">Notification to be sent when Light is on!</string>
     <string name="keyIs">Light Key is :</string>
+    <string name="Lights">Lights</string>
+
 </resources>

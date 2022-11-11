@@ -9,7 +9,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 public class UserHelperClass {
-    String name, email,phoneNo, password ;
+    String name, email,phoneNo ;
 
     public UserHelperClass(){
 
@@ -18,7 +18,6 @@ public class UserHelperClass {
         this.name = name;
         this.email = email;
         this.phoneNo = phoneNo;
-        this.password = password;
     }
 
     public String getName() {
@@ -45,11 +44,5 @@ public class UserHelperClass {
         this.phoneNo = phoneNo;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
