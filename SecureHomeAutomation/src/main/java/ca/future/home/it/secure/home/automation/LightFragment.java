@@ -43,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 public class LightFragment extends Fragment {
+
     UserInfo userInfo=new UserInfo();
     public int counter;
     TextView timerTV, testing, ultrasonicTV;
@@ -58,8 +59,8 @@ public class LightFragment extends Fragment {
     Vibrator vibrator;
 
     public LightFragment() {
-
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,8 +110,6 @@ public class LightFragment extends Fragment {
             lightHandler();});
 
         SensorDB();
-
-
     }
 
     private void dbID(){
@@ -127,8 +126,6 @@ public class LightFragment extends Fragment {
             key= personalKey;
             Log.d(TAG, key);
         }
-
-
     }
 
     private void lightHandler() {

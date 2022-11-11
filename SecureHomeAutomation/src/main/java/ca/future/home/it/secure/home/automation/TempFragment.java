@@ -27,6 +27,7 @@ public class TempFragment extends Fragment {
     TextView tvCurrentTemperature;
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
+
     public TempFragment() {
         // Required empty public constructor
     }

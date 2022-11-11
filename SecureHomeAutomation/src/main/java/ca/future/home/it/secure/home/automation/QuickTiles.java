@@ -1,3 +1,11 @@
+/*
+Authors/Std.#/Section:
+Zachary Learoyd (LRDZ0002) - CENG-322-0NC
+Akash Muhundhan (N01420118) - CENG-322-0NA
+Harpreet Cheema (N01438638) - CENG-322-0NA
+Krushang Parekh (N01415355) - CENG-322-0NC
+*/
+
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
@@ -15,6 +23,7 @@ import androidx.annotation.RequiresApi;
 public class QuickTiles extends TileService {
 
     UserInfo userInfo=new UserInfo();
+
     // Called when the user adds your tile.
     @Override
     public void onTileAdded() {
@@ -31,12 +40,8 @@ public class QuickTiles extends TileService {
         title.setIcon(Icon.createWithResource(this,R.drawable.appicon));
         title.updateTile();
 
-
-
         Log.d(TAG, String.valueOf(title));
-
     }
-
 
     // Called when your app can no longer update your tile.
     @Override
@@ -50,17 +55,16 @@ public class QuickTiles extends TileService {
         }
         else{
             Log.d(TAG,"Device UnLocked");
+
             if(userInfo.userId!=null||userInfo.idInfo!=null){
                 Log.d(TAG,"Connected using accounts");
             }
             else{
                 Log.d(TAG,"Not connected using accounts");
-
             }
             Intent intent=new Intent(this,LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-
         }
     }
 
@@ -75,5 +79,4 @@ public class QuickTiles extends TileService {
     public void onTileRemoved() {
         super.onTileRemoved();
     }
-
 }

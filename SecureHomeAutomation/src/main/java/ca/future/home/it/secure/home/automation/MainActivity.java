@@ -32,7 +32,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
-
     //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException("Test Crash"); // Force a crash
             }
         });
-
 
         addContentView(crashButton, new ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -199,6 +197,4 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, msg);
                 });
     }
-
-
 }

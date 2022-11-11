@@ -43,7 +43,7 @@ public class SchedulerActivity extends Activity {
     TextView startTV, endTv;
     Button start, end, saveTime;
     int hour, minute, checking,counter;
-    String endtimeout, Starttimeout, daySelected, timeday,check,count,dbDate,dbTime;
+    String endTimeout, startTimeout, daySelected, timeDay,check,count,dbDate,dbTime;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     LinearLayout linearLayout;
@@ -180,9 +180,9 @@ public class SchedulerActivity extends Activity {
             hour = selectedHour;
             minute = selectedMinute;
 
-            Starttimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
+            startTimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
 
-            String timeOut = getString(R.string.timeSet) + Starttimeout;
+            String timeOut = getString(R.string.timeSet) + startTimeout;
             Log.d(TAG, timeOut);
             startTV.setText(timeOut);
 
@@ -235,8 +235,8 @@ public class SchedulerActivity extends Activity {
             hour = selectedHour;
             minute = selectedMinute;
 
-            endtimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
-            String timeOut = getString(R.string.timeSet) + endtimeout;
+            endTimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
+            String timeOut = getString(R.string.timeSet) + endTimeout;
             endTv.setText(timeOut);
 
 
@@ -252,17 +252,17 @@ public class SchedulerActivity extends Activity {
 
     private void saveTime() throws ParseException {
 
-        String timeSaved = getString(R.string.startTimemsg) + Starttimeout + getString(R.string.endTimemsg) + endtimeout;
+        String timeSaved = getString(R.string.startTimemsg) + startTimeout + getString(R.string.endTimemsg) + endTimeout;
         Log.d(TAG, timeSaved);
 
-        if ((Starttimeout == null) || endtimeout == null) {
+        if ((startTimeout == null) || endTimeout == null) {
             Toast.makeText(this, R.string.startorendnull, Toast.LENGTH_SHORT).show();
 
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat(getString(hourmin));
-            Date d1 = sdf.parse(Starttimeout);
+            Date d1 = sdf.parse(startTimeout);
 
-            Date d2 = sdf.parse(endtimeout);
+            Date d2 = sdf.parse(endTimeout);
 
             assert d1 != null;
             assert d2 != null;
@@ -277,8 +277,8 @@ public class SchedulerActivity extends Activity {
 
             if (d2.getTime() > d1.getTime() && checking != 7) {
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                timeday = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + Starttimeout + getString(R.string.to) + endtimeout;
-                Log.d(TAG, timeday);
+                timeDay = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + startTimeout + getString(R.string.to) + endTimeout;
+                Log.d(TAG, timeDay);
                 logging();
                 check=daySelected;
                 counter=counter+1;
@@ -299,7 +299,7 @@ public class SchedulerActivity extends Activity {
 
         linearLayout=scroll.findViewById(R.id.liner_schedule);
 
-        addHistory(timeday);
+        addHistory(timeDay);
 
     }
 
@@ -316,7 +316,7 @@ public class SchedulerActivity extends Activity {
     }
 
     private void toDatabase(){
-        String timeMsg=Starttimeout+getString(R.string.to)+endtimeout;
+        String timeMsg= startTimeout +getString(R.string.to)+ endTimeout;
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.dayKey)));
 
@@ -330,7 +330,7 @@ public class SchedulerActivity extends Activity {
         }
         databaseReference.updateChildren(day);
 
-        dbTime=Starttimeout+getString(R.string.to)+endtimeout;
+        dbTime= startTimeout +getString(R.string.to)+ endTimeout;
         databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.timeKey)));
         databaseReference.setValue(dbTime);
         Map<String, Object> time = new HashMap<>();

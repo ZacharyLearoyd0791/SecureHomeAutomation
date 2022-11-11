@@ -21,7 +21,7 @@ public class UserInfo extends Fragment {
     String infoID,infoName,name,email,uid,str,photos,personName,personId,infoLocalName,personEmail,infoEmail,infoLocalEmail;
     String idInfo,nameInfo,userId,localName,localEmail,emailInfo;
     static Context context;
-    Uri personPhoto,photOut;
+    Uri personPhoto, photoOut;
 
     public void typeAccount() {
         UserInfo.context = getApplicationContext();
@@ -119,8 +119,8 @@ public class UserInfo extends Fragment {
     }
 
     private Uri returnPhoto() {
-        photOut=personPhoto;
-        return photOut;
+        photoOut =personPhoto;
+        return photoOut;
     }
 
     private String returnLocalName() {

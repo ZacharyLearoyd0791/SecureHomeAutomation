@@ -167,6 +167,7 @@ public class DoorFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
     public void removeKey(){
 
         AlertDialog.Builder removeBuilder = new AlertDialog.Builder(getContext());
@@ -203,5 +204,4 @@ public class DoorFragment extends Fragment {
 
         databaseReference.updateChildren(updateStatus);
     }
-
 }
