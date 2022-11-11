@@ -7,6 +7,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 
 package ca.future.home.it.secure.home.automation;
+
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
@@ -14,7 +15,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,19 +28,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
-import com.airbnb.lottie.L;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.Locale;
 
 public class LightFragment extends Fragment {
