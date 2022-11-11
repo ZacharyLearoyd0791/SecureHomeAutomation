@@ -5,6 +5,7 @@ Akash Muhundhan (N01420118) - CENG-322-0NA
 Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC
 */
+
 package ca.future.home.it.secure.home.automation;
 
 import android.content.DialogInterface;
