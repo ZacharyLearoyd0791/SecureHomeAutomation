@@ -5,7 +5,6 @@ Akash Muhundhan (N01420118) - CENG-322-0NA
 Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC
 */
-
 package ca.future.home.it.secure.home.automation;
 
 import android.content.DialogInterface;
@@ -22,11 +21,19 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class TempFragment extends Fragment {
 
     TextView tvCurrentTemperature;
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
+    FirebaseDatabase database;
+    DatabaseReference minTempRef;
+    DatabaseReference maxTempRef;
+
     public TempFragment() {
         // Required empty public constructor
     }
@@ -49,6 +56,9 @@ public class TempFragment extends Fragment {
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MaximumTemperature);
+        database = FirebaseDatabase.getInstance();
+        minTempRef = database.getReference("Temperature-Configurations/minTemperature");
+        maxTempRef = database.getReference("Temperature-Configurations/maxTemperature");
     }
 
     private void setListeners() {
@@ -68,7 +78,7 @@ public class TempFragment extends Fragment {
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
-        String title = isMinTemperature ? getString(R.string.min_temp) : getString(R.string.max_temp);
+        String title = isMinTemperature ? "Minimum Temperature" : "Maximum Temperature";
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.temperature_input_dialog_box, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -78,16 +88,17 @@ public class TempFragment extends Fragment {
         EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        int temperature = Integer.parseInt(userInput.getText().toString());
                         if (isMinTemperature) {
-                            //Todo handle the input for min temperature
+                            saveMinTemperature(temperature);
                         } else {
-                            //Todo handle the input for max temperature
+                            saveMaxTemperature(temperature);
                         }
                     }
                 })
-                .setNegativeButton(R.string.cancel,
+                .setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -95,5 +106,31 @@ public class TempFragment extends Fragment {
                         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private void saveMinTemperature(int temp) {
+        minTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Minimum Temperature could not be saved " + databaseError.getMessage());
+                } else {
+                    System.out.println("Minimum Temperature saved successfully.");
+                }
+            }
+        });
+    }
+
+    private void saveMaxTemperature(int temp) {
+        maxTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Maximum Temperature could not be saved " + databaseError.getMessage());
+                } else {
+                    System.out.println("Maximum Temperature saved successfully.");
+                }
+            }
+        });
     }
 }
