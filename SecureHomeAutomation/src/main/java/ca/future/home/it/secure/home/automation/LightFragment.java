@@ -76,7 +76,6 @@ public class LightFragment extends Fragment {
         lightsOn=view.findViewById(R.id.onLights);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
-
         return view;
     }
     private void notificationCaller() {
@@ -122,6 +121,7 @@ public class LightFragment extends Fragment {
             key=localKey;
             Log.d(TAG,key);
         }
+
         if(personalKey!=null) {
             key= personalKey;
             Log.d(TAG, key);
@@ -141,7 +141,6 @@ public class LightFragment extends Fragment {
             databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
             databaseReference.setValue(R.string.off);
             cancelTimer=false;
-
         }
     }
 
@@ -151,6 +150,7 @@ public class LightFragment extends Fragment {
         sensorKey=key+getString(R.string.db_ultrasonic_dist);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.db_ultrasonic_dist));
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -160,6 +160,7 @@ public class LightFragment extends Fragment {
                     value=getString(R.string.distance_from_ultra)+dist+getString(R.string.cm);
                     Log.d(TAG,value);
                     ultrasonicTV.setText(dist);
+
                     try
                     {
                         Double.parseDouble(dist);
@@ -197,9 +198,9 @@ public class LightFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -228,7 +229,6 @@ public class LightFragment extends Fragment {
     public void popTimePicker() {
         hour = 0;
         minute = 0;
-
 
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
             counter = 0;
@@ -265,7 +265,6 @@ public class LightFragment extends Fragment {
                     counter = 0;
                     hour = 0;
                     minute = 0;
-
                 }
             }.start();
         };

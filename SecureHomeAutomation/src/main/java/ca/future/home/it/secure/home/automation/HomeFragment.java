@@ -8,7 +8,6 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -35,9 +34,11 @@ public class HomeFragment extends Fragment {
     Date date;
     Calendar cal;
     int hour;
-    //Switches
 
     AlphaAnimation fadeIn,fadeOut;
+
+    //Switches
+
     public Switch lockSwitch;
     public Switch tempSwitch;
     public Switch lightSwitch;
@@ -63,8 +64,6 @@ public class HomeFragment extends Fragment {
 
     final Handler handler = new Handler();
 
-
-
     public HomeFragment() {
     }
 
@@ -81,18 +80,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void userinfo() {
-
         userInfo.typeAccount();
+
         if (userInfo.localName!=null){
             stringBuilder= new StringBuilder(userInfo.localName);
         }
-       if (userInfo.nameInfo!=null){
+
+        if (userInfo.nameInfo!=null){
             stringBuilder= new StringBuilder(userInfo.nameInfo);
         }
-       else{
+        else{
            stringBuilder=new StringBuilder(getString(R.string.empty));
         }
-
     }
 
     private void init(){
@@ -120,6 +119,7 @@ public class HomeFragment extends Fragment {
         cal.setTime(date);
         hour = cal.get(Calendar.HOUR_OF_DAY);
     }
+
     private void greeting(){
         greetingsText = view.findViewById(R.id.Greetings);
         greetingsText.setText(null);
@@ -130,9 +130,7 @@ public class HomeFragment extends Fragment {
         night=getString(R.string.greetingNight)+getString(R.string.empty)+stringBuilder;
 
         if (hour >= 6 && hour < 12) {
-
             greetingsText.setText(morning);
-
         }
         else if (hour >= 12 && hour < 17) {
             greetingsText.setText(afternoon);
@@ -143,7 +141,6 @@ public class HomeFragment extends Fragment {
         else {
             greetingsText.setText(night);
         }
-
     }
 
     @Override
@@ -205,6 +202,7 @@ public class HomeFragment extends Fragment {
                 doorView.setVisibility(View.VISIBLE);
             }
         });
+
         //temperature switch
         tempSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -213,6 +211,7 @@ public class HomeFragment extends Fragment {
                 tempView.setVisibility(View.VISIBLE);
             }
         });
+
         //light switch
         lightSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -221,6 +220,7 @@ public class HomeFragment extends Fragment {
                 lightView.setVisibility(View.VISIBLE);
             }
         });
+
         //window switch
         windowSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {

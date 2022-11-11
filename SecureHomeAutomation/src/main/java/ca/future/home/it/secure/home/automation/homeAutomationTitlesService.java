@@ -18,10 +18,12 @@ import androidx.annotation.RequiresApi;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class homeAutomationTitlesService extends TileService {
+
     private final String LOG_TAG = getString(R.string.my_tile_service);
     private final  int STATE_ON = 1;
     private final int STATE_OFF = 0;
     private  int toggleState = STATE_ON;
+
     @Override
     public void onTileAdded() {
         Log.d(LOG_TAG,getString(R.string.log_tile_add));
@@ -46,13 +48,14 @@ public class homeAutomationTitlesService extends TileService {
     public void onClick() {
         Log.d(LOG_TAG,getString(R.string.log_onclick_state)+ Integer.toString(getQsTile().getState()));
         Icon icon;
+
         if(toggleState == STATE_ON){
             toggleState = STATE_OFF;
             icon = Icon.createWithResource(getApplicationContext(),R.drawable.ic_window_icon);
-        }else{
+        }
+        else{
             toggleState = STATE_ON;
             icon = Icon.createWithResource(getApplicationContext(),R.drawable.ic_window_icon);
-
         }
         getQsTile().setIcon(icon);
         getQsTile().updateTile();

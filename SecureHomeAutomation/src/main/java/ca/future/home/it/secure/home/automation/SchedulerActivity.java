@@ -63,7 +63,6 @@ public class SchedulerActivity extends Activity {
         startTV = findViewById(R.id.startTimeTV);
         endTv = findViewById(R.id.endtimeTv);
 
-
         monday = findViewById(R.id.monday);
         tuesday = findViewById(R.id.tuesday);
         wednesday = findViewById(R.id.wednesday);
@@ -74,7 +73,6 @@ public class SchedulerActivity extends Activity {
 
         backButton();
         onButtonClick();
-
     }
 
     private void backButton() {
@@ -94,25 +92,23 @@ public class SchedulerActivity extends Activity {
         //save time if start > end
         saveTime.setOnClickListener(view -> {
             checking = 0;
+
             if (monday.isChecked()) {
                 isMonday = true;
                 checking = 0;
-
             } else {
                 checking = checking + 1;
                 isMonday = false;
             }
+
             if (tuesday.isChecked()) {
                 checking = 0;
                 isTuesday = true;
-
-
             } else {
                 checking = checking + 1;
                 isTuesday = false;
-
-
             }
+
             if (wednesday.isChecked()) {
                 checking = 0;
                 isWednesday = true;
@@ -120,7 +116,6 @@ public class SchedulerActivity extends Activity {
             } else {
                 checking = checking + 1;
                 isWednesday = false;
-
             }
 
             if (thursday.isChecked()) {
@@ -129,25 +124,24 @@ public class SchedulerActivity extends Activity {
             } else {
                 checking = checking + 1;
                 isThursday = false;
-
             }
+
             if (friday.isChecked()) {
                 checking = 0;
                 isFriday = true;
-
             } else {
                 checking = checking + 1;
                 isFriday = false;
-
             }
+
             if (saturday.isChecked()) {
                 checking = 0;
                 isSaturday = true;
-
             } else {
                 checking = checking + 1;
                 isSaturday = false;
             }
+
             if (sunday.isChecked()) {
                 checking = 0;
                 isSunday = true;
@@ -155,9 +149,11 @@ public class SchedulerActivity extends Activity {
                 checking = checking + 1;
                 isSunday = false;
             }
+
             checkDays();
             String num = getString(R.string.checkboxNum) + checking;
             Log.d(TAG, num);
+
             if (checking == 7) {
                 Log.d(TAG, getString(R.string.mustpickday));
                 Toast.makeText(this, mustpickday, Toast.LENGTH_SHORT).show();
@@ -175,7 +171,6 @@ public class SchedulerActivity extends Activity {
         hour = 0;
         minute = 0;
 
-
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
             hour = selectedHour;
             minute = selectedMinute;
@@ -185,51 +180,49 @@ public class SchedulerActivity extends Activity {
             String timeOut = getString(R.string.timeSet) + startTimeout;
             Log.d(TAG, timeOut);
             startTV.setText(timeOut);
-
         };
-
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, false);
 
         timePickerDialog.setTitle(getString(R.string.startTimeSelect));
         timePickerDialog.show();
-
     }
 
     private void checkDays() {
         daySelected = getString(R.string.empty);
+
         if (isMonday) {
             daySelected = getString(R.string.monday);
         }
+
         if (isTuesday) {
             daySelected = getString(R.string.tuesday);
         }
+
         if (isWednesday) {
             daySelected += getString(R.string.wednesday);
-
         }
+
         if (isThursday) {
             daySelected += getString(R.string.thursday);
-
         }
+
         if (isFriday) {
             daySelected += getString(R.string.friday);
-
         }
+
         if (isSaturday) {
             daySelected += getString(R.string.saturday);
-
         }
+
         if (isSunday) {
             daySelected += getString(R.string.sunday);
-
         }
     }
 
     private void endTime() {
         hour = 0;
         minute = 0;
-
 
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
             hour = selectedHour;
@@ -238,16 +231,12 @@ public class SchedulerActivity extends Activity {
             endTimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
             String timeOut = getString(R.string.timeSet) + endTimeout;
             endTv.setText(timeOut);
-
-
         };
-
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, false);
 
         timePickerDialog.setTitle(getString(R.string.endTimeSelect));
         timePickerDialog.show();
-
     }
 
     private void saveTime() throws ParseException {
@@ -257,7 +246,6 @@ public class SchedulerActivity extends Activity {
 
         if ((startTimeout == null) || endTimeout == null) {
             Toast.makeText(this, R.string.startorendnull, Toast.LENGTH_SHORT).show();
-
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat(getString(hourmin));
             Date d1 = sdf.parse(startTimeout);
@@ -282,15 +270,11 @@ public class SchedulerActivity extends Activity {
                 logging();
                 check=daySelected;
                 counter=counter+1;
-
-
             } else {
                 Log.d(TAG, getString(R.string.logDataEndSmall));
                 Toast.makeText(this, R.string.endSmall, Toast.LENGTH_SHORT).show();
-
             }
             toDatabase();
-
         }
     }
     private void logging(){
@@ -300,7 +284,6 @@ public class SchedulerActivity extends Activity {
         linearLayout=scroll.findViewById(R.id.liner_schedule);
 
         addHistory(timeDay);
-
     }
 
     private void addHistory(String string) {

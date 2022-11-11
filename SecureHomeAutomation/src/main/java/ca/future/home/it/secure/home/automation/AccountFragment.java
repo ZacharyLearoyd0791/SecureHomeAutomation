@@ -51,7 +51,7 @@ public class AccountFragment extends Fragment {
 
     private Button signOutButton;
     View view;
-//    ImageView imgAcc;
+    //ImageView imgAcc;
     TextView  emailAcc;
     ImageView profileImage;
     final Handler handler = new Handler();
@@ -81,7 +81,6 @@ public class AccountFragment extends Fragment {
         userinfo();
         btnSteps();
         imageHandler();
-
     }
 
     private void init() {
@@ -113,7 +112,6 @@ public class AccountFragment extends Fragment {
                             animationView.setVisibility(View.INVISIBLE);
 
                             Picasso.get().load(userImage).into(profileImage);
-
                         }
                         else {
                             animationView.setVisibility(View.VISIBLE);
@@ -162,6 +160,7 @@ public class AccountFragment extends Fragment {
         else{
             personName.setText(R.string.noInfo);
         }
+
         imageHandler();
     }
 

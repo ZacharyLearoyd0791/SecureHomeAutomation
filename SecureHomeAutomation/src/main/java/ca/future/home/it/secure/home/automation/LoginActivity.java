@@ -138,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Executor executor = ContextCompat.getMainExecutor(this);
+
         final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {

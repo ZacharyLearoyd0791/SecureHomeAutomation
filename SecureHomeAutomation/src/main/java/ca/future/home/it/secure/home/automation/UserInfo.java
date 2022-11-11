@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UserInfo extends Fragment {
+
     private GoogleSignInAccount acct;
     private FirebaseUser user;
     String infoID,infoName,name,email,uid,str,photos,personName,personId,infoLocalName,personEmail,infoEmail,infoLocalEmail;
@@ -38,8 +39,8 @@ public class UserInfo extends Fragment {
         else{
             Log.d(TAG,"User login information isn't available now");
         }
-
     }
+
     private void LocalUsers() {
         Log.d(TAG, "User method has been selected for testing");//remove after testing
 
@@ -54,6 +55,7 @@ public class UserInfo extends Fragment {
             Log.d(TAG,infoLocalName);
             returnLocalName();
         }
+
         if (email!=null){
             infoLocalEmail="Email is "+email;
             Log.d(TAG,infoLocalEmail);
@@ -62,8 +64,8 @@ public class UserInfo extends Fragment {
         else{
             Log.d(TAG,"name is null");
         }
-        returnLocalId();
 
+        returnLocalId();
     }
 
     private void googleLoginUsers(){
