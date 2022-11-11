@@ -109,7 +109,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public void registrationProcess(int CheckerId){
 
         databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.user_details));
-        UserHelperClass helperClass = new UserHelperClass(nameInput,emailInput,phoneNumberInput,passwordInput);
+        UserHelperClass helperClass = new UserHelperClass(nameInput,emailInput,phoneNumberInput);
         databaseReference.child(phoneNumberInput).setValue(helperClass);
         if(CheckerId == 0){
             mAuth.createUserWithEmailAndPassword(emailInput,passwordInput)
