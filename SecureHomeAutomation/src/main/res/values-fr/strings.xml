@@ -272,6 +272,7 @@
     <string name="notificationLightTitle">Light is On</string>
     <string name="notificationLightDesc">Your Home Automation System has activated the lights.</string>
     <string name="LightStatus">LightStatus</string>
+    <string name="Lights">Lights</string>
     <string name="channelDesc">Notification to be sent when Light is on!</string>
     <string name="keyIs">Light Key is :</string>
 </resources>
