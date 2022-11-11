@@ -60,9 +60,9 @@ public class HomeFragment extends Fragment {
     public ImageView pressLock;
     public ImageView pressTemp;
     public ImageView pressLight;
+    public ImageView pressWindow;
 
     final Handler handler = new Handler();
-
 
 
     public HomeFragment() {
@@ -112,6 +112,7 @@ public class HomeFragment extends Fragment {
         pressLock = view.findViewById(R.id.iv_press_lock);
         pressTemp = view.findViewById(R.id.iv_press_temp);
         pressLight = view.findViewById(R.id.iv_press_light);
+        pressWindow = view.findViewById(R.id.iv_press_window);
     }
 
     private void timeOfDay(){
@@ -186,7 +187,11 @@ public class HomeFragment extends Fragment {
 
         //Window button
         windowBtn.setOnClickListener(view1 -> {
-            getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit();
+            windowBtn.setVisibility(View.INVISIBLE);
+            pressWindow.setVisibility(View.VISIBLE);
+
+            //simulate button pressed
+            handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, MainActivity.windowFragment).commit(), 300);
             //MainActivity.bottomNav.setSelectedItemId(R.id.window);
         });
 
