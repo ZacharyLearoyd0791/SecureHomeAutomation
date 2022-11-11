@@ -1,11 +1,3 @@
-/*
-Authors/Std.#/Section:
-Zachary Learoyd (LRDZ0002) - CENG-322-0NC
-Akash Muhundhan (N01420118) - CENG-322-0NA
-Harpreet Cheema (N01438638) - CENG-322-0NA
-Krushang Parekh (N01415355) - CENG-322-0NC
-*/
-
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
@@ -44,34 +36,34 @@ public class UserInfo extends Fragment {
             googleLoginUsers();
         }
         else{
-            Log.d(TAG,getString(R.string.login_info_not_avail));
+            Log.d(TAG,"User login information isn't available now");
         }
+
     }
-
     private void LocalUsers() {
-        Log.d(TAG, getString(R.string.method_selected_testing));//remove after testing
+        Log.d(TAG, "User method has been selected for testing");//remove after testing
 
-            name = user.getDisplayName();
-            email = user.getEmail();
-            uid = user.getUid();
-            str = getString(R.string.testing_001) + getString(R.string.name_) + name + getString(R.string.email_) + email + getString(R.string.uid) + uid;
-            Log.d(TAG, str);
+        name = user.getDisplayName();
+        email = user.getEmail();
+        uid = user.getUid();
+        str = "Testing 001" + "\nName: " + name + "\nEmail: " + email + "\nUID: " + uid;
+        Log.d(TAG, str);
 
         if (name!=null){
-            infoLocalName=getString(R.string.name_is)+name;
+            infoLocalName="Name is "+name;
             Log.d(TAG,infoLocalName);
             returnLocalName();
         }
-
         if (email!=null){
-            infoLocalEmail=getString(R.string.email_is)+email;
+            infoLocalEmail="Email is "+email;
             Log.d(TAG,infoLocalEmail);
             returnLocalEmail();
         }
         else{
-            Log.d(TAG,getString(R.string.name_null));
+            Log.d(TAG,"name is null");
         }
         returnLocalId();
+
     }
 
     private void googleLoginUsers(){
@@ -81,38 +73,39 @@ public class UserInfo extends Fragment {
         personPhoto = acct.getPhotoUrl();
 
         if (personName!=null){
-            infoName=getString(R.string.name_is)+personName;
+            infoName="Name is "+personName;
             Log.d(TAG,infoName);
             returnName();
         }
 
         if (personEmail!=null){
-            infoEmail=getString(R.string.email_is)+personEmail;
+            infoEmail="Email is "+personEmail;
             Log.d(TAG,infoEmail);
             returnEmail();
         }
+
         else{
-            Log.d(TAG,getString(R.string.name_null));
+            Log.d(TAG,"name is null");
         }
 
         if (personId!=null){
-            infoID=getString(R.string.id_is)+personId;
+            infoID="Id of user is "+personId;
 
             Log.d(TAG,infoName);
             returnId();
         }
         else{
-            Log.d(TAG,getString(R.string.id_is_null));
+            Log.d(TAG,"Id is null");
         }
 
         if (personPhoto!=null){
-            photos=getString(R.string.person_photo_avail);
+            photos="Person Photo is Available ";
 
             Log.d(TAG,photos);
             returnPhoto();
         }
         else{
-            Log.d(TAG,getString(R.string.id_is_null));
+            Log.d(TAG,"Id is null");
         }
     }
 
@@ -146,7 +139,6 @@ public class UserInfo extends Fragment {
 
     private String returnName() {
         nameInfo=personName;
-
         return nameInfo;
     }
 }
