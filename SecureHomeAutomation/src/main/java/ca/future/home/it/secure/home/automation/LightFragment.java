@@ -73,7 +73,7 @@ public class LightFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("/Ultrasonic Sensor/distance");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.db_ultrasonic_dist));
         //timer and scheduler
         cancelTimer=true;
 
@@ -99,13 +99,13 @@ public class LightFragment extends Fragment {
         if (LightStatus) {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-            databaseReference.setValue("On");
+            databaseReference.setValue(R.string.on);
             cancelTimer=true;
         }
         else{
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-            databaseReference.setValue("Off");
+            databaseReference.setValue(R.string.off);
             cancelTimer=false;
 
         }
@@ -113,14 +113,14 @@ public class LightFragment extends Fragment {
 
     private void SensorDB(){
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("/Ultrasonic Sensor/distance");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.db_ultrasonic_dist));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
 
                     dist=snapshot.getValue().toString();
-                    value="Distance reading from Ultrasonic sensor :"+dist+" cm";
+                    value=getString(R.string.distance_from_ultra)+dist+getString(R.string.cm);
                     Log.d(TAG,value);
                     ultrasonicTV.setText(dist);
                     try
@@ -128,31 +128,31 @@ public class LightFragment extends Fragment {
                         Double.parseDouble(dist);
                         distance=Double.parseDouble(dist);
                         if (distance<20){
-                            String value="Sensor has detected movement! Lights turning on!";
+                            String value=getString(R.string.movement_detect);
                             Log.d(TAG,value);
                             ultrasonicTV.setText(value);
                             LightStatus=true;
                         }
                         else{
-                            String value="Sensor reads no movement within 20 cm. Current distance is "+distance+"cm";
+                            String value=getString(R.string.no_movement_detect)+distance+getString(R.string.cm);
                             Log.d(TAG,value);
                             LightStatus=false;
                         }
                         if (LightStatus) {
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-                            databaseReference.setValue("On");
+                            databaseReference.setValue(R.string.on);
                         }
                         else{
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-                            databaseReference.setValue("Off");
+                            databaseReference.setValue(R.string.off);
                         }
                     }
 
                     catch(NumberFormatException e)
                     {
-                        Log.d(TAG,"value is not a double");
+                        Log.d(TAG,getString(R.string.log_value_not_double));
                         ultrasonicTV.setText(dist);
                     }
 
@@ -189,12 +189,12 @@ public class LightFragment extends Fragment {
 
             new CountDownTimer(milli, second) {
                 public void onTick(long millisUntilFinished) {
-                    String count="Counter is on :"+counter;
+                    String count=getString(R.string.counter_on)+counter;
                     Log.d(TAG, String.valueOf(count));
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
 
-                    databaseReference.setValue("On");
+                    databaseReference.setValue(getString(R.string.on));
                     counter++;
                 }
 
@@ -203,7 +203,7 @@ public class LightFragment extends Fragment {
                     //Log.d(TAG, getString(R.string.lightOff));
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-                    databaseReference.setValue("Off");
+                    databaseReference.setValue(getString(R.string.off));
                     counter = 0;
                     hour = 0;
                     minute = 0;

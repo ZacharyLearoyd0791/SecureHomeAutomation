@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 public class RegistrationActivity extends AppCompatActivity {
+
     private EditText fullName;
     private EditText emailAddress;
     private EditText phoneNumber;
@@ -36,6 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private int fillChecker= 1;
     DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +95,10 @@ public class RegistrationActivity extends AppCompatActivity {
             registrationProcess(fillChecker);
         }
     }
+
     public void registrationProcess(int CheckerId){
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("User Details");
+        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.user_details));
         UserHelperClass helperClass = new UserHelperClass(nameInput,emailInput,phoneNumberInput,passwordInput);
         databaseReference.child(phoneNumberInput).setValue(helperClass);
         if(CheckerId == 0){

@@ -59,8 +59,8 @@ public class WindowFragment extends Fragment {
        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         alarmButton = view.findViewById(R.id.AlarmButton);
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("WindowBreak","windows", NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("Notification to be sent when window is broken");
+            NotificationChannel channel = new NotificationChannel(getString(R.string.window_break),getString(R.string.windows), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(getString(R.string.notify_window_break));
             NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
@@ -81,7 +81,7 @@ public class WindowFragment extends Fragment {
         return view;
     }
     public void sendNotificationProcess(String notificationTitle, String notificationText){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),"WindowBreak");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getString(R.string.window_break));
         builder.setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -91,16 +91,16 @@ public class WindowFragment extends Fragment {
         mangerCompat.notify(1,builder.build());
     }
     public void alarmProcess(){
-        String notificationTitle = "Window Sensor on Test!";
-        String notificationText = "Window Sensor is Activated for Testing, don't panic :)";
+        String notificationTitle = getString(R.string.window_on_test);
+        String notificationText = getString(R.string.window_alarm_active);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Do you want to test this device?")
-                .setMessage("Clicking Yes will activate the alarm system which can detect windows break. Alarm will be activated for 15 s ")
-                .setPositiveButton("Yes",(DialogInterface.OnClickListener)(dialog, which) ->{
+        builder.setTitle(R.string.test_device_req)
+                .setMessage(R.string.activate_window_alarm)
+                .setPositiveButton(R.string.yes,(DialogInterface.OnClickListener)(dialog, which) ->{
                     sendNotificationProcess(notificationTitle,notificationText);
                     createSnackBar();
                 })
-                .setNegativeButton("No",(DialogInterface.OnClickListener)(dialog,which)->{
+                .setNegativeButton(R.string.no,(DialogInterface.OnClickListener)(dialog, which)->{
                     dialog.cancel();
                 });
         AlertDialog alertDialog = builder.create();
@@ -115,11 +115,11 @@ public class WindowFragment extends Fragment {
         }
     }
     public void createSnackBar(){
-        Snackbar snackbar = Snackbar.make(view.findViewById(R.id.frameLayout5),"Do you want to Turn Off the alarm?",Snackbar.LENGTH_LONG)
-                .setAction("Off", new View.OnClickListener() {
+        Snackbar snackbar = Snackbar.make(view.findViewById(R.id.frameLayout5), R.string.turn_off_req,Snackbar.LENGTH_LONG)
+                .setAction(R.string.off, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getContext(), "Alarm test terminated!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.alarm_terminated, Toast.LENGTH_LONG).show();
                     }
                 });
         snackbar.show();

@@ -26,7 +26,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                  startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
                 SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-                boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+                boolean hasLoggedIn = sharedPreferences.getBoolean(getString(R.string.has_logged_in),false);
                 if(hasLoggedIn){
                     Intent intent = new Intent(SplashScreenActivity.this,MainActivity.class);
                     startActivity(intent);

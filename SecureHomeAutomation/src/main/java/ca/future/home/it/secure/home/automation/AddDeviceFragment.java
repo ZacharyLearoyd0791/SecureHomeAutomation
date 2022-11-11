@@ -70,10 +70,10 @@ public class AddDeviceFragment extends Fragment {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(getActivity(),
                             Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        Snackbar.make(getView(), "Permission is granted", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), R.string.permission_granted, Snackbar.LENGTH_LONG).show();
                     }
                 } else {
-                    Snackbar.make(getView(), "Permission is denied", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), R.string.permission_denied, Snackbar.LENGTH_LONG).show();
                 }
                 return;
             }

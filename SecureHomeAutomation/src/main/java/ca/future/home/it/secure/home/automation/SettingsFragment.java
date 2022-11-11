@@ -100,7 +100,6 @@ public class SettingsFragment extends Fragment {
                     tvFinger.setTypeface(null, Typeface.BOLD);
                     tvPortrait.setTypeface(null, Typeface.BOLD);
                     //HomeFragment.windowSwitch.setTypeface(null, Typeface.BOLD);
-
                 } else {
                     tvBold.setTypeface(null, Typeface.NORMAL);
                     tvColour.setTypeface(null, Typeface.NORMAL);
@@ -111,11 +110,9 @@ public class SettingsFragment extends Fragment {
                     tvFinger.setTypeface(null, Typeface.NORMAL);
                     tvPortrait.setTypeface(null, Typeface.NORMAL);
                     //HomeFragment.windowSwitch.setTypeface(null, Typeface.NORMAL);
-
                 }
             }
         });
-
 
         //Dark Mode
         colourSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -131,37 +128,36 @@ public class SettingsFragment extends Fragment {
         });
 
         //Fingerprint enable/disable
-        databaseReference = FirebaseDatabase.getInstance().getReference("Settings");
+        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.settings));
         fingerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(fingerSwitch.isChecked()){
-                    databaseReference.child("Fingerprint").setValue("On").addOnSuccessListener(new OnSuccessListener<Void>() {
+                    databaseReference.child(getString(R.string.fingerprint)).setValue(R.string.on).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(getContext(), "Fingerprint Enabled successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.fingerprint_enable_succ, Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }else{
-                    databaseReference.child("Fingerprint").setValue("Off").addOnSuccessListener(new OnSuccessListener<Void>() {
+                    databaseReference.child(getString(R.string.fingerprint)).setValue(R.string.off).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(getContext(), "Fingerprint Disabled successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.fingerprint_disable_succ, Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         });
-
     }
 }

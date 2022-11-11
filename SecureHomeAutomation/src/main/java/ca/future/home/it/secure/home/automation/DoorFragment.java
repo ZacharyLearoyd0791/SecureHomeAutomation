@@ -138,7 +138,7 @@ public class DoorFragment extends Fragment {
         textView.setTypeface(null, Typeface.BOLD);
         textView.setTextColor(0xFF000000);
         textView.setTextSize(14);
-        textView.setFontFeatureSettings("sans-serif");
+        textView.setFontFeatureSettings(getString(R.string.font_sans_serif));
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
     }
@@ -195,7 +195,7 @@ public class DoorFragment extends Fragment {
 
     private void toDatabase(String status){
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(("/Door/Status"));
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.fb_door_status)));
 
         databaseReference.setValue(status);
         Map<String, Object> updateStatus = new HashMap<>();

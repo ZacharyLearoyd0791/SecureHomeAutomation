@@ -100,7 +100,7 @@ public class AccountFragment extends Fragment {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getContext(), LoginActivity.class);
             startActivity(intent);
-            Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.signed_out, Toast.LENGTH_SHORT).show();
         });
     }
     private void imageHandler(){
@@ -124,7 +124,7 @@ public class AccountFragment extends Fragment {
 
 
 
-            Log.d(TAG, "onComplete: currentUserUid is null");
+            Log.d(TAG, getString(R.string.log_uid_null));
             imageAnimation();
             //Opening profile edit frag
             editProfileButton.setOnClickListener(new View.OnClickListener() {

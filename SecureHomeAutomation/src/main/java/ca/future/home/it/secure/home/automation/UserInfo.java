@@ -23,8 +23,6 @@ public class UserInfo extends Fragment {
     static Context context;
     Uri personPhoto,photOut;
 
-
-
     public void typeAccount() {
         UserInfo.context = getApplicationContext();
 
@@ -38,38 +36,35 @@ public class UserInfo extends Fragment {
             googleLoginUsers();
         }
         else{
-            Log.d(TAG,"User login information isn't available now");
+            Log.d(TAG,getString(R.string.login_info_not_avail));
         }
-
     }
+
     private void LocalUsers() {
-        Log.d(TAG, "User method has been selected for testing");//remove after testing
+        Log.d(TAG, getString(R.string.method_selected_testing));//remove after testing
 
             name = user.getDisplayName();
             email = user.getEmail();
             uid = user.getUid();
-            str = "Testing 001" + "\nName: " + name + "\nEmail: " + email + "\nUID: " + uid;
+            str = getString(R.string.testing_001) + getString(R.string.name_) + name + getString(R.string.email_) + email + getString(R.string.uid) + uid;
             Log.d(TAG, str);
 
         if (name!=null){
-            infoLocalName="Name is "+name;
+            infoLocalName=getString(R.string.name_is)+name;
             Log.d(TAG,infoLocalName);
             returnLocalName();
         }
+
         if (email!=null){
-            infoLocalEmail="Email is "+email;
+            infoLocalEmail=getString(R.string.email_is)+email;
             Log.d(TAG,infoLocalEmail);
             returnLocalEmail();
         }
         else{
-            Log.d(TAG,"name is null");
-
+            Log.d(TAG,getString(R.string.name_null));
         }
         returnLocalId();
-
     }
-
-
 
     private void googleLoginUsers(){
         personName = acct.getDisplayName();
@@ -78,40 +73,39 @@ public class UserInfo extends Fragment {
         personPhoto = acct.getPhotoUrl();
 
         if (personName!=null){
-            infoName="Name is "+personName;
+            infoName=getString(R.string.name_is)+personName;
             Log.d(TAG,infoName);
             returnName();
         }
+
         if (personEmail!=null){
-            infoEmail="Email is "+personEmail;
+            infoEmail=getString(R.string.email_is)+personEmail;
             Log.d(TAG,infoEmail);
             returnEmail();
         }
         else{
-            Log.d(TAG,"name is null");
+            Log.d(TAG,getString(R.string.name_null));
+        }
 
-    }
         if (personId!=null){
-            infoID="Id of user is "+personId;
+            infoID=getString(R.string.id_is)+personId;
 
             Log.d(TAG,infoName);
             returnId();
         }
         else{
-            Log.d(TAG,"Id is null");
-
+            Log.d(TAG,getString(R.string.id_is_null));
         }
+
         if (personPhoto!=null){
-            photos="Person Photo is Available ";
+            photos=getString(R.string.person_photo_avail);
 
             Log.d(TAG,photos);
             returnPhoto();
         }
         else{
-            Log.d(TAG,"Id is null");
-
+            Log.d(TAG,getString(R.string.id_is_null));
         }
-
     }
 
     private String returnEmail() {
@@ -147,6 +141,4 @@ public class UserInfo extends Fragment {
 
         return nameInfo;
     }
-
-
 }

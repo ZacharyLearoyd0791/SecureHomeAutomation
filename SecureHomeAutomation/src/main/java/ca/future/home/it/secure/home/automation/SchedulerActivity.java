@@ -69,8 +69,6 @@ public class SchedulerActivity extends Activity {
 
     }
 
-
-
     private void backButton() {
 
         //to go back to the main screen!
@@ -304,7 +302,7 @@ public class SchedulerActivity extends Activity {
         textView.setTypeface(null, Typeface.BOLD_ITALIC);
         textView.setTextColor(0xFF000000);
         textView.setTextSize(14);
-        textView.setFontFeatureSettings("sans-serif");
+        textView.setFontFeatureSettings(getString(R.string.font_sans_serif));
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
     }
