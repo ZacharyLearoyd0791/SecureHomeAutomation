@@ -5,6 +5,7 @@ Akash Muhundhan (N01420118) - CENG-322-0NA
 Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC
 */
+
 package ca.future.home.it.secure.home.automation;
 
 import android.content.DialogInterface;
@@ -33,6 +34,7 @@ public class TempFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
+
 
     public TempFragment() {
         // Required empty public constructor
@@ -78,7 +80,7 @@ public class TempFragment extends Fragment {
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
-        String title = isMinTemperature ? "Minimum Temperature" : "Maximum Temperature";
+        String title = isMinTemperature ? getString(R.string.min_temp) : getString(R.string.max_temp);
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.temperature_input_dialog_box, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -88,7 +90,7 @@ public class TempFragment extends Fragment {
         EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         int temperature = Integer.parseInt(userInput.getText().toString());
                         if (isMinTemperature) {
@@ -98,7 +100,7 @@ public class TempFragment extends Fragment {
                         }
                     }
                 })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

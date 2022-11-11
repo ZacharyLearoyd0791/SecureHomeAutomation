@@ -5,6 +5,7 @@ Akash Muhundhan (N01420118) - CENG-322-0NA
 Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC
 */
+
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
@@ -47,30 +48,30 @@ import java.util.Objects;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
+
     //Custom login
     private EditText emailAddress;
     private EditText password;
     private FirebaseAuth mAuth;
     public static String PREFS_NAME = "LoggedInFile";
+
     //Google login
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
+
     //Facebook login
     private ImageView facebookButton;
     CallbackManager callbackManager;
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         //Creating references
         emailAddress = findViewById(R.id.login_page_email_textBox);
         password = findViewById(R.id.login_page_password_textBox);
+
         //Declarations
         ImageView googleLogoButton = findViewById(R.id.google_logo);
         TextView loginButton = findViewById(R.id.login_page_login_button);
@@ -82,16 +83,12 @@ public class LoginActivity extends AppCompatActivity {
         facebookButton = findViewById(R.id.facebook_logo);
         callbackManager = CallbackManager.Factory.create();
 
-
         //Login button functionality
         loginButton.setOnClickListener(view -> {
             SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME,0);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("hasLoggedIn",true);
+            editor.putBoolean(getString(R.string.has_logged_in),true);
             editor.commit();
-
-
-
 
             String emailInput = emailAddress.getText().toString();
             String passwordInput = password.getText().toString();
@@ -127,21 +124,21 @@ public class LoginActivity extends AppCompatActivity {
         BiometricManager biometricManager= BiometricManager.from(this);
         switch(biometricManager.canAuthenticate()){
             case BiometricManager.BIOMETRIC_SUCCESS:
-                Toast.makeText(this, "You can use the fingerprint sensor to login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.opt_fingerprint_login, Toast.LENGTH_SHORT).show();
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                Toast.makeText(this, "This device don't have fingerprint sensor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.device_no_fingerprint, Toast.LENGTH_SHORT).show();
                 break;
             case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                Toast.makeText(this, "Biometric sensor currently unavailable", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.biometic_unavailable, Toast.LENGTH_SHORT).show();
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                Toast.makeText(this, "No fingerprint found!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_fingerprint_found, Toast.LENGTH_SHORT).show();
                 break;
         }
 
-
         Executor executor = ContextCompat.getMainExecutor(this);
+
         final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
@@ -152,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
 
             }
             @Override
@@ -160,12 +157,13 @@ public class LoginActivity extends AppCompatActivity {
                 super.onAuthenticationFailed();
             }
         });
+
         // creating a variable for our promptInfo
         // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("GFG")
-                .setDescription("Use your fingerprint to login ")
+        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.gfg))
+                .setDescription(getString(R.string.use_fingerprint_login))
 
-                .setNegativeButtonText("Cancel").build();
+                .setNegativeButtonText(getString(R.string.cancel)).build();
 
         biometricPrompt.authenticate(promptInfo);
 //        loginbutton.setOnClickListener(new View.OnClickListener() {
@@ -192,23 +190,22 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(FacebookException exception) {
-                        Toast.makeText(LoginActivity.this, "Error: "+exception.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, getString(R.string.error)+exception.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile"));
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList(getString(R.string.public_profile)));
             }
         });
-
-
     }
+
     //Validating Email address
     private boolean validateEmailInput(EditText email) {
         String emailInput = emailAddress.getText().toString();
+
         if (!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             emailAddress.setTextColor(Color.BLACK);
             return true;
@@ -218,6 +215,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
+
     //Login User
     private void loginUser(String emailInput, String passwordInput) {
         mAuth.signInWithEmailAndPassword(emailInput,passwordInput)
@@ -227,7 +225,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_LONG).show();
                             //Starting main activity
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
-
                         }else{
                             Toast.makeText(LoginActivity.this, R.string.emailverify, Toast.LENGTH_LONG).show();
                         }
@@ -236,40 +233,33 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-
-
-
-
     }
 
     // Google Sign in process
     public void googleSignInProcess(){
         Intent googleSignInIntent = gsc.getSignInIntent();
         startActivityForResult(googleSignInIntent,1000);
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);    //used for facebook
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == 1000){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 task.getResult(ApiException.class);
                 changingActivity();
             } catch (ApiException e) {
-                Log.d("Exeception: ", String.valueOf(e));
+                Log.d(getString(R.string.exception), String.valueOf(e));
                 Toast.makeText(this, R.string.google_signin_error, Toast.LENGTH_SHORT).show();
             }
         }
-
-
     }
+
     public void changingActivity(){
         finish();
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
     }
-
-
 }

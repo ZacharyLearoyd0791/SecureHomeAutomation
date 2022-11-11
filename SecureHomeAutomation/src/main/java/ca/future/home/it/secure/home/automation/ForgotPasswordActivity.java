@@ -5,6 +5,7 @@ Akash Muhundhan (N01420118) - CENG-322-0NA
 Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC
 */
+
 package ca.future.home.it.secure.home.automation;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
+
     //Variable declaration
     private EditText userEmail;
     private Button sendEmailButton;
@@ -45,7 +47,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 userEmailInput = userEmail.getText().toString();
                 if(userEmailInput.isEmpty()){
-                    userEmail.setError("Enter your email Address");
+                    userEmail.setError(getString(R.string.enter_email_add));
                     userEmail.requestFocus();
                 }else{
                     boolean emailValidation = validateEmailInput(userEmail);
@@ -55,7 +57,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void sendEmailToResetPassword(EditText emailAddress) {
@@ -64,7 +65,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(ForgotPasswordActivity.this, "Email send...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ForgotPasswordActivity.this, R.string.email_send, Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         }else{
                             Toast.makeText(ForgotPasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -79,10 +80,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             userEmail.setTextColor(Color.BLACK);
             return true;
         } else{
-            Toast.makeText(this, "Enter Valid Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enter_valid, Toast.LENGTH_SHORT).show();
             userEmail.setTextColor(Color.RED);
             return false;
         }
-
     }
 }

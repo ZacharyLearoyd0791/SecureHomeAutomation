@@ -5,6 +5,7 @@ Akash Muhundhan (N01420118) - CENG-322-0NA
 Harpreet Cheema (N01438638) - CENG-322-0NA
 Krushang Parekh (N01415355) - CENG-322-0NC
 */
+
 package ca.future.home.it.secure.home.automation;
 
 import android.content.Intent;
@@ -26,7 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                  startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
                 SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-                boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+                boolean hasLoggedIn = sharedPreferences.getBoolean(getString(R.string.has_logged_in),false);
                 if(hasLoggedIn){
                     Intent intent = new Intent(SplashScreenActivity.this,MainActivity.class);
                     startActivity(intent);

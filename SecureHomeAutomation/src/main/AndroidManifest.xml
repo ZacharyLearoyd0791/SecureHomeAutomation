@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -74,7 +75,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="SHA">
+            android:label="Secure Home">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -96,6 +97,40 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".QuickTiles"
+            android:label="Secure Home Auto"
+            android:icon="@drawable/app_icon"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".homeAutomationTitlesService"
+            android:icon="@drawable/ic_window_icon"
+            android:label="Window break sensor"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+        </service>
+        <service
+            android:name=".LightFragTitleService"
+            android:icon="@drawable/ic_tiles_service_light_off"
+            android:label="Turn Lights On/Off"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+        </service>
 
     </application>
 

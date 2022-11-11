@@ -65,24 +65,13 @@
         android:id="@+id/timerTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="584dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="436dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="112dp"
-        android:backgroundTint="@color/black"
-        android:text="@string/save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
+    <TextView
         android:id="@+id/Ultrasonic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +79,7 @@
         android:layout_marginTop="100dp"
         android:importantForAutofill="no"
         android:inputType="text"
-        android:text="@string/data_in"
+        android:text="@string/ultrasonicSensor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
@@ -104,22 +93,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Ultrasonic" />
 
+
     <TextView
         android:id="@+id/testing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="580dp"
-        android:layout_marginEnd="104dp"
+        android:layout_marginTop="424dp"
+        android:layout_marginEnd="136dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="57dp"
         android:layout_height="53dp"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="332dp"
+        android:layout_marginTop="5dp"
         android:contentDescription="@string/light_icon"
         android:src="@drawable/ic_light_icon"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,8 +118,8 @@
         android:id="@+id/tv_light_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:text="@string/light_configuration"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -139,21 +128,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/onLights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="484dp"
+        android:layout_marginTop="496dp"
         android:text="@string/lightOn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/offLights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="484dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginTop="496dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/lightOff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

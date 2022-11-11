@@ -32,7 +32,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
-
     //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException("Test Crash"); // Force a crash
             }
         });
-
 
         addContentView(crashButton, new ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -117,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Fingerprint
-        databaseReference = FirebaseDatabase.getInstance().getReference("Fingerprint");
+        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.fingerprint));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -187,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        Log.w(TAG, getString(R.string.log_fcm), task.getException());
                         return;
                     }
 
@@ -195,10 +193,8 @@ public class MainActivity extends AppCompatActivity {
                     String token = task.getResult();
 
                     // Log and toast
-                    String msg = ("FCM TOKEN: ") + token;
+                    String msg = (getString(R.string.fcm_token)) + token;
                     Log.d(TAG, msg);
                 });
     }
-
-
 }

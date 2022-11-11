@@ -44,13 +44,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class AccountFragment extends Fragment {
+
     UserInfo userInfo=new UserInfo();
     String name;
     private TextView personName;
 
     private Button signOutButton;
     View view;
-//    ImageView imgAcc;
+    //ImageView imgAcc;
     TextView  emailAcc;
     ImageView profileImage;
     final Handler handler = new Handler();
@@ -59,7 +60,6 @@ public class AccountFragment extends Fragment {
     Uri userImage;
     //Edit profile
     FloatingActionButton editProfileButton;
-
 
     public AccountFragment() {
         // Required empty public constructor
@@ -81,8 +81,8 @@ public class AccountFragment extends Fragment {
         userinfo();
         btnSteps();
         imageHandler();
-
     }
+
     private void init() {
         personName=view.findViewById(R.id.tv_account_person_name);
         emailAcc = view.findViewById(R.id.tv_account_person_email);
@@ -90,19 +90,18 @@ public class AccountFragment extends Fragment {
         animationView = view.findViewById(R.id.animationView);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
         editProfileButton = view.findViewById(R.id.editProfileIcon);
-
     }
+
     private void btnSteps() {
-
-
 
         signOutButton.setOnClickListener(view1 -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getContext(), LoginActivity.class);
             startActivity(intent);
-            Toast.makeText(getContext(), "Signed out!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.signed_out, Toast.LENGTH_SHORT).show();
         });
     }
+
     private void imageHandler(){
 
                 handler.postDelayed(new Runnable() {
@@ -113,31 +112,22 @@ public class AccountFragment extends Fragment {
                             animationView.setVisibility(View.INVISIBLE);
 
                             Picasso.get().load(userImage).into(profileImage);
-
                         }
                         else {
                             animationView.setVisibility(View.VISIBLE);
                         }
-
-
                     }
                 }, 3000);
 
-
-
-
-            Log.d(TAG, "onComplete: currentUserUid is null");
+            Log.d(TAG, getString(R.string.log_uid_null));
             imageAnimation();
             //Opening profile edit frag
             editProfileButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                 handler.postDelayed(()-> getParentFragmentManager().beginTransaction().replace(R.id.flFragment,MainActivity.profileEditFragment).commit(),300);
-
                 }
             });
-
-
         }
 
     private void userinfo() {
@@ -147,6 +137,7 @@ public class AccountFragment extends Fragment {
         if (userInfo.localEmail!=null){
             emailAcc.setText(userInfo.localEmail);
         }
+
         if (userInfo.personEmail!=null){
             emailAcc.setText(userInfo.emailInfo);
         }
@@ -156,6 +147,7 @@ public class AccountFragment extends Fragment {
         if (userInfo.localName!=null){
             personName.setText(userInfo.localName);
         }
+
         if (userInfo.nameInfo!=null){
             personName.setText(userInfo.nameInfo);
             if(userInfo.personPhoto!=null) {
@@ -168,12 +160,13 @@ public class AccountFragment extends Fragment {
         else{
             personName.setText(R.string.noInfo);
         }
+
         imageHandler();
     }
+
     public void imageAnimation(){
         profileImage.setVisibility(View.VISIBLE);
         fadeInAnimation = AnimationUtils.loadAnimation(getContext(),R.anim.profile_image_anim);
         profileImage.startAnimation(fadeInAnimation);
-
     }
 }

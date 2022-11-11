@@ -16,14 +16,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UserInfo extends Fragment {
+
     private GoogleSignInAccount acct;
     private FirebaseUser user;
     String infoID,infoName,name,email,uid,str,photos,personName,personId,infoLocalName,personEmail,infoEmail,infoLocalEmail;
     String idInfo,nameInfo,userId,localName,localEmail,emailInfo;
     static Context context;
-    Uri personPhoto,photOut;
-
-
+    Uri personPhoto, photoOut;
 
     public void typeAccount() {
         UserInfo.context = getApplicationContext();
@@ -40,22 +39,23 @@ public class UserInfo extends Fragment {
         else{
             Log.d(TAG,"User login information isn't available now");
         }
-
     }
+
     private void LocalUsers() {
         Log.d(TAG, "User method has been selected for testing");//remove after testing
 
-            name = user.getDisplayName();
-            email = user.getEmail();
-            uid = user.getUid();
-            str = "Testing 001" + "\nName: " + name + "\nEmail: " + email + "\nUID: " + uid;
-            Log.d(TAG, str);
+        name = user.getDisplayName();
+        email = user.getEmail();
+        uid = user.getUid();
+        str = "Testing 001" + "\nName: " + name + "\nEmail: " + email + "\nUID: " + uid;
+        Log.d(TAG, str);
 
         if (name!=null){
             infoLocalName="Name is "+name;
             Log.d(TAG,infoLocalName);
             returnLocalName();
         }
+
         if (email!=null){
             infoLocalEmail="Email is "+email;
             Log.d(TAG,infoLocalEmail);
@@ -63,13 +63,10 @@ public class UserInfo extends Fragment {
         }
         else{
             Log.d(TAG,"name is null");
-
         }
+
         returnLocalId();
-
     }
-
-
 
     private void googleLoginUsers(){
         personName = acct.getDisplayName();
@@ -82,15 +79,17 @@ public class UserInfo extends Fragment {
             Log.d(TAG,infoName);
             returnName();
         }
+
         if (personEmail!=null){
             infoEmail="Email is "+personEmail;
             Log.d(TAG,infoEmail);
             returnEmail();
         }
+
         else{
             Log.d(TAG,"name is null");
+        }
 
-    }
         if (personId!=null){
             infoID="Id of user is "+personId;
 
@@ -99,8 +98,8 @@ public class UserInfo extends Fragment {
         }
         else{
             Log.d(TAG,"Id is null");
-
         }
+
         if (personPhoto!=null){
             photos="Person Photo is Available ";
 
@@ -109,9 +108,7 @@ public class UserInfo extends Fragment {
         }
         else{
             Log.d(TAG,"Id is null");
-
         }
-
     }
 
     private String returnEmail() {
@@ -124,8 +121,8 @@ public class UserInfo extends Fragment {
     }
 
     private Uri returnPhoto() {
-        photOut=personPhoto;
-        return photOut;
+        photoOut =personPhoto;
+        return photoOut;
     }
 
     private String returnLocalName() {
@@ -144,9 +141,6 @@ public class UserInfo extends Fragment {
 
     private String returnName() {
         nameInfo=personName;
-
         return nameInfo;
     }
-
-
 }

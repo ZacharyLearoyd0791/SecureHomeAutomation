@@ -31,6 +31,12 @@ import android.widget.ToggleButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class DoorFragment extends Fragment {
 
     //Door status
@@ -49,6 +55,10 @@ public class DoorFragment extends Fragment {
     ScrollView scrollView;
     LinearLayout linearLayout;
 
+    //Database
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
     public DoorFragment() {
     }
 
@@ -56,6 +66,7 @@ public class DoorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_door, container, false);
     }
+
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
 
@@ -95,12 +106,14 @@ public class DoorFragment extends Fragment {
                 locked.setVisibility(View.VISIBLE);
                 unlocked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_green);
+                toDatabase(getString(R.string.lock_status));
             } else {
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
                 status.setText(R.string.unlock);
                 unlocked.setVisibility(View.VISIBLE);
                 locked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_red);
+                toDatabase(getString(R.string.unlocked_status));
             }
         });
 
@@ -108,52 +121,15 @@ public class DoorFragment extends Fragment {
         addKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage(R.string.place_key);
-                builder.setTitle(R.string.add_key);
-
-                //Cancel
-                builder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener)
-                        (dialog, which) -> {
-                    dialog.cancel();
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
+                addKey();
+            }});
 
         //Remove key
         removeKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder removeBuilder = new AlertDialog.Builder(getContext());
-                removeBuilder.setMessage(R.string.place_key_remove);
-                removeBuilder.setTitle(R.string.remove_key);
-
-                //Cancel
-                removeBuilder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener) (dialog, which) -> {
-                    dialog.cancel();
-                });
-/*
-                try {
-
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-                    builder1.setMessage(R.string.success);
-                    builder1.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
-                        dialog.cancel();
-                    });
-                    AlertDialog removeSuccess = builder1.create();
-                    removeSuccess.show();
-                    sleep(3000);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-*/
-                AlertDialog removeAlert = removeBuilder.create();
-                removeAlert.show();
-            }
-        });
+                removeKey();
+            }});
     }
 
     public void addHistory(String info){
@@ -163,9 +139,70 @@ public class DoorFragment extends Fragment {
         textView.setTypeface(null, Typeface.BOLD);
         textView.setTextColor(0xFF000000);
         textView.setTextSize(14);
-        textView.setFontFeatureSettings("sans-serif");
+        textView.setFontFeatureSettings(getString(R.string.font_sans_serif));
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
     }
 
+    public void addKey(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(R.string.place_key);
+        builder.setTitle(R.string.add_key);
+
+        //Cancel
+        builder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener)
+                (dialog, which) -> {
+                    dialog.cancel();
+                });
+
+        //On successful add
+        AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
+        successBuilder.setMessage(R.string.success);
+        successBuilder.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog addSuccess = successBuilder.create();
+        addSuccess.show();
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void removeKey(){
+
+        AlertDialog.Builder removeBuilder = new AlertDialog.Builder(getContext());
+        removeBuilder.setMessage(R.string.place_key_remove);
+        removeBuilder.setTitle(R.string.remove_key);
+
+        //Cancel
+        removeBuilder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        //On successful removal
+        AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
+        successBuilder.setMessage(R.string.success);
+        successBuilder.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog removeSuccess = successBuilder.create();
+        removeSuccess.show();
+
+        //Remove alert
+        AlertDialog removeAlert = removeBuilder.create();
+        removeAlert.show();
+    }
+
+    private void toDatabase(String status){
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.fb_door_status)));
+
+        databaseReference.setValue(status);
+        Map<String, Object> updateStatus = new HashMap<>();
+        updateStatus.put(getString(R.string.status),status);
+
+        databaseReference.updateChildren(updateStatus);
+    }
 }
