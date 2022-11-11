@@ -20,7 +20,7 @@
             android:id="@+id/profile_frag_bg"
             android:layout_width="413dp"
             android:layout_height="263dp"
-            android:layout_marginBottom="528dp"
+            android:layout_marginBottom="532dp"
             android:src="@drawable/profile_frag_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

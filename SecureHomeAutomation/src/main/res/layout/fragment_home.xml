@@ -7,7 +7,6 @@
     tools:context=".HomeFragment"
     android:id="@+id/Homefrag">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -113,8 +112,8 @@
             android:layout_height="130dp"
             android:layout_marginTop="168dp"
             android:layout_marginEnd="27dp"
-            android:src="@drawable/temp_button_pressed"
             android:contentDescription="@string/temppress"
+            android:src="@drawable/temp_button_pressed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -124,8 +123,8 @@
             android:layout_height="130dp"
             android:layout_marginStart="27dp"
             android:layout_marginTop="168dp"
-            android:src="@drawable/lock_button_pressed"
             android:contentDescription="@string/lockpress"
+            android:src="@drawable/lock_button_pressed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,10 +132,10 @@
             android:id="@+id/iv_home_icon"
             android:layout_width="57dp"
             android:layout_height="53dp"
-            android:layout_marginStart="310dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="16dp"
             android:contentDescription="@string/homeicon"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_home" />
 
@@ -285,17 +284,14 @@
             android:id="@+id/tv_quick_acc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
             android:text="@string/quick_access"
             android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
