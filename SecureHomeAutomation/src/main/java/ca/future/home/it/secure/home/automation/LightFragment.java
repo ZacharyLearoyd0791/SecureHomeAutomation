@@ -47,8 +47,8 @@ public class LightFragment extends Fragment {
     public int counter;
     TextView timerTV, testing, ultrasonicTV;
     Double distance;
-    String dist,value,key,localKey,personalKey,lightKey,sensorKey,statusOfLight;
-    Boolean LightStatus,cancelTimer;
+    String dist,value,key,localKey,personalKey,lightKey,sensorKey,statusOfLight,LightStatus;
+    Boolean cancelTimer;
     TextView ultrasonicET;
     ImageButton timerBTN, schedulerBTN;
     int hour, minute;
@@ -103,11 +103,11 @@ public class LightFragment extends Fragment {
             getActivity().startActivity(myIntent);
         });
         lightsOff.setOnClickListener(view13 -> {
-            LightStatus = false;
+            LightStatus = getString(R.string.off);
             lightHandler();
         });
         lightsOn.setOnClickListener(view12 -> {
-            LightStatus = true;
+            LightStatus = getString(R.string.on);
             lightHandler();});
 
 
@@ -134,7 +134,7 @@ public class LightFragment extends Fragment {
 
     private void lightHandler() {
 
-        if (LightStatus) {
+        if (LightStatus==getString(R.string.on)) {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
             databaseReference.setValue(R.string.on);
@@ -148,14 +148,13 @@ public class LightFragment extends Fragment {
 
         }
     }
-
     private void SensorDB(){
         lightKey=key+getString(R.string.statusKey);
         Log.d(TAG,getString(R.string.keyIs)+lightKey);
         sensorKey=key+getString(R.string.db_ultrasonic_dist);
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.db_ultrasonic_dist));
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -165,6 +164,7 @@ public class LightFragment extends Fragment {
                     value=getString(R.string.distance_from_ultra)+dist+getString(R.string.cm);
                     Log.d(TAG,value);
                     ultrasonicTV.setText(dist);
+
                     try
                     {
                         Double.parseDouble(dist);
@@ -173,14 +173,14 @@ public class LightFragment extends Fragment {
                             String value=getString(R.string.movement_detect);
                             Log.d(TAG,value);
                             ultrasonicTV.setText(value);
-                            LightStatus=true;
+                            LightStatus = getString(R.string.on);
                         }
                         else{
                             String value=getString(R.string.no_movement_detect)+distance+getString(R.string.cm);
                             Log.d(TAG,value);
-                            LightStatus=false;
+                            LightStatus = getString(R.string.off);
                         }
-                        if (LightStatus) {
+                        if (LightStatus==getString(R.string.on)) {
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
                             databaseReference.setValue(R.string.on);
@@ -202,9 +202,9 @@ public class LightFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -233,7 +233,6 @@ public class LightFragment extends Fragment {
     public void popTimePicker() {
         hour = 0;
         minute = 0;
-
 
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
             counter = 0;
@@ -270,7 +269,6 @@ public class LightFragment extends Fragment {
                     counter = 0;
                     hour = 0;
                     minute = 0;
-
                 }
             }.start();
         };
