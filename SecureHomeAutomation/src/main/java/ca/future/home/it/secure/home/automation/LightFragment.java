@@ -47,7 +47,7 @@ public class LightFragment extends Fragment {
     public int counter;
     TextView timerTV, testing, ultrasonicTV;
     Double distance;
-    String dist,value,key,localKey,personalKey,lightKey,sensorKey,statusOfLight,LightStatus;
+    String dist,value,key,localKey,personalKey,lightKey,sensorKey,statusOfLight,LightStatus,on,off;
     Boolean cancelTimer;
     TextView ultrasonicET;
     ImageButton timerBTN, schedulerBTN;
@@ -133,17 +133,19 @@ public class LightFragment extends Fragment {
     }
 
     private void lightHandler() {
+        on= getString((R.string.on));
+        off=getString(R.string.off);
 
-        if (LightStatus==getString(R.string.on)) {
+        if (LightStatus==on) {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
-            databaseReference.setValue(R.string.on);
+            databaseReference.setValue(on);
             cancelTimer=true;
         }
         else{
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
-            databaseReference.setValue(R.string.off);
+            databaseReference.setValue(off);
             cancelTimer=false;
 
         }
