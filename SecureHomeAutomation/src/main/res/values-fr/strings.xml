@@ -219,7 +219,6 @@
     <string name="my_tile_service">MyTileService</string>
     <string name="permission_granted">Permission is granted</string>
     <string name="permission_denied">Permission is denied</string>
-    <string name="db_ultrasonic_dist">/Ultrasonic Sensor/distance</string>
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="counter_on">Counter is on :</string>
@@ -270,4 +269,9 @@
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="fingerprint_enable_succ">Fingerprint Enabled successfully</string>
     <string name="fingerprint_disable_succ">Fingerprint Disabled successfully</string>
+    <string name="notificationLightTitle">Light is On</string>
+    <string name="notificationLightDesc">Your Home Automation System has activated the lights.</string>
+    <string name="LightStatus">LightStatus</string>
+    <string name="channelDesc">Notification to be sent when Light is on!</string>
+    <string name="keyIs">Light Key is :</string>
 </resources>
