@@ -17,13 +17,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     EditText userFeedBack;
-    String ratingx;
     //Fingerprint
     String fingerprintState="";
 
@@ -193,32 +191,30 @@ public class MainActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheetlayout);
 
-        LinearLayout rating=dialog.findViewById(R.id.ratings);
-        LinearLayout feedback=dialog.findViewById(R.id.feedback);
-        LinearLayout save =dialog.findViewById(R.id.saveFeedBackLL);
         ratingBar=dialog.findViewById(R.id.ratingBar);
         saveBTN=dialog.findViewById(R.id.saveFeedback);
         userFeedBack=(EditText) dialog.findViewById(R.id.feedbackET);
+        feedBackofUser=userFeedBack.getText().toString();
+        ratingBar.setOnRatingBarChangeListener((ratingBar, v, b) -> {
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+            ratingVal=ratingBar.getRating();
+            saveBTN.setOnClickListener(view -> {
 
-                ratingVal=ratingBar.getRating();
+               /* if (ratingVal<4&&feedBackofUser.matches("")) {
+
+                    Toast.makeText(this, R.string.feedbackMust, Toast.LENGTH_SHORT).show();
+                }
+                else {*/
+
+                    dialog.dismiss();
+
+                    databaseRatingInfo(ratingVal, feedBackofUser);
+
+               /* }*/
+                    });
 
 
-                saveBTN.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        feedBackofUser=userFeedBack.getText().toString();
 
-                        dialog.dismiss();
-
-                        databaseRatingInfo(ratingVal,feedBackofUser);
-
-                    }
-                });
-            }
         });
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);

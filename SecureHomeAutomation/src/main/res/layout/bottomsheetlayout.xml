@@ -65,7 +65,6 @@
             android:id="@+id/feedbackET"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
             android:hint="Enter here"
             app:hintEnabled="false"
             android:textSize="20dp" />

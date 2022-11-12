@@ -299,4 +299,5 @@
     <string name="rating">Rating</string>
     <string name="FeedBack">FeedBack</string>
     <string name="forwardslash">/</string>
+    <string name="feedbackMust">Make Sure to write a feedback to help us Improve!</string>
 </resources>
