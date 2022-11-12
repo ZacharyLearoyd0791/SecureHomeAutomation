@@ -43,13 +43,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Locale;
 
 public class LightFragment extends Fragment {
-
     UserInfo userInfo=new UserInfo();
     public int counter;
     TextView timerTV, testing, ultrasonicTV;
     Double distance;
-    String dist,value,key,localKey,personalKey,lightKey,sensorKey,statusOfLight;
-    Boolean LightStatus,cancelTimer;
+    String dist,value,key,localKey,personalKey,lightKey,sensorKey,statusOfLight,LightStatus,on,off;
+    Boolean cancelTimer;
     TextView ultrasonicET;
     ImageButton timerBTN, schedulerBTN;
     int hour, minute;
@@ -59,8 +58,8 @@ public class LightFragment extends Fragment {
     Vibrator vibrator;
 
     public LightFragment() {
-    }
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,6 +75,7 @@ public class LightFragment extends Fragment {
         lightsOn=view.findViewById(R.id.onLights);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
+
         return view;
     }
     private void notificationCaller() {
@@ -90,6 +90,8 @@ public class LightFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         dbID();
+        SensorDB();
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.db_ultrasonic_dist));
         //timer and scheduler
@@ -101,14 +103,15 @@ public class LightFragment extends Fragment {
             getActivity().startActivity(myIntent);
         });
         lightsOff.setOnClickListener(view13 -> {
-            LightStatus = false;
+            LightStatus = getString(R.string.off);
             lightHandler();
         });
         lightsOn.setOnClickListener(view12 -> {
-            LightStatus = true;
+            LightStatus = getString(R.string.on);
             lightHandler();});
 
-        SensorDB();
+
+
     }
 
     private void dbID(){
@@ -121,31 +124,34 @@ public class LightFragment extends Fragment {
             key=localKey;
             Log.d(TAG,key);
         }
-
         if(personalKey!=null) {
             key= personalKey;
             Log.d(TAG, key);
         }
+
+
     }
 
     private void lightHandler() {
+        on= getString((R.string.on));
+        off=getString(R.string.off);
 
-        if (LightStatus) {
+        if (LightStatus==on) {
             firebaseDatabase = FirebaseDatabase.getInstance();
-            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-            databaseReference.setValue(R.string.on);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
+            databaseReference.setValue(on);
             cancelTimer=true;
         }
         else{
             firebaseDatabase = FirebaseDatabase.getInstance();
-            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
-            databaseReference.setValue(R.string.off);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
+            databaseReference.setValue(off);
             cancelTimer=false;
+
         }
     }
-
     private void SensorDB(){
-        lightKey=key+getString(R.string.key);
+        lightKey=key+getString(R.string.statusKey);
         Log.d(TAG,getString(R.string.keyIs)+lightKey);
         sensorKey=key+getString(R.string.db_ultrasonic_dist);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -169,21 +175,21 @@ public class LightFragment extends Fragment {
                             String value=getString(R.string.movement_detect);
                             Log.d(TAG,value);
                             ultrasonicTV.setText(value);
-                            LightStatus=true;
+                            LightStatus = getString(R.string.on);
                         }
                         else{
                             String value=getString(R.string.no_movement_detect)+distance+getString(R.string.cm);
                             Log.d(TAG,value);
-                            LightStatus=false;
+                            LightStatus = getString(R.string.off);
                         }
-                        if (LightStatus) {
+                        if (LightStatus==getString(R.string.on)) {
                             firebaseDatabase = FirebaseDatabase.getInstance();
-                            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
                             databaseReference.setValue(R.string.on);
                         }
                         else{
                             firebaseDatabase = FirebaseDatabase.getInstance();
-                            databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
                             databaseReference.setValue(R.string.off);
                         }
                     }
@@ -251,7 +257,7 @@ public class LightFragment extends Fragment {
                     String count=getString(R.string.counter_on)+counter;
                     Log.d(TAG, String.valueOf(count));
                     firebaseDatabase = FirebaseDatabase.getInstance();
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
 
                     databaseReference.setValue(getString(R.string.on));
                     counter++;
@@ -260,7 +266,7 @@ public class LightFragment extends Fragment {
                 public void onFinish() {
                     timerTV.setText(R.string.lightOff);
                     firebaseDatabase = FirebaseDatabase.getInstance();
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.key));
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
                     databaseReference.setValue(getString(R.string.off));
                     counter = 0;
                     hour = 0;

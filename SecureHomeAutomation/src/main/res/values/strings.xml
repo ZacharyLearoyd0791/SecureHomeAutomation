@@ -175,7 +175,9 @@
     <string name="startorendnull">Null Values in Start time or End Time</string>
     <string name="timeFormat">%02d:%02d</string>
     <string name="DatabaseStr">\"Database: \"</string>
-    <string name="key" translatable="false">/Ultrasonic Sensor/Light Status</string>
+    <string name="sensorKey" translatable="false">/Ultrasonic Sensor/Light Status</string>
+    <string name="statusKey" translatable="false">/Ultrasonic Sensor/Light Status</string>
+
     <string name="Timer">Timer</string>
     <string name="hourmin">HH:mm</string>
     <string name="sample_4">SAMPLE - Door Unlocked 6:48PM</string>
@@ -288,5 +290,5 @@
     <string name="Lights">Lights</string>
     <string name="channelDesc">Notification to be sent when Light is on!</string>
     <string name="keyIs">Light Key is :</string>
-    <string name="light_frag_tiles_service">Light_frag_tiles_service</string>
+    <string name="idLightStatus">ID/User/Light Status</string>
 </resources>

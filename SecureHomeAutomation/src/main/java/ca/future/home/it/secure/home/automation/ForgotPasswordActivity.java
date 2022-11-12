@@ -25,7 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-
     //Variable declaration
     private EditText userEmail;
     private Button sendEmailButton;
@@ -57,6 +56,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void sendEmailToResetPassword(EditText emailAddress) {
@@ -84,5 +84,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             userEmail.setTextColor(Color.RED);
             return false;
         }
+
     }
 }

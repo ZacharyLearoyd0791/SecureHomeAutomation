@@ -66,7 +66,6 @@ public class DoorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_door, container, false);
     }
-
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
 
@@ -168,7 +167,6 @@ public class DoorFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
     public void removeKey(){
 
         AlertDialog.Builder removeBuilder = new AlertDialog.Builder(getContext());
@@ -205,4 +203,5 @@ public class DoorFragment extends Fragment {
 
         databaseReference.updateChildren(updateStatus);
     }
+
 }

@@ -66,42 +66,33 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //Checking if fields are empty or not
         if(fillChecker==1){
-
             if(nameInput.isEmpty()){
                 fullName.setError(getString(R.string.enter_name));
                 fullName.requestFocus();
             }
-
             if(emailInput.isEmpty()){
                 emailAddress.setError(getString(R.string.email_address_enter));
             }
-
             if(passwordInput.isEmpty()){
                 password.setError(getString(R.string.password_enter));
             }
-
             if(passwordInput.length()<8){
                 password.setError(getString(R.string.minimum_eight_character));
                 password.requestFocus();
             }
-
             if(phoneNumberInput.length()<10){
                 phoneNumber.setError(getString(R.string.phone_number_error_message));
             }
-
             if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
                 emailAddress.setError(getString(R.string.enter_valid_email));
                 emailAddress.requestFocus();
             }
-
             if(!passwordInput.matches(confirmPasswordInput)){
                 confirmPassword.setError(getString(R.string.password_no_match));
                 confirmPassword.requestFocus();
             }
-
             fillChecker = 0;
-        }
-        else{
+        }else{
             registrationProcess(fillChecker);
         }
     }
@@ -109,7 +100,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public void registrationProcess(int CheckerId){
 
         databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.user_details));
-        UserHelperClass helperClass = new UserHelperClass(nameInput,emailInput,phoneNumberInput);
+        UserHelperClass helperClass = new UserHelperClass(nameInput,emailInput,phoneNumberInput,passwordInput);
         databaseReference.child(phoneNumberInput).setValue(helperClass);
         if(CheckerId == 0){
             mAuth.createUserWithEmailAndPassword(emailInput,passwordInput)

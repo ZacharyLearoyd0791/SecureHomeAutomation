@@ -32,6 +32,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
+    UserInfo userInfo=new UserInfo();
+    String localKey,key,personalKey,light_lightstatus,idKey;
+
     //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
@@ -42,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
     public static ProfileEditFragment profileEditFragment;
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     //Fingerprint
-    DatabaseReference databaseReference;
     String fingerprintState="";
 
     //Bottom Navigation
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dbID();
         getFCM();
         /*
 
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException("Test Crash"); // Force a crash
             }
         });
+
 
         addContentView(crashButton, new ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -126,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void idToDatabase() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.idLightStatus));
+        databaseReference.setValue(idKey);
+
     }
 
     //inflate action bar on first time opening app
@@ -197,4 +210,24 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, msg);
                 });
     }
+    private void dbID(){
+        userInfo.typeAccount();
+
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+
+        if(localKey!=null){
+            key=localKey;
+            Log.d(TAG,key);
+
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+            Log.d(TAG, key);
+        }
+        light_lightstatus=key+getString(R.string.statusKey);
+        idKey=key+getString(R.string.statusKey);
+        idToDatabase();
+    }
+
 }

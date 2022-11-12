@@ -43,7 +43,7 @@ public class SchedulerActivity extends Activity {
     TextView startTV, endTv;
     Button start, end, saveTime;
     int hour, minute, checking,counter;
-    String endTimeout, startTimeout, daySelected, timeDay,check,count,dbDate,dbTime;
+    String endtimeout, Starttimeout, daySelected, timeday,check,count,dbDate,dbTime;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     LinearLayout linearLayout;
@@ -63,6 +63,7 @@ public class SchedulerActivity extends Activity {
         startTV = findViewById(R.id.startTimeTV);
         endTv = findViewById(R.id.endtimeTv);
 
+
         monday = findViewById(R.id.monday);
         tuesday = findViewById(R.id.tuesday);
         wednesday = findViewById(R.id.wednesday);
@@ -73,6 +74,7 @@ public class SchedulerActivity extends Activity {
 
         backButton();
         onButtonClick();
+
     }
 
     private void backButton() {
@@ -92,23 +94,25 @@ public class SchedulerActivity extends Activity {
         //save time if start > end
         saveTime.setOnClickListener(view -> {
             checking = 0;
-
             if (monday.isChecked()) {
                 isMonday = true;
                 checking = 0;
+
             } else {
                 checking = checking + 1;
                 isMonday = false;
             }
-
             if (tuesday.isChecked()) {
                 checking = 0;
                 isTuesday = true;
+
+
             } else {
                 checking = checking + 1;
                 isTuesday = false;
-            }
 
+
+            }
             if (wednesday.isChecked()) {
                 checking = 0;
                 isWednesday = true;
@@ -116,6 +120,7 @@ public class SchedulerActivity extends Activity {
             } else {
                 checking = checking + 1;
                 isWednesday = false;
+
             }
 
             if (thursday.isChecked()) {
@@ -124,24 +129,25 @@ public class SchedulerActivity extends Activity {
             } else {
                 checking = checking + 1;
                 isThursday = false;
-            }
 
+            }
             if (friday.isChecked()) {
                 checking = 0;
                 isFriday = true;
+
             } else {
                 checking = checking + 1;
                 isFriday = false;
-            }
 
+            }
             if (saturday.isChecked()) {
                 checking = 0;
                 isSaturday = true;
+
             } else {
                 checking = checking + 1;
                 isSaturday = false;
             }
-
             if (sunday.isChecked()) {
                 checking = 0;
                 isSunday = true;
@@ -149,11 +155,9 @@ public class SchedulerActivity extends Activity {
                 checking = checking + 1;
                 isSunday = false;
             }
-
             checkDays();
             String num = getString(R.string.checkboxNum) + checking;
             Log.d(TAG, num);
-
             if (checking == 7) {
                 Log.d(TAG, getString(R.string.mustpickday));
                 Toast.makeText(this, mustpickday, Toast.LENGTH_SHORT).show();
@@ -171,52 +175,54 @@ public class SchedulerActivity extends Activity {
         hour = 0;
         minute = 0;
 
+
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
             hour = selectedHour;
             minute = selectedMinute;
 
-            startTimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
+            Starttimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
 
-            String timeOut = getString(R.string.timeSet) + startTimeout;
+            String timeOut = getString(R.string.timeSet) + Starttimeout;
             Log.d(TAG, timeOut);
             startTV.setText(timeOut);
+
         };
+
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, false);
 
         timePickerDialog.setTitle(getString(R.string.startTimeSelect));
         timePickerDialog.show();
+
     }
 
     private void checkDays() {
         daySelected = getString(R.string.empty);
-
         if (isMonday) {
             daySelected = getString(R.string.monday);
         }
-
         if (isTuesday) {
             daySelected = getString(R.string.tuesday);
         }
-
         if (isWednesday) {
             daySelected += getString(R.string.wednesday);
-        }
 
+        }
         if (isThursday) {
             daySelected += getString(R.string.thursday);
-        }
 
+        }
         if (isFriday) {
             daySelected += getString(R.string.friday);
-        }
 
+        }
         if (isSaturday) {
             daySelected += getString(R.string.saturday);
-        }
 
+        }
         if (isSunday) {
             daySelected += getString(R.string.sunday);
+
         }
     }
 
@@ -224,33 +230,39 @@ public class SchedulerActivity extends Activity {
         hour = 0;
         minute = 0;
 
+
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
             hour = selectedHour;
             minute = selectedMinute;
 
-            endTimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
-            String timeOut = getString(R.string.timeSet) + endTimeout;
+            endtimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
+            String timeOut = getString(R.string.timeSet) + endtimeout;
             endTv.setText(timeOut);
+
+
         };
+
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, false);
 
         timePickerDialog.setTitle(getString(R.string.endTimeSelect));
         timePickerDialog.show();
+
     }
 
     private void saveTime() throws ParseException {
 
-        String timeSaved = getString(R.string.startTimemsg) + startTimeout + getString(R.string.endTimemsg) + endTimeout;
+        String timeSaved = getString(R.string.startTimemsg) + Starttimeout + getString(R.string.endTimemsg) + endtimeout;
         Log.d(TAG, timeSaved);
 
-        if ((startTimeout == null) || endTimeout == null) {
+        if ((Starttimeout == null) || endtimeout == null) {
             Toast.makeText(this, R.string.startorendnull, Toast.LENGTH_SHORT).show();
+
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat(getString(hourmin));
-            Date d1 = sdf.parse(startTimeout);
+            Date d1 = sdf.parse(Starttimeout);
 
-            Date d2 = sdf.parse(endTimeout);
+            Date d2 = sdf.parse(endtimeout);
 
             assert d1 != null;
             assert d2 != null;
@@ -265,16 +277,20 @@ public class SchedulerActivity extends Activity {
 
             if (d2.getTime() > d1.getTime() && checking != 7) {
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                timeDay = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + startTimeout + getString(R.string.to) + endTimeout;
-                Log.d(TAG, timeDay);
+                timeday = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + Starttimeout + getString(R.string.to) + endtimeout;
+                Log.d(TAG, timeday);
                 logging();
                 check=daySelected;
                 counter=counter+1;
+
+
             } else {
                 Log.d(TAG, getString(R.string.logDataEndSmall));
                 Toast.makeText(this, R.string.endSmall, Toast.LENGTH_SHORT).show();
+
             }
             toDatabase();
+
         }
     }
     private void logging(){
@@ -283,7 +299,8 @@ public class SchedulerActivity extends Activity {
 
         linearLayout=scroll.findViewById(R.id.liner_schedule);
 
-        addHistory(timeDay);
+        addHistory(timeday);
+
     }
 
     private void addHistory(String string) {
@@ -299,7 +316,7 @@ public class SchedulerActivity extends Activity {
     }
 
     private void toDatabase(){
-        String timeMsg= startTimeout +getString(R.string.to)+ endTimeout;
+        String timeMsg=Starttimeout+getString(R.string.to)+endtimeout;
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.dayKey)));
 
@@ -313,7 +330,7 @@ public class SchedulerActivity extends Activity {
         }
         databaseReference.updateChildren(day);
 
-        dbTime= startTimeout +getString(R.string.to)+ endTimeout;
+        dbTime=Starttimeout+getString(R.string.to)+endtimeout;
         databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.timeKey)));
         databaseReference.setValue(dbTime);
         Map<String, Object> time = new HashMap<>();

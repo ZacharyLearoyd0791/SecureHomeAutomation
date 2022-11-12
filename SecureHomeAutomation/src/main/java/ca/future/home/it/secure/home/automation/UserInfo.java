@@ -14,15 +14,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserInfo extends Fragment {
-
     private GoogleSignInAccount acct;
     private FirebaseUser user;
     String infoID,infoName,name,email,uid,str,photos,personName,personId,infoLocalName,personEmail,infoEmail,infoLocalEmail;
     String idInfo,nameInfo,userId,localName,localEmail,emailInfo;
     static Context context;
-    Uri personPhoto, photoOut;
+    Uri personPhoto,photOut;
 
     public void typeAccount() {
         UserInfo.context = getApplicationContext();
@@ -39,8 +40,8 @@ public class UserInfo extends Fragment {
         else{
             Log.d(TAG,"User login information isn't available now");
         }
-    }
 
+    }
     private void LocalUsers() {
         Log.d(TAG, "User method has been selected for testing");//remove after testing
 
@@ -55,7 +56,6 @@ public class UserInfo extends Fragment {
             Log.d(TAG,infoLocalName);
             returnLocalName();
         }
-
         if (email!=null){
             infoLocalEmail="Email is "+email;
             Log.d(TAG,infoLocalEmail);
@@ -64,8 +64,8 @@ public class UserInfo extends Fragment {
         else{
             Log.d(TAG,"name is null");
         }
-
         returnLocalId();
+
     }
 
     private void googleLoginUsers(){
@@ -121,8 +121,8 @@ public class UserInfo extends Fragment {
     }
 
     private Uri returnPhoto() {
-        photoOut =personPhoto;
-        return photoOut;
+        photOut=personPhoto;
+        return photOut;
     }
 
     private String returnLocalName() {

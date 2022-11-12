@@ -77,7 +77,6 @@ public class WindowFragment extends Fragment {
         });
         return view;
     }
-
     public void sendNotificationProcess(String notificationTitle, String notificationText){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getString(R.string.window_break));
         builder.setContentTitle(notificationTitle)
@@ -88,7 +87,6 @@ public class WindowFragment extends Fragment {
         NotificationManagerCompat mangerCompat = NotificationManagerCompat.from(getContext());
         mangerCompat.notify(1,builder.build());
     }
-
     public void alarmProcess(){
         String notificationTitle = getString(R.string.window_on_test);
         String notificationText = getString(R.string.window_alarm_active);
@@ -113,7 +111,6 @@ public class WindowFragment extends Fragment {
             vibrator.vibrate(vibrationEffect);
         }
     }
-
     public void createSnackBar(){
         Snackbar snackbar = Snackbar.make(view.findViewById(R.id.frameLayout5), R.string.turn_off_req,Snackbar.LENGTH_LONG)
                 .setAction(R.string.off, new View.OnClickListener() {
