@@ -13,36 +13,23 @@
         android:id="@+id/schedulerButton"
         android:layout_width="94dp"
         android:layout_height="92dp"
-        android:layout_marginTop="332dp"
+        android:layout_marginTop="240dp"
         android:layout_marginEnd="60dp"
         android:background="@color/white"
         android:contentDescription="@string/scheduler"
-        app:tint="@color/black"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_scheduler"
         app:icon="@drawable/ic_scheduler"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/timerButton"
-        android:layout_width="94dp"
-        android:layout_height="92dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="332dp"
-        android:background="@color/white"
-        android:src="@drawable/ic_timer"
-        app:tint="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="296dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="204dp"
         android:text="@string/timer"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -53,8 +40,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="296dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="204dp"
         android:text="@string/scheduler"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -65,17 +52,39 @@
         android:id="@+id/timerTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="436dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="344dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/testing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="332dp"
+        android:layout_marginEnd="136dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/timerButton"
+        android:layout_width="94dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="240dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_timer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/Ultrasonic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="100dp"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -93,15 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Ultrasonic" />
 
-
-    <TextView
-        android:id="@+id/testing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="424dp"
-        android:layout_marginEnd="136dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -140,23 +140,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/offLights"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="404dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/lightOff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/onLights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="496dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="404dp"
         android:text="@string/lightOn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/offLights"
+    <TextView
+        android:id="@+id/statusOfLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="496dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/lightOff"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="158dp"
+        android:text="@string/lightStautsMSG"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
