@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     public static ProfileEditFragment profileEditFragment;
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
+    public static FeedbackFragment feedbackFragment;
+
+    //Database
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         accountFragment = new AccountFragment();
         addDeviceFragment = new AddDeviceFragment();
         profileEditFragment = new ProfileEditFragment();
+        feedbackFragment = new FeedbackFragment();
 
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
@@ -164,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.ab_add) {
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, addDeviceFragment).commit();
+        }
+        if (item.getItemId() == R.id.ab_feedback) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, feedbackFragment).commit();
         }
         return super.onOptionsItemSelected(item);
     }

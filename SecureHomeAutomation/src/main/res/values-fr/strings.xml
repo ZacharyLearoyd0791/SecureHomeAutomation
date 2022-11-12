@@ -112,17 +112,17 @@
     <string name="set_max_temperature">Régler la température maximale:</string>
     <string name="set_minimum_temperature">Régler la température minimale:</string>
     <string name="add_new_key_card">Ajouter une nouvelle carte-clé :</string>
-    <string name="lock_configuration">Verrouiller la configuration</string>
+    <string name="lock_configuration">Verrouiller</string>
     <string name="door_status">État de la porte:</string>
     <string name="lock_unlock_door">Verrouiller/Déverrouiller la porte :</string>
-    <string name="light_configuration">Configuration de la lumière</string>
-    <string name="temp_configuration">Configuration de la température</string>
-    <string name="window_configuration">Configuration de la fenêtre</string>
+    <string name="light_configuration">Lumière</string>
+    <string name="temp_configuration">Température</string>
+    <string name="window_configuration">Fenêtre</string>
     <string name="currenttemp">Température actuelle</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
-    <string name="unlock">UnLocked!</string>
-    <string name="lock">Locked!</string>
+    <string name="unlock">UnLocked</string>
+    <string name="lock">Locked</string>
     <string name="check_status">Check Status</string>
     <string name="google_signin_error">Something went wrong!</string>
     <string name="work_under_construction">Work under construction</string>
@@ -275,5 +275,11 @@
     <string name="channelDesc">Notification to be sent when Light is on!</string>
     <string name="keyIs">Light Key is :</string>
     <string name="Lights">Lights</string>
+    <string name="idLightStatus">ID/User/Light Status</string>
+    <string name="quick_access_menu">Quick Access Menu</string>
+    <string name="configuration">Configuration</string>
+    <string name="disarm_arm">Disarm/Arm</string>
+    <string name="unlock_lock">Unlock/Lock</string>
+    <string name="feedback">Feedback</string>
 
 </resources>

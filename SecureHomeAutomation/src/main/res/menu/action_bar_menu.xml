@@ -26,4 +26,9 @@
         android:orderInCategory="100"
         app:showAsAction="never"
         android:icon="@drawable/ic_settings"/>
+
+    <item android:title="@string/feedback"
+        android:id="@+id/ab_feedback"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
 </menu>

@@ -118,16 +118,16 @@
     <string name="set_minimum_temperature">Set minimum temperature:</string>
     <string name="add_new_key_card">Add new key card:</string>
     <string name="lock_configuration">Lock Configuration</string>
-    <string name="door_status">Door status</string>
+    <string name="door_status">Door status:</string>
     <string name="lock_unlock_door">Status</string>
-    <string name="light_configuration">Light Configuration</string>
-    <string name="temp_configuration">Temp Configuration</string>
-    <string name="window_configuration">Window Configuration</string>
+    <string name="light_configuration">Light</string>
+    <string name="temp_configuration">Temp</string>
+    <string name="window_configuration">Window</string>
     <string name="currenttemp">Current Temperature:</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
-    <string name="unlock">Unlocked!</string>
-    <string name="lock">Locked!</string>
+    <string name="unlock">Unlocked</string>
+    <string name="lock">Locked</string>
     <string name="check_status">Check Status</string>
     <string name="space" translatable="false"> </string>
     <string name="google_signin_error">Something went wrong!</string>
@@ -158,7 +158,7 @@
     <string name="manage_keys">Manage Keys:</string>
     <string name="setup">Setup</string>
     <string name="vacation_mode">Vacation Mode:</string>
-    <string name="door_configuration">Door Configuration</string>
+    <string name="door_configuration">Door</string>
     <string name="add_key">Add Key</string>
     <string name="remove_key">Remove Key</string>
     <string name="sample_1">SAMPLE - Unauthorized Key Attempt</string>
@@ -291,4 +291,9 @@
     <string name="channelDesc">Notification to be sent when Light is on!</string>
     <string name="keyIs">Light Key is :</string>
     <string name="idLightStatus">ID/User/Light Status</string>
+    <string name="quick_access_menu">Quick Access Menu</string>
+    <string name="configuration">Configuration</string>
+    <string name="disarm_arm">Disarm/Arm</string>
+    <string name="unlock_lock">Unlock/Lock</string>
+    <string name="feedback">Feedback</string>
 </resources>

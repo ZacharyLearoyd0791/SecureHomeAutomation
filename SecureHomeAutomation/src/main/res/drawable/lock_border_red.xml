@@ -21,9 +21,8 @@
             <shape android:shape="oval">
                 <stroke
                     android:width="4dp"
-                    android:color="@android:color/holo_red_dark" />
+                    android:color="@android:color/holo_red_light" />
             </shape>
-
         </inset>
     </item>
 </layer-list>
