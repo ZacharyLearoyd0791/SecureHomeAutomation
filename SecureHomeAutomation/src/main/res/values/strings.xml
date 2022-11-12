@@ -6,7 +6,7 @@
     Krushang Parekh (N01415355) - CENG-322-0NC
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Secure Home Automation</string>
     <string name="leavingMsg">Are you sure you want to exit the app</string>
     <string name="leavingTitle">Leaving?</string>
@@ -297,11 +297,12 @@
     <string name="unlock_lock">Unlock/Lock</string>
     <string name="feedback">Feedback</string>
     <string name="rating">Rating</string>
-    <string name="FeedBack">FeedBack</string>
-    <string name="forwardslash">/</string>
+    <string name="FeedBack" tools:ignore="MissingTranslation">FeedBack</string>
+    <string name="forwardslash" tools:ignore="MissingTranslation">/</string>
     <string name="feedbackMust">Make Sure to write a feedback to help us Improve!</string>
     <string name="BoldTextString">BoldText</string>
     <string name="DarkModeString">DarkMode</string>
     <string name="fingerPrintString">FingerPrint</string>
     <string name="screenOrientationString">screenOrientation</string>
+    <string name="lightStautsMSG">Status of Light: </string>
 </resources>

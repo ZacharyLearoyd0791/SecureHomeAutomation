@@ -287,5 +287,6 @@
     <string name="DarkModeString">DarkMode</string>
     <string name="fingerPrintString">FingerPrint</string>
     <string name="screenOrientationString">screenOrientation</string>
+    <string name="lightStautsMSG">Status of Light</string>
 
 </resources>
