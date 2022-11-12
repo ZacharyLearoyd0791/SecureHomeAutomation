@@ -9,8 +9,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -37,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.remoteconfig.internal.ConfigGetParameterHandler;
 
 
 public class SettingsFragment extends Fragment {
@@ -49,10 +52,16 @@ public class SettingsFragment extends Fragment {
     private Switch portraitSwitch;
     private Button saveButton;
     public static String SETTINGS_PREFS_NAME = "SavedSettings";
-    private Boolean boldTextState;
-    private Boolean darkModeState;
-    private Boolean fingerPrintState;
-    private Boolean screenOrientationState;
+    private Boolean boldTextState = false;
+    private Boolean darkModeState = false;
+    private Boolean fingerPrintState = false;
+    private Boolean screenOrientationState = false;
+    private Boolean sBoldTextState;
+    private Boolean sDarkModeState;
+    private Boolean sFingerPrintState;
+    private Boolean sScreenOrientationState;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     //View
@@ -91,12 +100,45 @@ public class SettingsFragment extends Fragment {
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
+        sBoldTextState = sharedPreferences.getBoolean(getString(R.string.BoldTextString),false);
+        sDarkModeState = sharedPreferences.getBoolean(getString(R.string.DarkModeString),false);
+        sFingerPrintState = sharedPreferences.getBoolean(getString(R.string.fingerPrintString),false);
+        sScreenOrientationState = sharedPreferences.getBoolean(getString(R.string.screenOrientationString),false);
 
         //TextViews
         tvBold = view.findViewById(R.id.tv_bold);
         tvColour = view.findViewById(R.id.tv_colour);
         tvFinger = view.findViewById(R.id.tv_finger);
         tvPortrait = view.findViewById(R.id.tv_Portrait);
+
+        //Getting Switch states from sharedPreferences
+        //Getting bold text switch state
+        if(sBoldTextState){
+            boldSwitch.setChecked(true);
+        }else{
+            boldSwitch.setChecked(false);
+        }
+
+        //Getting Dark Mode switch state
+        if(sDarkModeState){
+            colourSwitch.setChecked(true);
+        }else{
+            colourSwitch.setChecked(false);
+        }
+
+        //Getting fingerprint switch state
+        if(sFingerPrintState){
+            fingerSwitch.setChecked(true);
+        }else{
+            fingerSwitch.setChecked(false);
+        }
+
+        //Getting orientation switch state
+        if(sScreenOrientationState){
+            portraitSwitch.setChecked(true);
+        }else{
+            portraitSwitch.setChecked(false);
+        }
 
         //Bold Text
         boldSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -155,16 +197,25 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        //Save Button functionality
+        //Screen Orientation
+        if(portraitSwitch.isChecked()){
+            screenOrientationState = true;
+        }else{
+            screenOrientationState = false;
+        }
+
+
+
+    //Save Button functionality
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("BoldText",boldTextState);
-                editor.putBoolean("DarkMode",darkModeState);
-                editor.putBoolean("FingerPrint",fingerPrintState);
-                editor.putBoolean("screenOrientation",screenOrientationState);
+                sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
+                editor = sharedPreferences.edit();
+                editor.putBoolean(getString(R.string.BoldTextString),boldTextState);
+                editor.putBoolean(getString(R.string.DarkModeString),darkModeState);
+                editor.putBoolean(getString(R.string.fingerPrintString),fingerPrintState);
+                editor.putBoolean(getString(R.string.screenOrientationString),screenOrientationState);
             }
         });
 

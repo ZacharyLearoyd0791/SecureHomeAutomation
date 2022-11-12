@@ -300,4 +300,8 @@
     <string name="FeedBack">FeedBack</string>
     <string name="forwardslash">/</string>
     <string name="feedbackMust">Make Sure to write a feedback to help us Improve!</string>
+    <string name="BoldTextString">BoldText</string>
+    <string name="DarkModeString">DarkMode</string>
+    <string name="fingerPrintString">FingerPrint</string>
+    <string name="screenOrientationString">screenOrientation</string>
 </resources>
