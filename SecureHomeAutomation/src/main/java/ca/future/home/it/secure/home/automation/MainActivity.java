@@ -212,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         feedBackofUser=userFeedBack.getText().toString();
 
-                        Log.d(TAG,"save btn has been pressed");
                         dialog.dismiss();
 
                         databaseRatingInfo(ratingVal,feedBackofUser);
@@ -229,13 +228,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
 
-        Log.d(TAG,"Rating of User is :"+ratingVal);
-        Log.d(TAG,"Feedback of User is :"+feedbackOfUser);
-        Log.d(TAG,"Key of user: "+key);
-        ratingKey="/"+key+"/"+getString(R.string.rating)+"/"+getString(R.string.rating);
+
+        ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
         databaseReference.setValue(ratingVal);
-        feedBackKey="/"+key+"/"+getString(R.string.rating)+"/"+getString(R.string.FeedBack);
+        feedBackKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.FeedBack);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
 
