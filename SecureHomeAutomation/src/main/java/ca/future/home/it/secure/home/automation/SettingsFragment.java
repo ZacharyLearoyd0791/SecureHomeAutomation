@@ -100,6 +100,8 @@ public class SettingsFragment extends Fragment {
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
+        sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
+        editor = sharedPreferences.edit();
         sBoldTextState = sharedPreferences.getBoolean(getString(R.string.BoldTextString),false);
         sDarkModeState = sharedPreferences.getBoolean(getString(R.string.DarkModeString),false);
         sFingerPrintState = sharedPreferences.getBoolean(getString(R.string.fingerPrintString),false);
@@ -210,8 +212,7 @@ public class SettingsFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
-                editor = sharedPreferences.edit();
+
                 editor.putBoolean(getString(R.string.BoldTextString),boldTextState);
                 editor.putBoolean(getString(R.string.DarkModeString),darkModeState);
                 editor.putBoolean(getString(R.string.fingerPrintString),fingerPrintState);
