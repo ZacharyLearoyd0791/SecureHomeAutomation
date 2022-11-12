@@ -7,16 +7,26 @@
     android:background="@drawable/dialog_bg"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:background="@drawable/profile_frag_bg"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/feedBackTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+        android:layout_marginTop="10dp"
         android:text="@string/feedback"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:layout_marginTop="100dp"
         android:textSize="25dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/ratingTV"
@@ -43,6 +53,7 @@
 
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/feedbackUserTV"
         android:layout_width="wrap_content"
@@ -53,12 +64,11 @@
 
     <LinearLayout
         android:id="@+id/feedback"
-        android:layout_width="match_parent"
-        android:layout_height="227dp"
-        android:orientation="horizontal"
-        android:padding="8dp"
+        android:layout_width="387dp"
+        android:layout_height="142dp"
         android:background="@drawable/dialog_bg"
-        >
+        android:orientation="horizontal"
+        android:padding="8dp">
 
 
         <EditText
@@ -66,8 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter here"
-            app:hintEnabled="false"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            app:hintEnabled="false" />
 
     </LinearLayout>
     <LinearLayout
