@@ -10,6 +10,7 @@ package ca.future.home.it.secure.home.automation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -100,12 +101,12 @@ public class SettingsFragment extends Fragment {
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
-        sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
+        sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        sBoldTextState = sharedPreferences.getBoolean(getString(R.string.BoldTextString),false);
-        sDarkModeState = sharedPreferences.getBoolean(getString(R.string.DarkModeString),false);
-        sFingerPrintState = sharedPreferences.getBoolean(getString(R.string.fingerPrintString),false);
-        sScreenOrientationState = sharedPreferences.getBoolean(getString(R.string.screenOrientationString),false);
+        sBoldTextState = sharedPreferences.getBoolean("BoldText",false);
+        sDarkModeState = sharedPreferences.getBoolean("DarkMode",false);
+        sFingerPrintState = sharedPreferences.getBoolean("FingerPrint",false);
+        sScreenOrientationState = sharedPreferences.getBoolean("screenOrientation",false);
 
         //TextViews
         tvBold = view.findViewById(R.id.tv_bold);
@@ -193,8 +194,21 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(fingerSwitch.isChecked()){
                     fingerPrintState = true;
+                    
                 }else{
                     fingerPrintState = false;
+
+                    databaseReference.child(getString(R.string.fingerprint)).setValue(R.string.off).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getContext(), R.string.fingerprint_disable_succ, Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
@@ -213,10 +227,10 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                editor.putBoolean(getString(R.string.BoldTextString),boldTextState);
-                editor.putBoolean(getString(R.string.DarkModeString),darkModeState);
-                editor.putBoolean(getString(R.string.fingerPrintString),fingerPrintState);
-                editor.putBoolean(getString(R.string.screenOrientationString),screenOrientationState);
+                editor.putBoolean("BoldText",boldTextState);
+                editor.putBoolean("DarkMode",darkModeState);
+                editor.putBoolean("FingerPrint",fingerPrintState);
+                editor.putBoolean("screenOrientation",screenOrientationState);
             }
         });
 

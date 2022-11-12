@@ -121,57 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Login via fingerprint
-        BiometricManager biometricManager= BiometricManager.from(this);
-        switch(biometricManager.canAuthenticate()){
-            case BiometricManager.BIOMETRIC_SUCCESS:
-                Toast.makeText(this, R.string.opt_fingerprint_login, Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                Toast.makeText(this, R.string.device_no_fingerprint, Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                Toast.makeText(this, R.string.biometic_unavailable, Toast.LENGTH_SHORT).show();
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                Toast.makeText(this, R.string.no_fingerprint_found, Toast.LENGTH_SHORT).show();
-                break;
-        }
 
-        Executor executor = ContextCompat.getMainExecutor(this);
-        final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-            }
-
-            // THIS METHOD IS CALLED WHEN AUTHENTICATION IS SUCCESS
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                Toast.makeText(getApplicationContext(), R.string.login_success, Toast.LENGTH_SHORT).show();
-
-            }
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-            }
-        });
-
-        // creating a variable for our promptInfo
-        // BIOMETRIC DIALOG
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.gfg))
-                .setDescription(getString(R.string.use_fingerprint_login))
-
-                .setNegativeButtonText(getString(R.string.cancel)).build();
-
-        biometricPrompt.authenticate(promptInfo);
-//        loginbutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                biometricPrompt.authenticate(promptInfo);
-//
-//            }
-//        });
 
         //Login via facebook
         LoginManager.getInstance().registerCallback(callbackManager,
