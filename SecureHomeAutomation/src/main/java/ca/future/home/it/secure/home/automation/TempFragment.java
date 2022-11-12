@@ -57,7 +57,7 @@ public class TempFragment extends Fragment {
     private void init(View view) {
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
-        tvMaximumTemperature = view.findViewById(R.id.MaximumTemperature);
+        tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
         database = FirebaseDatabase.getInstance();
         minTempRef = database.getReference("Temperature-Configurations/minTemperature");
         maxTempRef = database.getReference("Temperature-Configurations/maxTemperature");
