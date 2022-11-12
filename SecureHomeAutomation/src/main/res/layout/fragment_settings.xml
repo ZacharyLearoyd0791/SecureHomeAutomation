@@ -35,7 +35,7 @@
         tools:ignore="ContentDescription" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/settingsSaveButton"
         android:layout_width="303dp"
         android:layout_height="54dp"
         android:layout_marginStart="44dp"

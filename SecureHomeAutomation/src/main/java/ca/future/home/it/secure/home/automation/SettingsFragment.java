@@ -8,7 +8,9 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -36,14 +38,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class SettingsFragment extends Fragment {
 
-    //Switches
+    //Switches and Others
 
     private Switch boldSwitch;
     private Switch colourSwitch;
     private Switch fingerSwitch;
     private Switch portraitSwitch;
+    private Button saveButton;
+    public static String SETTINGS_PREFS_NAME = "SavedSettings";
+    private Boolean boldTextState;
+    private Boolean darkModeState;
+    private Boolean fingerPrintState;
+    private Boolean screenOrientationState;
+
 
     //View
     private View view;
@@ -75,11 +85,12 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Switches
+        //Switches and Others
         boldSwitch = view.findViewById(R.id.bold_switch);
         colourSwitch = view.findViewById(R.id.colour_switch);
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
+        saveButton = view.findViewById(R.id.settingsSaveButton);
 
         //TextViews
         tvBold = view.findViewById(R.id.tv_bold);
@@ -91,6 +102,7 @@ public class SettingsFragment extends Fragment {
         boldSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    boldTextState = true;
                     tvBold.setTypeface(null, Typeface.BOLD);
                     tvColour.setTypeface(null, Typeface.BOLD);
                     boldSwitch.setTypeface(null, Typeface.BOLD);
@@ -101,6 +113,7 @@ public class SettingsFragment extends Fragment {
                     tvPortrait.setTypeface(null, Typeface.BOLD);
                     //HomeFragment.windowSwitch.setTypeface(null, Typeface.BOLD);
                 } else {
+                    boldTextState = false;
                     tvBold.setTypeface(null, Typeface.NORMAL);
                     tvColour.setTypeface(null, Typeface.NORMAL);
                     boldSwitch.setTypeface(null, Typeface.NORMAL);
@@ -119,9 +132,11 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
+                    darkModeState = true;
                     //mainAct.changeColour(1);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
+                    darkModeState = false;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             }
@@ -133,31 +148,27 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(fingerSwitch.isChecked()){
-                    databaseReference.child(getString(R.string.fingerprint)).setValue(R.string.on).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(getContext(), R.string.fingerprint_enable_succ, Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    fingerPrintState = true;
                 }else{
-                    databaseReference.child(getString(R.string.fingerprint)).setValue(R.string.off).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(getContext(), R.string.fingerprint_disable_succ, Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    fingerPrintState = false;
                 }
             }
         });
+
+        //Save Button functionality
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("BoldText",boldTextState);
+                editor.putBoolean("DarkMode",darkModeState);
+                editor.putBoolean("FingerPrint",fingerPrintState);
+                editor.putBoolean("screenOrientation",screenOrientationState);
+            }
+        });
+
+
+
     }
 }
