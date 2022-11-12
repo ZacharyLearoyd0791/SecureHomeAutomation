@@ -296,4 +296,6 @@
     <string name="disarm_arm">Disarm/Arm</string>
     <string name="unlock_lock">Unlock/Lock</string>
     <string name="feedback">Feedback</string>
+    <string name="rating">Rating</string>
+    <string name="FeedBack">FeedBack</string>
 </resources>

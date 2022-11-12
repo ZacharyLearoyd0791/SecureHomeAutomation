@@ -11,11 +11,19 @@ package ca.future.home.it.secure.home.automation;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -33,7 +41,10 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class MainActivity extends AppCompatActivity {
 
     UserInfo userInfo=new UserInfo();
-    String localKey,key,personalKey,light_lightstatus,idKey;
+    String localKey,key,personalKey,light_lightstatus,idKey,feedBackofUser,ratingKey,feedBackKey;
+
+    float ratingVal;
+
 
     //Fragments
     private HomeFragment homeFragment;
@@ -46,11 +57,13 @@ public class MainActivity extends AppCompatActivity {
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
     public static FeedbackFragment feedbackFragment;
-
+    RatingBar ratingBar;
+    Button saveBTN;
     //Database
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-
+    EditText userFeedBack;
+    String ratingx;
     //Fingerprint
     String fingerprintState="";
 
@@ -170,9 +183,64 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, addDeviceFragment).commit();
         }
         if (item.getItemId() == R.id.ab_feedback) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, feedbackFragment).commit();
+            showBottomDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showBottomDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheetlayout);
+
+        LinearLayout rating=dialog.findViewById(R.id.ratings);
+        LinearLayout feedback=dialog.findViewById(R.id.feedback);
+        LinearLayout save =dialog.findViewById(R.id.saveFeedBackLL);
+        ratingBar=dialog.findViewById(R.id.ratingBar);
+        saveBTN=dialog.findViewById(R.id.saveFeedback);
+        userFeedBack=(EditText) dialog.findViewById(R.id.feedbackET);
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+
+                ratingVal=ratingBar.getRating();
+
+
+                saveBTN.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        feedBackofUser=userFeedBack.getText().toString();
+
+                        Log.d(TAG,"save btn has been pressed");
+                        dialog.dismiss();
+
+                        databaseRatingInfo(ratingVal,feedBackofUser);
+
+                    }
+                });
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+    private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
+
+        Log.d(TAG,"Rating of User is :"+ratingVal);
+        Log.d(TAG,"Feedback of User is :"+feedbackOfUser);
+        Log.d(TAG,"Key of user: "+key);
+        ratingKey="/"+key+"/"+getString(R.string.rating)+"/"+getString(R.string.rating);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
+        databaseReference.setValue(ratingVal);
+        feedBackKey="/"+key+"/"+getString(R.string.rating)+"/"+getString(R.string.FeedBack);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
+        databaseReference.setValue(feedbackOfUser);
+
+
+
     }
 
     public void onBackPressed() {
