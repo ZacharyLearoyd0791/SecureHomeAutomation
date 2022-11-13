@@ -8,6 +8,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,18 +22,24 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ekn.gruzer.gaugelibrary.ArcGauge;
+import com.ekn.gruzer.gaugelibrary.Range;
+import com.ekn.gruzer.gaugelibrary.contract.ValueFormatter;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class TempFragment extends Fragment {
 
-    TextView tvCurrentTemperature;
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
+    TextView tvCurrentTemperature;
     FirebaseDatabase database;
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
+    ArcGauge temperatureView;
 
     public TempFragment() {
         // Required empty public constructor
@@ -57,8 +64,11 @@ public class TempFragment extends Fragment {
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
         database = FirebaseDatabase.getInstance();
+        temperatureView = view.findViewById(R.id.TemperatureView);
         minTempRef = database.getReference("Temperature-Configurations/minTemperature");
         maxTempRef = database.getReference("Temperature-Configurations/maxTemperature");
+        setTemperatureView(temperatureView);
+        setCurrentTemperature(18);
     }
 
     private void setListeners() {
@@ -132,5 +142,37 @@ public class TempFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void setTemperatureView(ArcGauge temperatureView) {
+
+        this.temperatureView = temperatureView;
+        Range range1 = new Range();
+        range1.setColor(Color.parseColor("#09B2FF"));
+        range1.setFrom(0);
+        range1.setTo(19);
+
+        Range range2 = new Range();
+        range2.setColor(Color.parseColor("#FFC107"));
+        range2.setFrom(20);
+        range2.setTo(28);
+
+        Range range3 = new Range();
+        range3.setColor(Color.parseColor("#F44336"));
+        range3.setFrom(29);
+        range3.setTo(75);
+
+        //add color ranges to gauge
+        temperatureView.addRange(range1);
+        temperatureView.addRange(range2);
+        temperatureView.addRange(range3);
+
+        temperatureView.setMinValue(0);
+        temperatureView.setMaxValue(75);
+        temperatureView.setValueColor(Color.parseColor("#ffffff"));
+    }
+
+    private void setCurrentTemperature(int value) {
+        tvCurrentTemperature.setText(value+"\u00B0 C");
     }
 }

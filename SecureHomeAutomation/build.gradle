@@ -67,5 +67,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'   //For facebook login
    //State progress bar
 
+    //guage
+    implementation 'com.github.Gruzer:simple-gauge-android:0.3.1'
+
 
 }
