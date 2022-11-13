@@ -29,10 +29,10 @@
 
     <ScrollView
         android:id="@+id/scheduleLog"
-        android:layout_width="372dp"
-        android:layout_height="182dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="4dp"
+        android:layout_width="363dp"
+        android:layout_height="183dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/scroll_view_border"
         android:fillViewport="true"
         android:padding="6dp"
@@ -227,7 +227,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.03" />
+        app:layout_constraintGuide_percent="0.04" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
