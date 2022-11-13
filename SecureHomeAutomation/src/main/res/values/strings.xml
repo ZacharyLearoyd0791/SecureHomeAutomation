@@ -190,7 +190,7 @@
     <string name="end">End</string>
     <string name="start">Start</string>
     <string name="save_days">Save Days</string>
-    <string name="select_start_and_end_time">Select Start and End time!</string>
+    <string name="select_start_and_end_time">Select start and end time:</string>
     <string name="select_the_day_of_week">Select the day of week</string>
     <string name="checkboxNum">number of checking</string>
     <string name="pickedDays">Days user picked are:</string>
