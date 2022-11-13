@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     float ratingVal;
 
-
     //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
@@ -55,13 +54,16 @@ public class MainActivity extends AppCompatActivity {
     public static ProfileEditFragment profileEditFragment;
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
-    public static FeedbackFragment feedbackFragment;
+
+    //Feedback system
     RatingBar ratingBar;
     Button saveBTN;
+
     //Database
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     EditText userFeedBack;
+
     //Fingerprint
     String fingerprintState="";
 
@@ -103,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         accountFragment = new AccountFragment();
         addDeviceFragment = new AddDeviceFragment();
         profileEditFragment = new ProfileEditFragment();
-        feedbackFragment = new FeedbackFragment();
 
         //Sets initial startup screen to homeFragment
         if(!getIntent().getBooleanExtra(getString(R.string.recreated),false)) {
@@ -214,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                     });
 
 
-
         });
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -224,16 +224,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
 
-
         ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
         databaseReference.setValue(ratingVal);
         feedBackKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.FeedBack);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
-
-
-
     }
 
     public void onBackPressed() {
@@ -278,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, msg);
                 });
     }
+
     private void dbID(){
         userInfo.typeAccount();
 

@@ -137,8 +137,8 @@
     <string name="facebook_client_token">56789</string>
     <string name="ultrasonicSensor">Ultrasonic Sensor Distance:</string>
     <string name="minutes">minutes</string>
-    <string name="lightOff">Lights OFF!!</string>
-    <string name="lightOn">Lights ON!!</string>
+    <string name="lightOff">Lights OFF</string>
+    <string name="lightOn">Lights ON</string>
     <string name="timeSet">Time you set in\n</string>
     <string name="data_in">Data to Database</string>
     <string name="lightpressed">LightPressed</string>
@@ -288,5 +288,6 @@
     <string name="fingerPrintString">FingerPrint</string>
     <string name="screenOrientationString">screenOrientation</string>
     <string name="lightStautsMSG">Status of Light</string>
-
+    <string name="enter_feedback">Please enter any feedback below:</string>
+    <string name="enter_here">Enter here</string>
 </resources>

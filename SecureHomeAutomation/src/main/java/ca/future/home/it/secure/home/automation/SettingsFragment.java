@@ -10,6 +10,7 @@ package ca.future.home.it.secure.home.automation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -23,6 +24,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.facebook.share.Share;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,7 +66,6 @@ public class SettingsFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-
     //View
     private View view;
 
@@ -77,6 +79,7 @@ public class SettingsFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     MainActivity mainAct = new MainActivity();
+
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -100,7 +103,7 @@ public class SettingsFragment extends Fragment {
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
-        sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
+        sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         sBoldTextState = sharedPreferences.getBoolean(getString(R.string.BoldTextString),false);
         sDarkModeState = sharedPreferences.getBoolean(getString(R.string.DarkModeString),false);
@@ -177,11 +180,11 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     darkModeState = true;
-                    //mainAct.changeColour(1);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
                     darkModeState = false;
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             }
         });
@@ -207,20 +210,21 @@ public class SettingsFragment extends Fragment {
         }
 
 
-
     //Save Button functionality
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                editor.putBoolean(getString(R.string.BoldTextString),boldTextState);
-                editor.putBoolean(getString(R.string.DarkModeString),darkModeState);
-                editor.putBoolean(getString(R.string.fingerPrintString),fingerPrintState);
-                editor.putBoolean(getString(R.string.screenOrientationString),screenOrientationState);
+                editor.putBoolean(getString(R.string.BoldTextString),boldTextState).apply();
+                editor.putBoolean(getString(R.string.DarkModeString),darkModeState).apply();
+                editor.putBoolean(getString(R.string.fingerPrintString),fingerPrintState).apply();
+                editor.putBoolean(getString(R.string.screenOrientationString),screenOrientationState).apply();
+
+                if(darkModeState==true)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                else
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
-
-
-
     }
 }

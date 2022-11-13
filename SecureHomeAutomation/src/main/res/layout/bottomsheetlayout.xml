@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:text="Please Enter your feed back"
+        android:text="@string/enter_feedback"
         android:textSize="20dp" />
 
     <LinearLayout
@@ -75,7 +75,7 @@
             android:id="@+id/feedbackET"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter here"
+            android:hint="@string/enter_here"
             android:textSize="20dp"
             app:hintEnabled="false" />
 
