@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/profile_frag_bg"
+        android:layout_width="413dp"
+        android:layout_height="263dp"
+        android:layout_marginBottom="600dp"
+        android:src="@drawable/profile_frag_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ScrollView
         android:id="@+id/scheduleLog"
         android:layout_width="411dp"
@@ -24,24 +33,15 @@
 
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/profile_frag_bg"
-        android:layout_width="413dp"
-        android:layout_height="263dp"
-        android:layout_marginBottom="600dp"
-        android:src="@drawable/profile_frag_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageButton
         android:id="@+id/backbtn"
         android:layout_width="54dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
         android:contentDescription="@null"
         android:src="@drawable/back"
-        android:background="@drawable/profile_frag_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
@@ -52,7 +52,7 @@
         android:layout_width="415dp"
         android:layout_height="52dp"
         android:layout_marginTop="444dp"
-        android:background="@drawable/profile_frag_bg"
+        android:background="@color/purple_500"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +63,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="312dp"
         android:layout_marginEnd="56dp"
-        android:background="@drawable/profile_frag_bg"
+        android:background="@color/purple_500"
         android:text="@string/end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="312dp"
-        android:background="@drawable/profile_frag_bg"
+        android:background="@color/purple_500"
         android:text="@string/start"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -90,11 +90,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
+        android:id="@+id/thursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="196dp"
+        android:text="@string/thursday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
         android:id="@+id/monday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="148dp"
         android:text="@string/monday"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -103,8 +113,8 @@
         android:id="@+id/tuesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="112dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="116dp"
         android:text="@string/tuesday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -113,29 +123,9 @@
         android:id="@+id/wednesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="12dp"
         android:text="@string/wednesday"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/thursday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="148dp"
-        android:text="@string/thursday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/friday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="156dp"
-        android:text="@string/friday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -143,8 +133,8 @@
         android:id="@+id/saturday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="68dp"
         android:text="@string/saturday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -153,8 +143,8 @@
         android:id="@+id/sunday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="148dp"
         android:text="@string/sunday"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -164,9 +154,19 @@
         android:id="@+id/DayTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="132dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="136dp"
         android:text="@string/select_the_day_of_week"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/friday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="160dp"
+        android:text="@string/friday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
