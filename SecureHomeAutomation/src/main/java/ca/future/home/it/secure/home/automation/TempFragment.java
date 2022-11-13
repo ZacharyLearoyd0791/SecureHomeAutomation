@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ekn.gruzer.gaugelibrary.ArcGauge;
@@ -36,6 +37,8 @@ public class TempFragment extends Fragment {
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
     TextView tvCurrentTemperature;
+    ImageButton btnMaxTemp;
+    ImageButton btnMinTemp;
     FirebaseDatabase database;
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
@@ -63,6 +66,8 @@ public class TempFragment extends Fragment {
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
+        btnMaxTemp = view.findViewById(R.id.btnMaxTem);
+        btnMinTemp = view.findViewById(R.id.btnMinTemp);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
         minTempRef = database.getReference("Temperature-Configurations/minTemperature");
@@ -72,14 +77,14 @@ public class TempFragment extends Fragment {
     }
 
     private void setListeners() {
-        tvMaximumTemperature.setOnClickListener(new View.OnClickListener() {
+        btnMinTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialogForInputTemperature(true);
             }
         });
 
-        tvMaximumTemperature.setOnClickListener(new View.OnClickListener() {
+        btnMaxTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialogForInputTemperature(false);
@@ -174,5 +179,6 @@ public class TempFragment extends Fragment {
 
     private void setCurrentTemperature(int value) {
         tvCurrentTemperature.setText(value+"\u00B0 C");
+        temperatureView.setValue(value);
     }
 }
