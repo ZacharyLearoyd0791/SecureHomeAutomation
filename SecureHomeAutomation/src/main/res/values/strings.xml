@@ -306,4 +306,5 @@
     <string name="lightStautsMSG">Status of Light: </string>
     <string name="enter_feedback">Please enter any feedback below:</string>
     <string name="enter_here">Enter here</string>
+    <string name="enable_face_lock">Enable Face Lock</string>
 </resources>
