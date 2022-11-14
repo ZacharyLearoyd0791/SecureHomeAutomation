@@ -137,6 +137,7 @@ public class LightFragment extends Fragment {
                         lightHandler(off);
                     }
                     else{
+                        Log.d(TAG,"Issue");
                     }
                 }
             }
@@ -345,7 +346,7 @@ public class LightFragment extends Fragment {
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
 
                     if(databaseReference.setValue(on)!=null){
-                        Log.d(TAG,"Testing2022DB:");
+                        Log.d(TAG,"Testing2022DB:"+counter);
                         databaseReference.setValue(on);
                     }
                     else{
@@ -362,7 +363,7 @@ public class LightFragment extends Fragment {
 
                     if((databaseReference.setValue(getString(R.string.off)))!=null){
                         Log.d(TAG,"Testing2021DB:");
-                        databaseReference.setValue(on);
+                        databaseReference.setValue(off);
                     }
                     else{
                         Log.d(TAG,"Testing2021DB Failed:");
