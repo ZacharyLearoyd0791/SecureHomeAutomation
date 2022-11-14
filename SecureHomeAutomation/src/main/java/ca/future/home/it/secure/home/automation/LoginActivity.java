@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private FirebaseAuth mAuth;
     public static String PREFS_NAME = "LoggedInFile";
+    CheckBox rememberMeCheckBox;
 
     //Google login
     private GoogleSignInOptions gso;
@@ -63,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView facebookButton;
     CallbackManager callbackManager;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,13 +85,16 @@ public class LoginActivity extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this,gso);
         facebookButton = findViewById(R.id.facebook_logo);
         callbackManager = CallbackManager.Factory.create();
+        rememberMeCheckBox = findViewById(R.id.rememberMe);
 
         //Login button functionality
         loginButton.setOnClickListener(view -> {
-            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME,0);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.has_logged_in),true);
-            editor.commit();
+            if(rememberMeCheckBox.isChecked()) {
+                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(getString(R.string.has_logged_in), true);
+                editor.commit();
+            }
 
             String emailInput = emailAddress.getText().toString();
             String passwordInput = password.getText().toString();
@@ -119,9 +125,6 @@ public class LoginActivity extends AppCompatActivity {
                 googleSignInProcess();
             }
         });
-
-        //Login via fingerprint
-
 
         //Login via facebook
         LoginManager.getInstance().registerCallback(callbackManager,
