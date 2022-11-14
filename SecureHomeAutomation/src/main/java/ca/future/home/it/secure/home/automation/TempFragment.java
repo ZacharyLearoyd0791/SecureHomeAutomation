@@ -9,6 +9,7 @@ package ca.future.home.it.secure.home.automation;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,8 @@ public class TempFragment extends Fragment {
 
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
+    TextView tvHeater;
+    TextView tvAC;
     TextView tvCurrentTemperature;
     Button btnMaxTemp;
     Button btnMinTemp;
@@ -64,6 +67,8 @@ public class TempFragment extends Fragment {
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
+        tvAC = view.findViewById(R.id.AC);
+        tvHeater = view.findViewById(R.id.heater);
         btnMaxTemp = view.findViewById(R.id.btnMaxTemperature);
         btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
@@ -71,7 +76,9 @@ public class TempFragment extends Fragment {
         minTempRef = database.getReference("Temperature-Configurations/minTemperature");
         maxTempRef = database.getReference("Temperature-Configurations/maxTemperature");
         setTemperatureView(temperatureView);
-        setCurrentTemperature(35);
+        setCurrentTemperature(15);
+        turnOnHeater();
+        turnOffAc();
     }
 
     private void setListeners() {
@@ -178,5 +185,25 @@ public class TempFragment extends Fragment {
     private void setCurrentTemperature(int value) {
         tvCurrentTemperature.setText(value+"\u00B0 C");
         temperatureView.setValue(value);
+    }
+
+    private void turnOnAc() {
+        tvAC.setTextColor(getResources().getColor(R.color.color_ac_indicator));
+        tvAC.setTypeface(tvAC.getTypeface(), Typeface.BOLD);
+    }
+
+    private void turnOffAc() {
+        tvAC.setTextColor(getResources().getColor(R.color.color_off_indicator));
+        tvAC.setTypeface(tvAC.getTypeface(), Typeface.NORMAL);
+    }
+
+    private void turnOnHeater() {
+        tvHeater.setTextColor(getResources().getColor(R.color.color_heater_indicator));
+        tvHeater.setTypeface(tvHeater.getTypeface(), Typeface.BOLD);
+    }
+
+    private void turnOffHeater() {
+        tvHeater.setTextColor(getResources().getColor(R.color.color_off_indicator));
+        tvHeater.setTypeface(tvHeater.getTypeface(), Typeface.NORMAL);
     }
 }

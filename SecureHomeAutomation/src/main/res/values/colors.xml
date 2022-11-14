@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorYellow">#FFFF00</color>
     <color name="colorPrimaryDark">#0E121B</color>
+    <color name="color_ac_indicator">#72FF78</color>
+    <color name="color_heater_indicator">#FF2414</color>
+    <color name="color_off_indicator">#979797</color>
 </resources>
