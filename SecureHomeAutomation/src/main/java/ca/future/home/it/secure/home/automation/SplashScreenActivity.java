@@ -68,7 +68,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             if (param.equals(onLights)){
                 databaseReference.setValue(on);
             }
-            if (param.equals(off)){
+            if (param.equals(offLights)){
                 databaseReference.setValue(off);
             }
             else{
