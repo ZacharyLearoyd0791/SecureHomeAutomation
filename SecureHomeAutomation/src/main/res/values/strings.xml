@@ -319,5 +319,15 @@
     <string name="shortcutOff" translatable="false">Turn Off</string>
     <string name="shortcutOpen" translatable="false">Open Door</string>
     <string name="shortcutClose" translatable="false">Close Door</string>
+    <string name="Auth_error">\"Authentication error: \"</string>
+    <string name="Auth_succeed">Authentication succeeded!</string>
+    <string name="Auth_Failed">Authentication failed</string>
+    <string name="Biometric_title">Biometric login for my app</string>
+    <string name="Biometric_subtitle">Log in using your biometric credential</string>
+    <string name="Biometric_negitiveBtn">Use account password</string>
+    <string name="turnOn">TurnOn</string>
+    <string name="turnOff">TurnOff</string>
+    <string name="statusKeyGoogleAssist">statusType</string>
+    <string name="loggedInFile">LoggedInFile</string>
 
 </resources>

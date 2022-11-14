@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     EditText userFeedBack;
 
     //Fingerprint
-    String fingerprintState="";
+    String fingerprintState;
 
     //Bottom Navigation
     public static BottomNavigationView bottomNav;
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fingerprintState=getString(R.string.empty);
         dbID();
         getFCM();
         /*
