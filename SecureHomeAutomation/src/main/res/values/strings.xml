@@ -296,8 +296,8 @@
     <string name="unlock_lock">Unlock/Lock</string>
     <string name="feedback">Feedback</string>
     <string name="rating">Rating</string>
-    <string name="FeedBack" tools:ignore="MissingTranslation">FeedBack</string>
-    <string name="forwardslash" tools:ignore="MissingTranslation">/</string>
+    <string name="FeedBack">FeedBack</string>
+    <string name="forwardslash" translatable="false">/</string>
     <string name="feedbackMust">Make Sure to write a feedback to help us Improve!</string>
     <string name="BoldTextString">BoldText</string>
     <string name="DarkModeString">DarkMode</string>
@@ -330,8 +330,8 @@
     <string name="statusKeyGoogleAssist">statusType</string>
     <string name="loggedInFile">LoggedInFile</string>
 
-    <string name="tempmin">/Temperature/Min</string>
-    <string name="tempmax">/Temperature/Max</string>
+    <string name="tempmin" translatable="false">/Temperature/Min</string>
+    <string name="tempmax" translatable="false">/Temperature/Max</string>
 
 
 </resources>

@@ -281,6 +281,7 @@
     <string name="disarm_arm">Disarm/Arm</string>
     <string name="unlock_lock">Unlock/Lock</string>
     <string name="feedback">Feedback</string>
+    <string name="FeedBack">FeedBack</string>
     <string name="rating">Rating</string>
     <string name="feedbackMust">Make Sure to write a feedback to help us Improve!</string>
     <string name="BoldTextString">BoldText</string>

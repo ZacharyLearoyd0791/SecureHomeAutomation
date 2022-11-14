@@ -64,12 +64,12 @@ public class TempFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dbID();
         init(view);
         setListeners();
     }
 
     private void init(View view) {
-        dbID();
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
@@ -103,6 +103,7 @@ public class TempFragment extends Fragment {
         }
         minkey=key+getString(R.string.tempmin);
         maxkey=key+getString(R.string.tempmax);
+        Log.d(TAG,"test2022 temp data out to db\n min key"+minkey+"\n max key"+maxkey);
 
 
     }
