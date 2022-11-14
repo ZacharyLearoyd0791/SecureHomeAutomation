@@ -12,6 +12,10 @@ import static androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRON
 import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import static ca.future.home.it.secure.home.automation.R.string.Auth_Failed;
+import static ca.future.home.it.secure.home.automation.R.string.Auth_error;
+import static ca.future.home.it.secure.home.automation.R.string.Auth_succeed;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,35 +57,29 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        dbID();
         intent = getIntent();
         data = intent.getData();
-
+        onLights=getString(R.string.turnOn);
+        offLights=getString(R.string.turnOff);
         on=getString(R.string.on);
         off=getString(R.string.off);
+        dbID();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
         if(data!=null){
-            param=intent.getData().getQueryParameter("statusType");
-            Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
+            param=intent.getData().getQueryParameter(getString(R.string.statusKeyGoogleAssist));
+            if (param != null) {
+                if (param.equals(onLights)){
 
-            if (param.equals(on)){
-                databaseReference.setValue(on);
-                Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
+                    databaseReference.setValue(on);
+                }
+                else if (param.equals(offLights)){
 
-            }
-            else if (param.equals(off)){
-                databaseReference.setValue(off);
-                Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
-
-            }
-            else{
-                Log.d(TAG,"Test_Google_Assistance: V2, open close test param grabbed but error\t"+param);
+                    databaseReference.setValue(off);
+                }
             }
         }
-        else{
-            Log.d(TAG,"Test_Google_Assistance: V2, open close test is null");
-        }
+
         new Handler().postDelayed(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
@@ -102,15 +100,15 @@ public class SplashScreenActivity extends AppCompatActivity {
                     switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
 
                         case BiometricManager.BIOMETRIC_SUCCESS:
-                            Log.d("MY_APP_TAG", "App can authenticate using biometrics.");
+//                            Log.d("MY_APP_TAG", "App can authenticate using biometrics.");
                             break;
 
                         case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                            Log.e("MY_APP_TAG", "No biometric features available on this device.");
+//                            Log.e("MY_APP_TAG", "No biometric features available on this device.");
                             break;
 
                         case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                            Log.e("MY_APP_TAG", "Biometric features are currently unavailable.");
+//                            Log.e("MY_APP_TAG", "Biometric features are currently unavailable.");
                             break;
 
                         case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
@@ -131,7 +129,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                                           @NonNull CharSequence errString) {
                             super.onAuthenticationError(errorCode, errString);
                             Toast.makeText(getApplicationContext(),
-                                            "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                                            getString(Auth_error) + errString, Toast.LENGTH_SHORT)
                                     .show();
                         }
 
@@ -141,22 +139,22 @@ public class SplashScreenActivity extends AppCompatActivity {
                             super.onAuthenticationSucceeded(result);
 
                             Toast.makeText(getApplicationContext(),
-                                    "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                                    R.string.Auth_succeed, Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onAuthenticationFailed() {
                             super.onAuthenticationFailed();
-                            Toast.makeText(getApplicationContext(), "Authentication failed",
+                            Toast.makeText(getApplicationContext(), R.string.Auth_Failed,
                                             Toast.LENGTH_SHORT)
                                     .show();
                         }
                     });
 
                     promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                            .setTitle("Biometric login for my app")
-                            .setSubtitle("Log in using your biometric credential")
-                            .setNegativeButtonText("Use account password")
+                            .setTitle(getString(R.string.Biometric_title))
+                            .setSubtitle(getString(R.string.Biometric_subtitle))
+                            .setNegativeButtonText(getString(R.string.Biometric_negitiveBtn))
                             .build();
 
                     biometricPrompt.authenticate(promptInfo);

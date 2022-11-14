@@ -8,18 +8,40 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileEditFragment extends Fragment {
 
+    //Declarations
+    private CircleImageView profileImage;
+    private FloatingActionButton changeProfileImageButton;
+    private Button saveChanges;
+    Uri imageUri;
+    View view;
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     private String mParam1;
     private String mParam2;
@@ -50,6 +72,41 @@ public class ProfileEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_edit, container, false);
+        view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
+        profileImage = view.findViewById(R.id.profile_image);
+        changeProfileImageButton = view.findViewById(R.id.editProfileImageIcon);
+        saveChanges = view.findViewById(R.id.editProfileSaveChanges);
+        changeProfileImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Opening Gallary
+                Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGallery,200);
+            }
+        });
+
+        saveChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+        return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 200){
+            if(resultCode == Activity.RESULT_OK){
+                imageUri = data.getData();
+                profileImage.setImageURI(imageUri);
+            }
+        }
     }
 }

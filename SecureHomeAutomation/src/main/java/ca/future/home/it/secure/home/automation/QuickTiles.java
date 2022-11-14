@@ -34,7 +34,7 @@ public class QuickTiles extends TileService {
     public void onStartListening() {
         super.onStartListening();
         Tile title=getQsTile();
-        title.setLabel("Home Secure Automation");
+        title.setLabel(getString(R.string.app_name));
         title.setState(Tile.STATE_ACTIVE);
         title.setIcon(Icon.createWithResource(this,R.drawable.appicon));
         title.updateTile();
@@ -53,16 +53,16 @@ public class QuickTiles extends TileService {
         userInfo.typeAccount();
 
         if (isLocked()){
-            Log.d(TAG,"Device Locked");
+//            Log.d(TAG,"Device Locked");
 
         }
         else{
-            Log.d(TAG,"Device UnLocked");
+//            Log.d(TAG,"Device UnLocked");
             if(userInfo.userId!=null||userInfo.idInfo!=null){
-                Log.d(TAG,"Connected using accounts");
+//                Log.d(TAG,"Connected using accounts");
             }
             else{
-                Log.d(TAG,"Not connected using accounts");
+//                Log.d(TAG,"Not connected using accounts");
 
             }
             Intent intent=new Intent(this,LoginActivity.class);

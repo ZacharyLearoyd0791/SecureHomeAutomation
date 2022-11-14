@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailAddress;
     private EditText password;
     private FirebaseAuth mAuth;
-    public static String PREFS_NAME = "LoggedInFile";
+    public static String PREFS_NAME;
     CheckBox rememberMeCheckBox;
 
     //Google login
@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        PREFS_NAME =(getString(R.string.loggedInFile));
 
         //Creating references
         emailAddress = findViewById(R.id.login_page_email_textBox);
