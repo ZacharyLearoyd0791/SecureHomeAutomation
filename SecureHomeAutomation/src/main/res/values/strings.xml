@@ -332,6 +332,7 @@
 
     <string name="tempmin" translatable="false">/Temperature/Min</string>
     <string name="tempmax" translatable="false">/Temperature/Max</string>
+    <string name="edit_senor">Edit senor</string>
 
 
 </resources>
