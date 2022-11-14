@@ -180,6 +180,7 @@ public class TempFragment extends Fragment {
         temperatureView.setMinValue(0);
         temperatureView.setMaxValue(75);
         temperatureView.setValueColor(Color.parseColor("#ffffff"));
+        temperatureView.setVisibility(View.VISIBLE);
     }
 
     private void setCurrentTemperature(int value) {
