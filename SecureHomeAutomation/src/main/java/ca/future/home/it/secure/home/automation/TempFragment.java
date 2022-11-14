@@ -7,6 +7,8 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -17,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class TempFragment extends Fragment {
+    String userId, localuserId, minkey, maxkey, key;
+    UserInfo userInfo = new UserInfo();
 
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
@@ -64,6 +69,7 @@ public class TempFragment extends Fragment {
     }
 
     private void init(View view) {
+        dbID();
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
@@ -73,14 +79,33 @@ public class TempFragment extends Fragment {
         btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
-        minTempRef = database.getReference("Temperature-Configurations/minTemperature");
-        maxTempRef = database.getReference("Temperature-Configurations/maxTemperature");
+        minTempRef = database.getReference(minkey);
+        maxTempRef = database.getReference(maxkey);
         setTemperatureView(temperatureView);
         setCurrentTemperature(15);
         turnOnHeater();
         turnOffAc();
     }
 
+    private void dbID(){
+        userInfo.typeAccount();
+
+        localuserId=userInfo.userId;
+        userId=userInfo.idInfo;
+
+        if(localuserId!=null){
+            key=localuserId;
+            Log.d(TAG,key);
+        }
+        if(userId!=null) {
+            key= userId;
+            Log.d(TAG, key);
+        }
+        minkey=key+getString(R.string.tempmin);
+        maxkey=key+getString(R.string.tempmax);
+
+
+    }
     private void setListeners() {
         btnMinTemp.setOnClickListener(new View.OnClickListener() {
             @Override

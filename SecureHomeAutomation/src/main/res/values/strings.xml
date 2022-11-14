@@ -330,6 +330,8 @@
     <string name="statusKeyGoogleAssist">statusType</string>
     <string name="loggedInFile">LoggedInFile</string>
 
+    <string name="tempmin">/Temperature/Min</string>
+    <string name="tempmax">/Temperature/Max</string>
 
 
 </resources>
