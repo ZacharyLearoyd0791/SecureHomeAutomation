@@ -69,12 +69,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             param=intent.getData().getQueryParameter("statusType");
             Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
-            if (param.equals(on)){
+            if (param.equalsIgnoreCase(on)){
                 databaseReference.setValue(on);
                 Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
             }
-            else if (param.equals(off)){
+            else if (param.equalsIgnoreCase(off)){
                 databaseReference.setValue(off);
                 Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
