@@ -319,7 +319,8 @@
     <string name="shortcutOff" translatable="false">Turn Off</string>
     <string name="shortcutOpen" translatable="false">Open Door</string>
     <string name="shortcutClose" translatable="false">Close Door</string>
-
+    <string name="tempmin">/Temperature/Min</string>
+    <string name="tempmax">/Temperature/Max</string>
 
 
 </resources>
