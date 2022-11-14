@@ -40,11 +40,11 @@
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnMaxTem"
+        app:layout_constraintStart_toEndOf="@+id/btnMinTemperature"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btnMaxTem"
+        android:id="@+id/btnMinTemperature"
         android:layout_width="97dp"
         android:layout_height="90dp"
         android:layout_marginStart="157dp"
@@ -56,14 +56,14 @@
         tools:ignore="ContentDescription" />
 
     <ImageButton
-        android:id="@+id/btnMinTemp"
+        android:id="@+id/btnMaxTemperature"
         android:layout_width="100dp"
         android:layout_height="89dp"
         android:layout_marginTop="291dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_cool_temp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnMaxTem"
+        app:layout_constraintStart_toEndOf="@+id/btnMinTemperature"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 

@@ -19,26 +19,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ekn.gruzer.gaugelibrary.ArcGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
-import com.ekn.gruzer.gaugelibrary.contract.ValueFormatter;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Objects;
 
 public class TempFragment extends Fragment {
 
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
     TextView tvCurrentTemperature;
-    ImageButton btnMaxTemp;
-    ImageButton btnMinTemp;
+    Button btnMaxTemp;
+    Button btnMinTemp;
     FirebaseDatabase database;
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
@@ -66,14 +64,14 @@ public class TempFragment extends Fragment {
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
-        btnMaxTemp = view.findViewById(R.id.btnMaxTem);
-        btnMinTemp = view.findViewById(R.id.btnMinTemp);
+        btnMaxTemp = view.findViewById(R.id.btnMaxTemperature);
+        btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
         minTempRef = database.getReference("Temperature-Configurations/minTemperature");
         maxTempRef = database.getReference("Temperature-Configurations/maxTemperature");
         setTemperatureView(temperatureView);
-        setCurrentTemperature(18);
+        setCurrentTemperature(35);
     }
 
     private void setListeners() {

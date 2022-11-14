@@ -23,12 +23,10 @@
         android:id="@+id/MaximumTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/set_max_temperature"
+        android:text="10\u00B0 C"
         android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="@+id/btnMinTemperature"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
@@ -36,33 +34,32 @@
         android:id="@+id/MinimumTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/set_minimum_temperature"
+        android:text="60\u00B0 C"
         android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMaxTem" />
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnMaxTemperature"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-    <ImageButton
-        android:id="@+id/btnMaxTem"
-        android:layout_width="97dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="156dp"
+    <Button
+        android:id="@+id/btnMinTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_hot_temp"
+        android:text="Set Min Temp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MaximumTemperature"
         tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/btnMinTemp"
-        android:layout_width="100dp"
-        android:layout_height="89dp"
-        android:layout_marginStart="155dp"
+    <Button
+        android:id="@+id/btnMaxTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:layout_marginEnd="16dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_cool_temp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Set Max Temp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MinimumTemperature"
         tools:ignore="ContentDescription" />
 
@@ -92,10 +89,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        android:layout_marginTop="24dp"
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_config">
