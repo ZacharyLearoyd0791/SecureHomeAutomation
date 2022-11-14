@@ -57,27 +57,28 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        dbID();
         intent = getIntent();
         data = intent.getData();
-        onLights=getString(R.string.turnOn);
-        offLights=getString(R.string.turnOff);
+
         on=getString(R.string.on);
         off=getString(R.string.off);
-        dbID();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
         if(data!=null){
-            param=intent.getData().getQueryParameter(getString(R.string.statusKeyGoogleAssist));
-            if (param != null) {
-                if (param.equals(onLights)){
+            param=intent.getData().getQueryParameter("statusType");
+            if (param.equals(on)){
+                databaseReference.setValue(on);
 
-                    databaseReference.setValue(on);
-                }
-                else if (param.equals(offLights)){
-
-                    databaseReference.setValue(off);
-                }
             }
+            else if (param.equals(off)){
+                databaseReference.setValue(off);
+
+            }
+            else{
+            }
+        }
+        else{
         }
 
         new Handler().postDelayed(new Runnable() {
