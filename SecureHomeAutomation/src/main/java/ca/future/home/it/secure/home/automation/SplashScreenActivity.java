@@ -45,7 +45,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private BiometricPrompt.PromptInfo promptInfo;
     Intent intent;
     Uri data;
-    String onLights, param,key,localKey,personalKey,lightKey,sensorKey,on,off;
+    String onLights, param,key,localKey,personalKey,lightKey,sensorKey,on,off,offLights;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -56,28 +56,27 @@ public class SplashScreenActivity extends AppCompatActivity {
         intent = getIntent();
         data = intent.getData();
         onLights="TurnOn";
+        offLights="TurnOff";
         on=getString(R.string.on);
+        off=getString(R.string.off);
         dbID();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
         if(data!=null){
-            param=intent.getData().getQueryParameter("feature");
-            Log.d(TAG,param);
-
-            if(param.equals(onLights)) {
-                Log.d(TAG, "Test2022: Turn on the lights");
-
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
+            param=intent.getData().getQueryParameter("statusType");
+            Log.d(TAG,"Test_Google_Assistance: V2, open close test"+param);
+            if (param.equals(onLights)){
                 databaseReference.setValue(on);
             }
-
-            else{
-                Log.d(TAG,"Feature issue"+param);
+            if (param.equals(off)){
+                databaseReference.setValue(off);
             }
-
+            else{
+                Log.d(TAG,"Test_Google_Assistance: V2, open close test param grabbed but error"+param);
+            }
         }
         else{
-            Log.d(TAG,"Test2022 Google Assistance: is null");
-
+            Log.d(TAG,"Test_Google_Assistance: V2, open close test is null");
         }
         new Handler().postDelayed(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.R)

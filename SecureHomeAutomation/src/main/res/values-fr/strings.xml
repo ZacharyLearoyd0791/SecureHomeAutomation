@@ -292,4 +292,11 @@
     <string name="enter_here">Enter here</string>
     <string name="enable_face_lock">Enable Face Lock</string>
     <string name="test_device">Test device</string>
+    <string name="edit_your_profile">Edit your Profile</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_email">Your Email</string>
+    <string name="your_phone_number">Your Phone Number</string>
+    <string name="change_password">Change Password</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="remember_me">Remember Me</string>
 </resources>

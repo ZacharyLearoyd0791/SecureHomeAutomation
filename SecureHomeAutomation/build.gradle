@@ -7,6 +7,12 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('A:\\android\\keystore\\SecureHomeAutomation.jks')
+            storePassword 'CENG322SHA'
+        }
+    }
     namespace 'ca.future.home.it.secure.home.automation'
     compileSdk 32
 
