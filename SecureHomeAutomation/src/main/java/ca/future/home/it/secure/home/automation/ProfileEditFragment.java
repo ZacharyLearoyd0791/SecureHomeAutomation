@@ -21,8 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,7 +33,9 @@ public class ProfileEditFragment extends Fragment {
 
     //Declarations
     private CircleImageView profileImage;
-    private FloatingActionButton saveChangesButton;
+    private FloatingActionButton changeProfileImageButton;
+    private Button saveChanges;
+    Uri imageUri;
     View view;
 
 
@@ -69,9 +74,9 @@ public class ProfileEditFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
         profileImage = view.findViewById(R.id.profile_image);
-        saveChangesButton = view.findViewById(R.id.editProfileImageIcon);
-
-        saveChangesButton.setOnClickListener(new View.OnClickListener() {
+        changeProfileImageButton = view.findViewById(R.id.editProfileImageIcon);
+        saveChanges = view.findViewById(R.id.editProfileSaveChanges);
+        changeProfileImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Opening Gallary
@@ -79,6 +84,15 @@ public class ProfileEditFragment extends Fragment {
                 startActivityForResult(openGallery,200);
             }
         });
+
+        saveChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
 
 
@@ -90,7 +104,7 @@ public class ProfileEditFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 200){
             if(resultCode == Activity.RESULT_OK){
-                Uri imageUri = data.getData();
+                imageUri = data.getData();
                 profileImage.setImageURI(imageUri);
             }
         }
