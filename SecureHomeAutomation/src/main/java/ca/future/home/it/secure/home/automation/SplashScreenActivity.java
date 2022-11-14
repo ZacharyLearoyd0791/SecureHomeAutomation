@@ -67,18 +67,24 @@ public class SplashScreenActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
         if(data!=null){
             param=intent.getData().getQueryParameter("statusType");
+            Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
+
             if (param.equals(on)){
                 databaseReference.setValue(on);
+                Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
             }
             else if (param.equals(off)){
                 databaseReference.setValue(off);
+                Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
             }
             else{
+                Log.d(TAG,"Test_Google_Assistance: V2, open close test param grabbed but error\t"+param);
             }
         }
         else{
+            Log.d(TAG,"Test_Google_Assistance: V2, open close test is null");
         }
 
         new Handler().postDelayed(new Runnable() {
