@@ -10,9 +10,12 @@ package ca.future.home.it.secure.home.automation;
 
 import static androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG;
 import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,32 +32,67 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.concurrent.Executor;
 
 public class SplashScreenActivity extends AppCompatActivity {
+
+    UserInfo userInfo= new UserInfo();
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
+    Intent intent;
+    Uri data;
+    String onLights, param,key,localKey,personalKey,lightKey,sensorKey,on,off;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        intent = getIntent();
+        data = intent.getData();
+        onLights="TurnOn";
+        on=getString(R.string.on);
+        dbID();
+        if(data!=null){
+            param=intent.getData().getQueryParameter("feature");
+            Log.d(TAG,param);
 
+            if(param.equals(onLights)) {
+                Log.d(TAG, "Test2022: Turn on the lights");
+
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
+                databaseReference.setValue(on);
+            }
+
+            else{
+                Log.d(TAG,"Feature issue"+param);
+            }
+
+        }
+        else{
+            Log.d(TAG,"Test2022 Google Assistance: is null");
+
+        }
         new Handler().postDelayed(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void run() {
 
-                 startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
+                startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
 
                 SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-                SharedPreferences settingsSharedPreferences = getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME,0);
+                SharedPreferences settingsSharedPreferences = getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, 0);
 
-                boolean hasLoggedIn = sharedPreferences.getBoolean(getString(R.string.has_logged_in),false);
-                boolean settingsEnableFingerPrint = settingsSharedPreferences.getBoolean(getString(R.string.fingerPrintString),true);
+                boolean hasLoggedIn = sharedPreferences.getBoolean(getString(R.string.has_logged_in), false);
+                boolean settingsEnableFingerPrint = settingsSharedPreferences.getBoolean(getString(R.string.fingerPrintString), true);
 
-                if(settingsEnableFingerPrint) {
+                if (settingsEnableFingerPrint) {
 
                     BiometricManager biometricManager = BiometricManager.from(getApplicationContext());
 
@@ -129,7 +167,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         finish();
                     }
 
-                }else{
+                } else {
                     if (hasLoggedIn) {
 
                         Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
@@ -143,6 +181,26 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
             }
-        },3000);
+        }, 3000);
     }
+
+    private void dbID() {
+        userInfo.typeAccount();
+
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+
+        if(localKey!=null){
+            key=localKey;
+            Log.d(ContentValues.TAG,key);
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+            Log.d(ContentValues.TAG, key);
+        }
+        lightKey=key+getString(R.string.statusKey);
+        Log.d(ContentValues.TAG,getString(R.string.keyIs)+lightKey);
+        sensorKey=key+getString(R.string.db_ultrasonic_dist);
+    }
+
 }
