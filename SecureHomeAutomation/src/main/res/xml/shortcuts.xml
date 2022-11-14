@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <capability android:name="actions.intent.OPEN_APP_FEATURE">
+        <intent
+            android:targetPackage="ca.future.home.it.secure.home.automation"
+            android:targetClass="ca.future.home.it.secure.home.automation">
+            <url-template android:value="https://secure-home-automation.futurehome/open?feature=TurnOn" />
+            <parameter
+                android:name="feature"
+                android:key="featureParam"/>
+        </intent>
+    </capability>
+    <shortcut
+        android:shortcutId="TurnOn"
+        android:shortcutShortLabel="@string/shortcut_short_label">
+        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="@array/LightsOn" />
+        </capability-binding>
+    </shortcut>
+</shortcuts>

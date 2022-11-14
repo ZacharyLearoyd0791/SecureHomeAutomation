@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="LightsOn">
+        <item>Turn On Lights</item>
+        <item>Turn On</item>
+        <item>Lights On</item>
+        <item>On Lights</item>
+    </string-array>
+</resources>

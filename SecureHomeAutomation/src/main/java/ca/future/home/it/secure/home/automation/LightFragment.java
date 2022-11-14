@@ -47,7 +47,12 @@ public class LightFragment extends Fragment {
     public int counter;
     TextView timerTV, testing, ultrasonicTV,statusOfLightTV;
     Double distance;
-    String dist,value,key,localKey,personalKey,lightKey,sensorKey,statusOfLight,LightStatus,on,off,status;
+    String dist,value,key,localKey,personalKey,lightKey,sensorKey,
+            statusOfLight,LightStatus,on,off,status,status_light,statusOn,
+                statusOff,light_status,lightState,chanelDes,
+                notificationLT,notificationDesc,lightstatusStr;
+    VibrationEffect vibrationEffect;
+    NotificationManagerCompat mangerCompat;
     Boolean cancelTimer;
     TextView ultrasonicET;
     ImageButton timerBTN, schedulerBTN;
@@ -56,6 +61,8 @@ public class LightFragment extends Fragment {
     DatabaseReference databaseReference;
     Button lightsOff,lightsOn;
     Vibrator vibrator;
+    NotificationChannel channel;
+    NotificationManager notificationManager;
 
     public LightFragment() {
 
@@ -76,41 +83,61 @@ public class LightFragment extends Fragment {
         lightsOn=view.findViewById(R.id.onLights);
         statusOfLightTV=view.findViewById(R.id.statusOfLight);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        on=getString(R.string.on);
+        off=getString(R.string.off);
+        status=getString(R.string.lightStautsMSG)+getString(R.string.empty);
+        light_status=getString(R.string.LightStatus);
+        lightState=getString(R.string.Lights);
+        chanelDes=getString(R.string.channelDesc);
+        value=getString(R.string.distance_from_ultra)+dist+getString(R.string.cm);
+
+
+        notificationManager = getContext().getSystemService(NotificationManager.class);
+        notificationLT=getString(R.string.notificationLightTitle);
+        notificationDesc=getString(R.string.notificationLightDesc);
+        lightstatusStr=getString(R.string.LightStatus);
+        mangerCompat= NotificationManagerCompat.from(getContext());
 
         return view;
     }
 
     private void notificationCaller() {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(getString(R.string.LightStatus), getString(R.string.Lights), NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(getString(R.string.channelDesc));
-            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            channel = new NotificationChannel(light_status, lightState, NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(chanelDes);
             notificationManager.createNotificationChannel(channel);
+
+
         }
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         dbID();
-        lightHandler(statusOfLight);
+        getStatusofLed();
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                statusOfLight=null;
+
                 if (snapshot.exists()) {
 
                     statusOfLight = snapshot.getValue().toString();
                     Log.d(TAG,statusOfLight);
-                    if(statusOfLight==getString(R.string.on)){
-                        lightHandler(getString(R.string.on));
+                    if(statusOfLight.equals(on)){
+                        lightHandler(on);
                         notificationCaller();
                         alarmProcess();
                     }
-                    else if(statusOfLight==getString(R.string.off)){
-                        lightHandler(getString(R.string.off));
+                    else if(statusOfLight.equals(off)){
+                        lightHandler(off);
                     }
                     else{
+                        Log.d(TAG,"Issue");
                     }
                 }
             }
@@ -121,7 +148,7 @@ public class LightFragment extends Fragment {
             }
         });
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.db_ultrasonic_dist));
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(sensorKey);
         //timer and scheduler
         cancelTimer=true;
 
@@ -131,15 +158,37 @@ public class LightFragment extends Fragment {
             getActivity().startActivity(myIntent);
         });
         lightsOff.setOnClickListener(view13 -> {
-            LightStatus = getString(R.string.off);
-            lightHandler(getString(R.string.off));
+            LightStatus = off;
+            lightHandler(off);
         });
         lightsOn.setOnClickListener(view12 -> {
-            LightStatus = getString(R.string.on);
-            lightHandler(getString(R.string.on));});
+            LightStatus = on;
+            lightHandler(on);});
 
 
 
+    }
+
+    private void getStatusofLed() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    status_light=snapshot.getValue().toString();
+                    Log.d(TAG,"Testing2022: Status: "+status_light);
+                    lightHandler(status_light);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void dbID(){
@@ -164,21 +213,26 @@ public class LightFragment extends Fragment {
     }
 
     private void lightHandler(String statusOfLight) {
-        on= getString((R.string.on));
-        off=getString(R.string.off);
-        status=getString(R.string.lightStautsMSG)+getString(R.string.empty);
-        if (statusOfLight==on) {
+
+
+        if (statusOfLight.equals(on)) {
+            statusOn=status+on;
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
             databaseReference.setValue(on);
-            statusOfLightTV.setText(status+on);
+            statusOfLightTV.setText(statusOn);
             cancelTimer=true;
         }
-        else{
+        else if(statusOfLight.equals(off)){
+            statusOff=status+off;
+
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
             databaseReference.setValue(off);
-            statusOfLightTV.setText(status+off);
+            statusOfLightTV.setText(statusOff);
+        }
+        else{
+            Log.d(TAG,"Something went wrong with status led");
         }
         SensorDB();
 
@@ -187,7 +241,7 @@ public class LightFragment extends Fragment {
     private void SensorDB(){
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.db_ultrasonic_dist));
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(sensorKey);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -195,7 +249,6 @@ public class LightFragment extends Fragment {
                 if (snapshot.exists()){
 
                     dist=snapshot.getValue().toString();
-                    value=getString(R.string.distance_from_ultra)+dist+getString(R.string.cm);
                     Log.d(TAG,value);
                     ultrasonicTV.setText(dist);
 
@@ -287,12 +340,19 @@ public class LightFragment extends Fragment {
 
             new CountDownTimer(milli, second) {
                 public void onTick(long millisUntilFinished) {
-                    String count=getString(R.string.counter_on)+counter;
+                    int count=counter;
                     Log.d(TAG, String.valueOf(count));
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
 
-                    databaseReference.setValue(getString(R.string.on));
+                    if(databaseReference.setValue(on)!=null){
+                        Log.d(TAG,"Testing2022DB:"+counter);
+                        databaseReference.setValue(on);
+                    }
+                    else{
+                        Log.d(TAG,"Testing2022DB Failed:");
+                    }
+//                    databaseReference.setValue(getActivity().getString(R.string.on));
                     counter++;
                 }
 
@@ -300,7 +360,15 @@ public class LightFragment extends Fragment {
                     timerTV.setText(R.string.lightOff);
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
-                    databaseReference.setValue(getString(R.string.off));
+
+                    if((databaseReference.setValue(getString(R.string.off)))!=null){
+                        Log.d(TAG,"Testing2021DB:");
+                        databaseReference.setValue(off);
+                    }
+                    else{
+                        Log.d(TAG,"Testing2021DB Failed:");
+
+                    }
                     counter = 0;
                     hour = 0;
                     minute = 0;
@@ -319,21 +387,19 @@ public class LightFragment extends Fragment {
     }
 
     public void sendNotificationProcess(String notificationTitle, String notificationText){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getString(R.string.LightStatus));
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),lightstatusStr);
         builder.setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
-        NotificationManagerCompat mangerCompat = NotificationManagerCompat.from(getContext());
         mangerCompat.notify(1,builder.build());
     }
 
     public void alarmProcess(){
-        String notificationTitle = getString(R.string.notificationLightTitle);
-        String notificationText = getString(R.string.notificationLightDesc);
+        String notificationTitle = notificationLT;
+        String notificationText = notificationDesc;
         sendNotificationProcess(notificationTitle,notificationText);
-        VibrationEffect vibrationEffect;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrationEffect = VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_HEAVY_CLICK);
             vibrator.cancel();

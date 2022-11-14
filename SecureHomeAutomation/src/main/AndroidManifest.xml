@@ -13,8 +13,6 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
-    <supports-screens
-        android:normalScreens="true"/>
 
 
     <application
@@ -67,11 +65,23 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="secure-home-automation.futurehome"
+                    android:scheme="https"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="Secure Home">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
