@@ -141,18 +141,29 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="139dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintEnd_toStartOf="@+id/Login_page_title"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/app_icon"
-            tools:ignore="ContentDescription" />
+
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="139dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/Login_page_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/app_icon"
+        tools:ignore="ContentDescription,NotSibling" />
+
+    <CheckBox
+        android:id="@+id/rememberMe"
+        android:layout_width="136dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="180dp"
+        android:text="@string/remember_me"
+        />
 
 </RelativeLayout>

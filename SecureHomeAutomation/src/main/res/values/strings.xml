@@ -315,5 +315,6 @@
     <string name="your_phone_number">Your Phone Number</string>
     <string name="change_password">Change Password</string>
     <string name="save_changes">Save Changes</string>
+    <string name="remember_me">Remember Me</string>
 
 </resources>
