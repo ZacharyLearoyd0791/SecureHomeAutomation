@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public static String PREFS_NAME;
     CheckBox rememberMeCheckBox;
+    Boolean checkBoxState;
 
     //Google login
     private GoogleSignInOptions gso;
@@ -88,15 +89,26 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         rememberMeCheckBox = findViewById(R.id.rememberMe);
 
+        //CheckBox functionality
+        rememberMeCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(rememberMeCheckBox.isChecked()) {
+                    checkBoxState = true;
+                }else{
+                    checkBoxState = false;
+                }
+            }
+        });
+
         //Login button functionality
         loginButton.setOnClickListener(view -> {
-            if(rememberMeCheckBox.isChecked()) {
-                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(getString(R.string.has_logged_in), true);
-                editor.commit();
-            }
 
+            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("hasLoggedIn", checkBoxState);
+            editor.commit();
+            editor.apply();
             String emailInput = emailAddress.getText().toString();
             String passwordInput = password.getText().toString();
             if(emailInput.isEmpty() && passwordInput.isEmpty()){

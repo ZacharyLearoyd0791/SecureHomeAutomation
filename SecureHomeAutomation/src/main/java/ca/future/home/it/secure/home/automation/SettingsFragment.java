@@ -125,6 +125,8 @@ public class SettingsFragment extends Fragment {
         fingerSwitch.setChecked(fingerPrintState);
         //Getting orientation switch state
         portraitSwitch.setChecked(screenOrientationState);
+        //Getting facelock switch state
+        faceLockSwitch.setChecked(faceLockState);
         //Bold Text
         boldSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

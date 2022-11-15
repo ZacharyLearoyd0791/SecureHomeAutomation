@@ -73,7 +73,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
                     SharedPreferences settingsSharedPreferences = getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, MODE_PRIVATE);
 
-                    boolean hasLoggedIn = sharedPreferences.getBoolean(getString(R.string.has_logged_in), false);
+                    boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", true);
                     boolean settingsEnableFingerPrint = settingsSharedPreferences.getBoolean("FingerprintState", false);
 
                     if (settingsEnableFingerPrint) {
