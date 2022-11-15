@@ -48,6 +48,7 @@ public class TempFragment extends Fragment {
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
     TextView tvHeater;
+    long temperature;
     TextView tvAC;
     TextView tvCurrentTemperature;
     TextView tvHumidity;
@@ -60,6 +61,7 @@ public class TempFragment extends Fragment {
     int minimumTemperature = 0;
     int maximumTemperature = 0;
     ProgressDialog progressDialog;
+    String tempstr;
 
     public TempFragment() {
         // Required empty public constructor
@@ -225,22 +227,25 @@ public class TempFragment extends Fragment {
         minTempRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot!=null){
+                    tempstr = snapshot.getValue().toString();
+                    temperature= Long.parseLong(tempstr);
+                    minimumTemperature = (int) temperature;
+                    setMinTemperature(minimumTemperature);
+                    maxTempRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long temperature = (long) snapshot.getValue();
+                            maximumTemperature = (int) temperature;
+                            setMaxTemperature(maximumTemperature);
+                        }
 
-                long temperature = (long) snapshot.getValue();
-                minimumTemperature = (int) temperature;
-                setMinTemperature(minimumTemperature);
-                maxTempRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        long temperature = (long) snapshot.getValue();
-                        maximumTemperature = (int) temperature;
-                        setMaxTemperature(maximumTemperature);
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
             }
 
             @Override

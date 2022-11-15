@@ -288,13 +288,13 @@ public class LightFragment extends Fragment {
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
                             lightHandler(LightStatus);
-                            databaseReference.setValue(on);
+                            //databaseReference.setValue(on);
                         }
                         else{
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
                             lightHandler(LightStatus);
-                            databaseReference.setValue(off);
+                            //databaseReference.setValue(off);
                         }
                     }
 
