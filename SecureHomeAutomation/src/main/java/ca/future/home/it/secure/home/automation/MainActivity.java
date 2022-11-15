@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -224,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(MainActivity.this,
-                    "ProgressDialog",
-                    "Wait for "+time+ " seconds");
+                    "Refreshing items",
+                    "It won't take much time :)");
         }
 
 
