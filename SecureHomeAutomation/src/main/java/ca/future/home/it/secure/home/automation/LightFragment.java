@@ -199,6 +199,7 @@ public class LightFragment extends Fragment {
     }
 
     private void dbID(){
+
         userInfo.typeAccount();
         time();
 
@@ -286,11 +287,13 @@ public class LightFragment extends Fragment {
                         if (LightStatus==getString(R.string.on)) {
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
+                            lightHandler(LightStatus);
                             databaseReference.setValue(on);
                         }
                         else{
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
+                            lightHandler(LightStatus);
                             databaseReference.setValue(off);
                         }
                     }
