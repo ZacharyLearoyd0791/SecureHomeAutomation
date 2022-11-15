@@ -22,8 +22,8 @@
             android:id="@+id/profile_frag_bg"
             android:layout_width="413dp"
             android:layout_height="263dp"
-            android:layout_marginBottom="556dp"
-            android:src="@drawable/profile_frag_bg_short"
+            android:layout_marginBottom="568dp"
+            android:src="@drawable/profile_frag_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

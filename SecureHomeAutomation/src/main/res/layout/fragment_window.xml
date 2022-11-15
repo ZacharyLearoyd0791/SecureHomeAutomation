@@ -5,7 +5,6 @@
     android:id="@+id/frameLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     tools:context=".WindowFragment">
 
 
@@ -49,7 +48,7 @@
         android:id="@+id/TestDeviceButton"
         android:layout_width="137dp"
         android:layout_height="36dp"
-        android:layout_marginStart="252dp"
+        android:layout_marginStart="240dp"
         android:layout_marginBottom="116dp"
         android:background="@drawable/button_style_1"
         android:backgroundTint="@color/white"
@@ -72,9 +71,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="388dp"
-        android:layout_height="472dp"
+        android:layout_height="450dp"
         android:layout_marginStart="4dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="156dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"

@@ -420,7 +420,7 @@ public class LightFragment extends Fragment {
     public void alarmProcess(){
         String notificationTitle = notificationLT;
         String notificationText = notificationDesc;
-        sendNotificationProcess(notificationTitle,notificationText);
+        //sendNotificationProcess(notificationTitle,notificationText);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrationEffect = VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_HEAVY_CLICK);
             vibrator.cancel();
