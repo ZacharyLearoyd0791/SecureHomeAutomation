@@ -49,6 +49,7 @@ public class TempFragment extends Fragment {
     TextView tvHeater;
     TextView tvAC;
     TextView tvCurrentTemperature;
+    TextView tvHumidity;
     Button btnMaxTemp;
     Button btnMinTemp;
     FirebaseDatabase database;
@@ -80,6 +81,7 @@ public class TempFragment extends Fragment {
 
     private void init(View view) {
         tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
+        tvHumidity = view.findViewById(R.id.Humidity);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
         tvAC = view.findViewById(R.id.AC);
@@ -91,9 +93,10 @@ public class TempFragment extends Fragment {
         minTempRef = database.getReference(minkey);
         maxTempRef = database.getReference(maxkey);
         setTemperatureView(temperatureView);
-        setCurrentTemperature(15);
-        turnOnHeater();
-        turnOffAc();
+        setCurrentTemperature(23);
+        setHumidity(20);
+        turnOffHeater();
+        turnOnAc();
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         loadTemperatureConfigurations();
@@ -284,6 +287,10 @@ public class TempFragment extends Fragment {
     private void setCurrentTemperature(int value) {
         tvCurrentTemperature.setText(value+"\u00B0 C");
         temperatureView.setValue(value);
+    }
+
+    private void setHumidity(int value) {
+        tvHumidity.setText("Humidity:  "+value+"%");
     }
 
     private void setMinTemperature(int value) {
