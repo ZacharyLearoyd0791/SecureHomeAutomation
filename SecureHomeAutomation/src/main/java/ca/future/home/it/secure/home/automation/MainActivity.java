@@ -19,12 +19,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     float ratingVal;
 
+
     //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
@@ -57,18 +59,15 @@ public class MainActivity extends AppCompatActivity {
     String time ="5";
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
-
-    //Feedback system
     RatingBar ratingBar;
     Button saveBTN;
-
     //Database
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     EditText userFeedBack;
-
+    String ratingx;
     //Fingerprint
-    String fingerprintState;
+    String fingerprintState="";
 
     //Bottom Navigation
     public static BottomNavigationView bottomNav;
@@ -78,11 +77,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fingerprintState=getString(R.string.empty);
         dbID();
         getFCM();
         /*
-
         //This is for testing purposes only. To test crashlytics
         Button crashButton = new Button(this);
         crashButton.setText("Test Crash");
@@ -91,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException("Test Crash"); // Force a crash
             }
         });
-
-
         addContentView(crashButton, new ViewGroup.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -245,29 +240,32 @@ public class MainActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheetlayout);
 
+        LinearLayout rating=dialog.findViewById(R.id.ratings);
+        LinearLayout feedback=dialog.findViewById(R.id.feedback);
+        LinearLayout save =dialog.findViewById(R.id.saveFeedBackLL);
         ratingBar=dialog.findViewById(R.id.ratingBar);
         saveBTN=dialog.findViewById(R.id.saveFeedback);
         userFeedBack=(EditText) dialog.findViewById(R.id.feedbackET);
-        feedBackofUser=userFeedBack.getText().toString();
-        ratingBar.setOnRatingBarChangeListener((ratingBar, v, b) -> {
 
-            ratingVal=ratingBar.getRating();
-            saveBTN.setOnClickListener(view -> {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
-               /* if (ratingVal<4&&feedBackofUser.matches("")) {
-
-                    Toast.makeText(this, R.string.feedbackMust, Toast.LENGTH_SHORT).show();
-                }
-                else {*/
-
-                    dialog.dismiss();
-
-                    databaseRatingInfo(ratingVal, feedBackofUser);
-
-               /* }*/
-                    });
+                ratingVal=ratingBar.getRating();
 
 
+                saveBTN.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        feedBackofUser=userFeedBack.getText().toString();
+
+                        dialog.dismiss();
+
+                        databaseRatingInfo(ratingVal,feedBackofUser);
+
+                    }
+                });
+            }
         });
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -277,12 +275,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
 
+
         ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
         databaseReference.setValue(ratingVal);
         feedBackKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.FeedBack);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
+
+
+
     }
 
     public void onBackPressed() {
@@ -327,7 +329,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, msg);
                 });
     }
-
     private void dbID(){
         userInfo.typeAccount();
 
