@@ -16,8 +16,6 @@ import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -42,8 +40,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class LightFragment extends Fragment {
@@ -54,11 +50,7 @@ public class LightFragment extends Fragment {
     String dist,value,key,localKey,personalKey,lightKey,sensorKey,
             statusOfLight,LightStatus,on,off,status,status_light,statusOn,
             statusOff,light_status,lightState,chanelDes,
-            notificationLT,notificationDesc,lightstatusStr,strDate;
-
-    //Date
-    Date date;
-    DateFormat dateFormat;;
+            notificationLT,notificationDesc,lightstatusStr;
     VibrationEffect vibrationEffect;
     NotificationManagerCompat mangerCompat;
     Boolean cancelTimer;
@@ -71,7 +63,7 @@ public class LightFragment extends Fragment {
     Vibrator vibrator;
     NotificationChannel channel;
     NotificationManager notificationManager;
-    String cm,ultrasonicDist,moveDect,timeFor;
+
     public LightFragment() {
 
     }
@@ -81,7 +73,6 @@ public class LightFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_light, container, false);
-        cm=getString(R.string.no_movement_detect)+distance+getString(R.string.cm);
         timerTV = view.findViewById(R.id.timerTV);
         ultrasonicTV = view.findViewById(R.id.distanceOut);
         timerBTN = view.findViewById(R.id.timerButton);
@@ -92,7 +83,6 @@ public class LightFragment extends Fragment {
         lightsOn=view.findViewById(R.id.onLights);
         statusOfLightTV=view.findViewById(R.id.statusOfLight);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        timeFor=getString(R.string.timeFormat);
         on=getString(R.string.on);
         off=getString(R.string.off);
         status=getString(R.string.lightStautsMSG)+getString(R.string.empty);
@@ -101,13 +91,13 @@ public class LightFragment extends Fragment {
         chanelDes=getString(R.string.channelDesc);
         value=getString(R.string.distance_from_ultra)+dist+getString(R.string.cm);
 
-        ultrasonicDist=(getString(R.string.db_ultrasonic_dist));
+
         notificationManager = getContext().getSystemService(NotificationManager.class);
         notificationLT=getString(R.string.notificationLightTitle);
         notificationDesc=getString(R.string.notificationLightDesc);
         lightstatusStr=getString(R.string.LightStatus);
         mangerCompat= NotificationManagerCompat.from(getContext());
-        moveDect=getString(R.string.movement_detect);
+
         return view;
     }
 
@@ -157,9 +147,10 @@ public class LightFragment extends Fragment {
 
             }
         });
-
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(sensorKey);
         //timer and scheduler
-
+        cancelTimer=true;
 
         timerBTN.setOnClickListener(v -> popTimePicker());
         schedulerBTN.setOnClickListener(view1 -> {
@@ -201,9 +192,7 @@ public class LightFragment extends Fragment {
     }
 
     private void dbID(){
-
         userInfo.typeAccount();
-        time();
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -216,26 +205,16 @@ public class LightFragment extends Fragment {
             key= personalKey;
             Log.d(TAG, key);
         }
-        lightKey=key+getString(R.string.statusKey)+getString(R.string.forwardslash)+strDate;
+        lightKey=key+getString(R.string.statusKey);
         Log.d(TAG,getString(R.string.keyIs)+lightKey);
-        sensorKey=key+getString(R.string.db_ultrasonic_dist)+getString(R.string.forwardslash)+strDate;
-        SensorDB();
+        sensorKey=key+getString(R.string.db_ultrasonic_dist);
 
 
-    }
-
-    private void time(){
-        date = Calendar.getInstance().getTime();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh:mm:ss");
-        }
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            strDate = dateFormat.format(date);
-        }
     }
 
     private void lightHandler(String statusOfLight) {
+
+
         if (statusOfLight.equals(on)) {
             statusOn=status+on;
             firebaseDatabase = FirebaseDatabase.getInstance();
@@ -260,49 +239,49 @@ public class LightFragment extends Fragment {
     }
 
     private void SensorDB(){
+
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(ultrasonicDist);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(sensorKey);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    dist = snapshot.getValue().toString();
-                    /*ultrasonicET.append(dist);
-                    Log.d(TAG,"Ultrasonic"+dist);*/
+                if (snapshot.exists()){
+
+                    dist=snapshot.getValue().toString();
+                    Log.d(TAG,value);
+                    ultrasonicTV.setText(dist);
 
                     try
                     {
                         Double.parseDouble(dist);
                         distance=Double.parseDouble(dist);
                         if (distance<20){
-                            String value=moveDect;
+                            String value=getString(R.string.movement_detect);
                             Log.d(TAG,value);
                             ultrasonicTV.setText(value);
-                            LightStatus = on;
+                            LightStatus = getString(R.string.on);
                         }
                         else{
-                            value=cm;
-                            ultrasonicTV.setText(value);
-                            LightStatus = off;
+                            String value=getString(R.string.no_movement_detect)+distance+getString(R.string.cm);
+                            Log.d(TAG,value);
+                            LightStatus = getString(R.string.off);
                         }
-                        if (LightStatus==on) {
+                        if (LightStatus==getString(R.string.on)) {
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
-                            lightHandler(LightStatus);
-                            //databaseReference.setValue(on);
+                            databaseReference.setValue(R.string.on);
                         }
                         else{
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
-                            lightHandler(LightStatus);
-                            //databaseReference.setValue(off);
+                            databaseReference.setValue(R.string.off);
                         }
                     }
 
                     catch(NumberFormatException e)
                     {
-                       // Log.d(TAG,getString(R.string.log_value_not_double));
+                        Log.d(TAG,getString(R.string.log_value_not_double));
                         ultrasonicTV.setText(dist);
                     }
                 }
@@ -320,11 +299,11 @@ public class LightFragment extends Fragment {
 
                     statusOfLight = snapshot.getValue().toString();
                     Log.d(TAG,statusOfLight);
-                    if(statusOfLight==on){
+                    if(statusOfLight==getString(R.string.on)){
                         notificationCaller();
                         alarmProcess();
                     }
-                    else if(statusOfLight==off){
+                    else if(statusOfLight==getString(R.string.off)){
 
                     }
                     else{
@@ -350,7 +329,7 @@ public class LightFragment extends Fragment {
             hour = selectedHour;
             minute = selectedMinute;
 
-            String timeout = (String.format(Locale.getDefault(), timeFor, hour, minute));
+            String timeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
             Log.d(TAG, timeout);
             String timeOut = getString(R.string.timeSet) + timeout;
             timerTV.setText(timeOut);
@@ -382,7 +361,7 @@ public class LightFragment extends Fragment {
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
 
-                    if((databaseReference.setValue(off))!=null){
+                    if((databaseReference.setValue(getString(R.string.off)))!=null){
 //                        Log.d(TAG,"Testing2021DB:");
                         databaseReference.setValue(off);
                     }
@@ -420,7 +399,7 @@ public class LightFragment extends Fragment {
     public void alarmProcess(){
         String notificationTitle = notificationLT;
         String notificationText = notificationDesc;
-        //sendNotificationProcess(notificationTitle,notificationText);
+        sendNotificationProcess(notificationTitle,notificationText);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrationEffect = VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_HEAVY_CLICK);
             vibrator.cancel();
