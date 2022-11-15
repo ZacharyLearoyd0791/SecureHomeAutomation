@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,7 +54,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailAddress;
     private EditText password;
     private FirebaseAuth mAuth;
-    public static String PREFS_NAME = "LoggedInFile";
+    public static String PREFS_NAME;
+    CheckBox rememberMeCheckBox;
+    Boolean checkBoxState;
 
     //Google login
     private GoogleSignInOptions gso;
@@ -63,10 +66,12 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView facebookButton;
     CallbackManager callbackManager;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        PREFS_NAME =(getString(R.string.loggedInFile));
 
         //Creating references
         emailAddress = findViewById(R.id.login_page_email_textBox);
@@ -82,14 +87,28 @@ public class LoginActivity extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this,gso);
         facebookButton = findViewById(R.id.facebook_logo);
         callbackManager = CallbackManager.Factory.create();
+        rememberMeCheckBox = findViewById(R.id.rememberMe);
+
+        //CheckBox functionality
+        rememberMeCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(rememberMeCheckBox.isChecked()) {
+                    checkBoxState = true;
+                }else{
+                    checkBoxState = false;
+                }
+            }
+        });
 
         //Login button functionality
         loginButton.setOnClickListener(view -> {
-            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME,0);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.has_logged_in),true);
-            editor.commit();
 
+            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("hasLoggedIn", checkBoxState);
+            editor.commit();
+            editor.apply();
             String emailInput = emailAddress.getText().toString();
             String passwordInput = password.getText().toString();
             if(emailInput.isEmpty() && passwordInput.isEmpty()){
@@ -119,9 +138,6 @@ public class LoginActivity extends AppCompatActivity {
                 googleSignInProcess();
             }
         });
-
-        //Login via fingerprint
-
 
         //Login via facebook
         LoginManager.getInstance().registerCallback(callbackManager,

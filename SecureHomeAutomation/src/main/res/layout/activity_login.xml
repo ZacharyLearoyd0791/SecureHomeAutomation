@@ -186,4 +186,14 @@
         app:layout_constraintTop_toBottomOf="@+id/login_page_login_button"
         app:layout_constraintVertical_bias="0.169" />
 
+    <CheckBox
+        android:id="@+id/rememberMe"
+        android:layout_width="136dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/remember_me"
+        app:layout_constraintStart_toEndOf="@+id/loginForgotPassword"
+        app:layout_constraintTop_toBottomOf="@+id/login_page_password_textBox" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

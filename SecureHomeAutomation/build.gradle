@@ -65,7 +65,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'   //For facebook login
-   //State progress bar
+    //State progress bar
 
     //guage
     implementation 'com.github.Gruzer:simple-gauge-android:0.3.1'

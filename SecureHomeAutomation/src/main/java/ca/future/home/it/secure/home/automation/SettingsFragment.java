@@ -53,16 +53,14 @@ public class SettingsFragment extends Fragment {
     private Switch colourSwitch;
     private Switch fingerSwitch;
     private Switch portraitSwitch;
+    private Switch faceLockSwitch;
     private Button saveButton;
     public static String SETTINGS_PREFS_NAME = "SavedSettings";
-    private Boolean boldTextState = false;
-    private Boolean darkModeState = false;
-    private Boolean fingerPrintState = false;
-    private Boolean screenOrientationState = false;
-    private Boolean sBoldTextState;
-    private Boolean sDarkModeState;
-    private Boolean sFingerPrintState;
-    private Boolean sScreenOrientationState;
+    private Boolean boldTextState ;
+    private Boolean darkModeState;
+    private Boolean fingerPrintState;
+    private Boolean screenOrientationState;
+    private Boolean faceLockState;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -102,14 +100,15 @@ public class SettingsFragment extends Fragment {
         colourSwitch = view.findViewById(R.id.colour_switch);
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
+        faceLockSwitch = view.findViewById(R.id.settings_face_lock_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
         sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        sBoldTextState = sharedPreferences.getBoolean(getString(R.string.BoldTextString),false);
-        sDarkModeState = sharedPreferences.getBoolean(getString(R.string.DarkModeString),false);
-        sFingerPrintState = sharedPreferences.getBoolean(getString(R.string.fingerPrintString),false);
-        sScreenOrientationState = sharedPreferences.getBoolean(getString(R.string.screenOrientationString),false);
-
+        boldTextState = sharedPreferences.getBoolean("BoldTextState",false);
+        darkModeState = sharedPreferences.getBoolean("DarkModeState",false);
+        fingerPrintState = sharedPreferences.getBoolean("FingerprintState",false);
+        screenOrientationState = sharedPreferences.getBoolean("ScreenLockState",false);
+        faceLockState = sharedPreferences.getBoolean("FaceLockState",false);
         //TextViews
         tvBold = view.findViewById(R.id.tv_bold);
         tvColour = view.findViewById(R.id.tv_colour);
@@ -118,33 +117,16 @@ public class SettingsFragment extends Fragment {
 
         //Getting Switch states from sharedPreferences
         //Getting bold text switch state
-        if(sBoldTextState){
-            boldSwitch.setChecked(true);
-        }else{
-            boldSwitch.setChecked(false);
-        }
+        boldSwitch.setChecked(boldTextState);
 
         //Getting Dark Mode switch state
-        if(sDarkModeState){
-            colourSwitch.setChecked(true);
-        }else{
-            colourSwitch.setChecked(false);
-        }
-
+        colourSwitch.setChecked(darkModeState);
         //Getting fingerprint switch state
-        if(sFingerPrintState){
-            fingerSwitch.setChecked(true);
-        }else{
-            fingerSwitch.setChecked(false);
-        }
-
+        fingerSwitch.setChecked(fingerPrintState);
         //Getting orientation switch state
-        if(sScreenOrientationState){
-            portraitSwitch.setChecked(true);
-        }else{
-            portraitSwitch.setChecked(false);
-        }
-
+        portraitSwitch.setChecked(screenOrientationState);
+        //Getting facelock switch state
+        faceLockSwitch.setChecked(faceLockState);
         //Bold Text
         boldSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -178,36 +160,36 @@ public class SettingsFragment extends Fragment {
         colourSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    darkModeState = true;
-
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    darkModeState = false;
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
+                //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                darkModeState = colourSwitch.isChecked();
             }
         });
 
         //Fingerprint enable/disable
-        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.settings));
         fingerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(fingerSwitch.isChecked()){
-                    fingerPrintState = true;
-                }else{
-                    fingerPrintState = false;
-                }
+                fingerPrintState = fingerSwitch.isChecked();
             }
         });
 
         //Screen Orientation
-        if(portraitSwitch.isChecked()){
-            screenOrientationState = true;
-        }else{
-            screenOrientationState = false;
-        }
+        portraitSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                screenOrientationState = portraitSwitch.isChecked();
+            }
+        });
+
+        //FaceLock
+        faceLockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                faceLockState =faceLockSwitch.isChecked();
+            }
+        });
+
 
 
     //Save Button functionality
@@ -215,11 +197,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                editor.putBoolean(getString(R.string.BoldTextString),boldTextState).apply();
-                editor.putBoolean(getString(R.string.DarkModeString),darkModeState).apply();
-                editor.putBoolean(getString(R.string.fingerPrintString),fingerPrintState).apply();
-                editor.putBoolean(getString(R.string.screenOrientationString),screenOrientationState).apply();
-
+                editor.putBoolean("BoldTextState",boldTextState).apply();
+                editor.putBoolean("DarkModeState",darkModeState).apply();
+                editor.putBoolean("FingerprintState",fingerPrintState).apply();
+                editor.putBoolean("ScreenLockState",screenOrientationState).apply();
+                editor.putBoolean("FaceLockState",faceLockState).apply();
+                editor.apply();
+                editor.commit();
                 if(darkModeState==true)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 else

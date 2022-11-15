@@ -7,6 +7,9 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -17,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +31,15 @@ import android.widget.TextView;
 
 import com.ekn.gruzer.gaugelibrary.ArcGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class TempFragment extends Fragment {
+    String userId, localuserId, minkey, maxkey, key;
+    UserInfo userInfo = new UserInfo();
 
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
@@ -44,6 +52,9 @@ public class TempFragment extends Fragment {
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
     ArcGauge temperatureView;
+    int minimumTemperature = 8;
+    int maximumTemperature = 60;
+    ProgressDialog progressDialog;
 
     public TempFragment() {
         // Required empty public constructor
@@ -59,6 +70,7 @@ public class TempFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dbID();
         init(view);
         setListeners();
     }
@@ -73,14 +85,37 @@ public class TempFragment extends Fragment {
         btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
-        minTempRef = database.getReference("Temperature-Configurations/minTemperature");
-        maxTempRef = database.getReference("Temperature-Configurations/maxTemperature");
+        minTempRef = database.getReference(minkey);
+        maxTempRef = database.getReference(maxkey);
         setTemperatureView(temperatureView);
         setCurrentTemperature(15);
         turnOnHeater();
         turnOffAc();
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please wait...");
     }
 
+    private void dbID(){
+        userInfo.typeAccount();
+
+        localuserId=userInfo.userId;
+        userId=userInfo.idInfo;
+
+        if(localuserId!=null){
+            key=localuserId;
+            Log.d(TAG,key);
+        }
+        if(userId!=null) {
+            key= userId;
+            Log.d(TAG, key);
+        }
+        minkey=key+getString(R.string.tempmin);
+        maxkey=key+getString(R.string.tempmax);
+        Log.d(TAG,"test2022 temp data out to db\n min key"+minkey+"\n max key"+maxkey);
+
+
+    }
     private void setListeners() {
         btnMinTemp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,15 +141,31 @@ public class TempFragment extends Fragment {
         TextView tvTitle = promptsView.findViewById(R.id.Title);
         tvTitle.setText(title);
         EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
+        if(isMinTemperature) {
+            userInput.setText(minimumTemperature+"");
+        } else {
+            userInput.setText(maximumTemperature+"");
+        }
         alertDialogBuilder
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         int temperature = Integer.parseInt(userInput.getText().toString());
                         if (isMinTemperature) {
-                            saveMinTemperature(temperature);
+                            if (minimumTemperature < maximumTemperature) {
+                                saveMinTemperature(temperature);
+                            } else {
+                                userInput.setError("Minimum temperature must be less than Maximum Temperature");
+                                userInput.requestFocus();
+                            }
                         } else {
-                            saveMaxTemperature(temperature);
+                            if (minimumTemperature < maximumTemperature) {
+                                saveMaxTemperature(temperature);
+                            } else {
+                                userInput.setError("Maximum temperature must be greater than Minimum Temperature");
+                                userInput.requestFocus();
+                            }
+
                         }
                     }
                 })
@@ -129,26 +180,36 @@ public class TempFragment extends Fragment {
     }
 
     private void saveMinTemperature(int temp) {
+        progressDialog.setMessage("Saving...");
+        progressDialog.show();
         minTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                progressDialog.dismiss();
                 if (databaseError != null) {
                     System.out.println("Minimum Temperature could not be saved " + databaseError.getMessage());
                 } else {
                     System.out.println("Minimum Temperature saved successfully.");
+                    tvMinimumTemperature.setText(temp + "\u00B0 C");
+                    minimumTemperature = temp;
                 }
             }
         });
     }
 
     private void saveMaxTemperature(int temp) {
+        progressDialog.setMessage("Saving...");
+        progressDialog.show();
         maxTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                progressDialog.dismiss();
                 if (databaseError != null) {
                     System.out.println("Maximum Temperature could not be saved " + databaseError.getMessage());
                 } else {
                     System.out.println("Maximum Temperature saved successfully.");
+                    tvMaximumTemperature.setText(temp + "\u00B0 C");
+                    maximumTemperature = temp;
                 }
             }
         });
@@ -180,6 +241,7 @@ public class TempFragment extends Fragment {
         temperatureView.setMinValue(0);
         temperatureView.setMaxValue(75);
         temperatureView.setValueColor(Color.parseColor("#ffffff"));
+        temperatureView.setVisibility(View.VISIBLE);
     }
 
     private void setCurrentTemperature(int value) {

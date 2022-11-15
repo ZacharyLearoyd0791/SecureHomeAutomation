@@ -198,9 +198,9 @@
     <string name="dayspickedMsg">\"Day picked: \"</string>
     <string name="timeSelectedmsg">\nTime selected :</string>
     <string name="to"> to </string>
-    <string name="place_key">Place key card you wish to add on the RIFD reader...</string>
+    <string name="place_key">Place key card you wish to add on the RIFD reader…</string>
     <string name="cancel">Cancel</string>
-    <string name="place_key_remove">Place the key you wish to remove on the RFID reader...</string>
+    <string name="place_key_remove">Place the key you wish to remove on the RFID reader…</string>
     <string name="success">Success!</string>
     <string name="close">Close</string>
     <string name="Time">"Time "</string>
@@ -222,7 +222,7 @@
     <string name="fb_door_status">/Door/Status</string>
     <string name="enter_email_add">Enter your email Address</string>
     <string name="log_onclick_state">\"onClick state = \"</string>
-    <string name="email_send">Email send...</string>
+    <string name="email_send">Email send…</string>
     <string name="enter_valid">Enter Valid Email</string>
     <string name="signed_out">Signed out!</string>
     <string name="log_tile_add">onTileAdded</string>
@@ -296,8 +296,8 @@
     <string name="unlock_lock">Unlock/Lock</string>
     <string name="feedback">Feedback</string>
     <string name="rating">Rating</string>
-    <string name="FeedBack" tools:ignore="MissingTranslation">FeedBack</string>
-    <string name="forwardslash" tools:ignore="MissingTranslation">/</string>
+    <string name="FeedBack">FeedBack</string>
+    <string name="forwardslash" translatable="false">/</string>
     <string name="feedbackMust">Make Sure to write a feedback to help us Improve!</string>
     <string name="BoldTextString">BoldText</string>
     <string name="DarkModeString">DarkMode</string>
@@ -307,7 +307,32 @@
     <string name="enter_feedback">Please enter any feedback below:</string>
     <string name="enter_here">Enter here</string>
     <string name="enable_face_lock">Enable Face Lock</string>
-    <string name="shortcut_short_label" translatable="false">Turn On</string>
+    <string name="shortcutOn" translatable="false">Turn On</string>
     <string name="test_device">Test device</string>
+    <string name="edit_your_profile">Edit your Profile</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_email">Your Email</string>
+    <string name="your_phone_number">Your Phone Number</string>
+    <string name="change_password">Change Password</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="shortcutOff" translatable="false">Turn Off</string>
+    <string name="shortcutOpen" translatable="false">Open Door</string>
+    <string name="shortcutClose" translatable="false">Close Door</string>
+    <string name="Auth_error">\"Authentication error: \"</string>
+    <string name="Auth_succeed">Authentication succeeded!</string>
+    <string name="Auth_Failed">Authentication failed</string>
+    <string name="Biometric_title">Biometric login for my app</string>
+    <string name="Biometric_subtitle">Log in using your biometric credential</string>
+    <string name="Biometric_negitiveBtn">Use account password</string>
+    <string name="turnOn">TurnOn</string>
+    <string name="turnOff">TurnOff</string>
+    <string name="statusKeyGoogleAssist">statusType</string>
+    <string name="loggedInFile">LoggedInFile</string>
+
+    <string name="tempmin" translatable="false">/Temperature/Min</string>
+    <string name="tempmax" translatable="false">/Temperature/Max</string>
+    <string name="edit_senor">Edit senor</string>
+
 
 </resources>

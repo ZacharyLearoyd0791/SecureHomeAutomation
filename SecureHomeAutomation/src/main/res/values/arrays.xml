@@ -6,4 +6,24 @@
         <item>Lights On</item>
         <item>On Lights</item>
     </string-array>
+
+    <string-array name="LightsOff">
+        <item>Turn Off Lights</item>
+        <item>Turn Off</item>
+        <item>Lights Off</item>
+        <item>Off Lights</item>
+    </string-array>
+
+    <string-array name="doorOpen">
+=        <item>Door Open</item>
+        <item>Open Door</item>
+        <item>Open</item>
+    </string-array>
+
+    <string-array name="doorClose">
+        <item>Close Door</item>
+        <item>Door Close</item>
+        <item>Close</item>
+    </string-array>
+
 </resources>

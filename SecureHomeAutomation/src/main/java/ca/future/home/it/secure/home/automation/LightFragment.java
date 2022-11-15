@@ -49,8 +49,8 @@ public class LightFragment extends Fragment {
     Double distance;
     String dist,value,key,localKey,personalKey,lightKey,sensorKey,
             statusOfLight,LightStatus,on,off,status,status_light,statusOn,
-                statusOff,light_status,lightState,chanelDes,
-                notificationLT,notificationDesc,lightstatusStr;
+            statusOff,light_status,lightState,chanelDes,
+            notificationLT,notificationDesc,lightstatusStr;
     VibrationEffect vibrationEffect;
     NotificationManagerCompat mangerCompat;
     Boolean cancelTimer;
@@ -137,7 +137,7 @@ public class LightFragment extends Fragment {
                         lightHandler(off);
                     }
                     else{
-                        Log.d(TAG,"Issue");
+//                        Log.d(TAG,"Issue");
                     }
                 }
             }
@@ -178,7 +178,7 @@ public class LightFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     status_light=snapshot.getValue().toString();
-                    Log.d(TAG,"Testing2022: Status: "+status_light);
+//                    Log.d(TAG,"Testing2022: Status: "+status_light);
                     lightHandler(status_light);
 
                 }
@@ -232,7 +232,7 @@ public class LightFragment extends Fragment {
             statusOfLightTV.setText(statusOff);
         }
         else{
-            Log.d(TAG,"Something went wrong with status led");
+//            Log.d(TAG,"Something went wrong with status led");
         }
         SensorDB();
 
@@ -346,11 +346,11 @@ public class LightFragment extends Fragment {
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
 
                     if(databaseReference.setValue(on)!=null){
-                        Log.d(TAG,"Testing2022DB:"+counter);
+//                        Log.d(TAG,"Testing2022DB:"+counter);
                         databaseReference.setValue(on);
                     }
                     else{
-                        Log.d(TAG,"Testing2022DB Failed:");
+//                        Log.d(TAG,"Testing2022DB Failed:");
                     }
 //                    databaseReference.setValue(getActivity().getString(R.string.on));
                     counter++;
@@ -362,11 +362,11 @@ public class LightFragment extends Fragment {
                     databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
 
                     if((databaseReference.setValue(getString(R.string.off)))!=null){
-                        Log.d(TAG,"Testing2021DB:");
+//                        Log.d(TAG,"Testing2021DB:");
                         databaseReference.setValue(off);
                     }
                     else{
-                        Log.d(TAG,"Testing2021DB Failed:");
+//                        Log.d(TAG,"Testing2021DB Failed:");
 
                     }
                     counter = 0;
