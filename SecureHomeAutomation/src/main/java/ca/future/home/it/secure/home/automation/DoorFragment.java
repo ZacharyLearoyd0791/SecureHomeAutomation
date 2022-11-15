@@ -11,6 +11,7 @@ package ca.future.home.it.secure.home.automation;
 import static android.content.ContentValues.TAG;
 import static java.lang.Thread.sleep;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -224,7 +225,7 @@ public class DoorFragment extends Fragment {
     private void dbID(){
         userInfo.typeAccount();
         time();
-        Log.d(TAG,"Time string before key;"+strDate);
+        //Log.d(TAG,"Time string before key;"+strDate);
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -241,10 +242,11 @@ public class DoorFragment extends Fragment {
 
         idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash)+strDate;
     }
+    @SuppressLint("SimpleDateFormat")
     private void time(){
         date = Calendar.getInstance().getTime();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh:mm:ss");
+            dateFormat = new SimpleDateFormat(getString(R.string.formatted));
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {

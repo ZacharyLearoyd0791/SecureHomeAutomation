@@ -9,6 +9,7 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -156,27 +157,27 @@ public class TempFragment extends Fragment {
         }
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok_temp, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         int temperature = Integer.parseInt(userInput.getText().toString());
                         if (isMinTemperature) {
                             if (temperature < maximumTemperature && temperature > 0) {
                                 saveMinTemperature(temperature);
                             } else {
-                                showToast("Minimum temperature must be less than Maximum Temperature and greater than 0");
+                                showToast(getString(R.string.mini_temp_text));
                                 userInput.requestFocus();
                             }
                         } else {
                             if (temperature > minimumTemperature && temperature > 0) {
                                 saveMaxTemperature(temperature);
                             } else {
-                                showToast("Maximum temperature must be greater than Minimum Temperature and greater than 0");
+                                showToast(getString(R.string.max_temp_text));
                             }
 
                         }
                     }
                 })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(R.string.cancel_temp,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -187,14 +188,14 @@ public class TempFragment extends Fragment {
     }
 
     private void saveMinTemperature(int temp) {
-        progressDialog.setMessage("Saving...");
+        progressDialog.setMessage(getString(R.string.savie));
         progressDialog.show();
         minTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 closeProgressDialog();
                 if (databaseError != null) {
-                    showToast("Minimum Temperature could not be saved " + databaseError.getMessage());
+                    showToast(getString(R.string.min_temp_min_temp) + databaseError.getMessage());
                 } else {
                     minimumTemperature = temp;
                     setMinTemperature(minimumTemperature);
@@ -204,14 +205,14 @@ public class TempFragment extends Fragment {
     }
 
     private void saveMaxTemperature(int temp) {
-        progressDialog.setMessage("Saving...");
+        progressDialog.setMessage(getString(R.string.savings));
         progressDialog.show();
         maxTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 closeProgressDialog();
                 if (databaseError != null) {
-                    showToast("Maximum Temperature could not be saved " + databaseError.getMessage());
+                    showToast(getString(R.string.max_temp_text_temp) + databaseError.getMessage());
                 } else {
                     maximumTemperature = temp;
                     setMaxTemperature(maximumTemperature);
@@ -244,7 +245,7 @@ public class TempFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("abc","not loaded");
+                //Log.d("abc","not loaded");
             }
         });
     }
@@ -289,8 +290,9 @@ public class TempFragment extends Fragment {
         temperatureView.setValue(value);
     }
 
+
     private void setHumidity(int value) {
-        tvHumidity.setText("Humidity:  "+value+"%");
+        tvHumidity.setText(getString(R.string.Humidity)+value+"%");
     }
 
     private void setMinTemperature(int value) {
