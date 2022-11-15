@@ -15,6 +15,8 @@ import android.app.Dialog;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public static LightFragment lightFragment;
     public static WindowFragment windowFragment;
     public static ProfileEditFragment profileEditFragment;
+    String time ="5";
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
     Date date;
@@ -182,6 +185,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.ab_refresh) {
             bottomNav.setSelectedItemId(R.id.home);
+            AsyncTaskRunner runner = new AsyncTaskRunner();
+            String sleepTime = time;
+            runner.execute(sleepTime);
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
         }
         if (item.getItemId() == R.id.ab_add) {
@@ -192,7 +198,53 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                int time = Integer.parseInt(params[0])*1000;
+
+                Thread.sleep(time);
+                resp = "Slept for " + params[0] + " seconds";
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            progressDialog.dismiss();
+            Toast.makeText(MainActivity.this, "Items Refreshed!", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(MainActivity.this,
+                    "ProgressDialog",
+                    "Wait for "+time+ " seconds");
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+
+
+        }
+    }
     private void showBottomDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
