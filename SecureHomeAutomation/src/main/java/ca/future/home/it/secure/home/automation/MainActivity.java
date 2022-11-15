@@ -206,12 +206,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            publishProgress(getString(R.string.sleeping)); // Calls onProgressUpdate()
             try {
                 int time = Integer.parseInt(params[0])*1000;
 
                 Thread.sleep(time);
-                resp = "Slept for " + params[0] + " seconds";
+                resp = getString(R.string.sleptFor) + params[0] + getString(R.string.sec);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 resp = e.getMessage();
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
             progressDialog.dismiss();
-            Toast.makeText(MainActivity.this, "Items Refreshed!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.refreshing, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -235,8 +235,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(MainActivity.this,
-                    "Refreshing items",
-                    "It won't take much time :)");
+                    getString(R.string.refresher),
+                    getString(R.string.discription_dialog));
         }
 
 
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     private void time(){
         date = Calendar.getInstance().getTime();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh:mm:ss");
+            dateFormat = new SimpleDateFormat(getString(R.string.format));
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
