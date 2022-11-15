@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -342,7 +343,6 @@ public class MainActivity extends AppCompatActivity {
     private void dbID(){
         userInfo.typeAccount();
         time();
-        Log.d(TAG,"Time string before key;"+strDate);
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -369,6 +369,5 @@ public class MainActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             strDate = dateFormat.format(date);
         }
-        System.out.println("Converted String: " + strDate);
     }
 }
