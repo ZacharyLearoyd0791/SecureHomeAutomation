@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("hasLoggedIn", checkBoxState);
+            editor.putBoolean(getString(R.string.hasLoggedIn), checkBoxState);
             editor.commit();
             editor.apply();
             String emailInput = emailAddress.getText().toString();

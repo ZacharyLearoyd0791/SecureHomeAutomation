@@ -8,6 +8,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 
@@ -91,18 +92,19 @@ public class WindowFragment extends Fragment {
         //Getting Device status from firebase database
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Windows Break");
         reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int deviceState = snapshot.child("Device Status").getValue(Integer.class);
+                int deviceState = snapshot.child(getString(R.string.status_device)).getValue(Integer.class);
                 if(deviceState==0){
-                    deviceStatusTextView.setText("No Device Found!");
+                    deviceStatusTextView.setText(R.string.devicenotfound);
                 }else if(deviceState ==1){
-                    deviceStatusTextView.setText("Device Active");
+                    deviceStatusTextView.setText(R.string.activedevice);
                     deviceStatusTextView.setTextColor(Color.GREEN);
                 }else if(deviceState == -1){
-                    deviceStatusTextView.setText("Device Error");
+                    deviceStatusTextView.setText(R.string.errordevice);
                     deviceStatusTextView.setTextColor(Color.RED);
-                    Toast.makeText(getContext(), "Try reconnecting your device!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.reconnect, Toast.LENGTH_SHORT).show();
                 }
 
             }

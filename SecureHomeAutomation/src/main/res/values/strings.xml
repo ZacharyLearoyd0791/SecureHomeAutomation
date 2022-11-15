@@ -333,6 +333,34 @@
     <string name="tempmin" translatable="false">/Temperature/Min</string>
     <string name="tempmax" translatable="false">/Temperature/Max</string>
     <string name="edit_senor">Edit senor</string>
+    <string name="hasLoggedIn">hasLoggedIn</string>
+    <string name="hasLoggedin">hasLoggedIn</string>
+    <string name="fingerprintstate">FingerprintState</string>
+    <string name="sleeping">Sleeping...</string>
+    <string name="sleptFor">\"Slept for \"</string>
+    <string name="sec">\" seconds\"</string>
+    <string name="refreshing">Items Refreshed!</string>
+    <string name="refresher">Refreshing...</string>
+    <string name="discription_dialog">It won\'t take much time :)</string>
+    <string name="format">yyyy-mm-dd-hh:mm:ss</string>
+    <string name="formatted">yyyy-mm-dd-hh:mm:ss</string>
+    <string name="status_device">Device Status</string>
+    <string name="devicenotfound">No Device Found!</string>
+    <string name="devicenotfound1">Device not found!</string>
+    <string name="activedevice">Device Active</string>
+    <string name="errordevice">Device Error</string>
+    <string name="errordevice1">errorDevice</string>
+    <string name="reconnect">Try reconnecting your device!</string>
+    <string name="reconnect1">reconnect</string>
+    <string name="ok_temp">OK</string>
+    <string name="mini_temp_text">Minimum temperature must be less than Maximum Temperature and greater than 0</string>
+    <string name="max_temp_text">Maximum temperature must be greater than Minimum Temperature and greater than 0</string>
+    <string name="cancel_temp">Cancel</string>
+    <string name="min_temp_min_temp">\"Minimum Temperature could not be saved \"</string>
+    <string name="max_temp_text_temp">\"Maximum Temperature could not be saved \"</string>
+    <string name="Humidity">\"Humidity:  \"</string>
+    <string name="savings">Saving...</string>
+    <string name="savie">Saving...</string>
 
 
 </resources>

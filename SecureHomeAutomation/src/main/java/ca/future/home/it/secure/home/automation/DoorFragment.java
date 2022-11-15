@@ -8,15 +8,21 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
 import static java.lang.Thread.sleep;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +40,8 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +67,15 @@ public class DoorFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+    //String
+    String idKey,localKey,key,personalKey,strDate;
+
+    //Date
+    Date date;
+    DateFormat dateFormat;
+
+    //Classes called
+    UserInfo userInfo=new UserInfo();
     public DoorFragment() {
     }
 
@@ -68,6 +85,7 @@ public class DoorFragment extends Fragment {
     }
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
+        dbID();
 
         //Door status
         doorLock=view.findViewById(R.id.doorLockBtn);
@@ -194,8 +212,9 @@ public class DoorFragment extends Fragment {
     }
 
     private void toDatabase(String status){
+        dbID();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.fb_door_status)));
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
 
         databaseReference.setValue(status);
         Map<String, Object> updateStatus = new HashMap<>();
@@ -203,5 +222,36 @@ public class DoorFragment extends Fragment {
 
         databaseReference.updateChildren(updateStatus);
     }
+    private void dbID(){
+        userInfo.typeAccount();
+        time();
+        //Log.d(TAG,"Time string before key;"+strDate);
 
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+
+        if(localKey!=null){
+            key=localKey;
+            Log.d(TAG,key);
+
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+            Log.d(TAG, key);
+        }
+
+        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash)+strDate;
+    }
+    @SuppressLint("SimpleDateFormat")
+    private void time(){
+        date = Calendar.getInstance().getTime();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            dateFormat = new SimpleDateFormat(getString(R.string.formatted));
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            strDate = dateFormat.format(date);
+        }
+        System.out.println("Converted String: " + strDate);
+    }
 }
