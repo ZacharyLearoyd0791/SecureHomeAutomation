@@ -227,7 +227,8 @@ public class TempFragment extends Fragment {
         minTempRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot!=null){
+                if (snapshot.getValue()!=null){
+
                     tempstr = snapshot.getValue().toString();
                     temperature= Long.parseLong(tempstr);
                     minimumTemperature = (int) temperature;
