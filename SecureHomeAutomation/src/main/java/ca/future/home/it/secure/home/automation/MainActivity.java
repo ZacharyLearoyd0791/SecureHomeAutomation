@@ -12,6 +12,9 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,6 +43,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,8 +66,11 @@ public class MainActivity extends AppCompatActivity {
     String time ="5";
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
+    Date date;
+    DateFormat dateFormat;
     RatingBar ratingBar;
     Button saveBTN;
+    String strDate;
     //Database
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -276,11 +286,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
 
-
-        ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating);
+        time();
+        ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
         databaseReference.setValue(ratingVal);
-        feedBackKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.FeedBack);
+        feedBackKey=key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
 
@@ -332,6 +342,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void dbID(){
         userInfo.typeAccount();
+        time();
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -349,5 +360,14 @@ public class MainActivity extends AppCompatActivity {
         idKey=key+getString(R.string.statusKey);
         idToDatabase();
     }
+    private void time(){
+        date = Calendar.getInstance().getTime();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh:mm:ss");
+        }
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            strDate = dateFormat.format(date);
+        }
+    }
 }
