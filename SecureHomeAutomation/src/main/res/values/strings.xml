@@ -333,8 +333,6 @@
     <string name="tempmin" translatable="false">/Temperature/Min</string>
     <string name="tempmax" translatable="false">/Temperature/Max</string>
     <string name="edit_senor">Edit senor</string>
-    <string name="hasLoggedIn">hasLoggedIn</string>
-    <string name="hasLoggedin">hasLoggedIn</string>
     <string name="fingerprintstate">FingerprintState</string>
     <string name="sleeping">Sleeping...</string>
     <string name="sleptFor">\"Slept for \"</string>

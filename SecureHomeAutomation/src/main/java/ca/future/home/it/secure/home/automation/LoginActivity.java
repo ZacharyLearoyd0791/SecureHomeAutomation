@@ -54,10 +54,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailAddress;
     private EditText password;
     private FirebaseAuth mAuth;
-    public static String PREFS_NAME;
+    public static final String PREFS_NAME = "loginStatus";
     CheckBox rememberMeCheckBox;
     Boolean checkBoxState;
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     //Google login
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
@@ -71,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        PREFS_NAME =(getString(R.string.loggedInFile));
 
         //Creating references
         emailAddress = findViewById(R.id.login_page_email_textBox);
@@ -88,7 +88,11 @@ public class LoginActivity extends AppCompatActivity {
         facebookButton = findViewById(R.id.facebook_logo);
         callbackManager = CallbackManager.Factory.create();
         rememberMeCheckBox = findViewById(R.id.rememberMe);
+        sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
+
+        Toast.makeText(this, "Checkbox: " + sharedPreferences.getBoolean("logged",false) , Toast.LENGTH_SHORT).show();
         //CheckBox functionality
         rememberMeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +108,8 @@ public class LoginActivity extends AppCompatActivity {
         //Login button functionality
         loginButton.setOnClickListener(view -> {
 
-            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.hasLoggedIn), checkBoxState);
+
+            editor.putBoolean("logged", checkBoxState).apply();
             editor.commit();
             editor.apply();
             String emailInput = emailAddress.getText().toString();
