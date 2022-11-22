@@ -32,6 +32,7 @@ public class UserInfo extends Fragment {
     String idInfo,nameInfo,userId,localName,localEmail,emailInfo;
     static Context context;
     Uri personPhoto,photOut;
+    private int signInMethod;
 
     public void typeAccount() {
         UserInfo.context = getApplicationContext();
@@ -40,13 +41,16 @@ public class UserInfo extends Fragment {
         acct = GoogleSignIn.getLastSignedInAccount(context);
 
         if (user != null) {
+            signInMethod = 1;
             LocalUsers();
         }
         else if(acct!=null){
             googleLoginUsers();
+            signInMethod = 2;
         }
         else{
             Log.d(TAG,"User login information isn't available now");
+            signInMethod = 0;
         }
 
     }

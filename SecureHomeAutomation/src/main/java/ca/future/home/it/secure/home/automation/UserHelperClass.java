@@ -12,8 +12,8 @@ public class UserHelperClass {
     String name, email,phoneNo ;
 
     public UserHelperClass(){
-
     }
+
     public UserHelperClass(String name, String email, String phoneNo, String password) {
         this.name = name;
         this.email = email;

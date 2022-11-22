@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         facebookButton = findViewById(R.id.facebook_logo);
         callbackManager = CallbackManager.Factory.create();
         rememberMeCheckBox = findViewById(R.id.rememberMe);
+        checkBoxState = rememberMeCheckBox.isChecked();
         sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -96,10 +97,10 @@ public class LoginActivity extends AppCompatActivity {
         rememberMeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(rememberMeCheckBox.isChecked()) {
-                    checkBoxState = true;
-                }else{
+                if(rememberMeCheckBox.isChecked() == false) {
                     checkBoxState = false;
+                }else{
+                    checkBoxState = true;
                 }
             }
         });
@@ -109,8 +110,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
             editor.putBoolean("logged", checkBoxState).apply();
-            editor.commit();
-            editor.apply();
             String emailInput = emailAddress.getText().toString();
             String passwordInput = password.getText().toString();
             if(emailInput.isEmpty() && passwordInput.isEmpty()){

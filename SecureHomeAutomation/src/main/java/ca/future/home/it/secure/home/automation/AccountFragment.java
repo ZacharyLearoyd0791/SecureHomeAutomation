@@ -7,12 +7,14 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.google.firebase.crashlytics.internal.Logger.TAG;
 
 import android.animation.Animator;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,9 +49,9 @@ public class AccountFragment extends Fragment {
     UserInfo userInfo=new UserInfo();
     String name;
     private TextView personName;
-
     private Button signOutButton;
     View view;
+    private int signInType;
 //    ImageView imgAcc;
     TextView  emailAcc;
     ImageView profileImage;
@@ -92,17 +94,37 @@ public class AccountFragment extends Fragment {
         editProfileButton = view.findViewById(R.id.editProfileIcon);
 
     }
+
+    private int getSignInType() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseAuth != null) {
+            return 0;
+        }else{
+            return 1;
+        }
+    }
     private void btnSteps() {
 
-
-
         signOutButton.setOnClickListener(view1 -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(getContext(), LoginActivity.class);
-            startActivity(intent);
-            Toast.makeText(getContext(), R.string.signed_out, Toast.LENGTH_SHORT).show();
+            if(getSignInType()==0) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("logged",false).apply();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(), R.string.signed_out, Toast.LENGTH_SHORT).show();
+            }else if(signInType == 1){
+
+            }else if(signInType == 2){
+
+            }
+
         });
     }
+
+
     private void imageHandler(){
 
                 handler.postDelayed(new Runnable() {
