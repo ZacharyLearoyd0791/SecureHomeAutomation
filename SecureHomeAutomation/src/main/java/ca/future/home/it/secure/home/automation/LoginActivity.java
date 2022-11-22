@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
 
-        Toast.makeText(this, "Checkbox: " + sharedPreferences.getBoolean("logged",false) , Toast.LENGTH_SHORT).show();
         //CheckBox functionality
         rememberMeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override

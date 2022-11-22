@@ -18,7 +18,7 @@ import androidx.annotation.RequiresApi;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class homeAutomationTitlesService extends TileService {
-    private final String LOG_TAG = getString(R.string.my_tile_service);
+    private final String LOG_TAG = "myTileService";
     private final  int STATE_ON = 1;
     private final int STATE_OFF = 0;
     private  int toggleState = STATE_ON;
