@@ -35,6 +35,7 @@ public class ProfileEditFragment extends Fragment {
     private CircleImageView profileImage;
     private FloatingActionButton changeProfileImageButton;
     private Button saveChanges;
+    private Button changePassword;
     Uri imageUri;
     View view;
 
@@ -75,6 +76,7 @@ public class ProfileEditFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
         profileImage = view.findViewById(R.id.profile_image);
         changeProfileImageButton = view.findViewById(R.id.editProfileImageIcon);
+        changePassword = view.findViewById(R.id.editProfileChangePasswordButton);
         saveChanges = view.findViewById(R.id.editProfileSaveChanges);
         changeProfileImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,12 @@ public class ProfileEditFragment extends Fragment {
             }
         });
 
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),ForgotPasswordActivity.class));
+            }
+        });
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

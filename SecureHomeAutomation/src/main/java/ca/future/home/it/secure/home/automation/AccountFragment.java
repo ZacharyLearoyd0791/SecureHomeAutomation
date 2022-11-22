@@ -119,6 +119,8 @@ public class AccountFragment extends Fragment {
                 mClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
                         Toast.makeText(getContext(), "Signed Out", Toast.LENGTH_SHORT).show();
                     }
                 });
