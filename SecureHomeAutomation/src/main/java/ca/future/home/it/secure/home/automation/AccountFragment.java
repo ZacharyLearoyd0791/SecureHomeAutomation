@@ -40,6 +40,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,9 +61,10 @@ public class AccountFragment extends Fragment {
     Animation fadeInAnimation;
     LottieAnimationView animationView;
     Uri userImage;
+
     //Edit profile
     FloatingActionButton editProfileButton;
-
+    GoogleSignInClient mClient;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -72,6 +75,12 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_account, container, false);
+        //Google details
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mClient = GoogleSignIn.getClient(getContext(),gso);
+        GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(getContext());
 
         return view;
     }
@@ -95,19 +104,10 @@ public class AccountFragment extends Fragment {
 
     }
 
-    private int getSignInType() {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseAuth != null) {
-            return 0;
-        }else{
-            return 1;
-        }
-    }
     private void btnSteps() {
 
         signOutButton.setOnClickListener(view1 -> {
-            if(getSignInType()==0) {
+            if(UserInfo.getSignInType()==0) {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("logged",false).apply();
@@ -116,7 +116,12 @@ public class AccountFragment extends Fragment {
                 startActivity(intent);
                 Toast.makeText(getContext(), R.string.signed_out, Toast.LENGTH_SHORT).show();
             }else if(signInType == 1){
-
+                mClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getContext(), "Signed Out", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }else if(signInType == 2){
 
             }

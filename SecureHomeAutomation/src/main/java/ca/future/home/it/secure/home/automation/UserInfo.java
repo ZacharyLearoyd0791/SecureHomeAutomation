@@ -26,8 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class UserInfo extends Fragment {
-    private GoogleSignInAccount acct;
-    private FirebaseUser user;
+    private static GoogleSignInAccount acct;
+    private static FirebaseUser user;
     String infoID,infoName,name,email,uid,str,photos,personName,personId,infoLocalName,personEmail,infoEmail,infoLocalEmail;
     String idInfo,nameInfo,userId,localName,localEmail,emailInfo;
     static Context context;
@@ -54,6 +54,20 @@ public class UserInfo extends Fragment {
         }
 
     }
+
+    public static int getSignInType(){
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        acct = GoogleSignIn.getLastSignedInAccount(context);
+
+        if (user != null) {
+            return 0;
+        }
+        else if(acct!=null){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
     private void LocalUsers() {
         Log.d(TAG, "User method has been selected for testing");//remove after testing
 
@@ -77,7 +91,6 @@ public class UserInfo extends Fragment {
             Log.d(TAG,"name is null");
         }
         returnLocalId();
-
     }
 
     private void googleLoginUsers(){
