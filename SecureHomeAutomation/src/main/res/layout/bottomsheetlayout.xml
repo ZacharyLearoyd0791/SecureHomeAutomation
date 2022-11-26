@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dialog_bg"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,14 +34,14 @@
         android:layout_marginLeft="8dp"
         android:text="Ratings"
         android:textSize="20dp" />
+
     <LinearLayout
         android:id="@+id/ratings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
         android:background="@drawable/dialog_bg"
-        >
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -80,14 +79,13 @@
             app:hintEnabled="false" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/saveFeedBackLL"
         android:layout_width="match_parent"
-        android:layout_height="227dp"
-        android:orientation="horizontal"
-        android:padding="8dp"
+        android:layout_height="74dp"
         android:background="@drawable/dialog_bg"
-        >
+        android:padding="8dp">
 
         <Button
             android:id="@+id/saveFeedback"
@@ -99,6 +97,21 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/dialog_bg"
+        android:padding="8dp">
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 
 </LinearLayout>

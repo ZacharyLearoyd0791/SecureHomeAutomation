@@ -12,12 +12,13 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
-import android.os.Build;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -27,7 +28,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -64,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
     public static WindowFragment windowFragment;
     public static ProfileEditFragment profileEditFragment;
     public static ForgotPasswordActivity forgotPasswordActivity;
-    String time ="5";
+    private final Handler handler = new Handler();
+    ProgressBar progressBar;
+    String time = "5";
     private AccountFragment accountFragment;
     public static AddDeviceFragment addDeviceFragment;
     Date date;
@@ -76,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     EditText userFeedBack;
-    String ratingx;
     //Fingerprint
-    String fingerprintState="";
+    String fingerprintState = "";
+    private int progressStatus = 0;
 
     //Bottom Navigation
     public static BottomNavigationView bottomNav;
@@ -91,19 +94,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dbID();
         getFCM();
-        /*
-        //This is for testing purposes only. To test crashlytics
-        Button crashButton = new Button(this);
-        crashButton.setText("Test Crash");
-        crashButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                throw new RuntimeException("Test Crash"); // Force a crash
-            }
-        });
-        addContentView(crashButton, new ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT));
-        */
 
         //Bottom navigation and fragment views
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -248,37 +238,48 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
     private void showBottomDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheetlayout);
 
-        LinearLayout rating=dialog.findViewById(R.id.ratings);
-        LinearLayout feedback=dialog.findViewById(R.id.feedback);
-        LinearLayout save =dialog.findViewById(R.id.saveFeedBackLL);
-        ratingBar=dialog.findViewById(R.id.ratingBar);
-        saveBTN=dialog.findViewById(R.id.saveFeedback);
-        userFeedBack=(EditText) dialog.findViewById(R.id.feedbackET);
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+        ratingBar = dialog.findViewById(R.id.ratingBar);
+        saveBTN = dialog.findViewById(R.id.saveFeedback);
+        userFeedBack = (EditText) dialog.findViewById(R.id.feedbackET);
+        progressBar = (ProgressBar) dialog.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        ratingBar.setOnRatingBarChangeListener((ratingBar, v, b) -> {
 
-                ratingVal=ratingBar.getRating();
+            ratingVal = ratingBar.getRating();
 
 
-                saveBTN.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        feedBackofUser=userFeedBack.getText().toString();
-
-                        dialog.dismiss();
-
-                        databaseRatingInfo(ratingVal,feedBackofUser);
-
+            saveBTN.setOnClickListener(view -> {
+                feedBackofUser = userFeedBack.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
+                new Thread(() -> {
+                    while (progressStatus < 10) {
+                        progressStatus += 1;
+                        // Update the progress bar and display the
+                        //current value in the text view
+                        handler.post(() -> {
+                            progressBar.setProgress(progressStatus);
+                            if (progressStatus == 10) {
+                                dialog.dismiss();
+                            }
+                        });
+                        try {
+                            // Sleep for 200 milliseconds.
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                });
-            }
+                }).start();
+
+                databaseRatingInfo(ratingVal, feedBackofUser);
+            });
         });
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
