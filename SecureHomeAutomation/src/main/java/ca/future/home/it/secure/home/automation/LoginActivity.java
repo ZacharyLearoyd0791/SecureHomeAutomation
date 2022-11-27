@@ -219,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
                 changingActivity();
             } catch (ApiException e) {
                 Log.d(getString(R.string.exception), String.valueOf(e));
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, task.getException().toString(), Toast.LENGTH_SHORT).show();
             }
         }
     }
