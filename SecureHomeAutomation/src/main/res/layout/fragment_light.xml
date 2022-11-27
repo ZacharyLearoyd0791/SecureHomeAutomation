@@ -13,8 +13,8 @@
         android:id="@+id/schedulerButton"
         android:layout_width="94dp"
         android:layout_height="92dp"
-        android:layout_marginTop="240dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="325dp"
+        android:layout_marginEnd="64dp"
         android:background="@color/white"
         android:contentDescription="@string/scheduler"
         android:scaleType="fitCenter"
@@ -28,11 +28,12 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="288dp"
         android:text="@string/timer"
         android:textColor="#000000"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,12 +41,13 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="252dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="65dp"
         android:text="@string/scheduler"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -71,8 +73,8 @@
         android:id="@+id/timerButton"
         android:layout_width="94dp"
         android:layout_height="92dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="325dp"
         android:background="@color/white"
         android:src="@drawable/ic_timer"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,11 +86,14 @@
         android:id="@+id/Ultrasonic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="150dp"
         android:importantForAutofill="no"
         android:inputType="text"
         android:text="@string/ultrasonicSensor"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
@@ -143,8 +148,8 @@
         android:id="@+id/offLights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="404dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="55dp"
         android:text="@string/lightOff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -153,8 +158,8 @@
         android:id="@+id/onLights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="404dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="500dp"
         android:text="@string/lightOn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -163,10 +168,27 @@
         android:id="@+id/statusOfLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="158dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="190dp"
         android:text="@string/lightStautsMSG"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.18" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.81" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
