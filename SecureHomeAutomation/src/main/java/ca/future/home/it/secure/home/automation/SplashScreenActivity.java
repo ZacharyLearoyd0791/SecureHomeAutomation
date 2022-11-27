@@ -63,115 +63,110 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        run();
         dbID();
-        homelayout = findViewById(R.id.Homefrag);
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences settingsSharedPreferences = getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, MODE_PRIVATE);
-
-        hasLoggedIn = sharedPreferences.getBoolean("logged", false);
-        boolean settingsEnableFingerPrint = settingsSharedPreferences.getBoolean(getString(R.string.fingerprintstate), false);
-
-       // Toast.makeText(this, "state: "+hasLoggedIn, Toast.LENGTH_SHORT).show();
-        if (settingsEnableFingerPrint) {
-
-            BiometricManager biometricManager = BiometricManager.from(getApplicationContext());
-
-            switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
-
-                case BiometricManager.BIOMETRIC_SUCCESS:
-//                            Log.d("MY_APP_TAG", "App can authenticate using biometrics.");
-                    break;
-
-                case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-//                            Log.e("MY_APP_TAG", "No biometric features available on this device.");
-                    break;
-
-                case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-//                            Log.e("MY_APP_TAG", "Biometric features are currently unavailable.");
-                    break;
-
-                case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-
-                    // Prompts the user to create credentials that your app accepts.
-                    final Intent enrollIntent = new Intent(Settings.ACTION_BIOMETRIC_ENROLL);
-                    enrollIntent.putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                            BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
-                    startActivityForResult(enrollIntent, 101);
-                    break;
-            }
-
-            executor = ContextCompat.getMainExecutor(getApplicationContext());
-            biometricPrompt = new BiometricPrompt(SplashScreenActivity.this,
-                    executor, new BiometricPrompt.AuthenticationCallback() {
-                @Override
-                public void onAuthenticationError(int errorCode,
-                                                  @NonNull CharSequence errString) {
-                    super.onAuthenticationError(errorCode, errString);
-                    Toast.makeText(getApplicationContext(),
-                                    getString(Auth_error) + errString, Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                @Override
-                public void onAuthenticationSucceeded(
-                        @NonNull BiometricPrompt.AuthenticationResult result) {
-                    super.onAuthenticationSucceeded(result);
-                    homelayout.setVisibility(View.VISIBLE);
-                    Toast.makeText(getApplicationContext(),
-                            R.string.Auth_succeed, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onAuthenticationFailed() {
-                    super.onAuthenticationFailed();
-                    Toast.makeText(getApplicationContext(), R.string.Auth_Failed,
-                                    Toast.LENGTH_SHORT)
-                            .show();
-                }
-            });
-
-            promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                    .setTitle(getString(R.string.Biometric_title))
-                    .setSubtitle(getString(R.string.Biometric_subtitle))
-                    .setNegativeButtonText(getString(R.string.Biometric_negitiveBtn))
-                    .build();
-
-            biometricPrompt.authenticate(promptInfo);
-            if (hasLoggedIn) {
-
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
-                finish();
-            }
-
-        } else {
-            if (hasLoggedIn) {
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
-                finish();
-            }
-        }
-            //loginActivity();
         shortCuts();
 
     }
 
-    private void loginActivity() {
+    protected void run() {
             new Handler().postDelayed(new Runnable() {
                 @RequiresApi(api = Build.VERSION_CODES.R)
                 @Override
                 public void run() {
-                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
 
+                    homelayout = findViewById(R.id.Homefrag);
+                    SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+                    SharedPreferences settingsSharedPreferences = getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, MODE_PRIVATE);
 
+                    hasLoggedIn = sharedPreferences.getBoolean("logged", false);
+                    boolean settingsEnableFingerPrint = settingsSharedPreferences.getBoolean(getString(R.string.fingerprintstate), false);
 
+                    // Toast.makeText(this, "state: "+hasLoggedIn, Toast.LENGTH_SHORT).show();
+                    if (settingsEnableFingerPrint) {
 
+                        BiometricManager biometricManager = BiometricManager.from(getApplicationContext());
+
+                        switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
+
+                            case BiometricManager.BIOMETRIC_SUCCESS:
+//                            Log.d("MY_APP_TAG", "App can authenticate using biometrics.");
+                                break;
+
+                            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+//                            Log.e("MY_APP_TAG", "No biometric features available on this device.");
+                                break;
+
+                            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+//                            Log.e("MY_APP_TAG", "Biometric features are currently unavailable.");
+                                break;
+
+                            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+
+                                // Prompts the user to create credentials that your app accepts.
+                                final Intent enrollIntent = new Intent(Settings.ACTION_BIOMETRIC_ENROLL);
+                                enrollIntent.putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                                        BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
+                                startActivityForResult(enrollIntent, 101);
+                                break;
+                        }
+
+                        executor = ContextCompat.getMainExecutor(getApplicationContext());
+                        biometricPrompt = new BiometricPrompt(SplashScreenActivity.this,
+                                executor, new BiometricPrompt.AuthenticationCallback() {
+                            @Override
+                            public void onAuthenticationError(int errorCode,
+                                                              @NonNull CharSequence errString) {
+                                super.onAuthenticationError(errorCode, errString);
+                                Toast.makeText(getApplicationContext(),
+                                                getString(Auth_error) + errString, Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+
+                            @Override
+                            public void onAuthenticationSucceeded(
+                                    @NonNull BiometricPrompt.AuthenticationResult result) {
+                                super.onAuthenticationSucceeded(result);
+                                homelayout.setVisibility(View.VISIBLE);
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.Auth_succeed, Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onAuthenticationFailed() {
+                                super.onAuthenticationFailed();
+                                Toast.makeText(getApplicationContext(), R.string.Auth_Failed,
+                                                Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
+
+                        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                                .setTitle(getString(R.string.Biometric_title))
+                                .setSubtitle(getString(R.string.Biometric_subtitle))
+                                .setNegativeButtonText(getString(R.string.Biometric_negitiveBtn))
+                                .build();
+
+                        biometricPrompt.authenticate(promptInfo);
+                        if (hasLoggedIn) {
+                            Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                            finish();
+                        }
+
+                    } else {
+                        if (hasLoggedIn) {
+                            Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                    }
                 }
             }, 3000);
 
