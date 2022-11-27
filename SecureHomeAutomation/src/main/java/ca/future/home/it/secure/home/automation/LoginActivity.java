@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient gsc;
 
     //Facebook login
-    private ImageView facebookButton;
     CallbackManager callbackManager;
 
     @SuppressLint("MissingInflatedId")
@@ -85,8 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();         //Getting firebase instance
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
-        facebookButton = findViewById(R.id.facebook_logo);
-        callbackManager = CallbackManager.Factory.create();
         rememberMeCheckBox = findViewById(R.id.rememberMe);
         checkBoxState = rememberMeCheckBox.isChecked();
         sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
@@ -137,33 +134,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 googleSignInProcess();
-            }
-        });
-
-        //Login via facebook
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                        finish();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Toast.makeText(LoginActivity.this, getString(R.string.error)+exception.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        facebookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList(getString(R.string.public_profile)));
             }
         });
     }
