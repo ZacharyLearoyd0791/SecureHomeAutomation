@@ -340,4 +340,8 @@
     <string name="appwidget_text">Lights</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="temperature_status">Temperature Status</string>
+    <string name="turn_on">Turn On</string>
+    <string name="window_status">Window Status</string>
+    <string name="light_status">Light Status</string>
 </resources>
