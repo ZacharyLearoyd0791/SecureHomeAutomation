@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);    //used for facebook
+//        callbackManager.onActivityResult(requestCode, resultCode, data);    //used for facebook
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 1000){
