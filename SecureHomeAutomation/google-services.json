@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "831662568562",
+    "firebase_url": "https://homeautomation-90233-default-rtdb.firebaseio.com",
     "project_id": "homeautomation-90233",
     "storage_bucket": "homeautomation-90233.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "831662568562-tpbnp1po0b7f9kkkrot0siqqif3fr5q6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.future.home.it.secure.home.automation",
+            "certificate_hash": "3488ee75cdcfac6c13780b7eb0901bfe2e802aa8"
+          }
+        },
+        {
+          "client_id": "831662568562-ttav2jg34hntd5iftmqm44ru2eune34r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.future.home.it.secure.home.automation",
+            "certificate_hash": "fb3468527536fd0ced4c1b22c03d7d1275b7a999"
+          }
+        },
         {
           "client_id": "831662568562-8mm7ebkbnqamu2dg9ksjfk6ht6eji231.apps.googleusercontent.com",
           "client_type": 3
