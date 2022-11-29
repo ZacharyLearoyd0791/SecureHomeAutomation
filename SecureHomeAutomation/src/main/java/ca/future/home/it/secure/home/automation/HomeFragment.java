@@ -9,8 +9,15 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,27 +27,29 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
     UserInfo userInfo=new UserInfo();
     StringBuilder stringBuilder;
     public View view;
-    String morning,afternoon,evening,night;
-    Date date;
-    Calendar cal;
-    int hour;
-    //Switches
-
     AlphaAnimation fadeIn,fadeOut;
+
+    //Switches
     public Switch lockSwitch;
     public Switch tempSwitch;
     public Switch lightSwitch;
@@ -72,6 +81,17 @@ public class HomeFragment extends Fragment {
     DatabaseReference databaseReference;
     DatabaseActivity databaseActivity = new DatabaseActivity();
 
+    //Date
+    DateFormat dateFormat;
+    String morning,afternoon,evening,night;
+    Date date;
+    Calendar cal;
+    int hour;
+
+    //String
+    String idKey,localKey,key,personalKey,strDate,doorKey;
+    boolean retrieveKey;
+
     public HomeFragment() {
     }
 
@@ -80,26 +100,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         init();
-        timeOfDay();
-        userinfo();
         greeting();
-
         return view;
-    }
-
-    private void userinfo() {
-
-        userInfo.typeAccount();
-        if (userInfo.localName!=null){
-            stringBuilder= new StringBuilder(userInfo.localName);
-        }
-       if (userInfo.nameInfo!=null){
-            stringBuilder= new StringBuilder(userInfo.nameInfo);
-        }
-       else{
-           stringBuilder=new StringBuilder(getString(R.string.empty));
-        }
-
     }
 
     private void init(){
@@ -122,12 +124,6 @@ public class HomeFragment extends Fragment {
         pressWindow = view.findViewById(R.id.iv_press_window);
     }
 
-    private void timeOfDay(){
-        date = new Date();
-        cal = Calendar.getInstance();
-        cal.setTime(date);
-        hour = cal.get(Calendar.HOUR_OF_DAY);
-    }
     private void greeting(){
         greetingsText = view.findViewById(R.id.Greetings);
         greetingsText.setText(null);
@@ -138,9 +134,7 @@ public class HomeFragment extends Fragment {
         night=getString(R.string.greetingNight)+getString(R.string.empty)+stringBuilder;
 
         if (hour >= 6 && hour < 12) {
-
             greetingsText.setText(morning);
-
         }
         else if (hour >= 12 && hour < 17) {
             greetingsText.setText(afternoon);
@@ -151,11 +145,32 @@ public class HomeFragment extends Fragment {
         else {
             greetingsText.setText(night);
         }
-
     }
 
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
+
+        //Door lock status in database
+        doorKey=dbID(true);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(doorKey);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String doorStatus = snapshot.getValue().toString();
+                if(doorStatus.equals(getString(R.string.lock_status))){
+                    lockSwitch.setChecked(true);
+                    doorView.setVisibility(View.INVISIBLE);
+                }
+                else if(doorStatus.equals(getString(R.string.unlocked_status))){
+                    lockSwitch.setChecked(false);
+                    doorView.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         pressLock.setVisibility(View.INVISIBLE);
         pressTemp.setVisibility(View.INVISIBLE);
@@ -214,9 +229,12 @@ public class HomeFragment extends Fragment {
             if (isChecked) {
                 doorView.setVisibility(View.INVISIBLE);
                 databaseActivity.toDatabase(getString(R.string.lock_status));
+                //toDatabase(getString(R.string.lock_status));
+
             } else {
                 doorView.setVisibility(View.VISIBLE);
-                databaseActivity.toDatabase(getString(R.string.unlocked_status));
+                toDatabase(getString(R.string.unlocked_status));
+                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
             }
         });
         //temperature switch
@@ -243,5 +261,56 @@ public class HomeFragment extends Fragment {
                 windowView.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    ////////////////////////
+    //Temporary fix for storing to database while DatabaseActivity is debugged
+    /////////////////////////
+    public void toDatabase(String status){
+        dbID(false);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
+
+        databaseReference.setValue(status);
+        Map<String, Object> updateStatus = new HashMap<>();
+        updateStatus.put(getString(R.string.status),status);
+
+        databaseReference.updateChildren(updateStatus);
+    }
+    private String dbID(boolean retrieveKey){
+        userInfo.typeAccount();
+        time();
+
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+
+        if(localKey!=null){
+            key=localKey;
+            Log.d(TAG,key);
+
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+            Log.d(TAG, key);
+        }
+
+        if(retrieveKey){
+            return idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
+        }
+
+        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
+        return "";
+    }
+    @SuppressLint("SimpleDateFormat")
+    private void time(){
+        date = Calendar.getInstance().getTime();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            dateFormat = new SimpleDateFormat(getString(R.string.formatted));
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            strDate = dateFormat.format(date);
+        }
+        System.out.println("Converted String: " + strDate);
     }
 }

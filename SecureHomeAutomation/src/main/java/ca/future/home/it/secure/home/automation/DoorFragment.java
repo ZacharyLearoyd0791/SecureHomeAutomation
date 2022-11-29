@@ -126,8 +126,8 @@ public class DoorFragment extends Fragment{
                 locked.setVisibility(View.VISIBLE);
                 unlocked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_green);
-                //toDatabase(getString(R.string.lock_status));
-                databaseActivity.toDatabase(getString(R.string.lock_status));
+                toDatabase(getString(R.string.lock_status));
+                //databaseActivity.toDatabase(getString(R.string.lock_status));
 
             } else {
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
@@ -135,8 +135,8 @@ public class DoorFragment extends Fragment{
                 unlocked.setVisibility(View.VISIBLE);
                 locked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_red);
-                //toDatabase(getString(R.string.unlocked_status));
-                databaseActivity.toDatabase(getString(R.string.unlocked_status));
+                toDatabase(getString(R.string.unlocked_status));
+                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
             }
         });
 
@@ -217,7 +217,7 @@ public class DoorFragment extends Fragment{
         removeAlert.show();
     }
 
-/*    public void toDatabase(String status){
+    public void toDatabase(String status){
         dbID();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
@@ -246,7 +246,7 @@ public class DoorFragment extends Fragment{
             Log.d(TAG, key);
         }
 
-        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash)+strDate;
+        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
     }
     @SuppressLint("SimpleDateFormat")
     private void time(){
@@ -259,5 +259,5 @@ public class DoorFragment extends Fragment{
             strDate = dateFormat.format(date);
         }
         System.out.println("Converted String: " + strDate);
-    }*/
+    }
 }
