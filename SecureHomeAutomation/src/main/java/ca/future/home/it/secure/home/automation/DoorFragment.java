@@ -9,6 +9,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static java.lang.Thread.sleep;
 
 import android.annotation.SuppressLint;
@@ -82,6 +83,7 @@ public class DoorFragment extends Fragment{
     public DoorFragment() {
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_door, container, false);
@@ -127,7 +129,7 @@ public class DoorFragment extends Fragment{
                 unlocked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_green);
                 toDatabase(getString(R.string.lock_status));
-                //databaseActivity.toDatabase(getString(R.string.lock_status));
+                //databaseActivity.toDatabase(getApplicationContext().getString(R.string.lock_status));
 
             } else {
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
@@ -136,7 +138,7 @@ public class DoorFragment extends Fragment{
                 locked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_red);
                 toDatabase(getString(R.string.unlocked_status));
-                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
+                //databaseActivity.toDatabase(getApplicationContext().getString(R.string.unlocked_status));
             }
         });
 
