@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -40,7 +41,7 @@ public class DatabaseActivity extends AppCompatActivity {
     //String
     String idKey,localKey,key,personalKey,strDate;
 
-
+    //FOR DOOR LOCK
     public void toDatabase(String status){
         DatabaseActivity.context = getApplicationContext();
 

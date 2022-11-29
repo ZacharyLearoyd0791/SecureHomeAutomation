@@ -91,6 +91,9 @@ public class HomeFragment extends Fragment {
     //String
     String idKey,localKey,key,personalKey,strDate,doorKey;
     boolean retrieveKey;
+    String lock;
+    String unlock;
+    String doorStatus;
 
     public HomeFragment() {
     }
@@ -101,6 +104,11 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         init();
         greeting();
+        lock= getString(R.string.lock_status);
+        unlock=getString(R.string.unlocked_status);
+
+        Bundle bundle = new Bundle();
+
         return view;
     }
 
@@ -128,10 +136,10 @@ public class HomeFragment extends Fragment {
         greetingsText = view.findViewById(R.id.Greetings);
         greetingsText.setText(null);
 
-        morning=getString(R.string.greetingMorning)+getString(R.string.empty)+stringBuilder;
-        afternoon=getString(R.string.greetingAfternoon)+getString(R.string.empty)+stringBuilder;
-        evening=getString(R.string.greetingEvening)+getString(R.string.empty)+stringBuilder;
-        night=getString(R.string.greetingNight)+getString(R.string.empty)+stringBuilder;
+        morning=getString(R.string.greetingMorning);
+        afternoon=getString(R.string.greetingAfternoon);
+        evening=getString(R.string.greetingEvening);
+        night=getString(R.string.greetingNight);
 
         if (hour >= 6 && hour < 12) {
             greetingsText.setText(morning);
@@ -157,15 +165,30 @@ public class HomeFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String doorStatus = snapshot.getValue().toString();
-                if(doorStatus.equals(getString(R.string.lock_status))){
-                    lockSwitch.setChecked(true);
-                    doorView.setVisibility(View.INVISIBLE);
+                doorStatus=null;
+                if(snapshot.exists()) {
+                    doorStatus = snapshot.getValue().toString();
+                    if (doorStatus.equals(lock)) {
+                        lockSwitch.setChecked(true);
+                        doorView.setVisibility(View.INVISIBLE);
+                    } else if (doorStatus.equals(unlock)) {
+                        lockSwitch.setChecked(false);
+                        doorView.setVisibility(View.VISIBLE);
+                    }
+
                 }
-                else if(doorStatus.equals(getString(R.string.unlocked_status))){
-                    lockSwitch.setChecked(false);
-                    doorView.setVisibility(View.VISIBLE);
-                }
+                lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (isChecked) {
+                        doorView.setVisibility(View.INVISIBLE);
+                        //databaseActivity.toDatabase(getString(R.string.lock_status));
+                        toDatabase(getString(R.string.lock_status));
+
+                    } else {
+                        doorView.setVisibility(View.VISIBLE);
+                        toDatabase(getString(R.string.unlocked_status));
+                        //databaseActivity.toDatabase(getString(R.string.unlocked_status));
+                    }
+                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -225,18 +248,7 @@ public class HomeFragment extends Fragment {
 
         //Switches selected
         //lock switch
-        lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                doorView.setVisibility(View.INVISIBLE);
-                databaseActivity.toDatabase(getString(R.string.lock_status));
-                //toDatabase(getString(R.string.lock_status));
 
-            } else {
-                doorView.setVisibility(View.VISIBLE);
-                toDatabase(getString(R.string.unlocked_status));
-                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
-            }
-        });
         //temperature switch
         tempSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -273,7 +285,7 @@ public class HomeFragment extends Fragment {
 
         databaseReference.setValue(status);
         Map<String, Object> updateStatus = new HashMap<>();
-        updateStatus.put(getString(R.string.status),status);
+        updateStatus.put("Status ",status);
 
         databaseReference.updateChildren(updateStatus);
     }
@@ -295,7 +307,7 @@ public class HomeFragment extends Fragment {
         }
 
         if(retrieveKey){
-            return idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
+            return idKey=key+"/Door status/Status ";
         }
 
         idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);

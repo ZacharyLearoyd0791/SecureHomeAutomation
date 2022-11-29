@@ -41,6 +41,7 @@
             android:contentDescription="@string/g_light_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenDoor"
             app:srcCompat="@drawable/green_gradient"
             tools:ignore="ImageContrastCheck" />
 
@@ -53,6 +54,7 @@
             android:contentDescription="@string/g_window_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_press_temp"
             app:srcCompat="@drawable/green_gradient"
             tools:ignore="ImageContrastCheck" />
 
@@ -89,6 +91,7 @@
             android:contentDescription="@string/r_light_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenDoor"
             app:srcCompat="@drawable/red_gradient"
             tools:ignore="ImageContrastCheck" />
 
@@ -101,6 +104,7 @@
             android:contentDescription="@string/r_window_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenTemp"
             app:srcCompat="@drawable/red_gradient" />
 
         <ImageView
@@ -148,6 +152,7 @@
             android:src="@drawable/window_button_pressed"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenTemp"
             tools:ignore="DuplicateClickableBoundsCheck" />
 
         <ImageButton
@@ -161,7 +166,8 @@
             android:scaleType="fitCenter"
             android:src="@drawable/window_custom"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenTemp" />
 
         <ImageView
             android:id="@+id/iv_press_light"
@@ -172,7 +178,8 @@
             android:contentDescription="@string/lightpressed"
             android:src="@drawable/light_button_pressed"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenDoor" />
 
         <ImageButton
             android:id="@+id/light_Btn"
@@ -185,7 +192,8 @@
             android:scaleType="fitCenter"
             android:src="@drawable/light_custom"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenDoor" />
 
         <ImageButton
             android:id="@+id/temp_Btn"
@@ -257,7 +265,7 @@
             android:id="@+id/sw_light"
             android:layout_width="114dp"
             android:layout_height="48dp"
-            android:layout_marginStart="45dp"
+            android:layout_marginStart="44dp"
             android:layout_marginBottom="76dp"
             android:text="@string/off_on"
             android:textColor="#000000"
@@ -265,13 +273,15 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greenLight"
+            app:layout_constraintVertical_bias="0.072"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <Switch
             android:id="@+id/sw_window"
             android:layout_width="150dp"
             android:layout_height="46dp"
-            android:layout_marginEnd="22dp"
+            android:layout_marginEnd="25dp"
             android:layout_marginBottom="76dp"
             android:text="@string/disarm_arm"
             android:textColor="#000000"
@@ -279,6 +289,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_press_window"
+            app:layout_constraintVertical_bias="0.097"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
