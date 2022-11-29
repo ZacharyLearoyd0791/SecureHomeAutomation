@@ -23,6 +23,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -64,6 +67,10 @@ public class HomeFragment extends Fragment {
 
     final Handler handler = new Handler();
 
+    //Database
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    DatabaseActivity databaseActivity = new DatabaseActivity();
 
     public HomeFragment() {
     }
@@ -206,8 +213,10 @@ public class HomeFragment extends Fragment {
         lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 doorView.setVisibility(View.INVISIBLE);
+                databaseActivity.toDatabase(getString(R.string.lock_status));
             } else {
                 doorView.setVisibility(View.VISIBLE);
+                databaseActivity.toDatabase(getString(R.string.unlocked_status));
             }
         });
         //temperature switch
