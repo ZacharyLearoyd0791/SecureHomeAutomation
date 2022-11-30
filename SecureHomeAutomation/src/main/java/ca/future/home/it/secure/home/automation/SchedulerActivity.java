@@ -47,6 +47,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class SchedulerActivity extends Activity {
@@ -137,41 +138,47 @@ public class SchedulerActivity extends Activity {
         databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.dayKey)));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot!=null){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
 
-                    readDate=snapshot.getValue().toString();
-                    readDate=readDate.replace("{","");
-                    readDate=readDate.replace("}","");
-                    Log.d(TAG,readDate);
-                    getday=readDate.split(",");
+                    readDate = Objects.requireNonNull(dataSnapshot.getValue()).toString();
+                    if (readDate != null) {
 
-                    databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.timeKey)));
-                    databaseReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot != null) {
-                                readTime = snapshot.getValue().toString();
-                                Log.d(TAG,"Data from readDB is:\nDate:"+readDate+"\nTime:"+readTime);
-                                readTime=readTime.replace("{","");
-                                readTime=readTime.replace("}","");
-                                Log.d(TAG,readTime);
-                                gettime=readTime.split(",");
+                        readDate = readDate.replace("{", "");
+                        readDate = readDate.replace("}", "");
+                        Log.d(TAG, readDate);
+                        getday = readDate.split(",");
+                        databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.timeKey)));
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    readTime = Objects.requireNonNull(snapshot.getValue()).toString();
+                                    if (readTime!=null){
+                                        Log.d(TAG,"Data from readDB is:\nDate:"+readDate+"\nTime:"+readTime);
+                                        readTime=readTime.replace("{","");
+                                        readTime=readTime.replace("}","");
+                                        Log.d(TAG,readTime);
+                                        gettime=readTime.split(",");
 
-                                for(int i=0;i<gettime.length;i++){
+                                        for(int i=0;i<gettime.length;i++){
 
-                                    timeday=getday[i]+"\n"+gettime[i];
-                                    logging(timeday);
-                                    counter=counter+1;
+                                            timeday=getday[i]+"\n"+gettime[i];
+                                            logging(timeday);
+                                            counter=counter+1;
+                                        }
+                                        Log.d(TAG,"Counter: "+counter);
+                                        countCheck=counter;
+                                    }
+
                                 }
-                                Log.d(TAG,"Counter: "+counter);
-                                countCheck=counter;
                             }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    }
+
                 }
                 else{
                     Toast.makeText(SchedulerActivity.this, "Has no Recent Data", Toast.LENGTH_SHORT).show();
