@@ -370,6 +370,7 @@
     <string name="schedKey" translatable="false">/Schedule</string>
     <string name="noID">NoID</string>
     <string name="exitScheduleMsg">Nothing will be saved</string>
+    <string name="ratings">Ratings</string>
     <string name="savedScheduleToast">Saved To Account</string>
 
 
