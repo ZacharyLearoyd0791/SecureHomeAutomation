@@ -9,6 +9,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
+import static ca.future.home.it.secure.home.automation.R.string.dayKey;
 import static ca.future.home.it.secure.home.automation.R.string.hourmin;
 import static ca.future.home.it.secure.home.automation.R.string.mustpickday;
 
@@ -26,11 +27,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,11 +46,15 @@ import java.util.Map;
 
 public class SchedulerActivity extends Activity {
 
+    UserInfo userInfo= new UserInfo();
     ImageButton back;
     TextView startTV, endTv;
     Button start, end, saveTime;
     int hour, minute, checking,counter;
-    String endtimeout, Starttimeout, daySelected, timeday,check,count,dbDate,dbTime;
+    String endtimeout, Starttimeout, daySelected,
+            timeday,check,count,dbDate,dbTime,
+                localKey,personalKey,schedKey,key,
+                                readTime,readDate,mDate,strTime,strDate;
     Boolean isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday, isSunday;
     CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     LinearLayout linearLayout;
@@ -51,18 +62,33 @@ public class SchedulerActivity extends Activity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+    String []getday,gettime;
+
+    int time,dayOfWeek;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduler);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        dbID();
+        backButton();
+        init();
+        onButtonClick();
+        readDB();
+        Log.d(TAG,"Test2002 id key with scheduler: "+schedKey);
+
+    }
+
+    private void init() {
         start = findViewById(R.id.startTime);
         end = findViewById(R.id.endTime);
         saveTime = findViewById(R.id.saveScheduler);
         back = findViewById(R.id.backbtn);
         startTV = findViewById(R.id.startTimeTV);
         endTv = findViewById(R.id.endtimeTv);
-
 
         monday = findViewById(R.id.monday);
         tuesday = findViewById(R.id.tuesday);
@@ -72,240 +98,95 @@ public class SchedulerActivity extends Activity {
         saturday = findViewById(R.id.saturday);
         sunday = findViewById(R.id.sunday);
 
-        backButton();
-        onButtonClick();
-
     }
 
-    private void backButton() {
+    private void dbID() {
+        //Get user ID from Database
+        userInfo.typeAccount();
 
-        //to go back to the main screen!
-        back.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        });
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+        if(localKey!=null){
+            key=localKey;
+            Log.d(TAG,key);
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+            Log.d(TAG, key);
+        }
+        else{
+            key=getString(R.string.noID);
+        }
+        schedKey=key+getString(R.string.schedKey);
+        Log.d(TAG,getString(R.string.keyIs)+schedKey);
     }
 
-    private void onButtonClick() {
-        start.setOnClickListener(view -> startTime());
+    private void readDB() {
+        //reading data from database
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(schedKey+(getString(R.string.dayKey)));
+        databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.dayKey)));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot!=null){
 
-        end.setOnClickListener(view -> endTime());
+                    readDate=snapshot.getValue().toString();
+                    readDate=readDate.replace("{","");
+                    readDate=readDate.replace("}","");
+                    Log.d(TAG,readDate);
+                    getday=readDate.split(",");
+                    for(int i=0;i<getday.length;i++){
 
-        //save time if start > end
-        saveTime.setOnClickListener(view -> {
-            checking = 0;
-            if (monday.isChecked()) {
-                isMonday = true;
-                checking = 0;
+                        Log.d(TAG,"Each day picked: "+getday[i]);
+                    }
+                    databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.timeKey)));
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot != null) {
+                                readTime = snapshot.getValue().toString();
+                                Log.d(TAG,"Data from readDB is:\nDate:"+readDate+"\nTime:"+readTime);
+                                readTime=readTime.replace("{","");
+                                readTime=readTime.replace("}","");
+                                Log.d(TAG,readTime);
+                                gettime=readTime.split(",");
+                                for(int i=0;i<gettime.length;i++){
 
-            } else {
-                checking = checking + 1;
-                isMonday = false;
-            }
-            if (tuesday.isChecked()) {
-                checking = 0;
-                isTuesday = true;
+                                    Log.d(TAG,"Each day picked: "+gettime[i]);
+                                    timeday=getday[i]+"\n"+gettime[i];
+                                    logging(timeday);
+                                }
 
-
-            } else {
-                checking = checking + 1;
-                isTuesday = false;
-
-
-            }
-            if (wednesday.isChecked()) {
-                checking = 0;
-                isWednesday = true;
-
-            } else {
-                checking = checking + 1;
-                isWednesday = false;
-
-            }
-
-            if (thursday.isChecked()) {
-                checking = 0;
-                isThursday = true;
-            } else {
-                checking = checking + 1;
-                isThursday = false;
-
-            }
-            if (friday.isChecked()) {
-                checking = 0;
-                isFriday = true;
-
-            } else {
-                checking = checking + 1;
-                isFriday = false;
-
-            }
-            if (saturday.isChecked()) {
-                checking = 0;
-                isSaturday = true;
-
-            } else {
-                checking = checking + 1;
-                isSaturday = false;
-            }
-            if (sunday.isChecked()) {
-                checking = 0;
-                isSunday = true;
-            } else {
-                checking = checking + 1;
-                isSunday = false;
-            }
-            checkDays();
-            String num = getString(R.string.checkboxNum) + checking;
-            Log.d(TAG, num);
-            if (checking == 7) {
-                Log.d(TAG, getString(R.string.mustpickday));
-                Toast.makeText(this, mustpickday, Toast.LENGTH_SHORT).show();
-            } else {
-                try {
-                    saveTime();
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(SchedulerActivity.this, "Has no Recent Data", Toast.LENGTH_SHORT).show();
                 }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
-    }
-
-    private void startTime() {
-        hour = 0;
-        minute = 0;
-
-
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
-            hour = selectedHour;
-            minute = selectedMinute;
-
-            Starttimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
-
-            String timeOut = getString(R.string.timeSet) + Starttimeout;
-            Log.d(TAG, timeOut);
-            startTV.setText(timeOut);
-
-        };
-
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, false);
-
-        timePickerDialog.setTitle(getString(R.string.startTimeSelect));
-        timePickerDialog.show();
 
     }
 
-    private void checkDays() {
-        daySelected = getString(R.string.empty);
-        if (isMonday) {
-            daySelected = getString(R.string.monday);
-        }
-        if (isTuesday) {
-            daySelected = getString(R.string.tuesday);
-        }
-        if (isWednesday) {
-            daySelected += getString(R.string.wednesday);
-
-        }
-        if (isThursday) {
-            daySelected += getString(R.string.thursday);
-
-        }
-        if (isFriday) {
-            daySelected += getString(R.string.friday);
-
-        }
-        if (isSaturday) {
-            daySelected += getString(R.string.saturday);
-
-        }
-        if (isSunday) {
-            daySelected += getString(R.string.sunday);
-
-        }
-    }
-
-    private void endTime() {
-        hour = 0;
-        minute = 0;
-
-
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
-            hour = selectedHour;
-            minute = selectedMinute;
-
-            endtimeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
-            String timeOut = getString(R.string.timeSet) + endtimeout;
-            endTv.setText(timeOut);
-
-
-        };
-
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, false);
-
-        timePickerDialog.setTitle(getString(R.string.endTimeSelect));
-        timePickerDialog.show();
-
-    }
-
-    private void saveTime() throws ParseException {
-
-        String timeSaved = getString(R.string.startTimemsg) + Starttimeout + getString(R.string.endTimemsg) + endtimeout;
-        Log.d(TAG, timeSaved);
-
-        if ((Starttimeout == null) || endtimeout == null) {
-            Toast.makeText(this, R.string.startorendnull, Toast.LENGTH_SHORT).show();
-
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat(getString(hourmin));
-            Date d1 = sdf.parse(Starttimeout);
-
-            Date d2 = sdf.parse(endtimeout);
-
-            assert d1 != null;
-            assert d2 != null;
-
-            if (counter ==0){
-                Log.d(TAG,getString(R.string.FirstCheck));
-            }
-            else{
-                count= getString(R.string.Check)+ counter;
-                Log.d(TAG,count);
-            }
-
-            if (d2.getTime() > d1.getTime() && checking != 7) {
-                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                timeday = getString(R.string.dayspickedMsg) + daySelected + getString(R.string.timeSelectedmsg) + Starttimeout + getString(R.string.to) + endtimeout;
-                Log.d(TAG, timeday);
-                logging();
-                check=daySelected;
-                counter=counter+1;
-
-
-            } else {
-                Log.d(TAG, getString(R.string.logDataEndSmall));
-                Toast.makeText(this, R.string.endSmall, Toast.LENGTH_SHORT).show();
-
-            }
-            toDatabase();
-
-        }
-    }
-    private void logging(){
+    private void logging(String timeday) {
 
         scroll=findViewById(R.id.scheduleLog);
 
         linearLayout=scroll.findViewById(R.id.liner_schedule);
 
         addHistory(timeday);
-
     }
 
-    private void addHistory(String string) {
+    private void addHistory(String timeday) {
         TextView textView = new TextView(getApplicationContext());
-        textView.setText(string);
+        textView.setText(timeday);
         textView.setBackgroundResource(R.drawable.scroll_view_item_border);
         textView.setTypeface(null, Typeface.BOLD_ITALIC);
         textView.setTextColor(0xFF000000);
@@ -315,30 +196,14 @@ public class SchedulerActivity extends Activity {
         linearLayout.addView(textView);
     }
 
-    private void toDatabase(){
-        String timeMsg=Starttimeout+getString(R.string.to)+endtimeout;
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.dayKey)));
-
-        dbDate = daySelected;
-        databaseReference.setValue(dbDate);
-        databaseReference.setValue(dbTime);
-        Map<String, Object> day = new HashMap<>();
-        for (int i =0; i<counter;i++){
-            String dateC=getString(R.string.Day)+i;
-            day.put(dateC, daySelected);
-        }
-        databaseReference.updateChildren(day);
-
-        dbTime=Starttimeout+getString(R.string.to)+endtimeout;
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((getString(R.string.timeKey)));
-        databaseReference.setValue(dbTime);
-        Map<String, Object> time = new HashMap<>();
-        for (int i =0; i<counter;i++){
-            String dateC=getString(R.string.Time)+i;
-            time.put(dateC, timeMsg);
-        }
-        databaseReference.updateChildren(time);
+    private void onButtonClick() {
+        //On click actions when using buttons
     }
+
+    private void backButton() {
+        //back button code
+    }
+
+
 }
 

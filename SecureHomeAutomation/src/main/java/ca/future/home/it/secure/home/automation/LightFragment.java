@@ -106,8 +106,6 @@ public class LightFragment extends Fragment {
             channel = new NotificationChannel(light_status, lightState, NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription(chanelDes);
             notificationManager.createNotificationChannel(channel);
-
-
         }
     }
 

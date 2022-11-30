@@ -9,6 +9,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static java.lang.Thread.sleep;
 
 import android.annotation.SuppressLint;
@@ -37,6 +38,7 @@ import android.widget.ToggleButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -45,7 +47,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DoorFragment extends Fragment {
+public class DoorFragment extends Fragment{
 
     //Door status
     ToggleButton doorLock;
@@ -76,8 +78,11 @@ public class DoorFragment extends Fragment {
 
     //Classes called
     UserInfo userInfo=new UserInfo();
+    DatabaseActivity databaseActivity = new DatabaseActivity();
+
     public DoorFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +90,7 @@ public class DoorFragment extends Fragment {
     }
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
-        dbID();
+        //dbID();
 
         //Door status
         doorLock=view.findViewById(R.id.doorLockBtn);
@@ -124,6 +129,8 @@ public class DoorFragment extends Fragment {
                 unlocked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_green);
                 toDatabase(getString(R.string.lock_status));
+                //databaseActivity.toDatabase(getApplicationContext().getString(R.string.lock_status));
+
             } else {
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
                 status.setText(R.string.unlock);
@@ -131,6 +138,7 @@ public class DoorFragment extends Fragment {
                 locked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_red);
                 toDatabase(getString(R.string.unlocked_status));
+                //databaseActivity.toDatabase(getApplicationContext().getString(R.string.unlocked_status));
             }
         });
 
@@ -211,7 +219,7 @@ public class DoorFragment extends Fragment {
         removeAlert.show();
     }
 
-    private void toDatabase(String status){
+    public void toDatabase(String status){
         dbID();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
@@ -240,7 +248,7 @@ public class DoorFragment extends Fragment {
             Log.d(TAG, key);
         }
 
-        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash)+strDate;
+        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
     }
     @SuppressLint("SimpleDateFormat")
     private void time(){
