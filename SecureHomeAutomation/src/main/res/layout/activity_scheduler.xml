@@ -3,29 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".SchedulerActivity">
 
-    <ImageView
+
+<ImageView
         android:id="@+id/profile_frag_bg"
         android:layout_width="414dp"
         android:layout_height="122dp"
+        android:layout_marginBottom="612dp"
         android:src="@drawable/profile_frag_bg_short"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/scheduleLog"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
-        android:id="@+id/tv_light_title"
+        android:id="@+id/scheduleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="4dp"
         android:text="@string/scheduler"
         android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ScrollView
         android:id="@+id/scheduleLog"
@@ -54,8 +57,8 @@
         android:id="@+id/backbtn"
         android:layout_width="54dp"
         android:layout_height="33dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:background="@android:color/transparent"
         android:contentDescription="@null"
         android:src="@drawable/back"
@@ -78,8 +81,8 @@
         android:id="@+id/endTime"
         android:layout_width="111dp"
         android:layout_height="65dp"
-        android:layout_marginTop="302dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="276dp"
+        android:layout_marginEnd="28dp"
         android:background="@color/purple_500"
         android:text="@string/end"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,8 +92,8 @@
         android:id="@+id/startTime"
         android:layout_width="111dp"
         android:layout_height="65dp"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="302dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="276dp"
         android:background="@color/purple_500"
         android:text="@string/start"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,8 +103,8 @@
         android:id="@+id/TimeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="240dp"
         android:text="@string/select_start_and_end_time"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -113,8 +116,8 @@
         android:id="@+id/thursday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="164dp"
         android:text="@string/thursday"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -123,8 +126,8 @@
         android:id="@+id/monday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="112dp"
         android:text="@string/monday"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -133,8 +136,8 @@
         android:id="@+id/tuesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="116dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="132dp"
         android:text="@string/tuesday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -143,8 +146,8 @@
         android:id="@+id/wednesday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/wednesday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -153,8 +156,8 @@
         android:id="@+id/saturday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="196dp"
-        android:layout_marginEnd="68dp"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="92dp"
         android:text="@string/saturday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -163,8 +166,8 @@
         android:id="@+id/sunday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="112dp"
         android:text="@string/sunday"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -174,8 +177,8 @@
         android:id="@+id/DayTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="124dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="120dp"
         android:text="@string/select_the_day_of_week"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -187,29 +190,29 @@
         android:id="@+id/friday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="196dp"
-        android:layout_marginEnd="160dp"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="188dp"
         android:text="@string/friday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/startTimeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="386dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="356dp"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/endtimeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="386dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="356dp"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -247,10 +250,10 @@
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/saveScheduler"
-        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="@+id/startTimeTV"
         app:layout_constraintTop_toTopOf="@+id/profile_frag_bg"
-        app:layout_constraintVertical_bias="0.453" />
+        app:layout_constraintVertical_bias="0.526" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
