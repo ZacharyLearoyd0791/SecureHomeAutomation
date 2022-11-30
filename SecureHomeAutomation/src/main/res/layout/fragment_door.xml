@@ -96,52 +96,54 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="172dp"
+            android:layout_marginTop="305dp"
+            android:layout_marginBottom="405dp"
+            android:text="@string/history"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="172dp"
-        android:layout_marginBottom="405dp"
-        android:text="@string/history"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/sv_history"
         android:layout_width="370dp"
         android:layout_height="163dp"
-        android:layout_marginStart="10dp"
         android:layout_marginBottom="235dp"
         android:background="@drawable/scroll_view_border"
         android:fillViewport="true"
         android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <LinearLayout
             android:id="@+id/linear_history"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"></LinearLayout>
 
-        </ScrollView>
+    </ScrollView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_keys"
         android:layout_width="370dp"
         android:layout_height="140dp"
-        android:layout_marginStart="10dp"
         android:layout_marginBottom="80dp"
         app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_history">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
