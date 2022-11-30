@@ -369,6 +369,7 @@
     <string name="light_status">Light Status</string>
     <string name="schedKey">/Schedule</string>
     <string name="noID">NoID</string>
+    <string name="exitScheduleMsg">Nothing will be saved</string>
 
 
 </resources>

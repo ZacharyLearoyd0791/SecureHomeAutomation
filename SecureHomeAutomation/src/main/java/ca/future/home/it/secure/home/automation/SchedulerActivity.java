@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,7 +51,7 @@ public class SchedulerActivity extends Activity {
     ImageButton back;
     TextView startTV, endTv;
     Button start, end, saveTime;
-    int hour, minute, checking,counter;
+    int hour, minute, checking,counter,countCheck;
     String endtimeout, Starttimeout, daySelected,
             timeday,check,count,dbDate,dbTime,
                 localKey,personalKey,schedKey,key,
@@ -70,16 +71,15 @@ public class SchedulerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduler);
-
+        counter=0;
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         dbID();
-        backButton();
         init();
+
+        backButton();
         onButtonClick();
         readDB();
-        Log.d(TAG,"Test2002 id key with scheduler: "+schedKey);
-
     }
 
     private void init() {
@@ -135,10 +135,7 @@ public class SchedulerActivity extends Activity {
                     readDate=readDate.replace("}","");
                     Log.d(TAG,readDate);
                     getday=readDate.split(",");
-                    for(int i=0;i<getday.length;i++){
 
-                        Log.d(TAG,"Each day picked: "+getday[i]);
-                    }
                     databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.timeKey)));
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -150,13 +147,15 @@ public class SchedulerActivity extends Activity {
                                 readTime=readTime.replace("}","");
                                 Log.d(TAG,readTime);
                                 gettime=readTime.split(",");
+
                                 for(int i=0;i<gettime.length;i++){
 
-                                    Log.d(TAG,"Each day picked: "+gettime[i]);
                                     timeday=getday[i]+"\n"+gettime[i];
                                     logging(timeday);
+                                    counter=counter+1;
                                 }
-
+                                Log.d(TAG,"Counter: "+counter);
+                                countCheck=counter;
                             }
                         }
                         @Override
@@ -194,14 +193,43 @@ public class SchedulerActivity extends Activity {
         textView.setFontFeatureSettings(getString(R.string.font_sans_serif));
         textView.setPadding(10,19,10,19);
         linearLayout.addView(textView);
+
     }
 
     private void onButtonClick() {
         //On click actions when using buttons
+
     }
 
     private void backButton() {
         //back button code
+        back.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+            AlertDialog.Builder builder
+                    = new androidx.appcompat.app.AlertDialog
+                    .Builder(SchedulerActivity.this);
+
+            builder
+                    .setMessage(R.string.exitScheduleMsg)
+
+                    .setTitle(R.string.leavingTitle)
+                    .setIcon(R.drawable.exit_icon);
+            builder.setCancelable(false);
+
+            builder
+                    .setPositiveButton(
+                            R.string.Yes,
+                            (dialog, which) -> startActivity(intent));
+
+            builder
+                    .setNegativeButton(
+                            R.string.No,
+                            (dialog, which) -> dialog.cancel());
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+        });
     }
 
 
