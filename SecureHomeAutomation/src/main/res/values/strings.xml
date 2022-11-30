@@ -372,6 +372,7 @@
     <string name="exitScheduleMsg">Nothing will be saved</string>
     <string name="ratings">Ratings</string>
     <string name="savedScheduleToast">Saved To Account</string>
+    <string name="app_configuration">App Configuration</string>
 
 
 </resources>
