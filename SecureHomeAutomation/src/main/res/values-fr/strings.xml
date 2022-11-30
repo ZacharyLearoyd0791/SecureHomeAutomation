@@ -344,4 +344,5 @@
     <string name="turn_on">Turn On</string>
     <string name="window_status">Window Status</string>
     <string name="light_status">Light Status</string>
+    <string name="noID">NoID</string>
 </resources>
