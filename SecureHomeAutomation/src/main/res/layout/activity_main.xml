@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/profile_frag_bg"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
             android:src="@drawable/profile_frag_bg_short"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
     private void showBottomDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottomsheetlayout);
+        dialog.setContentView(R.layout.feedback_layout);
 
 
         ratingBar = dialog.findViewById(R.id.ratingBar);
@@ -288,7 +288,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
-
         time();
         ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
@@ -296,9 +295,6 @@ public class MainActivity extends AppCompatActivity {
         feedBackKey=key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
-
-
-
     }
 
     public void onBackPressed() {
