@@ -14,6 +14,7 @@ import static ca.future.home.it.secure.home.automation.R.string.hourmin;
 import static ca.future.home.it.secure.home.automation.R.string.mustpickday;
 import static ca.future.home.it.secure.home.automation.R.string.off;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -142,42 +143,38 @@ public class SchedulerActivity extends Activity {
                 if (dataSnapshot.exists()) {
 
                     readDate = Objects.requireNonNull(dataSnapshot.getValue()).toString();
-                    if (readDate != null) {
 
-                        readDate = readDate.replace("{", "");
-                        readDate = readDate.replace("}", "");
-                        Log.d(TAG, readDate);
-                        getday = readDate.split(",");
-                        databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.timeKey)));
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    readTime = Objects.requireNonNull(snapshot.getValue()).toString();
-                                    if (readTime!=null){
-                                        Log.d(TAG,"Data from readDB is:\nDate:"+readDate+"\nTime:"+readTime);
-                                        readTime=readTime.replace("{","");
-                                        readTime=readTime.replace("}","");
-                                        Log.d(TAG,readTime);
-                                        gettime=readTime.split(",");
+                    readDate = readDate.replace("{", "");
+                    readDate = readDate.replace("}", "");
+                    Log.d(TAG, readDate);
+                    getday = readDate.split(",");
+                    databaseReference=firebaseDatabase.getReference().child(schedKey+(getString(R.string.timeKey)));
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                readTime = Objects.requireNonNull(snapshot.getValue()).toString();
+                                Log.d(TAG,"Data from readDB is:\nDate:"+readDate+"\nTime:"+readTime);
+                                readTime=readTime.replace("{","");
+                                readTime=readTime.replace("}","");
+                                Log.d(TAG,readTime);
+                                gettime=readTime.split(",");
 
-                                        for(int i=0;i<gettime.length;i++){
+                                for(int i=0;i<gettime.length;i++){
 
-                                            timeday=getday[i]+"\n"+gettime[i];
-                                            logging(timeday);
-                                            counter=counter+1;
-                                        }
-                                        Log.d(TAG,"Counter: "+counter);
-                                        countCheck=counter;
-                                    }
-
+                                    timeday=getday[i]+"\n"+gettime[i];
+                                    logging(timeday);
+                                    counter=counter+1;
                                 }
+                                Log.d(TAG,"Counter: "+counter);
+                                countCheck=counter;
+
                             }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                    }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
 
                 }
                 else{
@@ -380,7 +377,7 @@ public class SchedulerActivity extends Activity {
 
         }
         else {
-            SimpleDateFormat sdf = new SimpleDateFormat(getString(hourmin));
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(getString(hourmin));
             Date d1 = sdf.parse(Starttimeout);
             Date d2 = sdf.parse(endtimeout);
             assert d1 != null;

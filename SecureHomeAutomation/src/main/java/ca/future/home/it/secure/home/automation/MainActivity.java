@@ -8,8 +8,6 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -19,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +39,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -50,8 +46,10 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    UserInfo userInfo=new UserInfo();
-    String localKey,key,personalKey,light_lightstatus,idKey,feedBackofUser,ratingKey,feedBackKey;
+    String key;
+    String feedBackofUser;
+    String ratingKey;
+    String feedBackKey;
 
     float ratingVal;
 
@@ -59,11 +57,17 @@ public class MainActivity extends AppCompatActivity {
     //Fragments
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
+    @SuppressLint("StaticFieldLeak")
     public static DoorFragment doorFragment;
+    @SuppressLint("StaticFieldLeak")
     public static TempFragment tempFragment;
+    @SuppressLint("StaticFieldLeak")
     public static LightFragment lightFragment;
+    @SuppressLint("StaticFieldLeak")
     public static WindowFragment windowFragment;
+    @SuppressLint("StaticFieldLeak")
     public static ProfileEditFragment profileEditFragment;
+    @SuppressLint("StaticFieldLeak")
     public static ForgotPasswordActivity forgotPasswordActivity;
     private final Handler handler = new Handler();
     ProgressBar progressBar;
@@ -75,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
     RatingBar ratingBar;
     Button saveBTN;
     String strDate;
-    //Database
-    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     EditText userFeedBack;
     //Fingerprint
@@ -92,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbID();
-        getFCM();
+
+
 
         //Bottom navigation and fragment views
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -152,12 +154,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void idToDatabase() {
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.idLightStatus));
-        databaseReference.setValue(idKey);
 
-    }
 
     //inflate action bar on first time opening app
     @Override
@@ -191,22 +188,20 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
-        private String resp;
         ProgressDialog progressDialog;
 
         @Override
         protected String doInBackground(String... params) {
             publishProgress(getString(R.string.sleeping)); // Calls onProgressUpdate()
+            String resp;
             try {
                 int time = Integer.parseInt(params[0])*1000;
 
                 Thread.sleep(time);
                 resp = getString(R.string.sleptFor) + params[0] + getString(R.string.sec);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                resp = e.getMessage();
             } catch (Exception e) {
                 e.printStackTrace();
                 resp = e.getMessage();
@@ -247,8 +242,8 @@ public class MainActivity extends AppCompatActivity {
 
         ratingBar = dialog.findViewById(R.id.ratingBar);
         saveBTN = dialog.findViewById(R.id.saveFeedback);
-        userFeedBack = (EditText) dialog.findViewById(R.id.feedbackET);
-        progressBar = (ProgressBar) dialog.findViewById(R.id.progressBar);
+        userFeedBack = dialog.findViewById(R.id.feedbackET);
+        progressBar = dialog.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         ratingBar.setOnRatingBarChangeListener((ratingBar, v, b) -> {
 
@@ -323,42 +318,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void getFCM() {
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w(TAG, getString(R.string.log_fcm), task.getException());
-                        return;
-                    }
-
-                    // Get new FCM registration token
-                    String token = task.getResult();
-
-                    // Log and toast
-                    String msg = (getString(R.string.fcm_token)) + token;
-                    Log.d(TAG, msg);
-                });
-    }
-    private void dbID(){
-        userInfo.typeAccount();
-        time();
-
-        localKey=userInfo.userId;
-        personalKey=userInfo.idInfo;
-
-        if(localKey!=null){
-            key=localKey;
-            Log.d(TAG,key);
-
-        }
-        if(personalKey!=null) {
-            key= personalKey;
-            Log.d(TAG, key);
-        }
-        light_lightstatus=key+getString(R.string.statusKey);
-        idKey=key+getString(R.string.statusKey);
-        idToDatabase();
-    }
+    @SuppressLint("SimpleDateFormat")
     private void time(){
         date = Calendar.getInstance().getTime();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
