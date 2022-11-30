@@ -53,6 +53,7 @@ public class WindowFragment extends Fragment {
     Button alarmButton;
     Vibrator vibrator;
     View view;
+    int deviceState;
 
 
     public WindowFragment() {
@@ -95,7 +96,7 @@ public class WindowFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int deviceState = snapshot.child(getString(R.string.status_device)).getValue(Integer.class);
+                deviceState = snapshot.child(getString(R.string.status_device)).getValue(Integer.class);
                 if(deviceState==0){
                     deviceStatusTextView.setText(R.string.devicenotfound);
                 }else if(deviceState ==1){
