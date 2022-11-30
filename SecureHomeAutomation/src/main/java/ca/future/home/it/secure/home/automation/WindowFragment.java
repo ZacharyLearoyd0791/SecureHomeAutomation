@@ -55,7 +55,7 @@ public class WindowFragment extends Fragment {
     View view;
     int deviceState;
 
-
+ 
     public WindowFragment() {
         // Required empty public constructor
     }
