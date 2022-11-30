@@ -348,6 +348,5 @@
     <string name="exitScheduleMsg">Nothing will be saved</string>
     <string name="ratings">Ratings</string>
     <string name="schedKey">/Schedule</string>
-    <string name="configure">Configure</string>
     <string name="savedScheduleToast">Saved To Account</string>
 </resources>
