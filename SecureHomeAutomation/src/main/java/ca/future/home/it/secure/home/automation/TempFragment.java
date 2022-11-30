@@ -12,6 +12,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ public class TempFragment extends Fragment {
     TextView tvHumidity;
     Button btnMaxTemp;
     Button btnMinTemp;
+    ImageButton scheduleButton;
     FirebaseDatabase database;
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
@@ -93,6 +95,7 @@ public class TempFragment extends Fragment {
         btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
+        scheduleButton = view.findViewById(R.id.schedulerButton);
         minTempRef = database.getReference(minkey);
         maxTempRef = database.getReference(maxkey);
         setTemperatureView(temperatureView);
@@ -137,6 +140,13 @@ public class TempFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showDialogForInputTemperature(false);
+            }
+        });
+        scheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),SchedulerActivity.class);
+                startActivity(intent);
             }
         });
     }
