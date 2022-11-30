@@ -168,7 +168,6 @@
     <string name="timeFormat">%02d:%02d</string>
     <string name="DatabaseStr">\"Database: \"</string>
     <string name="Timer">Timer</string>
-    <string name="hourmin">HH:mm</string>
     <string name="sample_4">SAMPLE - Door Unlocked 6:48PM</string>
     <string name="end">End</string>
     <string name="start">Start</string>
@@ -340,10 +339,12 @@
     <string name="appwidget_text">Lights</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="configure">Configure</string>
     <string name="temperature_status">Temperature Status</string>
     <string name="turn_on">Turn On</string>
     <string name="window_status">Window Status</string>
     <string name="light_status">Light Status</string>
     <string name="noID">NoID</string>
     <string name="exitScheduleMsg">Nothing will be saved</string>
+    <string name="savedScheduleToast">Saved To Account</string>
 </resources>
