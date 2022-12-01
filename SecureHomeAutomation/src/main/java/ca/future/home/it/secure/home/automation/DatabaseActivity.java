@@ -191,7 +191,24 @@ public class DatabaseActivity extends Fragment {
                     LightStatusDBAction(DBLight);
                 }
                 else {
-                    Log.d(TAG, "Door Status No Current Value");
+                    Log.d(TAG, "Light Status No Current Value");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalSensorKey));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    DBDist= Objects.requireNonNull(snapshot.getValue()).toString();//on or off
+                    DistDBAction(DBDist);
+                }
+                else {
+                    Log.d(TAG, "Distance Status No Current Value");
                 }
             }
 
@@ -201,16 +218,16 @@ public class DatabaseActivity extends Fragment {
         });
 
         //Window
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalWindowBreak));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    DBDoor= Objects.requireNonNull(snapshot.getValue()).toString();
-                    DoorDBAction(DBDoor);
+                    DBWindow= Objects.requireNonNull(snapshot.getValue()).toString();
+                    WindowDBAction(DBWindow);
                 }
                 else {
-                    Log.d(TAG, "Door Status No Current Value");
+                    Log.d(TAG, "Window Status No Current Value");
                 }
             }
 
@@ -221,11 +238,20 @@ public class DatabaseActivity extends Fragment {
 
 
         }
-
+//Window Action
+    private void WindowDBAction(String dbWindow) {
+        Log.d(TAG,"Status of Window is: "+dbWindow);
+    }
+    
+    //Light Action
     private void LightStatusDBAction(String dbLight) {
         Log.d(TAG,"Status of Light is: "+dbLight);
     }
+    private void DistDBAction(String dbDist) {
+        Log.d(TAG,"Current Distance on sensor is: "+dbDist);
+    }
 
+    //Temperature action
     private void TemperatureDBAction(String dbMax, String dbMin) {
         try{
             max = Integer.parseInt(dbMax);
@@ -242,7 +268,7 @@ public class DatabaseActivity extends Fragment {
             ex.printStackTrace();
         }
     }
-
+//Door action
     private void DoorDBAction(String dbDoor) {
         Log.d(TAG,"Door Status"+dbDoor);
     }
