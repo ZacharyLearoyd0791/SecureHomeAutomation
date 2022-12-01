@@ -6,29 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_gravity="center"
     tools:context=".AccountFragment">
 
 
     <ImageView
         android:id="@+id/profile_frag_bg"
-        android:layout_width="413dp"
-        android:layout_height="263dp"
-        android:layout_marginBottom="528dp"
-        android:src="@drawable/profile_frag_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:src="@drawable/profile_frag_bg_short"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/profile_title"
-        android:layout_width="114dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="8dp"
-        android:text="Profile"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/profile"
+        android:textColor="#CEFFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/configuration"
+        android:textColor="#CEFFFFFF"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,15 +48,18 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
-        android:layout_width="141dp"
-        android:layout_height="137dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="153dp"
+        android:layout_height="161dp"
+        android:layout_marginTop="90dp"
         android:backgroundTint="@color/white"
         android:padding="0dp"
         android:paddingStart="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/profile_animation"
@@ -53,27 +68,35 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="103dp"
-        android:layout_height="121dp"
-        android:layout_marginStart="152dp"
+        android:layout_width="126dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="134dp"
         android:layout_marginTop="68dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/animationView"
+        app:layout_constraintEnd_toEndOf="@+id/animationView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.666" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="391dp"
-        android:layout_height="352dp"
-        android:layout_marginTop="188dp"
+        android:layout_width="371dp"
+        android:layout_height="254dp"
+        android:layout_marginTop="172dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:cardMaxElevation="5dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/profile_frag_bg"
+        app:layout_constraintVertical_bias="0.011">
 
         <TextView
             android:id="@+id/Email"
@@ -118,7 +141,7 @@
 
         <TextView
             android:id="@+id/tv_account_person_email"
-            android:layout_width="278dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginTop="8dp"
@@ -131,19 +154,20 @@
         android:id="@+id/Settings_signOut_button"
         android:layout_width="121dp"
         android:layout_height="53dp"
-        android:layout_marginStart="188dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="120dp"
         android:text="@string/sign_out"
-        app:layout_constraintStart_toEndOf="@+id/editProfileIcon"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.775"
+        app:layout_constraintStart_toEndOf="@+id/editProfileIcon" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/editProfileIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="544dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_edit_profile_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -374,6 +374,7 @@
     <string name="savedScheduleToast">Saved To Account</string>
     <string name="app_configuration">App Configuration</string>
     <string name="windowBreakKey">/Window Status</string>
+    <string name="profile">Profile</string>
 
 
 </resources>
