@@ -39,16 +39,32 @@ public class DatabaseActivity extends AppCompatActivity {
     DateFormat dateFormat;
 
     //String
-    String idKey,localKey,key,personalKey,strDate;
+    String idKey,localKey,key,personalKey,strDate, lightKey, sensorKey,
+            minKey,maxKey;
 
     int keyType; //1 = door, 2 = light, 3 = temperature, 4 = window
 
-    public void toDatabase(String status){
+    public void toDatabase(String status) {
         DatabaseActivity.context = getApplicationContext();
 
         //Door idKey
-        if(status.equals(getString(R.string.lock_status))){
+        if (status.equals(getString(R.string.lock_status))) {
             dbID(1);
+        }
+
+        //Light idKey
+        if (status.equals(getString(R.string.light_status))) {
+            dbID(2);
+        }
+
+        //Temperature idKey
+        if (status.equals(getString(R.string.temperature_status))) {
+            dbID(3);
+        }
+
+        //Window idKey
+        if (status.equals(getString(R.string.window_status))) {
+            dbID(4);
         }
 
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -61,6 +77,12 @@ public class DatabaseActivity extends AppCompatActivity {
             updateStatus.put(getString(R.string.status), status);
             databaseReference.updateChildren(updateStatus);
         }
+
+        //Light status
+
+        //Temperature status
+
+        //Window status
     }
 
     private void dbID(int keyType){
@@ -84,6 +106,21 @@ public class DatabaseActivity extends AppCompatActivity {
         if(keyType==1){
             idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash)+strDate;
         }
+
+        //Light idKey
+        if(keyType==2){
+            lightKey=key+getString(R.string.statusKey);
+            sensorKey=key+getString(R.string.db_ultrasonic_dist);
+        }
+
+        //Temperature idKey
+        if(keyType==3){
+            minKey=key+getString(R.string.tempmin);
+            maxKey=key+getString(R.string.tempmax);
+        }
+
+        //Window idKey
+        if(keyType==4){}
     }
 
     @SuppressLint("SimpleDateFormat")
