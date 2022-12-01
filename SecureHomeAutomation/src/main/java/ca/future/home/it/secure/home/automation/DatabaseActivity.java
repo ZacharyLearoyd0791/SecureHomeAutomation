@@ -182,13 +182,13 @@ public class DatabaseActivity extends Fragment {
         });
 
         //Light
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    DBDoor= Objects.requireNonNull(snapshot.getValue()).toString();
-                    DoorDBAction(DBDoor);
+                    DBLight= Objects.requireNonNull(snapshot.getValue()).toString();//on or off
+                    LightStatusDBAction(DBLight);
                 }
                 else {
                     Log.d(TAG, "Door Status No Current Value");
@@ -221,6 +221,10 @@ public class DatabaseActivity extends Fragment {
 
 
         }
+
+    private void LightStatusDBAction(String dbLight) {
+        Log.d(TAG,"Status of Light is: "+dbLight);
+    }
 
     private void TemperatureDBAction(String dbMax, String dbMin) {
         try{
