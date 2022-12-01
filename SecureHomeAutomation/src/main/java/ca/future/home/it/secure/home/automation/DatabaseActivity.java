@@ -41,25 +41,31 @@ public class DatabaseActivity extends AppCompatActivity {
     //String
     String idKey,localKey,key,personalKey,strDate;
 
-    //FOR DOOR LOCK
+    int keyType; //1 = door, 2 = light, 3 = temperature, 4 = window
+
     public void toDatabase(String status){
         DatabaseActivity.context = getApplicationContext();
 
-        dbID();
+        //Door idKey
+        if(status.equals(getString(R.string.lock_status))){
+            dbID(1);
+        }
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
 
-        databaseReference.setValue(status);
-        Map<String, Object> updateStatus = new HashMap<>();
-        updateStatus.put(getString(R.string.status),status);
-
-        databaseReference.updateChildren(updateStatus);
+        //Door status
+        if(status.equals(getString(R.string.lock_status))) {
+            databaseReference.setValue(status);
+            Map<String, Object> updateStatus = new HashMap<>();
+            updateStatus.put(getString(R.string.status), status);
+            databaseReference.updateChildren(updateStatus);
+        }
     }
 
-    private void dbID(){
+    private void dbID(int keyType){
         userInfo.typeAccount();
         time();
-        //Log.d(TAG,"Time string before key;"+strDate);
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -74,7 +80,10 @@ public class DatabaseActivity extends AppCompatActivity {
             Log.d(TAG, key);
         }
 
-        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash)+strDate;
+        //Door idKey
+        if(keyType==1){
+            idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash)+strDate;
+        }
     }
 
     @SuppressLint("SimpleDateFormat")

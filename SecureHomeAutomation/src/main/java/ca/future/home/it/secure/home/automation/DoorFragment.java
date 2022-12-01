@@ -129,6 +129,7 @@ public class DoorFragment extends Fragment{
                 unlocked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_green);
                 toDatabase(getString(R.string.lock_status));
+                //databaseActivity.toDatabase(getString(R.string.lock_status));
                 //databaseActivity.toDatabase(getApplicationContext().getString(R.string.lock_status));
 
             } else {
@@ -138,6 +139,7 @@ public class DoorFragment extends Fragment{
                 locked.setVisibility(View.INVISIBLE);
                 doorLock.setBackgroundResource(R.drawable.lock_border_red);
                 toDatabase(getString(R.string.unlocked_status));
+                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
                 //databaseActivity.toDatabase(getApplicationContext().getString(R.string.unlocked_status));
             }
         });
