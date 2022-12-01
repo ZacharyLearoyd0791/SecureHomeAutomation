@@ -124,9 +124,7 @@ public class SchedulerActivity extends Activity {
             key= personalKey;
             Log.d(TAG, key);
         }
-        else{
-            key=getString(R.string.noID);
-        }
+
         schedKey=key+getString(R.string.schedKey);
         Log.d(TAG,getString(R.string.keyIs)+schedKey);
     }

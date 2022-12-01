@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
         greeting();
         lock= getString(R.string.lock_status);
         unlock=getString(R.string.unlocked_status);
-
+        databaseActivity.Activity();
         Bundle bundle = new Bundle();
 
         return view;
