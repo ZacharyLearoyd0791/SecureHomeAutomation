@@ -42,6 +42,7 @@ public class DatabaseActivity extends AppCompatActivity {
     String idKey,localKey,key,personalKey,strDate, lightKey, sensorKey,
             minKey,maxKey;
 
+    //For idKey
     int keyType; //1 = door, 2 = light, 3 = temperature, 4 = window
 
     public void toDatabase(String status) {
@@ -50,6 +51,12 @@ public class DatabaseActivity extends AppCompatActivity {
         //Door idKey
         if (status.equals(getString(R.string.lock_status))) {
             dbID(1);
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
+            databaseReference.setValue(status);
+            Map<String, Object> updateStatus = new HashMap<>();
+            updateStatus.put(getString(R.string.status), status);
+            databaseReference.updateChildren(updateStatus);
         }
 
         //Light idKey
@@ -66,23 +73,6 @@ public class DatabaseActivity extends AppCompatActivity {
         if (status.equals(getString(R.string.window_status))) {
             dbID(4);
         }
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
-
-        //Door status
-        if(status.equals(getString(R.string.lock_status))) {
-            databaseReference.setValue(status);
-            Map<String, Object> updateStatus = new HashMap<>();
-            updateStatus.put(getString(R.string.status), status);
-            databaseReference.updateChildren(updateStatus);
-        }
-
-        //Light status
-
-        //Temperature status
-
-        //Window status
     }
 
     private void dbID(int keyType){
@@ -95,8 +85,8 @@ public class DatabaseActivity extends AppCompatActivity {
         if(localKey!=null){
             key=localKey;
             Log.d(TAG,key);
-
         }
+
         if(personalKey!=null) {
             key= personalKey;
             Log.d(TAG, key);
