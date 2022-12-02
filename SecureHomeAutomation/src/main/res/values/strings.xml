@@ -376,6 +376,7 @@
     <string name="windowBreakKey">/Window Status</string>
     <string name="profile">Profile</string>
     <string name="NoVal">No value</string>
+    <string name="local_network_bluetooth"><![CDATA[Local Network & Bluetooth]]></string>
 
 
 </resources>
