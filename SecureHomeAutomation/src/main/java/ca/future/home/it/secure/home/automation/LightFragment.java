@@ -149,27 +149,14 @@ public class LightFragment extends Fragment {
         //timer and scheduler
         cancelTimer=true;
 
-        lightsOn.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                LightStatus = on;
-                lightsOn.setBackgroundResource(R.drawable.status_border_green);
-                ivLightOff.setVisibility(View.INVISIBLE);
-                ivLightOn.setVisibility(View.VISIBLE);
-                sendData(on);
-            } else {
-                LightStatus = off;
-                lightsOn.setBackgroundResource(R.drawable.status_border_red);
-                ivLightOn.setVisibility(View.INVISIBLE);
-                ivLightOff.setVisibility(View.VISIBLE);
-                sendData(off);
-            }
-        });
+
         timerBTN.setOnClickListener(view1 -> popTimePicker());
         schedulerBTN.setOnClickListener(view1 -> {
             Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
             getActivity().startActivity(myIntent);
         });
     }
+
 
     void StartTimer(){
         handler = new Handler();
@@ -199,11 +186,37 @@ public class LightFragment extends Fragment {
 
         if(Objects.equals(LightStatus, "On")){
             Log.d(TAG,"Confirm it is on!!!\t"+LightStatus);
-
+            lightsOn.setChecked(true);
+            LightStatus = on;
+            lightsOn.setBackgroundResource(R.drawable.status_border_green);
+            ivLightOff.setVisibility(View.INVISIBLE);
+            ivLightOn.setVisibility(View.VISIBLE);
         }
         else if(Objects.equals(LightStatus, off)){
             Log.d(TAG,"Confirm it is off!!!\t"+LightStatus);
+            lightsOn.setChecked(false);
+            lightsOn.setBackgroundResource(R.drawable.status_border_red);
+            ivLightOn.setVisibility(View.INVISIBLE);
+            ivLightOff.setVisibility(View.VISIBLE);
+
         }
+        lightsOn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (lightsOn.isChecked()) {
+                LightStatus = on;
+                lightsOn.setBackgroundResource(R.drawable.status_border_green);
+                ivLightOff.setVisibility(View.INVISIBLE);
+                ivLightOn.setVisibility(View.VISIBLE);
+                sendData(on);
+
+            }
+            else {
+                LightStatus = off;
+                lightsOn.setBackgroundResource(R.drawable.status_border_red);
+                ivLightOn.setVisibility(View.INVISIBLE);
+                ivLightOff.setVisibility(View.VISIBLE);
+                sendData(off);
+            }
+        });
     }
 
     public void popTimePicker() {
@@ -230,11 +243,15 @@ public class LightFragment extends Fragment {
                     int count=counter;
                     Log.d(TAG, String.valueOf(count));
                     sendData(on);
+                    LightStatus=on;
+                    Status();
                     counter++;
                 }
 
                 public void onFinish() {
                     timerTV.setText(R.string.lightOff);
+                    LightStatus=off;
+                    Status();
                     sendData(off);
                     counter = 0;
                     hour = 0;
