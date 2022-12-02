@@ -416,7 +416,26 @@ public class SchedulerActivity extends Activity {
     }
 
     private void toDatabase() {
-
+       // progressBar.setVisibility(View.VISIBLE);
+        new Thread(() -> {
+            while (progressStatus < 10) {
+                progressStatus += 1;
+                // Update the progress bar and display the
+                //current value in the text view
+                handler.post(() -> {
+                   // progressBar.setProgress(progressStatus);
+                    if (progressStatus == 10) {
+                       // progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
+                try {
+                    // Sleep for 200 milliseconds.
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
         Toast.makeText(this, R.string.savedScheduleToast, Toast.LENGTH_SHORT).show();
     }
 
@@ -449,66 +468,6 @@ public class SchedulerActivity extends Activity {
             alertDialog.show();
 
         });
-    }
-    private void Scheduler(){
-        Calendar mCalendar = Calendar.getInstance();
-        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("HH");
-        mDate = mSimpleDateFormat.format(mCalendar.getTime());
-
-        time = Integer.parseInt(mDate);
-        dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK);
-
-        if (Calendar.MONDAY == dayOfWeek) {
-            monday();
-        }
-        if (Calendar.TUESDAY == dayOfWeek) {
-            tuesday();
-        }
-        if (Calendar.WEDNESDAY == dayOfWeek) {
-            wednesday();
-        }
-        if (Calendar.THURSDAY == dayOfWeek) {
-            thursday();
-        }
-        if (Calendar.FRIDAY == dayOfWeek) {
-            friday();
-        }
-        if (Calendar.SATURDAY == dayOfWeek) {
-            saturday();
-        }
-        if (Calendar.SUNDAY == dayOfWeek) {
-            sunday();
-        }
-
-    }
-
-    private void monday() {
-        Log.d(TAG,"Monday Task");
-    }
-    private void tuesday() {
-        Log.d(TAG,"Tuesday Task");
-    }
-    private void wednesday() {
-        Log.d(TAG,"Wednesday Task");
-        if (isWednesday){
-            Log.d(TAG,"Wednesday Task is Active");
-        }
-        else{
-            Log.d(TAG,"No Wednesday Task is Active");
-
-        }
-    }
-    private void thursday() {
-        Log.d(TAG,"Thursday Task");
-    }
-    private void friday() {
-        Log.d(TAG,"Friday Task");
-    }
-    private void saturday() {
-        Log.d(TAG,"Saturday Task");
-    }
-    private void sunday() {
-        Log.d(TAG,"Saturday Task");
     }
 }
 

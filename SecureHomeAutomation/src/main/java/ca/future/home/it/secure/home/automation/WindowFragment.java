@@ -8,6 +8,8 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -20,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
@@ -28,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +47,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class WindowFragment extends Fragment {
 
@@ -53,9 +59,19 @@ public class WindowFragment extends Fragment {
     Button alarmButton;
     Vibrator vibrator;
     View view;
-    int deviceState;
+    String deviceState;
+    UserInfo userInfo=new UserInfo();
+    String key,localKey,personalKey,windowsKey,sensorKey;
+    String[] sensorStatusArray = {"Sensor is ON","Sensor is OFF","Sensor is Activated","Sensor is Deactivated","Sensor is in TEST mode"};
+    String sensorStatus = "Sensor is off";
+    RecyclerView recyclerView;
+    RecyclerAdapter adapter;
+    ArrayList<RecyclerViewData> data;
 
- 
+
+
+
+
     public WindowFragment() {
         // Required empty public constructor
     }
@@ -67,10 +83,21 @@ public class WindowFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_window, container, false);
 
         //Creating Instances
+        putToDatabase();
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         alarmButton = view.findViewById(R.id.TestDeviceButton);
-        activitiesRecyclerView = view.findViewById(R.id.activity_recycler_view);
+        activitiesRecyclerView = view.findViewById(R.id.windows_recycler_view);
         deviceStatusTextView = view.findViewById(R.id.device_status_windows_break);
+
+        //Recycler View
+        data = RecyclerViewData.createWindowsAlertList(10);
+        RecyclerAdapter adapter = new RecyclerAdapter(data);
+        activitiesRecyclerView.setAdapter(adapter);
+        activitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+//        activitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        adapter = new RecyclerAdapter(getContext(),sensorStatusArray);
+//        activitiesRecyclerView.setAdapter(adapter);
 
         //If SDK is lower than oreo then creating channel for notification process
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
@@ -88,7 +115,8 @@ public class WindowFragment extends Fragment {
         });
 
 
-        //Activities of the devices using recyclerView
+
+
 
         //Getting Device status from firebase database
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Windows Break");
@@ -96,13 +124,13 @@ public class WindowFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                deviceState = snapshot.child(getString(R.string.status_device)).getValue(Integer.class);
-                if(deviceState==0){
+                deviceState = snapshot.child(getString(R.string.status_device)).toString();
+                if(deviceState.contains("0")){
                     deviceStatusTextView.setText(R.string.devicenotfound);
-                }else if(deviceState ==1){
+                }else if(deviceState.contains("1")){
                     deviceStatusTextView.setText(R.string.activedevice);
                     deviceStatusTextView.setTextColor(Color.GREEN);
-                }else if(deviceState == -1){
+                }else if(deviceState.contains("-1")){
                     deviceStatusTextView.setText(R.string.errordevice);
                     deviceStatusTextView.setTextColor(Color.RED);
                     Toast.makeText(getContext(), R.string.reconnect, Toast.LENGTH_SHORT).show();
@@ -161,6 +189,49 @@ public class WindowFragment extends Fragment {
                     }
                 });
         snackbar.show();
+    }
+    private String dbID(){
+        userInfo.typeAccount();
+
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+
+        if(localKey!=null){
+            key=localKey;
+            Log.d(TAG,key);
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+            Log.d(TAG, key);
+        }
+        windowsKey=key+"/Windows Sensor/";
+        sensorKey=windowsKey;
+
+        return windowsKey;
+    }
+    private void putToDatabase(){
+        Date currentTime = Calendar.getInstance().getTime();
+        String time = currentTime.toString();
+        Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child(dbID()).child("Time").setValue(time);
+        reference.child(dbID()).child("Device Status").setValue(sensorStatus);
+
+    }
+
+    private void getSensorStatus(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                sensorStatus = snapshot.child(dbID()).child("Device Status").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 

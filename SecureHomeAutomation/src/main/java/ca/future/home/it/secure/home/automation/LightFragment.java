@@ -63,6 +63,7 @@ public class LightFragment extends Fragment {
     Vibrator vibrator;
     NotificationChannel channel;
     NotificationManager notificationManager;
+    NotificationCompat.Builder builder;
 
     public LightFragment() {
 
@@ -73,6 +74,7 @@ public class LightFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_light, container, false);
+        builder = new NotificationCompat.Builder(getActivity().getApplicationContext(),lightstatusStr);
         timerTV = view.findViewById(R.id.timerTV);
         ultrasonicTV = view.findViewById(R.id.distanceOut);
         timerBTN = view.findViewById(R.id.timerButton);
@@ -385,7 +387,7 @@ public class LightFragment extends Fragment {
     }
 
     public void sendNotificationProcess(String notificationTitle, String notificationText){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),lightstatusStr);
+
         builder.setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setSmallIcon(R.mipmap.ic_launcher)
