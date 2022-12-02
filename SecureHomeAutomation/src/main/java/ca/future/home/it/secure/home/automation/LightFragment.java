@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
@@ -92,6 +93,8 @@ public class LightFragment extends Fragment {
     ImageView ivLightOn, ivLightOff;
     ToggleButton lightsOn;
 
+    CardView cardView;
+
     public LightFragment() {
     }
 
@@ -136,6 +139,7 @@ public class LightFragment extends Fragment {
         lightstatusStr=getString(R.string.LightStatus);
         mangerCompat= NotificationManagerCompat.from(getContext());
         lightsOn=view.findViewById(R.id.onLights);
+        cardView=view.findViewById(R.id.cv_scheduler);
 
         //Light off by default
         ivLightOn.setVisibility(View.INVISIBLE);
@@ -149,7 +153,7 @@ public class LightFragment extends Fragment {
         //timer and scheduler
         cancelTimer=true;
 
-
+        cardView.setBackgroundResource(R.drawable.cardview_border);
         timerBTN.setOnClickListener(view1 -> popTimePicker());
         schedulerBTN.setOnClickListener(view1 -> {
             Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
