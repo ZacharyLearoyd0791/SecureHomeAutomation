@@ -174,17 +174,17 @@ public class LightFragment extends Fragment {
 
         lightsOn.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                LightStatus = off;
+                LightStatus = on;
                 lightsOn.setBackgroundResource(R.drawable.status_border_green);
                 ivLightOff.setVisibility(View.INVISIBLE);
                 ivLightOn.setVisibility(View.VISIBLE);
-                lightHandler(off);
+                lightHandler(on);
             } else {
-                LightStatus = on;
+                LightStatus = off;
                 lightsOn.setBackgroundResource(R.drawable.status_border_red);
                 ivLightOn.setVisibility(View.INVISIBLE);
                 ivLightOff.setVisibility(View.VISIBLE);
-                lightHandler(on);
+                lightHandler(off);
             }
         });
     }
