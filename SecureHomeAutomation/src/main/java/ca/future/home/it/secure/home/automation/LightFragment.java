@@ -55,8 +55,7 @@ public class LightFragment extends Fragment {
     Timer timer = new Timer();
     UserInfo userInfo=new UserInfo();
     public int counter;
-    TextView timerTV, testing, ultrasonicTV,statusOfLightTV;
-    Double distance;
+    TextView timerTV, testing, statusOfLightTV;
 
     View view;
 
@@ -75,7 +74,6 @@ public class LightFragment extends Fragment {
     Vibrator vibrator;
 
     Boolean cancelTimer;
-    TextView ultrasonicET;
 
     //Scheduler
     ImageButton timerBTN, schedulerBTN;
@@ -124,10 +122,8 @@ public class LightFragment extends Fragment {
     private void init() {
 
         timerTV = view.findViewById(R.id.timerTV);
-        ultrasonicTV = view.findViewById(R.id.distanceOut);
         timerBTN = view.findViewById(R.id.timerButton);
         schedulerBTN = view.findViewById(R.id.schedulerButton);
-        ultrasonicET = view.findViewById(R.id.Ultrasonic);
         testing = view.findViewById(R.id.testing);
         ivLightOff=view.findViewById(R.id.light_off);
         ivLightOn=view.findViewById(R.id.light_on);
