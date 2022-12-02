@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,8 +37,12 @@ public class ProfileEditFragment extends Fragment {
     private FloatingActionButton changeProfileImageButton;
     private Button saveChanges;
     private Button changePassword;
+    private EditText eName;
+    private EditText eEmail;
+    private EditText ePhoneNumber;
     Uri imageUri;
     View view;
+    UserInfo userInfo=new UserInfo();
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -78,6 +83,10 @@ public class ProfileEditFragment extends Fragment {
         changeProfileImageButton = view.findViewById(R.id.editProfileImageIcon);
         changePassword = view.findViewById(R.id.editProfileChangePasswordButton);
         saveChanges = view.findViewById(R.id.editProfileSaveChanges);
+        eName = view.findViewById(R.id.editProfilePersonName);
+        eEmail = view.findViewById(R.id.editProfilePersonEmail);
+        ePhoneNumber = view.findViewById(R.id.editProfilePersonPhone);
+        userinfo();
         changeProfileImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +115,35 @@ public class ProfileEditFragment extends Fragment {
 
         return view;
     }
+    private void userinfo() {
 
+        userInfo.typeAccount();
+
+        if (userInfo.localEmail!=null){
+            eEmail.setText(userInfo.localEmail);
+        }
+        if (userInfo.personEmail!=null){
+            eEmail.setText(userInfo.emailInfo);
+        }
+        else
+            eEmail.setText(R.string.noInfo);
+
+        if (userInfo.localName!=null){
+            eName.setText(userInfo.localName);
+        }
+        if (userInfo.nameInfo!=null){
+            eName.setText(userInfo.nameInfo);
+            if(userInfo.personPhoto!=null) {
+                imageUri=userInfo.personPhoto;
+            }
+            else {
+                imageUri=null;
+            }
+        }
+        else{
+            eName.setText(R.string.noInfo);
+        }
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
