@@ -13,8 +13,7 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/light_off"
@@ -67,12 +66,13 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_scheduler"
         android:layout_width="367dp"
-        android:layout_height="153dp"
-        android:layout_marginBottom="200dp"
+        android:layout_height="135dp"
+        android:layout_marginBottom="55dp"
         app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scheduleLog">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="352dp"
@@ -81,8 +81,8 @@
 
             <ImageButton
                 android:id="@+id/schedulerButton"
-                android:layout_width="94dp"
-                android:layout_height="92dp"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="32dp"
                 android:background="#BDBDBD"
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="100dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -132,15 +132,15 @@
                 android:id="@+id/testing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginEnd="116dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/timerButton"
-                android:layout_width="94dp"
-                android:layout_height="92dp"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="28dp"
                 android:background="#BDBDBD"
@@ -163,7 +163,8 @@
         android:textColor="#000000"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/cv_scheduler"
+
+        app:layout_constraintBottom_toTopOf="@+id/scheduleLog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statusOfLight"
         tools:ignore="TextViewEdits,TouchTargetSizeCheck" />
@@ -213,6 +214,29 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scheduleLog"
+        android:layout_width="367dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="250dp"
+        android:background="@drawable/scroll_view_border"
+        android:fillViewport="true"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:id="@+id/liner_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline8"
