@@ -124,8 +124,10 @@ public class AccountFragment extends Fragment {
                         Toast.makeText(getContext(), "Signed Out", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }else if(signInType == 2){
-
+            }else{
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(), "Signed Out", Toast.LENGTH_SHORT).show();
             }
 
         });
