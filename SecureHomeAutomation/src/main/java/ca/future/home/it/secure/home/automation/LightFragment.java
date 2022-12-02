@@ -81,7 +81,7 @@ public class LightFragment extends Fragment {
     ImageButton timerBTN, schedulerBTN;
     int hour, minute;
 
-    public static String statusOfLight,dist,dataOut;
+    public static String statusOfLight,dist,scheduleDate,scheduleTime;
 
     //Notifications
     NotificationChannel channel;
@@ -106,6 +106,7 @@ public class LightFragment extends Fragment {
         init();
         StartTimer();
         Status();
+
         return view;
     }
 
@@ -159,6 +160,8 @@ public class LightFragment extends Fragment {
             Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
             getActivity().startActivity(myIntent);
         });
+        Log.d(TAG,"Schedule time from ScheduleActivity to LightFragment is:\t"+scheduleTime);
+        Log.d(TAG,"Schedule time from ScheduleActivity to LightFragment is:\t"+scheduleDate);
     }
 
 
@@ -180,18 +183,12 @@ public class LightFragment extends Fragment {
         handlerTask.run();
     }
 
-    private String sendData(String Status) {
-        dataOut=Status;
-        return dataOut;
-    }
-
     private void Status(){
         Log.d(TAG,"Confirm Status method is working!!!"+LightStatus);
 
-        if(Objects.equals(LightStatus, "On")){
+        if(Objects.equals(LightStatus, on)){
             Log.d(TAG,"Confirm it is on!!!\t"+LightStatus);
             lightsOn.setChecked(true);
-            LightStatus = on;
             lightsOn.setBackgroundResource(R.drawable.status_border_green);
             ivLightOff.setVisibility(View.INVISIBLE);
             ivLightOn.setVisibility(View.VISIBLE);
@@ -210,7 +207,7 @@ public class LightFragment extends Fragment {
                 lightsOn.setBackgroundResource(R.drawable.status_border_green);
                 ivLightOff.setVisibility(View.INVISIBLE);
                 ivLightOn.setVisibility(View.VISIBLE);
-                sendData(on);
+                statusOfLight=on;
 
             }
             else {
@@ -218,7 +215,7 @@ public class LightFragment extends Fragment {
                 lightsOn.setBackgroundResource(R.drawable.status_border_red);
                 ivLightOn.setVisibility(View.INVISIBLE);
                 ivLightOff.setVisibility(View.VISIBLE);
-                sendData(off);
+                statusOfLight=off;
             }
         });
     }
@@ -246,7 +243,7 @@ public class LightFragment extends Fragment {
                 public void onTick(long millisUntilFinished) {
                     int count=counter;
                     Log.d(TAG, String.valueOf(count));
-                    sendData(on);
+                    statusOfLight=on;
                     LightStatus=on;
                     Status();
                     counter++;
@@ -256,7 +253,7 @@ public class LightFragment extends Fragment {
                     timerTV.setText(R.string.lightOff);
                     LightStatus=off;
                     Status();
-                    sendData(off);
+                    statusOfLight=off;
                     counter = 0;
                     hour = 0;
                     minute = 0;

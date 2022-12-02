@@ -37,6 +37,7 @@ import java.util.Objects;
 public class DatabaseActivity extends Fragment {
     UserInfo userInfo=new UserInfo();
     LightFragment lightFragment=new LightFragment();
+    DoorFragment doorFragment=new DoorFragment();
 
 
     //Database
@@ -52,11 +53,12 @@ public class DatabaseActivity extends Fragment {
     //Key string
     String finalDoorKey,localKey,key,personalKey,strDate,
             finalSensorKey, finalStatusKey,statusKey,SensorKey,doorKey,maxKey,minKey,finalMaxKey,finalMinKey,
-            finalWindowBreak,windowBKey;
+            finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey;
 
     //Database String
-    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin;
-    String outDoor,outLight,outDist,outWindow,outMax,outMin;
+    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime;
+    String outDoor,outLight,outDist,outWindow,outMax,outMin,outScheduleDate,outScheduleTime;
+
     int min,max;
     private Handler handler;
     private Runnable handlerTask;
@@ -99,6 +101,9 @@ public class DatabaseActivity extends Fragment {
         maxKey=getApplicationContext().getString(R.string.tempmax);
         minKey=getApplicationContext().getString(R.string.tempmin);
         windowBKey=getApplicationContext().getString(R.string.windowBreakKey);
+        scheduleKey= getApplicationContext().getString(R.string.schedKey);
+
+
 
     }
     public void dbID(){
@@ -121,6 +126,8 @@ public class DatabaseActivity extends Fragment {
         //Light related user key:
         finalStatusKey =key+statusKey;
         finalSensorKey =key+SensorKey;
+        finaldateKey=key+scheduleKey+getApplicationContext().getString(R.string.dayKey);
+        finalTimeKey=key+scheduleKey+getApplicationContext().getString(R.string.timeKey);
 
         //Temp related user key:
         finalMaxKey=key+maxKey;
@@ -128,8 +135,6 @@ public class DatabaseActivity extends Fragment {
         //Window related user key:
         finalWindowBreak=key+windowBKey;
 
-        //Log key to confirm for testing
-        Log.d(TAG,"Key grabbed from DatabaseClass: \n"+finalDoorKey+"\n"+finalStatusKey+"\n"+finalSensorKey+"\n"+finalMaxKey+"\n"+finalMinKey+"\n"+finalWindowBreak);
     }
 
 
@@ -154,6 +159,7 @@ public class DatabaseActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     DBDoor= Objects.requireNonNull(snapshot.getValue()).toString();
+                    Log.d(TAG,"Test Door DB"+DBDoor);
                     DoorDBAction();
                 }
                 else {
@@ -208,7 +214,8 @@ public class DatabaseActivity extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    DBLight= Objects.requireNonNull(snapshot.getValue()).toString();//on or off
+                    DBLight= Objects.requireNonNull(snapshot.getValue()).toString();
+                    Log.d(TAG,"DATABASE ACTIVITY SAYS THAT THE LIGHT IS:"+DBLight);
                     LightStatusDBAction();
                 }
                 else {
@@ -220,6 +227,7 @@ public class DatabaseActivity extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalSensorKey));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -230,6 +238,39 @@ public class DatabaseActivity extends Fragment {
                 }
                 else {
                     Log.d(TAG, "Distance Status No Current Value");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        //Schedule
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finaldateKey));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    DBScheduleDay= Objects.requireNonNull(snapshot.getValue()).toString();
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child((finalTimeKey));
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                              DBScheduleTime=Objects.requireNonNull(snapshot.getValue()).toString();
+                              ScheduleDBAction();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+                }
+                else {
+
                 }
             }
 
@@ -259,14 +300,18 @@ public class DatabaseActivity extends Fragment {
 
 
     }
+
+    private void ScheduleDBAction() {
+
+    }
+
     //Window Action
     private void WindowDBAction() {
         Log.d(TAG,"Status of Window is: "+DBWindow);
     }
 
     //Light Action
-    public void LightStatusDBAction() {
-        //outLight=DBLight;
+    private void LightStatusDBAction() {
         lightFragment.statusOfLight=(DBLight);
         Log.d(TAG,"2002 light fragment status led is :\t"+lightFragment.statusOfLight);
 
@@ -295,26 +340,45 @@ public class DatabaseActivity extends Fragment {
     }
     //Door action
     private void DoorDBAction() {
-        Log.d(TAG,"Door Status"+DBDoor);
+        doorFragment.statusofDoor=(DBDoor);
+        Log.d(TAG,"2002 door fragment status led is :\t"+doorFragment.statusofDoor);
+
     }
+
     private void sendDataStrings(){
 
-        outLight=lightFragment.dataOut;
+        outLight=lightFragment.statusOfLight;
+        outScheduleDate=lightFragment.scheduleDate;
+        outDoor=doorFragment.statusofDoor;
+
+
         if (outLight!=null) {
             Log.d(TAG, "Testing data for sending data to db " + outLight);
             toDatabase();
         }
-        else{
-
+        if (outScheduleDate!=null){
+            Log.d(TAG, "Testing data for sending data to db " + outScheduleDate);
+            toDatabase();
         }
+        if (outDoor!=null){
+            Log.d(TAG, "Testing data for sending data to db " + outDoor);
+            toDatabase();
+        }
+
     }
     //FOR DOOR LOCK
     public void toDatabase(){
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseActivity.context = getApplicationContext();
 
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
+        databaseReference.setValue(outDoor);
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
         databaseReference.setValue(outLight);
+
 
 
     }

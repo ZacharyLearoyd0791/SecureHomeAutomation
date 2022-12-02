@@ -80,6 +80,8 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     DatabaseActivity databaseActivity = new DatabaseActivity();
+    //LightFragment lightFragment=new LightFragment();
+    DoorFragment doorFragment=new DoorFragment();
 
     //Date
     DateFormat dateFormat;
@@ -93,8 +95,10 @@ public class HomeFragment extends Fragment {
     boolean retrieveKey;
     String lock;
     String unlock;
-    String doorStatus;
+    String doorStatus,lightStatus;
 
+    private Handler handlerRun;
+    private Runnable handlerTask;
     public HomeFragment() {
     }
 
@@ -102,14 +106,38 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        databaseActivity.Activity();
         init();
         greeting();
+        StartTimer();
         lock= getString(R.string.lock_status);
         unlock=getString(R.string.unlocked_status);
-        databaseActivity.Activity();
         Bundle bundle = new Bundle();
 
         return view;
+    }
+    void StartTimer(){
+        handlerRun = new Handler();
+        handlerTask = new Runnable()
+        {
+            @Override
+            public void run() {
+                // do something
+                changeState();
+
+                handler.postDelayed(handlerTask, 1000);
+            }
+        };
+        handlerTask.run();
+    }
+    private void changeState() {
+        databaseActivity.Activity();
+
+        doorStatus=databaseActivity.outDoor;
+        //lightStatus=databaseActivity.outLight;
+        Log.d(TAG,"Homefragment says that door is: "+doorStatus);
+        Log.d(TAG,"Homefragment says that Light is: "+lightStatus);
     }
 
     private void init(){
@@ -133,6 +161,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void greeting(){
+        date = new Date();
+        cal = Calendar.getInstance();
+        cal.setTime(date);
+        hour = cal.get(Calendar.HOUR_OF_DAY);
         greetingsText = view.findViewById(R.id.Greetings);
         greetingsText.setText(null);
 

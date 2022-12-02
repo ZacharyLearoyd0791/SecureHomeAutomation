@@ -35,16 +35,17 @@ import android.widget.ToggleButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DoorFragment extends Fragment{
 
+    View view;
     //Door status
     ToggleButton doorLock;
     TextView status;
@@ -62,49 +63,92 @@ public class DoorFragment extends Fragment{
     LinearLayout linearLayout;
 
     //Database
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+
 
     //String
-    String idKey,localKey,key,personalKey,strDate;
+    String idKey,localKey,key,personalKey,strDate,statusDoor;
+    public static String statusofDoor;
 
     //Date
     Date date;
     DateFormat dateFormat;
 
-    //Classes called
-    UserInfo userInfo=new UserInfo();
-    DatabaseActivity databaseActivity = new DatabaseActivity();
+    private Handler handlerRun;
+    private Runnable handlerTask;
 
     public DoorFragment() {
     }
+    void StartTimer(){
+        handlerRun = new Handler();
+        handlerTask = new Runnable()
+        {
+            @Override
+            public void run() {
+                // do something
+                statusDoor=statusofDoor;
+                status.setText(statusDoor);
 
+                handler.postDelayed(handlerTask, 1000);
+            }
+        };
+        handlerTask.run();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_door, container, false);
+        view= inflater.inflate(R.layout.fragment_door, container, false);
+        init();
+        StartTimer();
+        action();
+        return view;
     }
     @Override
-    public void onViewCreated (View view, Bundle savedInstanceState){
+    public void onViewCreated (View view, Bundle savedInstanceState) {
         //dbID();
 
-        //Door status
-        doorLock=view.findViewById(R.id.doorLockBtn);
-        status=view.findViewById(R.id.statusofDoor);
-        locked=view.findViewById(R.id.iv_locked);
-        unlocked=view.findViewById(R.id.iv_unlocked);
+    }
 
-        //Manage keys
-        cardView=view.findViewById(R.id.cv_keys);
-        cardView.setBackgroundResource(R.drawable.cardview_border);
-        addKey=view.findViewById(R.id.add_key_btn);
-        removeKey=view.findViewById(R.id.remove_key_btn);
+    private void action() {
+        if(Objects.equals(statusDoor, getString(R.string.lock))){
+            Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
+            status.setText(R.string.lock);
+            locked.setVisibility(View.VISIBLE);
+            unlocked.setVisibility(View.INVISIBLE);
+            doorLock.setBackgroundResource(R.drawable.status_border_green);
+            statusofDoor=getString(R.string.lock);
+        }
+        else if(Objects.equals(statusDoor, getString(R.string.unlock))){
+            Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
+            status.setText(R.string.unlock);
+            unlocked.setVisibility(View.VISIBLE);
+            locked.setVisibility(View.INVISIBLE);
+            doorLock.setBackgroundResource(R.drawable.status_border_red);
 
+        }
+        doorLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
+                status.setText(R.string.lock);
+                locked.setVisibility(View.VISIBLE);
+                unlocked.setVisibility(View.INVISIBLE);
+                doorLock.setBackgroundResource(R.drawable.status_border_green);
+                statusofDoor=getString(R.string.lock);
+
+            } else {
+                Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
+                status.setText(R.string.unlock);
+                unlocked.setVisibility(View.VISIBLE);
+                locked.setVisibility(View.INVISIBLE);
+                doorLock.setBackgroundResource(R.drawable.status_border_red);
+                statusofDoor=getString(R.string.unlock);
+
+
+            }
+        });
         //Door status unlocked by default for testing
-        locked.setVisibility(View.INVISIBLE);
-        doorLock.setBackgroundResource(R.drawable.status_border_red);
-        status.setText(R.string.unlock);
-
+        /*locked.setVisibility(View.INVISIBLE);
+        doorLock.setBackgroundResource(R.drawable.status_border_red);*/
+        //status.setText(R.string.unlock);
         //Door history
         linearLayout=view.findViewById(R.id.linear_history);
         addHistory(getString(R.string.sample_4));
@@ -117,28 +161,8 @@ public class DoorFragment extends Fragment{
         addHistory(getString(R.string.sample_4));
         addHistory(getString(R.string.sample_2));
 
-        doorLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
-                status.setText(R.string.lock);
-                locked.setVisibility(View.VISIBLE);
-                unlocked.setVisibility(View.INVISIBLE);
-                doorLock.setBackgroundResource(R.drawable.status_border_green);
-                toDatabase(getString(R.string.lock_status));
-                //databaseActivity.toDatabase(getString(R.string.lock_status));
-                //databaseActivity.toDatabase(getApplicationContext().getString(R.string.lock_status));
 
-            } else {
-                Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
-                status.setText(R.string.unlock);
-                unlocked.setVisibility(View.VISIBLE);
-                locked.setVisibility(View.INVISIBLE);
-                doorLock.setBackgroundResource(R.drawable.status_border_red);
-                toDatabase(getString(R.string.unlocked_status));
-                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
-                //databaseActivity.toDatabase(getApplicationContext().getString(R.string.unlocked_status));
-            }
-        });
+
 
         //Add key
         addKey.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +177,20 @@ public class DoorFragment extends Fragment{
             public void onClick(View view) {
                 removeKey();
             }});
+    }
+
+
+    private void init() {
+        doorLock=view.findViewById(R.id.doorLockBtn);
+        status=view.findViewById(R.id.statusofDoor);
+        locked=view.findViewById(R.id.iv_locked);
+        unlocked=view.findViewById(R.id.iv_unlocked);
+
+        //Manage keys
+        cardView=view.findViewById(R.id.cv_keys);
+        cardView.setBackgroundResource(R.drawable.cardview_border);
+        addKey=view.findViewById(R.id.add_key_btn);
+        removeKey=view.findViewById(R.id.remove_key_btn);
     }
 
     public void addHistory(String info){
@@ -217,37 +255,7 @@ public class DoorFragment extends Fragment{
         removeAlert.show();
     }
 
-    public void toDatabase(String status){
-        dbID();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
 
-        databaseReference.setValue(status);
-        Map<String, Object> updateStatus = new HashMap<>();
-        updateStatus.put(getString(R.string.status),status);
-
-        databaseReference.updateChildren(updateStatus);
-    }
-    private void dbID(){
-        userInfo.typeAccount();
-        time();
-        //Log.d(TAG,"Time string before key;"+strDate);
-
-        localKey=userInfo.userId;
-        personalKey=userInfo.idInfo;
-
-        if(localKey!=null){
-            key=localKey;
-            Log.d(TAG,key);
-
-        }
-        if(personalKey!=null) {
-            key= personalKey;
-            Log.d(TAG, key);
-        }
-
-        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
-    }
     @SuppressLint("SimpleDateFormat")
     private void time(){
         date = Calendar.getInstance().getTime();
