@@ -332,7 +332,7 @@
     <string name="cancel_temp">Cancel</string>
     <string name="min_temp_min_temp">\"Minimum Temperature could not be saved \"</string>
     <string name="max_temp_text_temp">\"Maximum Temperature could not be saved \"</string>
-    <string name="edit_senor">Edit senor</string>
+    <string name="edit_sensor">Edit senor</string>
     <string name="Humidity">\"Humidity:  \"</string>
     <string name="savings">Saving…</string>
     <string name="savie">Saving…</string>

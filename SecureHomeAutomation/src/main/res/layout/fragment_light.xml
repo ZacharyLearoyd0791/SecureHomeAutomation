@@ -54,7 +54,7 @@
         android:id="@+id/statusOfLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="115dp"
+        android:layout_marginStart="138dp"
         android:layout_marginTop="255dp"
         android:text="@string/lightStatusMSG"
         android:textColor="#000000"
@@ -66,8 +66,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_scheduler"
         android:layout_width="370dp"
-        android:layout_height="135dp"
-        android:layout_marginBottom="60dp"
+        android:layout_height="140dp"
+        android:layout_marginBottom="70dp"
         app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="100dp"
+                android:textColor="#000000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -151,32 +152,6 @@
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/Ultrasonic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:text="@string/ultrasonicSensor"
-        android:textColor="#000000"
-        android:textSize="15sp"
-        android:textStyle="bold"
-
-        app:layout_constraintBottom_toTopOf="@+id/scheduleLog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusOfLight"
-        tools:ignore="TextViewEdits,TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/distanceOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Ultrasonic" />
 
 
     <ImageView
@@ -218,14 +193,15 @@
     <ScrollView
         android:id="@+id/scheduleLog"
         android:layout_width="370dp"
-        android:layout_height="125dp"
-        android:layout_marginBottom="225dp"
+        android:layout_height="163dp"
+        android:layout_marginBottom="200dp"
         android:background="@drawable/scroll_view_border"
         android:fillViewport="true"
         android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusOfLight"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
@@ -243,13 +219,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.18" />
+        app:layout_constraintGuide_begin="138dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.81" />
+        app:layout_constraintGuide_end="130dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
