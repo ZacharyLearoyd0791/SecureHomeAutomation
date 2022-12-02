@@ -12,6 +12,7 @@ package ca.future.home.it.secure.home.automation;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -44,10 +46,10 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
-    UserInfo userInfo=new UserInfo();
+    UserInfo userInfo = new UserInfo();
     StringBuilder stringBuilder;
     public View view;
-    AlphaAnimation fadeIn,fadeOut;
+    AlphaAnimation fadeIn, fadeOut;
 
     //Switches
     public Switch lockSwitch;
@@ -80,25 +82,26 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     DatabaseActivity databaseActivity = new DatabaseActivity();
-    //LightFragment lightFragment=new LightFragment();
-    DoorFragment doorFragment=new DoorFragment();
+    LightFragment lightFragment = new LightFragment();
+    DoorFragment doorFragment = new DoorFragment();
 
     //Date
     DateFormat dateFormat;
-    String morning,afternoon,evening,night;
+    String morning, afternoon, evening, night;
     Date date;
     Calendar cal;
     int hour;
 
     //String
-    String idKey,localKey,key,personalKey,strDate,doorKey;
+    String idKey, localKey, key, personalKey, strDate, doorKey;
     boolean retrieveKey;
     String lock;
     String unlock;
-    String doorStatus,lightStatus;
+    String doorStatus, lightStatus, MinVal, MaxVal, WindowStatus;
 
     private Handler handlerRun;
     private Runnable handlerTask;
+
     public HomeFragment() {
     }
 
@@ -111,34 +114,37 @@ public class HomeFragment extends Fragment {
         init();
         greeting();
         StartTimer();
-        lock= getString(R.string.lock_status);
-        unlock=getString(R.string.unlocked_status);
+        lock = getString(R.string.lock_status);
+        unlock = getString(R.string.unlocked_status);
         Bundle bundle = new Bundle();
 
         return view;
     }
-    void StartTimer(){
+
+    void StartTimer() {
         handlerRun = new Handler();
-        handlerTask = new Runnable()
-        {
+        handlerTask = new Runnable() {
+
             @Override
             public void run() {
                 // do something
                 changeState();
-
-                handler.postDelayed(handlerTask, 1000);
+                handlerTask.run();
             }
         };
-        handlerTask.run();
     }
+
     private void changeState() {
         databaseActivity.Activity();
 
-        doorStatus=databaseActivity.outDoor;
-        //lightStatus=databaseActivity.outLight;
-        Log.d(TAG,"Homefragment says that door is: "+doorStatus);
-        Log.d(TAG,"Homefragment says that Light is: "+lightStatus);
+        doorStatus = databaseActivity.outDoor;
+        lightStatus = databaseActivity.outLight;
+        MinVal = databaseActivity.outMin;
+        MaxVal = databaseActivity.outMax;
+        WindowStatus = databaseActivity.outWindow;
     }
+
+
 
     private void init(){
         //Switches
@@ -172,7 +178,8 @@ public class HomeFragment extends Fragment {
         afternoon=getString(R.string.greetingAfternoon);
         evening=getString(R.string.greetingEvening);
         night=getString(R.string.greetingNight);
-
+        greetingsText.setTypeface(Typeface.DEFAULT_BOLD);
+        greetingsText.setTextSize(20);
         if (hour >= 6 && hour < 12) {
             greetingsText.setText(morning);
         }
