@@ -9,14 +9,11 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
-import static com.facebook.FacebookSdk.getApplicationContext;
 import static java.lang.Thread.sleep;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -38,7 +35,6 @@ import android.widget.ToggleButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -106,7 +102,7 @@ public class DoorFragment extends Fragment{
 
         //Door status unlocked by default for testing
         locked.setVisibility(View.INVISIBLE);
-        doorLock.setBackgroundResource(R.drawable.lock_border_red);
+        doorLock.setBackgroundResource(R.drawable.status_border_red);
         status.setText(R.string.unlock);
 
         //Door history
@@ -127,7 +123,7 @@ public class DoorFragment extends Fragment{
                 status.setText(R.string.lock);
                 locked.setVisibility(View.VISIBLE);
                 unlocked.setVisibility(View.INVISIBLE);
-                doorLock.setBackgroundResource(R.drawable.lock_border_green);
+                doorLock.setBackgroundResource(R.drawable.status_border_green);
                 toDatabase(getString(R.string.lock_status));
                 //databaseActivity.toDatabase(getString(R.string.lock_status));
                 //databaseActivity.toDatabase(getApplicationContext().getString(R.string.lock_status));
@@ -137,7 +133,7 @@ public class DoorFragment extends Fragment{
                 status.setText(R.string.unlock);
                 unlocked.setVisibility(View.VISIBLE);
                 locked.setVisibility(View.INVISIBLE);
-                doorLock.setBackgroundResource(R.drawable.lock_border_red);
+                doorLock.setBackgroundResource(R.drawable.status_border_red);
                 toDatabase(getString(R.string.unlocked_status));
                 //databaseActivity.toDatabase(getString(R.string.unlocked_status));
                 //databaseActivity.toDatabase(getApplicationContext().getString(R.string.unlocked_status));

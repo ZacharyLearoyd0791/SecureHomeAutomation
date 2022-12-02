@@ -27,7 +27,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -59,14 +61,17 @@ public class LightFragment extends Fragment {
     int hour, minute;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    Button lightsOff,lightsOn;
+    Button lightsOff;
     Vibrator vibrator;
     NotificationChannel channel;
     NotificationManager notificationManager;
     NotificationCompat.Builder builder;
 
-    public LightFragment() {
+    //Light toggle button
+    ImageView ivLightOn, ivLightOff;
+    ToggleButton lightsOn;
 
+    public LightFragment() {
     }
 
     @Override
@@ -75,30 +80,23 @@ public class LightFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_light, container, false);
         builder = new NotificationCompat.Builder(getActivity().getApplicationContext(),lightstatusStr);
-        timerTV = view.findViewById(R.id.timerTV);
-        ultrasonicTV = view.findViewById(R.id.distanceOut);
-        timerBTN = view.findViewById(R.id.timerButton);
-        schedulerBTN = view.findViewById(R.id.schedulerButton);
-        ultrasonicET = view.findViewById(R.id.Ultrasonic);
-        testing = view.findViewById(R.id.testing);
-        lightsOff=view.findViewById(R.id.offLights);
-        lightsOn=view.findViewById(R.id.onLights);
-        statusOfLightTV=view.findViewById(R.id.statusOfLight);
+
+
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         on=getString(R.string.on);
         off=getString(R.string.off);
-        status=getString(R.string.lightStautsMSG)+getString(R.string.empty);
+        status=getString(R.string.lightStatusMSG)+getString(R.string.empty);
         light_status=getString(R.string.LightStatus);
         lightState=getString(R.string.Lights);
         chanelDes=getString(R.string.channelDesc);
         value=getString(R.string.distance_from_ultra)+dist+getString(R.string.cm);
-
 
         notificationManager = getContext().getSystemService(NotificationManager.class);
         notificationLT=getString(R.string.notificationLightTitle);
         notificationDesc=getString(R.string.notificationLightDesc);
         lightstatusStr=getString(R.string.LightStatus);
         mangerCompat= NotificationManagerCompat.from(getContext());
+
 
         return view;
     }
@@ -114,9 +112,24 @@ public class LightFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        ivLightOff=view.findViewById(R.id.light_off);
+        ivLightOn=view.findViewById(R.id.light_on);
+        timerTV = view.findViewById(R.id.timerTV);
+        ultrasonicTV = view.findViewById(R.id.distanceOut);
+        timerBTN = view.findViewById(R.id.timerButton);
+        schedulerBTN = view.findViewById(R.id.schedulerButton);
+        ultrasonicET = view.findViewById(R.id.Ultrasonic);
+        testing = view.findViewById(R.id.testing);
+        lightsOn=view.findViewById(R.id.onLights);
+        statusOfLightTV=view.findViewById(R.id.statusOfLight);
+
+        //Light off by default
+        ivLightOn.setVisibility(View.INVISIBLE);
+        ivLightOff.setVisibility(View.VISIBLE);
+        lightsOn.setBackgroundResource(R.drawable.status_border_red);
+
         dbID();
         getStatusofLed();
-
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -147,6 +160,7 @@ public class LightFragment extends Fragment {
 
             }
         });
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(sensorKey);
         //timer and scheduler
@@ -157,16 +171,22 @@ public class LightFragment extends Fragment {
             Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
             getActivity().startActivity(myIntent);
         });
-        lightsOff.setOnClickListener(view13 -> {
-            LightStatus = off;
-            lightHandler(off);
+
+        lightsOn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                LightStatus = off;
+                lightsOn.setBackgroundResource(R.drawable.status_border_green);
+                ivLightOff.setVisibility(View.INVISIBLE);
+                ivLightOn.setVisibility(View.VISIBLE);
+                lightHandler(off);
+            } else {
+                LightStatus = on;
+                lightsOn.setBackgroundResource(R.drawable.status_border_red);
+                ivLightOn.setVisibility(View.INVISIBLE);
+                ivLightOff.setVisibility(View.VISIBLE);
+                lightHandler(on);
+            }
         });
-        lightsOn.setOnClickListener(view12 -> {
-            LightStatus = on;
-            lightHandler(on);});
-
-
-
     }
 
     private void getStatusofLed() {
@@ -208,7 +228,6 @@ public class LightFragment extends Fragment {
         lightKey=key+getString(R.string.statusKey);
         Log.d(TAG,getString(R.string.keyIs)+lightKey);
         sensorKey=key+getString(R.string.db_ultrasonic_dist);
-
 
     }
 

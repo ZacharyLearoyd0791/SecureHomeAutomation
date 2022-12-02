@@ -287,7 +287,7 @@
     <string name="DarkModeString">DarkMode</string>
     <string name="fingerPrintString">FingerPrint</string>
     <string name="screenOrientationString">screenOrientation</string>
-    <string name="lightStautsMSG">Status of Light</string>
+    <string name="lightStatusMSG">Status of Light </string>
     <string name="enter_feedback">Please enter any feedback below:</string>
     <string name="enter_here">Enter here</string>
     <string name="enable_face_lock">Enable Face Lock</string>
@@ -350,4 +350,6 @@
     <string name="savedScheduleToast">Saved To Account</string>
     <string name="app_configuration">App Configuration</string>
     <string name="configure">Configure</string>
+    <string name="windowBreakKey">/Window Status</string>
+    <string name="profile">Profile</string>
 </resources>

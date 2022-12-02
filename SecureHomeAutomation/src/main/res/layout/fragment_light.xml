@@ -9,11 +9,68 @@
     tools:context=".LightFragment">
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/light_off"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="118dp"
+            android:src="@drawable/ic_light_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/light_on"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="118dp"
+        android:src="@drawable/ic_light_green"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/onLights"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginEnd="126dp"
+            android:background="@null"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/statusOfLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="255dp"
+        android:text="@string/lightStatusMSG"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/schedulerButton"
         android:layout_width="94dp"
         android:layout_height="92dp"
-        android:layout_marginTop="325dp"
+        android:layout_marginTop="400dp"
         android:layout_marginEnd="64dp"
         android:background="@color/white"
         android:contentDescription="@string/scheduler"
@@ -29,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="83dp"
-        android:layout_marginTop="288dp"
+        android:layout_marginTop="363dp"
         android:text="@string/timer"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -41,7 +98,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="288dp"
+        android:layout_marginTop="363dp"
         android:layout_marginEnd="65dp"
         android:text="@string/scheduler"
         android:textColor="#000000"
@@ -55,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="344dp"
+        android:layout_marginTop="500dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -64,7 +121,7 @@
         android:id="@+id/testing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="332dp"
+        android:layout_marginTop="500dp"
         android:layout_marginEnd="136dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +131,7 @@
         android:layout_width="94dp"
         android:layout_height="92dp"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="325dp"
+        android:layout_marginTop="400dp"
         android:background="@color/white"
         android:src="@drawable/ic_timer"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="550dp"
         android:importantForAutofill="no"
         android:inputType="text"
         android:text="@string/ultrasonicSensor"
@@ -140,39 +197,6 @@
         android:layout_marginTop="50dp"
         android:text="@string/configuration"
         android:textColor="#CEFFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/offLights"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-        android:layout_marginEnd="55dp"
-        android:text="@string/lightOff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/onLights"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="500dp"
-        android:text="@string/lightOn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/statusOfLight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="190dp"
-        android:text="@string/lightStautsMSG"
-        android:textColor="#000000"
-        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
