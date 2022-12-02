@@ -18,7 +18,9 @@ import android.icu.text.SimpleDateFormat;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,12 +35,14 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DatabaseActivity extends Fragment {
+    UserInfo userInfo=new UserInfo();
+    LightFragment lightFragment=new LightFragment();
+
 
     //Database
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    UserInfo userInfo=new UserInfo();
     static Context context;
 
     //Date
@@ -48,22 +52,42 @@ public class DatabaseActivity extends Fragment {
     //Key string
     String finalDoorKey,localKey,key,personalKey,strDate,
             finalSensorKey, finalStatusKey,statusKey,SensorKey,doorKey,maxKey,minKey,finalMaxKey,finalMinKey,
-                finalWindowBreak,windowBKey;
+            finalWindowBreak,windowBKey;
 
     //Database String
     String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin;
+    String outDoor,outLight,outDist,outWindow,outMax,outMin;
     int min,max;
-
+    private Handler handler;
+    private Runnable handlerTask;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Activity();
+    }
+    void StartTimer(){
+        handler = new Handler();
+        handlerTask = new Runnable()
+        {
+            @Override
+            public void run() {
+                // do something
+                sendDataStrings();
+                handler.postDelayed(handlerTask, 1000);
+            }
+        };
+        handlerTask.run();
     }
     public void Activity(){
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         Log.d(TAG, "DatabaseActivity Active!");
         time();
+        initString();
+        dbID();
+        getDB();
+        StartTimer();
 
     }
 
@@ -75,7 +99,6 @@ public class DatabaseActivity extends Fragment {
         maxKey=getApplicationContext().getString(R.string.tempmax);
         minKey=getApplicationContext().getString(R.string.tempmin);
         windowBKey=getApplicationContext().getString(R.string.windowBreakKey);
-        dbID();
 
     }
     public void dbID(){
@@ -107,7 +130,6 @@ public class DatabaseActivity extends Fragment {
 
         //Log key to confirm for testing
         Log.d(TAG,"Key grabbed from DatabaseClass: \n"+finalDoorKey+"\n"+finalStatusKey+"\n"+finalSensorKey+"\n"+finalMaxKey+"\n"+finalMinKey+"\n"+finalWindowBreak);
-        getDB();
     }
 
 
@@ -123,7 +145,6 @@ public class DatabaseActivity extends Fragment {
         }
         System.out.println("Converted String: " + strDate);
         Log.d(TAG,"STR Time: "+strDate);
-        initString();
     }
     public void getDB(){
         //door
@@ -133,7 +154,7 @@ public class DatabaseActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     DBDoor= Objects.requireNonNull(snapshot.getValue()).toString();
-                    DoorDBAction(DBDoor);
+                    DoorDBAction();
                 }
                 else {
                     Log.d(TAG, "Door Status No Current Value");
@@ -159,7 +180,7 @@ public class DatabaseActivity extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()) {
                                 DBMin= Objects.requireNonNull(snapshot.getValue().toString());
-                                TemperatureDBAction(DBMax,DBMin);
+                                TemperatureDBAction();
                             }
                             else {
                                 Log.d(TAG, "Temperature  No Current Value");
@@ -188,7 +209,7 @@ public class DatabaseActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     DBLight= Objects.requireNonNull(snapshot.getValue()).toString();//on or off
-                    LightStatusDBAction(DBLight);
+                    LightStatusDBAction();
                 }
                 else {
                     Log.d(TAG, "Light Status No Current Value");
@@ -205,7 +226,7 @@ public class DatabaseActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     DBDist= Objects.requireNonNull(snapshot.getValue()).toString();//on or off
-                    DistDBAction(DBDist);
+                    DistDBAction();
                 }
                 else {
                     Log.d(TAG, "Distance Status No Current Value");
@@ -224,7 +245,7 @@ public class DatabaseActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     DBWindow= Objects.requireNonNull(snapshot.getValue()).toString();
-                    WindowDBAction(DBWindow);
+                    WindowDBAction();
                 }
                 else {
                     Log.d(TAG, "Window Status No Current Value");
@@ -237,52 +258,64 @@ public class DatabaseActivity extends Fragment {
         });
 
 
-        }
-//Window Action
-    private void WindowDBAction(String dbWindow) {
-        Log.d(TAG,"Status of Window is: "+dbWindow);
     }
-    
+    //Window Action
+    private void WindowDBAction() {
+        Log.d(TAG,"Status of Window is: "+DBWindow);
+    }
+
     //Light Action
-    private void LightStatusDBAction(String dbLight) {
-        Log.d(TAG,"Status of Light is: "+dbLight);
+    public void LightStatusDBAction() {
+        //outLight=DBLight;
+        lightFragment.statusOfLight=(DBLight);
+        Log.d(TAG,"2002 light fragment status led is :\t"+lightFragment.statusOfLight);
+
     }
-    private void DistDBAction(String dbDist) {
-        Log.d(TAG,"Current Distance on sensor is: "+dbDist);
+    private void DistDBAction() {
+        lightFragment.dist=(DBDist);
+        Log.d(TAG,"Current Distance on sensor is: "+lightFragment.dist);
     }
 
     //Temperature action
-    private void TemperatureDBAction(String dbMax, String dbMin) {
+    private void TemperatureDBAction() {
         try{
-            max = Integer.parseInt(dbMax);
+            max = Integer.parseInt(DBMax);
             Log.d(TAG,"Max value:\t"+max);
         }
         catch (NumberFormatException ex){
             ex.printStackTrace();
         }
         try{
-            min = Integer.parseInt(dbMin);
+            min = Integer.parseInt(DBMin);
             Log.d(TAG,"Min value:\t"+min);
         }
         catch (NumberFormatException ex){
             ex.printStackTrace();
         }
     }
-//Door action
-    private void DoorDBAction(String dbDoor) {
-        Log.d(TAG,"Door Status"+dbDoor);
+    //Door action
+    private void DoorDBAction() {
+        Log.d(TAG,"Door Status"+DBDoor);
     }
+    private void sendDataStrings(){
 
+        outLight=lightFragment.dataOut;
+        if (outLight!=null) {
+            Log.d(TAG, "Testing data for sending data to db " + outLight);
+            toDatabase();
+        }
+        else{
+
+        }
+    }
     //FOR DOOR LOCK
-    public void toDatabase(String status){
-        DatabaseActivity.context = getApplicationContext();
+    public void toDatabase(){
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalSensorKey));
+        DatabaseActivity.context = getApplicationContext();
 
-        databaseReference.setValue(status);
-        Map<String, Object> updateStatus = new HashMap<>();
-        updateStatus.put(getString(R.string.status),status);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
+        databaseReference.setValue(outLight);
 
-        databaseReference.updateChildren(updateStatus);
+
     }
 }

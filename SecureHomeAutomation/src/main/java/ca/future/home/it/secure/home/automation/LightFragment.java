@@ -63,10 +63,11 @@ public class LightFragment extends Fragment {
     private Runnable handlerTask;
 
     //Strings
-    String dist,value,key,localKey,personalKey,lightKey,sensorKey,
-            statusOfLight,LightStatus,on,off,status,status_light,statusOn,
-            statusOff,light_status,lightState,chanelDes,
-            notificationLT,notificationDesc,lightstatusStr, StatusOut,distOut,noVal;
+
+    String value,LightStatus,on,off,status,
+                status_light,statusOn,
+                    statusOff,light_status,lightState,chanelDes,
+                        notificationLT,notificationDesc,lightstatusStr, StatusOut,noVal;
 
     //Device vibrate
     VibrationEffect vibrationEffect;
@@ -79,10 +80,7 @@ public class LightFragment extends Fragment {
     ImageButton timerBTN, schedulerBTN;
     int hour, minute;
 
-    //Database
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-    public static String dataOut;
+    public static String statusOfLight,dist,dataOut;
 
     //Notifications
     NotificationChannel channel;
@@ -104,17 +102,8 @@ public class LightFragment extends Fragment {
         initString();
         init();
         StartTimer();
-
         Status();
         return view;
-    }
-
-    private void notificationCaller() {
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
-            channel = new NotificationChannel(light_status, lightState, NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(chanelDes);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 
     private void initString() {
@@ -175,6 +164,7 @@ public class LightFragment extends Fragment {
                 sendData(off);
             }
         });
+        timerBTN.setOnClickListener(view1 -> popTimePicker());
     }
 
     void StartTimer(){
@@ -211,4 +201,52 @@ public class LightFragment extends Fragment {
             Log.d(TAG,"Confirm it is off!!!\t"+LightStatus);
         }
     }
+
+    public void popTimePicker() {
+        hour = 0;
+        minute = 0;
+
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> {
+            counter = 0;
+            int milli = 0;
+            int second = 1000;
+            hour = selectedHour;
+            minute = selectedMinute;
+            String timeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
+            Log.d(TAG, timeout);
+            String timeOut = getString(R.string.timeSet) + timeout;
+            timerTV.setText(timeOut);
+
+            int hourmilli = hour * 600000;
+            int minmilli = minute * 60000;
+            milli = hourmilli + minmilli;
+
+            new CountDownTimer(milli, second) {
+                public void onTick(long millisUntilFinished) {
+                    int count=counter;
+                    Log.d(TAG, String.valueOf(count));
+                    sendData(on);
+                    counter++;
+                }
+
+                public void onFinish() {
+                    timerTV.setText(R.string.lightOff);
+                    sendData(off);
+                    counter = 0;
+                    hour = 0;
+                    minute = 0;
+                }
+            }.start();
+        };
+        counter = 0;
+
+        int style = AlertDialog.THEME_HOLO_DARK;
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), style, onTimeSetListener, hour, minute, true);
+
+        timePickerDialog.setTitle(getString(R.string.Timer));
+        timePickerDialog.show();
+
+    }
+
 }
