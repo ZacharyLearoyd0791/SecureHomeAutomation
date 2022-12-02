@@ -369,7 +369,7 @@
     <string name="light_status">Light Status</string>
     <string name="schedKey" translatable="false">/Schedule</string>
     <string name="noID">NoID</string>
-    <string name="exitScheduleMsg">Nothing will be saved</string>
+    <string name="exitScheduleMsg">Any Un-Saved Changes will Not be saved!!!</string>
     <string name="ratings">Ratings</string>
     <string name="savedScheduleToast">Saved To Account</string>
     <string name="app_configuration">App Configuration</string>

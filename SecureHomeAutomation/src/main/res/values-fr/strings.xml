@@ -352,4 +352,6 @@
     <string name="configure">Configure</string>
     <string name="windowBreakKey">/Window Status</string>
     <string name="profile">Profile</string>
+    <string name="NoVal">No value</string>
+
 </resources>

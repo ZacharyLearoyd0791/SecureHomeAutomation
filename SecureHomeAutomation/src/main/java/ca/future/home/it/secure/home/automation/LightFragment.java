@@ -165,6 +165,10 @@ public class LightFragment extends Fragment {
             }
         });
         timerBTN.setOnClickListener(view1 -> popTimePicker());
+        schedulerBTN.setOnClickListener(view1 -> {
+            Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
+            getActivity().startActivity(myIntent);
+        });
     }
 
     void StartTimer(){
