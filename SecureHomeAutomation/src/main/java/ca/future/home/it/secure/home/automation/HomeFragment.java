@@ -149,7 +149,6 @@ public class HomeFragment extends Fragment {
     private void init(){
         //Switches
         lockSwitch = view.findViewById(R.id.sw_lock);
-        tempSwitch = view.findViewById(R.id.sw_temp);
         lightSwitch = view.findViewById(R.id.sw_light);
         windowSwitch = view.findViewById(R.id.sw_window);
 
@@ -216,6 +215,7 @@ public class HomeFragment extends Fragment {
                     }
 
                 }
+                //lock switch
                 lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if (isChecked) {
                         doorView.setVisibility(View.INVISIBLE);
@@ -288,14 +288,6 @@ public class HomeFragment extends Fragment {
         //Switches selected
         //lock switch
 
-        //temperature switch
-        tempSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                tempView.setVisibility(View.INVISIBLE);
-            } else {
-                tempView.setVisibility(View.VISIBLE);
-            }
-        });
         //light switch
         lightSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {

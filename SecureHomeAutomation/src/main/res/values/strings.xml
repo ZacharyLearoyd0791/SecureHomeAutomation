@@ -377,6 +377,7 @@
     <string name="profile">Profile</string>
     <string name="NoVal">No value</string>
     <string name="local_network_bluetooth"><![CDATA[Local Network & Bluetooth]]></string>
+    <string name="quick_access_status"><![CDATA[*Status of sensors & enable/disable quick options*]]></string>
 
 
 </resources>
