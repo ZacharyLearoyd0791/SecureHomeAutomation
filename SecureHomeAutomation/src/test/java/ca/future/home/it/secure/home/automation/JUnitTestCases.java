@@ -33,5 +33,11 @@ public class JUnitTestCases {
         Assert.assertEquals(compare,"Not Same");
     }
 
+    @Test
+    public void testB() {
+
+        Assert.assertEquals(sum(7,9),16);
+        Assert.assertNotEquals(sum(8,4),4);
+    }
 
 }
