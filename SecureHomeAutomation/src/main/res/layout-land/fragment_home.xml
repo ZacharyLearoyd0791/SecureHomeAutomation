@@ -251,17 +251,6 @@
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/temp_custom" />
 
-                <Switch
-                    android:id="@+id/sw_temp"
-                    android:layout_width="120dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/tempInfo"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/off_on"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-
             </RelativeLayout>
 
 
