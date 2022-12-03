@@ -43,6 +43,7 @@ public class ProfileEditFragment extends Fragment {
     Uri imageUri;
     View view;
     UserInfo userInfo=new UserInfo();
+    String DBName,DBEmail,DBPhone,DBImage;
 
 
     private static final String ARG_PARAM1 = "param1";

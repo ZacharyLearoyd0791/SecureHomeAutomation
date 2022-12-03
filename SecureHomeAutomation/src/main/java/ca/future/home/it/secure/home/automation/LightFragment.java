@@ -152,10 +152,10 @@ public class LightFragment extends Fragment {
 
         cardView.setBackgroundResource(R.drawable.cardview_border);
         timerBTN.setOnClickListener(view1 -> popTimePicker());
-        schedulerBTN.setOnClickListener(view1 -> {
+        /*schedulerBTN.setOnClickListener(view1 -> {
             Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
             getActivity().startActivity(myIntent);
-        });
+        });*/
         Log.d(TAG,"Schedule time from ScheduleActivity to LightFragment is:\t"+scheduleTime);
         Log.d(TAG,"Schedule time from ScheduleActivity to LightFragment is:\t"+scheduleDate);
     }
