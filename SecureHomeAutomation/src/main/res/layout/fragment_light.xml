@@ -13,7 +13,9 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/light_off"
@@ -67,38 +69,22 @@
         android:id="@+id/cv_scheduler"
         android:layout_width="370dp"
         android:layout_height="140dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="200dp"
         app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleLog">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="352dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <ImageButton
-                android:id="@+id/schedulerButton"
-                android:layout_width="100dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="32dp"
-                android:background="#BDBDBD"
-                android:contentDescription="@string/scheduler"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_scheduler"
-                app:icon="@drawable/ic_scheduler"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
-
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
+                android:layout_marginStart="145dp"
                 android:text="@string/timer"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -107,42 +93,21 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:text="@string/scheduler"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/timerTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="130dp"
                 android:layout_marginTop="100dp"
                 android:textColor="#000000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <TextView
-                android:id="@+id/testing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="116dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <ImageButton
                 android:id="@+id/timerButton"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginTop="28dp"
                 android:background="#BDBDBD"
                 android:src="@drawable/ic_timer"
@@ -189,30 +154,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
-        android:id="@+id/scheduleLog"
-        android:layout_width="370dp"
-        android:layout_height="163dp"
-        android:layout_marginBottom="200dp"
-        android:background="@drawable/scroll_view_border"
-        android:fillViewport="true"
-        android:padding="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusOfLight"
-        tools:ignore="SpeakableTextPresentCheck">
-
-        <LinearLayout
-            android:id="@+id/liner_schedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-    </ScrollView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline8"
