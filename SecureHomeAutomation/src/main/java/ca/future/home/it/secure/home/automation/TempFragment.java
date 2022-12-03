@@ -55,7 +55,6 @@ public class TempFragment extends Fragment {
     TextView tvHumidity;
     Button btnMaxTemp;
     Button btnMinTemp;
-    ImageButton scheduleButton;
     FirebaseDatabase database;
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
@@ -95,7 +94,6 @@ public class TempFragment extends Fragment {
         btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
-        scheduleButton = view.findViewById(R.id.schedulerButton);
         minTempRef = database.getReference(minkey);
         maxTempRef = database.getReference(maxkey);
         setTemperatureView(temperatureView);
@@ -142,13 +140,7 @@ public class TempFragment extends Fragment {
                 showDialogForInputTemperature(false);
             }
         });
-        scheduleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),SchedulerActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
@@ -161,10 +153,10 @@ public class TempFragment extends Fragment {
         tvTitle.setText(title);
         EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
         if(isMinTemperature) {
-            if(minimumTemperature > 0)
+            if(minimumTemperature > 0&&minimumTemperature < 33)
                 userInput.setText(minimumTemperature+"");
         } else {
-            if (maximumTemperature > 0)
+            if (maximumTemperature > 0&&maximumTemperature  < 33)
                 userInput.setText(maximumTemperature+"");
         }
         alertDialogBuilder
