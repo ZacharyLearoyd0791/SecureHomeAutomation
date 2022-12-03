@@ -74,14 +74,12 @@ public class JUnitTestCases {
     @Test
     public void testD() {
 
-        Assert.assertEquals(sum(7,9),16);
-        Assert.assertNotEquals(sum(8,4),4);
+
     }
 
     @Test
     public void testE() {
 
-        Assert.assertEquals(sum(7,9),16);
-        Assert.assertNotEquals(sum(8,4),4);
+
     }
 }
