@@ -132,8 +132,8 @@
     <string name="space" translatable="false"> </string>
     <string name="google_signin_error">Something went wrong!</string>
     <string name="work_under_construction">Work under construction</string>
-    <string name="name">"Name: "</string>
-    <string name="email">"Email: "</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
     <string name="morningUsr">"Good Morning, "</string>
     <string name="noonUsr">"Good Afternoon, "</string>
     <string name="eveningUsr">"Good Evening, "</string>
@@ -212,7 +212,7 @@
     <string name="dayKey" translatable="false">/Schedule/Day</string>
     <string name="enter_your_phone_number">Enter your Phone number</string>
     <string name="phone_number_error_message">Must be at least 10 numbers</string>
-    <string name="phone">Phone Number</string>
+    <string name="phone">Phone Number:</string>
     <string name="noInfo">No Info</string>
     <string name="status">\"Status: \"</string>
     <string name="lock_status">locked</string>
