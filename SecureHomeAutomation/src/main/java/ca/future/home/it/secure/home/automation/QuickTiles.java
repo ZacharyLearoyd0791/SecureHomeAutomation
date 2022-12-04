@@ -41,7 +41,6 @@ public class QuickTiles extends TileService {
 
 
 
-        Log.d(TAG, String.valueOf(title));
 
     }
 
@@ -53,16 +52,12 @@ public class QuickTiles extends TileService {
         userInfo.typeAccount();
 
         if (isLocked()){
-//            Log.d(TAG,"Device Locked");
 
         }
         else{
-//            Log.d(TAG,"Device UnLocked");
             if(userInfo.userId!=null||userInfo.idInfo!=null){
-//                Log.d(TAG,"Connected using accounts");
             }
             else{
-//                Log.d(TAG,"Not connected using accounts");
 
             }
             Intent intent=new Intent(this,LoginActivity.class);

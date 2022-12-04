@@ -64,7 +64,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         run();
-        dbID();
+
         shortCuts();
 
     }
@@ -90,15 +90,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                         switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
 
                             case BiometricManager.BIOMETRIC_SUCCESS:
-//                            Log.d("MY_APP_TAG", "App can authenticate using biometrics.");
-                                break;
 
                             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-//                            Log.e("MY_APP_TAG", "No biometric features available on this device.");
-                                break;
 
                             case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-//                            Log.e("MY_APP_TAG", "Biometric features are currently unavailable.");
                                 break;
 
                             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
@@ -183,44 +178,20 @@ public class SplashScreenActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
         if(data!=null){
             param=intent.getData().getQueryParameter("statusType");
-            //Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
             if (param.equalsIgnoreCase(on)){
                 databaseReference.setValue(on);
-                //Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
             }
             else if (param.equalsIgnoreCase(off)){
                 databaseReference.setValue(off);
-                //Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
 
             }
             else{
-               // Log.d(TAG,"Test_Google_Assistance: V2, open close test param grabbed but error\t"+param);
             }
         }
         else{
-            //Log.d(TAG,"Test_Google_Assistance: V2, open close test is null");
         }
-    }
-
-    private void dbID() {
-        userInfo.typeAccount();
-
-        localKey=userInfo.userId;
-        personalKey=userInfo.idInfo;
-
-        if(localKey!=null){
-            key=localKey;
-            Log.d(ContentValues.TAG,key);
-        }
-        if(personalKey!=null) {
-            key= personalKey;
-            Log.d(ContentValues.TAG, key);
-        }
-        lightKey=key+getString(R.string.statusKey);
-        Log.d(ContentValues.TAG,getString(R.string.keyIs)+lightKey);
-        sensorKey=key+getString(R.string.db_ultrasonic_dist);
     }
 
 }

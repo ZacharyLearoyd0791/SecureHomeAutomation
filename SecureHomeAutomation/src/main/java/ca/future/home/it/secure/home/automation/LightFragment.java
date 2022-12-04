@@ -10,14 +10,11 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
 
-
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -27,35 +24,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class LightFragment extends Fragment {
 
-    Timer timer = new Timer();
-    UserInfo userInfo=new UserInfo();
     public int counter;
-    TextView timerTV, testing, statusOfLightTV;
+    TextView timerTV, statusOfLightTV;
 
     View view;
 
@@ -64,10 +49,19 @@ public class LightFragment extends Fragment {
 
     //Strings
 
-    String value,LightStatus,on,off,status,
-                status_light,statusOn,
-                    statusOff,light_status,lightState,chanelDes,
-                        notificationLT,notificationDesc,lightstatusStr, StatusOut,noVal;
+    String value;
+    String LightStatus;
+    String on;
+    String off;
+    String status;
+    String light_status;
+    String lightState;
+    String chanelDes;
+    String notificationLT;
+    String notificationDesc;
+    String lightstatusStr;
+    String StatusOut;
+    String noVal;
 
     //Device vibrate
     VibrationEffect vibrationEffect;
@@ -75,7 +69,6 @@ public class LightFragment extends Fragment {
 
     Boolean cancelTimer;
 
-    //Scheduler
     ImageButton timerBTN, schedulerBTN;
     int hour, minute;
 
@@ -155,8 +148,7 @@ public class LightFragment extends Fragment {
             Intent myIntent = new Intent(getActivity(), SchedulerActivity.class);
             getActivity().startActivity(myIntent);
         });*/
-        Log.d(TAG,"Schedule time from ScheduleActivity to LightFragment is:\t"+scheduleTime);
-        Log.d(TAG,"Schedule time from ScheduleActivity to LightFragment is:\t"+scheduleDate);
+
     }
 
 
@@ -167,7 +159,6 @@ public class LightFragment extends Fragment {
             @Override
             public void run() {
                 // do something
-                Log.d(TAG,"Light status is: "+statusOfLight);
                 LightStatus=statusOfLight;
                 StatusOut=status+LightStatus;
                 statusOfLightTV.setText(StatusOut);
@@ -179,17 +170,14 @@ public class LightFragment extends Fragment {
     }
 
     private void Status(){
-        Log.d(TAG,"Confirm Status method is working!!!"+LightStatus);
 
-        if(Objects.equals(LightStatus, on)){
-            Log.d(TAG,"Confirm it is on!!!\t"+LightStatus);
+        if(LightStatus.equals(on)){
             lightsOn.setChecked(true);
             lightsOn.setBackgroundResource(R.drawable.status_border_green);
             ivLightOff.setVisibility(View.INVISIBLE);
             ivLightOn.setVisibility(View.VISIBLE);
         }
         else if(Objects.equals(LightStatus, off)){
-            Log.d(TAG,"Confirm it is off!!!\t"+LightStatus);
             lightsOn.setChecked(false);
             lightsOn.setBackgroundResource(R.drawable.status_border_red);
             ivLightOn.setVisibility(View.INVISIBLE);
@@ -224,7 +212,6 @@ public class LightFragment extends Fragment {
             hour = selectedHour;
             minute = selectedMinute;
             String timeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
-            Log.d(TAG, timeout);
             String timeOut = getString(R.string.timeSet) + timeout;
             timerTV.setText(timeOut);
 
@@ -235,7 +222,6 @@ public class LightFragment extends Fragment {
             new CountDownTimer(milli, second) {
                 public void onTick(long millisUntilFinished) {
                     int count=counter;
-                    Log.d(TAG, String.valueOf(count));
                     statusOfLight=on;
                     LightStatus=on;
                     Status();

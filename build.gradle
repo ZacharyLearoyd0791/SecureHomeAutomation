@@ -3,6 +3,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven{url "androidx.test.ext"}
     }
 
     dependencies {
@@ -14,9 +15,6 @@ buildscript {
         classpath 'com.google.firebase:perf-plugin:1.4.1'
 
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
-
-
-
 
 
     }
