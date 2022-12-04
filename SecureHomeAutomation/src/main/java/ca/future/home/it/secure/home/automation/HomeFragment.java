@@ -43,6 +43,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment {
     public ImageView pressLight;
     public ImageView pressWindow;
 
-    Handler handler = new Handler();
+    final Handler handler = new Handler();
 
     //Database
     FirebaseDatabase firebaseDatabase;
@@ -87,18 +88,17 @@ public class HomeFragment extends Fragment {
 
     //Date
     DateFormat dateFormat;
-    String morning, afternoon, evening, night;
+    String morning, afternoon, evening, night, on, off;
     Date date;
     Calendar cal;
     int hour;
 
-    //String
-    String idKey, localKey, key, personalKey, strDate, doorKey;
-    boolean retrieveKey;
-    String lock;
-    String unlock;
-    String doorStatus, lightStatus, MinVal, MaxVal, WindowStatus;
+    //Misc Strings
+    String doorStatus, lightStatus, MinVal, MaxVal, windowStatus,
+            idKey, localKey, key, personalKey, strDate, doorKey, lock,
+            unlock, armed, disarmed;
 
+    private Handler handlerRun;
     private Runnable handlerTask;
 
     public HomeFragment() {
@@ -113,21 +113,23 @@ public class HomeFragment extends Fragment {
         init();
         greeting();
         StartTimer();
-        lock = getString(R.string.lock_status);
-        unlock = getString(R.string.unlocked_status);
         Bundle bundle = new Bundle();
+        Status();
 
         return view;
     }
 
-    void StartTimer(){
-        handler = new Handler();
-        handlerTask = new Runnable()
-        {
+    void StartTimer() {
+        handlerRun = new Handler();
+        handlerTask = new Runnable() {
+
             @Override
             public void run() {
-                // do something
-                changeState();
+                doorStatus = databaseActivity.outDoor;
+                lightStatus = databaseActivity.outLight;
+                MinVal = databaseActivity.outMin;
+                MaxVal = databaseActivity.outMax;
+                windowStatus = databaseActivity.outWindow;
 
                 handler.postDelayed(handlerTask, 1000);
             }
@@ -135,12 +137,82 @@ public class HomeFragment extends Fragment {
         handlerTask.run();
     }
 
-    private void changeState() {
+    private void Status(){
 
-        doorStatus=doorFragment.statusofDoor;
+        //Door status
+        if(Objects.equals(doorStatus, lock)){
+            Log.d(TAG, lightStatus + lock);
+            lockSwitch.setChecked(true);
+            doorView.setVisibility(View.INVISIBLE);
+        }
+        else if(Objects.equals(doorStatus, unlock)){
+            Log.d(TAG, lightStatus + lock);
+            lockSwitch.setChecked(false);
+            doorView.setVisibility(View.VISIBLE);
+        }
+
+        //Door lock switch
+        lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                doorStatus = lock;
+                doorView.setVisibility(View.INVISIBLE);
+                //databaseActivity.toDatabase(getString(R.string.lock_status));
+                //toDatabase(getString(R.string.lock_status));
+
+            } else {
+                doorStatus = unlock;
+                doorView.setVisibility(View.VISIBLE);
+                //toDatabase(getString(R.string.unlocked_status));
+                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
+            }
+        });
+
+        /////////
+
+        //Light status
+        if(Objects.equals(lightStatus, on)){
+            Log.d(TAG,"Light is on\t"+lightStatus);
+            lightSwitch.setChecked(true);
+            lightView.setVisibility(View.INVISIBLE);
+        }
+        else if(Objects.equals(lightStatus, off)){
+            Log.d(TAG,"Light it is off\t"+lightStatus);
+            lightSwitch.setChecked(false);
+            lightView.setVisibility(View.VISIBLE);
+        }
+
+        //Light switch
+        lightSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                lightView.setVisibility(View.INVISIBLE);
+            } else {
+                lightView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        /////////
+
+        //Window status
+        if(Objects.equals(windowStatus, armed)){
+            Log.d(TAG, "Window is armed" + windowStatus);
+            windowSwitch.setChecked(true);
+            windowView.setVisibility(View.INVISIBLE);
+        }
+        else if(Objects.equals(windowStatus, disarmed)){
+            Log.d(TAG, "Window is disarmed" + windowStatus);
+            windowSwitch.setChecked(false);
+            windowView.setVisibility(View.VISIBLE);
+        }
+
+        //window switch
+        windowSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                windowView.setVisibility(View.INVISIBLE);
+            } else {
+                windowView.setVisibility(View.VISIBLE);
+            }
+        });
     }
-
-
 
     private void init(){
         //Switches
@@ -159,6 +231,13 @@ public class HomeFragment extends Fragment {
         pressTemp = view.findViewById(R.id.iv_press_temp);
         pressLight = view.findViewById(R.id.iv_press_light);
         pressWindow = view.findViewById(R.id.iv_press_window);
+
+        on=getString(R.string.on);
+        off=getString(R.string.off);
+        lock = getString(R.string.lock_status);
+        unlock = getString(R.string.unlocked_status);
+        armed=getString(R.string.sensor_on);
+        disarmed=getString(R.string.sensor_off);
     }
 
     private void greeting(){
@@ -191,45 +270,6 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
-        StartTimer();
-
-        //Door lock status in database
-        doorKey=dbID(true);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(doorKey);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                doorStatus=null;
-                if(snapshot.exists()) {
-                    doorStatus = snapshot.getValue().toString();
-                    if (doorStatus.equals(lock)) {
-                        lockSwitch.setChecked(true);
-                        doorView.setVisibility(View.INVISIBLE);
-                    } else if (doorStatus.equals(unlock)) {
-                        lockSwitch.setChecked(false);
-                        doorView.setVisibility(View.VISIBLE);
-                    }
-
-                }
-                //lock switch
-                lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    if (isChecked) {
-                        doorView.setVisibility(View.INVISIBLE);
-                        //databaseActivity.toDatabase(getString(R.string.lock_status));
-                        toDatabase(getString(R.string.lock_status));
-
-                    } else {
-                        doorView.setVisibility(View.VISIBLE);
-                        toDatabase(getString(R.string.unlocked_status));
-                        //databaseActivity.toDatabase(getString(R.string.unlocked_status));
-                    }
-                });
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
         pressLock.setVisibility(View.INVISIBLE);
         pressTemp.setVisibility(View.INVISIBLE);
@@ -281,32 +321,12 @@ public class HomeFragment extends Fragment {
         tempView = view.findViewById(R.id.tempInfo);
         lightView = view.findViewById(R.id.lightInfo);
         windowView = view.findViewById(R.id.windowInfo);
-
-        //Switches selected
-        //lock switch
-
-        //light switch
-        lightSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                lightView.setVisibility(View.INVISIBLE);
-            } else {
-                lightView.setVisibility(View.VISIBLE);
-            }
-        });
-        //window switch
-        windowSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                windowView.setVisibility(View.INVISIBLE);
-            } else {
-                windowView.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     ////////////////////////
     //Temporary fix for storing to database while DatabaseActivity is debugged
     /////////////////////////
-    public void toDatabase(String status){
+    /*public void toDatabase(String status){
         dbID(false);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
@@ -317,6 +337,7 @@ public class HomeFragment extends Fragment {
 
         databaseReference.updateChildren(updateStatus);
     }
+
     private String dbID(boolean retrieveKey){
         userInfo.typeAccount();
         time();
@@ -326,10 +347,12 @@ public class HomeFragment extends Fragment {
 
         if(localKey!=null){
             key=localKey;
+            Log.d(TAG,key);
 
         }
         if(personalKey!=null) {
             key= personalKey;
+            Log.d(TAG, key);
         }
 
         if(retrieveKey){
@@ -338,7 +361,7 @@ public class HomeFragment extends Fragment {
 
         idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
         return "";
-    }
+    }*/
     @SuppressLint("SimpleDateFormat")
     private void time(){
         date = Calendar.getInstance().getTime();

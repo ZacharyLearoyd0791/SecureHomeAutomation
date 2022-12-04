@@ -182,7 +182,6 @@ public class LightFragment extends Fragment {
             lightsOn.setBackgroundResource(R.drawable.status_border_red);
             ivLightOn.setVisibility(View.INVISIBLE);
             ivLightOff.setVisibility(View.VISIBLE);
-
         }
         lightsOn.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (lightsOn.isChecked()) {
@@ -191,7 +190,6 @@ public class LightFragment extends Fragment {
                 ivLightOff.setVisibility(View.INVISIBLE);
                 ivLightOn.setVisibility(View.VISIBLE);
                 statusOfLight=on;
-
             }
             else {
                 LightStatus = off;
