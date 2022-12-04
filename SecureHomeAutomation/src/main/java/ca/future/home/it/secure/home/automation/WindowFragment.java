@@ -39,6 +39,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -61,6 +62,7 @@ public class WindowFragment extends Fragment {
     Vibrator vibrator;
     View view;
     String deviceState;
+    ToggleButton sensorPowerButton;
     UserInfo userInfo=new UserInfo();
     String key,localKey,personalKey,windowsKey,sensorKey;
     String[] sensorStatusArray = {"Sensor is ON","Sensor is OFF","Sensor is Activated","Sensor is Deactivated","Sensor is in TEST mode"};
@@ -69,6 +71,7 @@ public class WindowFragment extends Fragment {
     RecyclerAdapter adapter;
     ArrayList<RecyclerViewData> data;
     public static int numberOfAlerts;
+    private int alertCode;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -88,18 +91,18 @@ public class WindowFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("Number of activities",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
         numberOfAlerts = sharedPreferences.getInt("Number of Alerts",0);
-        //Creating Instances
+        alertCode = sharedPreferences.getInt("Code of Alerts",0);
         getFromDataBase();
-        putToDatabase();
-        //getSensorStatus();
+
+
 
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         alarmButton = view.findViewById(R.id.TestDeviceButton);
         activitiesRecyclerView = view.findViewById(R.id.windows_recycler_view);
         deviceStatusTextView = view.findViewById(R.id.device_status_windows_break);
-
+        sensorPowerButton = view.findViewById(R.id.windows_sensor_on_off_button);
+        sensorPowerButton.setChecked( sharedPreferences.getBoolean("Power state", false));
         //Recycler View
         data = RecyclerViewData.createWindowsAlertList(numberOfAlerts);
         RecyclerAdapter adapter = new RecyclerAdapter(data);
@@ -118,14 +121,42 @@ public class WindowFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 numberOfAlerts++;
+                alertCode = 2;
                 editor.putInt("Number of Alerts", numberOfAlerts);
+                editor.putInt("Code of Alerts",alertCode);
                 editor.commit();
                 alarmProcess();
             }
         });
 
+        //Toggle button for power on/off
+        sensorPowerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(sensorPowerButton.isChecked()){
+                    numberOfAlerts++;
+                    alertCode = 1;
+                    editor.putBoolean("Power state",sensorPowerButton.isChecked());
+                    editor.putInt("Number of Alerts", numberOfAlerts);
+                    editor.putInt("Code of Alerts",alertCode);
+                    editor.commit();
+
+                    Toast.makeText(getContext(), "Sensor turned ON!"+alertCode, Toast.LENGTH_SHORT).show();
+                }else{
+                    alertCode = 0;
+                    numberOfAlerts++;
+                    editor.putBoolean("Power state",sensorPowerButton.isChecked());
+                    editor.putInt("Number of Alerts", numberOfAlerts);
+                    editor.putInt("Code of Alerts",alertCode);
+                    editor.commit();
+                    Toast.makeText(getContext(), "Sensor turned OFF"+alertCode, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        putToDatabase();
         return view;
     }
+
 
     public void sendNotificationProcess(String notificationTitle, String notificationText){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getString(R.string.window_break));
@@ -193,7 +224,7 @@ public class WindowFragment extends Fragment {
         //Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Time").setValue(time);     //This will store time of Alert
-        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue("0");    //This stores the type of Alert
+        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue(alertCode);    //This stores the type of Alert
         reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is on/off/error
         reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);  //This is number of activity/alerts
 
