@@ -107,6 +107,11 @@ public class LightFragment extends Fragment {
         StartTimer();
         Status();
 
+        //SAMPLE DATA
+        addHistory(on);
+        addHistory(off);
+        addHistory(on);
+        addHistory(off);
 
         return view;
     }

@@ -145,10 +145,12 @@ public class DoorFragment extends Fragment{
 
             }
         });
+
         //Door status unlocked by default for testing
-        /*locked.setVisibility(View.INVISIBLE);
-        doorLock.setBackgroundResource(R.drawable.status_border_red);*/
-        //status.setText(R.string.unlock);
+        locked.setVisibility(View.INVISIBLE);
+        doorLock.setBackgroundResource(R.drawable.status_border_red);
+        status.setText(R.string.unlock);
+
         //Door history
         linearLayout=view.findViewById(R.id.linear_history);
         addHistory(getString(R.string.sample_4));
@@ -160,9 +162,6 @@ public class DoorFragment extends Fragment{
         addHistory(getString(R.string.sample_1));
         addHistory(getString(R.string.sample_4));
         addHistory(getString(R.string.sample_2));
-
-
-
 
         //Add key
         addKey.setOnClickListener(new View.OnClickListener() {

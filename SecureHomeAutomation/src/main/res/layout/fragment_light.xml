@@ -64,7 +64,8 @@
             android:fillViewport="true"
             android:padding="6dp"
             app:layout_constraintBottom_toTopOf="@+id/light_off"
-            tools:ignore="SpeakableTextPresentCheck">
+            tools:ignore="SpeakableTextPresentCheck"
+            >
 
             <LinearLayout
                 android:id="@+id/linearScroll"
