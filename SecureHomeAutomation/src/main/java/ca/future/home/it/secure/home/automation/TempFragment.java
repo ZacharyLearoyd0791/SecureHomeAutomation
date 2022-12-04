@@ -114,15 +114,12 @@ public class TempFragment extends Fragment {
 
         if(localuserId!=null){
             key=localuserId;
-            Log.d(TAG,key);
         }
         if(userId!=null) {
             key= userId;
-            Log.d(TAG, key);
         }
         minkey=key+getString(R.string.tempmin);
         maxkey=key+getString(R.string.tempmax);
-        Log.d(TAG,"test2022 temp data out to db\n min key"+minkey+"\n max key"+maxkey);
 
 
     }
@@ -253,7 +250,6 @@ public class TempFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //Log.d("abc","not loaded");
             }
         });
     }

@@ -24,27 +24,23 @@ public class homeAutomationTitlesService extends TileService {
     private  int toggleState = STATE_ON;
     @Override
     public void onTileAdded() {
-        Log.d(LOG_TAG,getString(R.string.log_tile_add));
     }
 
     @Override
     public void onTileRemoved() {
-        Log.d(LOG_TAG,getString(R.string.log_tile_rem));
     }
 
     @Override
     public void onStartListening() {
-        Log.d(LOG_TAG,getString(R.string.log_start_listen));
+
     }
 
     @Override
     public void onStopListening() {
-        Log.d(LOG_TAG,getString(R.string.log_stop_listen));
     }
 
     @Override
     public void onClick() {
-        Log.d(LOG_TAG,getString(R.string.log_onclick_state)+ Integer.toString(getQsTile().getState()));
         Icon icon;
         if(toggleState == STATE_ON){
             toggleState = STATE_OFF;

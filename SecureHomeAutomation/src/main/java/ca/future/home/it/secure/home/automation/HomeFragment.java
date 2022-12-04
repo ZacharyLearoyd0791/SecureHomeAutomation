@@ -136,10 +136,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void changeState() {
-        Log.d(TAG,"Test String");
 
         doorStatus=doorFragment.statusofDoor;
-        Log.d(TAG,doorStatus+"String adlas fbalf ");
     }
 
 
@@ -328,12 +326,10 @@ public class HomeFragment extends Fragment {
 
         if(localKey!=null){
             key=localKey;
-            Log.d(TAG,key);
 
         }
         if(personalKey!=null) {
             key= personalKey;
-            Log.d(TAG, key);
         }
 
         if(retrieveKey){

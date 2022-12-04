@@ -198,11 +198,9 @@ public class WindowFragment extends Fragment {
 
         if(localKey!=null){
             key=localKey;
-            Log.d(TAG,key);
         }
         if(personalKey!=null) {
             key= personalKey;
-            Log.d(TAG, key);
         }
         windowsKey=key+"/Windows Sensor/";
         sensorKey=windowsKey;

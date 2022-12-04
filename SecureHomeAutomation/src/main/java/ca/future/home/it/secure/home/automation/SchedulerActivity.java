@@ -177,7 +177,6 @@ public class SchedulerActivity extends Activity {
             }
             //checkDays();
             if (checking == 7) {
-                Log.d(TAG, getString(R.string.mustpickday));
                 Toast.makeText(this, mustpickday, Toast.LENGTH_SHORT).show();
             } else {
                 saveSchedule();
@@ -215,7 +214,6 @@ public class SchedulerActivity extends Activity {
 
             }
             else {
-                //Log.d(TAG, getString(R.string.logDataEndSmall));
                 Toast.makeText(this, R.string.endSmall, Toast.LENGTH_SHORT).show();
 
             }

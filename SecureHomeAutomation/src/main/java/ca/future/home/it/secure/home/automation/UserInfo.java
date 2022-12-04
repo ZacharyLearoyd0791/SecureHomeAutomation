@@ -49,7 +49,6 @@ public class UserInfo extends Fragment {
             signInMethod = 2;
         }
         else{
-            Log.d(TAG,"User login information isn't available now");
             signInMethod = 0;
         }
 
@@ -69,26 +68,20 @@ public class UserInfo extends Fragment {
         }
     }
     private void LocalUsers() {
-        Log.d(TAG, "User method has been selected for testing");//remove after testing
 
         name = user.getDisplayName();
         email = user.getEmail();
         uid = user.getUid();
-        str = "Testing 001" + "\nName: " + name + "\nEmail: " + email + "\nUID: " + uid;
-        Log.d(TAG, str);
 
         if (name!=null){
             infoLocalName="Name is "+name;
-            Log.d(TAG,infoLocalName);
             returnLocalName();
         }
         if (email!=null){
             infoLocalEmail="Email is "+email;
-            Log.d(TAG,infoLocalEmail);
             returnLocalEmail();
         }
         else{
-            Log.d(TAG,"name is null");
         }
         returnLocalId();
     }
@@ -101,38 +94,31 @@ public class UserInfo extends Fragment {
 
         if (personName!=null){
             infoName="Name is "+personName;
-            Log.d(TAG,infoName);
             returnName();
         }
 
         if (personEmail!=null){
             infoEmail="Email is "+personEmail;
-            Log.d(TAG,infoEmail);
             returnEmail();
         }
 
         else{
-            Log.d(TAG,"name is null");
         }
 
         if (personId!=null){
             infoID="Id of user is "+personId;
 
-            Log.d(TAG,infoName);
             returnId();
         }
         else{
-            Log.d(TAG,"Id is null");
         }
 
         if (personPhoto!=null){
             photos="Person Photo is Available ";
 
-            Log.d(TAG,photos);
             returnPhoto();
         }
         else{
-            Log.d(TAG,"Id is null");
         }
     }
 

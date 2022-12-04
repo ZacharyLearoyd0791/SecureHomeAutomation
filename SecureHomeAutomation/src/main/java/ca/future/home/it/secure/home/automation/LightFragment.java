@@ -170,17 +170,14 @@ public class LightFragment extends Fragment {
     }
 
     private void Status(){
-        Log.d(TAG,"Confirm Status method is working!!!"+LightStatus);
 
         if(LightStatus.equals(on)){
-            Log.d(TAG,"Confirm it is on!!!\t"+LightStatus);
             lightsOn.setChecked(true);
             lightsOn.setBackgroundResource(R.drawable.status_border_green);
             ivLightOff.setVisibility(View.INVISIBLE);
             ivLightOn.setVisibility(View.VISIBLE);
         }
         else if(Objects.equals(LightStatus, off)){
-            Log.d(TAG,"Confirm it is off!!!\t"+LightStatus);
             lightsOn.setChecked(false);
             lightsOn.setBackgroundResource(R.drawable.status_border_red);
             ivLightOn.setVisibility(View.INVISIBLE);
@@ -217,7 +214,6 @@ public class LightFragment extends Fragment {
             hour = selectedHour;
             minute = selectedMinute;
             String timeout = (String.format(Locale.getDefault(), getString(R.string.timeFormat), hour, minute));
-            Log.d(TAG, timeout);
             String timeOut = getString(R.string.timeSet) + timeout;
             timerTV.setText(timeOut);
 
@@ -228,7 +224,6 @@ public class LightFragment extends Fragment {
             new CountDownTimer(milli, second) {
                 public void onTick(long millisUntilFinished) {
                     int count=counter;
-                    Log.d(TAG, String.valueOf(count));
                     statusOfLight=on;
                     LightStatus=on;
                     Status();
