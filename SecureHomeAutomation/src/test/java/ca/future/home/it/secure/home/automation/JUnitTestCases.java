@@ -2,10 +2,12 @@ package ca.future.home.it.secure.home.automation;
 
 import androidx.test.filters.MediumTest;
 
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Scanner;
+import java.util.*;
 
 
 @MediumTest
@@ -27,6 +29,48 @@ public class JUnitTestCases {
 
 
     }
+
+    public Boolean email() {
+
+        String inputs = "akash@gmail.com";
+        System.out.println("Email: " + inputs);
+
+        if (inputs.contains("@")) {
+
+            int count = 0;
+            System.out.println("String @ is found");
+            String[] newInput = inputs.split("@");
+
+            for (int i = 0; i < newInput.length; i++) {
+                System.out.println(count);
+                if(count==1){
+                    System.out.println("There is 1 @");
+                    input=newInput[i];
+                    if(input.contains(".")){
+
+                        System.out.println("String . is found");
+                        String[] newinput = input.split("@");
+                        for (int j = 0; j < newinput.length; j++) {
+                            System.out.println(count);
+                            if (count==1){
+                                System.out.println("There is 1 '.'");
+                                return true;
+                            }
+                            return false;
+                        }
+                        return false;
+                    }
+                }
+                else if(count>1){
+                    System.out.println("More than 1");
+                    return false;
+                }
+                count++;
+            }
+        }
+        return false;
+    }
+
     public int sum(int num1,int num2){
         sum=num1+num2;
         return sum;
@@ -73,6 +117,8 @@ public class JUnitTestCases {
 
     @Test
     public void testD() {
+
+        Assert.assertTrue(email());
 
 
     }
