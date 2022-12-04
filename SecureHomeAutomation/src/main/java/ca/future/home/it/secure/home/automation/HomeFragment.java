@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
     public ImageView pressLight;
     public ImageView pressWindow;
 
-    final Handler handler = new Handler();
+    Handler handler = new Handler();
 
     //Database
     FirebaseDatabase firebaseDatabase;
@@ -99,7 +99,6 @@ public class HomeFragment extends Fragment {
     String unlock;
     String doorStatus, lightStatus, MinVal, MaxVal, WindowStatus;
 
-    private Handler handlerRun;
     private Runnable handlerTask;
 
     public HomeFragment() {
@@ -121,27 +120,26 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    void StartTimer() {
-        handlerRun = new Handler();
-        handlerTask = new Runnable() {
-
+    void StartTimer(){
+        handler = new Handler();
+        handlerTask = new Runnable()
+        {
             @Override
             public void run() {
                 // do something
                 changeState();
-                handlerTask.run();
+
+                handler.postDelayed(handlerTask, 1000);
             }
         };
+        handlerTask.run();
     }
 
     private void changeState() {
-        databaseActivity.Activity();
+        Log.d(TAG,"Test String");
 
-        doorStatus = databaseActivity.outDoor;
-        lightStatus = databaseActivity.outLight;
-        MinVal = databaseActivity.outMin;
-        MaxVal = databaseActivity.outMax;
-        WindowStatus = databaseActivity.outWindow;
+        doorStatus=doorFragment.statusofDoor;
+        Log.d(TAG,doorStatus+"String adlas fbalf ");
     }
 
 
@@ -195,6 +193,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState){
+        StartTimer();
 
         //Door lock status in database
         doorKey=dbID(true);

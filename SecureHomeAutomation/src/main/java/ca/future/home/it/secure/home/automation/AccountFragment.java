@@ -8,7 +8,6 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.google.firebase.crashlytics.internal.Logger.TAG;
 
 import android.animation.Animator;
 import android.app.FragmentManager;
@@ -18,7 +17,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -155,7 +153,6 @@ public class AccountFragment extends Fragment {
 
 
 
-            Log.d(TAG, getString(R.string.log_uid_null));
             imageAnimation();
             //Opening profile edit frag
             editProfileButton.setOnClickListener(new View.OnClickListener() {
