@@ -53,11 +53,13 @@
         <ScrollView
             android:id="@+id/scheduleLog"
             android:layout_width="370dp"
-            android:layout_height="163dp"
+            android:layout_height="130dp"
             android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginBottom="78dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="88dp"
             android:background="@drawable/scroll_view_border"
             android:fillViewport="true"
             android:padding="6dp"
@@ -65,31 +67,28 @@
             tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
-                android:id="@+id/liner_schedule"
-                android:layout_width="match_parent"
+                android:id="@+id/linearScroll"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/linearScroll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"></LinearLayout>
-            </LinearLayout>
+                android:orientation="vertical"
+                android:padding="6dp"></LinearLayout>
 
         </ScrollView>
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:layout_width="118dp"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/scheduleLog"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="136dp"
-            android:layout_marginBottom="252dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="146dp"
+            android:layout_marginEnd="144dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/light_log"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="35dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -110,12 +109,15 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_scheduler"
         android:layout_width="370dp"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="355dp"
         android:layout_marginBottom="310dp"
         app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusOfLight"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="352dp"
@@ -128,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/timer"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
