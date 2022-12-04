@@ -72,7 +72,7 @@ public class WindowFragment extends Fragment {
     ArrayList<RecyclerViewData> data;
     public static int numberOfAlerts;
     private int alertCode;
-    SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
 
@@ -222,9 +222,10 @@ public class WindowFragment extends Fragment {
         Date currentTime = Calendar.getInstance().getTime();
         String time = currentTime.toString();
         //Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
+        int alertCodeData =  sharedPreferences.getInt("Code of Alerts",0);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Time").setValue(time);     //This will store time of Alert
-        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue(alertCode);    //This stores the type of Alert
+        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue(alertCodeData);    //This stores the type of Alert
         reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is on/off/error
         reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);  //This is number of activity/alerts
 
