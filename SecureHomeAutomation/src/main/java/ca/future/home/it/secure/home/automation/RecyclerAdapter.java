@@ -2,6 +2,7 @@ package ca.future.home.it.secure.home.automation;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private List<RecyclerViewData> mData;
     UserInfo userInfo=new UserInfo();
-    String time,alertType;
+    public String time,alertType;
     String key,localKey,personalKey,windowsKey,sensorKey;
     public RecyclerAdapter(List<RecyclerViewData> data){
         mData = data;
@@ -50,10 +51,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
 
+
         RecyclerViewData recyclerViewData = mData.get(position);
 
         TextView textView = holder.AlertType;
-        textView.setText(recyclerViewData.getwAlertType());
+
+
+        //textView.setText(recyclerViewData.getwAlertType());
 
     }
 
@@ -75,7 +79,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
+            SharedPreferences sharedPreferences = WindowFragment.sharedPreferences;
+            int activityNumber = sharedPreferences.getInt("Number of Alerts",0);
             AlertType = (TextView) itemView.findViewById(R.id.windows_break_alarm_title);
             AlertTime = (TextView) itemView.findViewById(R.id.windows_break_alarm_date);
             AlertImageView = itemView.findViewById(R.id.window_break_alarm_icon);
@@ -83,6 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
         public void setTextData(String timing, String alarmType){
+
             AlertType.setText(alarmType);
             AlertTime.setText(timing);
 
@@ -108,14 +114,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 return windowsKey;
             }
 
-            private void getFromDb(){
+            private String getFromDb(){
+                SharedPreferences sharedPreferences = WindowFragment.sharedPreferences;
+               int activityNumber = sharedPreferences.getInt("Number of Alerts",0);
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        time = snapshot.child(dbID()).child("Time").toString();
-                        alertType = snapshot.child(dbID()).child("Device Status").toString();
+                        time = snapshot.child(dbID()).child("Activities").child(String.valueOf(activityNumber)).child("Time").toString();
+                        alertType = snapshot.child(dbID()).child("Activities").child(String.valueOf(activityNumber)).child("Alert Code").toString();
                         setTextData(time,alertType);
                     }
 
@@ -124,7 +132,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
                     }
                 });
-
+                return alertType;
             }
 
 
