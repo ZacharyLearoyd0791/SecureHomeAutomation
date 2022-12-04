@@ -68,6 +68,7 @@ public class DatabaseActivity extends Fragment {
         super.onCreate(savedInstanceState);
         Activity();
     }
+
     void StartTimer(){
         handler = new Handler();
         handlerTask = new Runnable()
@@ -81,6 +82,7 @@ public class DatabaseActivity extends Fragment {
         };
         handlerTask.run();
     }
+
     public void Activity(){
 
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -90,7 +92,6 @@ public class DatabaseActivity extends Fragment {
         dbID();
         getDB();
         StartTimer();
-
     }
 
     private void initString() {
@@ -102,10 +103,8 @@ public class DatabaseActivity extends Fragment {
         minKey=getApplicationContext().getString(R.string.tempmin);
         windowBKey=getApplicationContext().getString(R.string.windowBreakKey);
         scheduleKey= getApplicationContext().getString(R.string.schedKey);
-
-
-
     }
+
     public void dbID(){
         userInfo.typeAccount();
         localKey=userInfo.userId;
@@ -134,9 +133,7 @@ public class DatabaseActivity extends Fragment {
         finalMinKey=key+minKey;
         //Window related user key:
         finalWindowBreak=key+windowBKey;
-
     }
-
 
     private void time(){
         Log.d(TAG,"STR TIME METHOD");
@@ -151,6 +148,7 @@ public class DatabaseActivity extends Fragment {
         System.out.println("Converted String: " + strDate);
         Log.d(TAG,"STR Time: "+strDate);
     }
+
     public void getDB(){
         //door
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
@@ -297,8 +295,6 @@ public class DatabaseActivity extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-
     }
 
     private void ScheduleDBAction() {
@@ -371,15 +367,10 @@ public class DatabaseActivity extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseActivity.context = getApplicationContext();
 
-
-
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
         databaseReference.setValue(outDoor);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
         databaseReference.setValue(outLight);
-
-
-
     }
 }

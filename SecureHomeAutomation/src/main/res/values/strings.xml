@@ -378,6 +378,8 @@
     <string name="NoVal">No value</string>
     <string name="local_network_bluetooth"><![CDATA[Local Network & Bluetooth]]></string>
     <string name="quick_access_status"><![CDATA[*Status of sensors & enable/disable quick options*]]></string>
+    <string name="sensor_on">Sensor is on</string>
+    <string name="sensor_off">Sensor is off</string>
 
 
 </resources>
