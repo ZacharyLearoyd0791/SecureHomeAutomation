@@ -64,15 +64,13 @@
             android:fillViewport="true"
             android:padding="6dp"
             app:layout_constraintBottom_toTopOf="@+id/light_off"
-            tools:ignore="SpeakableTextPresentCheck"
-            >
+            tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
                 android:id="@+id/linearScroll"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="6dp"></LinearLayout>
+                android:orientation="vertical"></LinearLayout>
 
         </ScrollView>
 
