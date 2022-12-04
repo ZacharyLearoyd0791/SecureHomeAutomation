@@ -8,24 +8,25 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -34,6 +35,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -41,9 +46,11 @@ public class LightFragment extends Fragment {
 
     public int counter;
     TextView timerTV, statusOfLightTV;
-
+    ScrollView scroll;
+    LinearLayout linearLayout;
     View view;
-
+    Date date;
+    DateFormat dateFormat;
     private Handler handler;
     private Runnable handlerTask;
 
@@ -62,6 +69,7 @@ public class LightFragment extends Fragment {
     String lightstatusStr;
     String StatusOut;
     String noVal;
+    String strTime;
 
     //Device vibrate
     VibrationEffect vibrationEffect;
@@ -93,10 +101,12 @@ public class LightFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_light, container, false);
+        time();
         initString();
         init();
         StartTimer();
         Status();
+
 
         return view;
     }
@@ -134,7 +144,23 @@ public class LightFragment extends Fragment {
         ivLightOn.setVisibility(View.INVISIBLE);
         ivLightOff.setVisibility(View.VISIBLE);
         lightsOn.setBackgroundResource(R.drawable.status_border_red);
+        scroll=view.findViewById(R.id.scheduleLog);
+        linearLayout=scroll.findViewById(R.id.linearScroll);
+
     }
+
+    private void addHistory(String string) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(getString(R.string.logLightUpdate)+strTime+getString(R.string.logLightStatus)+string);
+        textView.setBackgroundResource(R.drawable.scroll_view_item_border);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(0xFF000000);
+        textView.setTextSize(14);
+        textView.setFontFeatureSettings("sans-serif");
+        textView.setPadding(10,19,10,19);
+        linearLayout.addView(textView);
+    }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -176,6 +202,7 @@ public class LightFragment extends Fragment {
             lightsOn.setBackgroundResource(R.drawable.status_border_green);
             ivLightOff.setVisibility(View.INVISIBLE);
             ivLightOn.setVisibility(View.VISIBLE);
+
         }
         else if(Objects.equals(LightStatus, off)){
             lightsOn.setChecked(false);
@@ -198,6 +225,8 @@ public class LightFragment extends Fragment {
                 ivLightOff.setVisibility(View.VISIBLE);
                 statusOfLight=off;
             }
+            addHistory(LightStatus);
+
         });
     }
 
@@ -248,6 +277,16 @@ public class LightFragment extends Fragment {
         timePickerDialog.setTitle(getString(R.string.Timer));
         timePickerDialog.show();
 
+    }
+    private void time(){
+        date = Calendar.getInstance().getTime();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh:mm:ss");
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            strTime = dateFormat.format(date);
+        }
     }
 
 }

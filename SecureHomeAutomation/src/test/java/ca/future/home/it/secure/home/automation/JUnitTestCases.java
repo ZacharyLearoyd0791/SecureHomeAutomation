@@ -32,7 +32,7 @@ public class JUnitTestCases {
 
     public Boolean email() {
 
-        String inputs = "akash@gmail.com";
+        String inputs = "akash@gmail.com    ";
         System.out.println("Email: " + inputs);
 
         if (inputs.contains("@")) {
