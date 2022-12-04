@@ -77,6 +77,7 @@ public class HomeFragment extends Fragment {
     public ImageView pressLight;
     public ImageView pressWindow;
 
+
     final Handler handler = new Handler();
 
     //Database
@@ -109,6 +110,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //ImageView Objects
+        doorView = view.findViewById(R.id.doorInfo);
+        tempView = view.findViewById(R.id.tempInfo);
+        lightView = view.findViewById(R.id.lightInfo);
+        windowView = view.findViewById(R.id.windowInfo);
         databaseActivity.Activity();
         init();
         greeting();
@@ -316,11 +322,6 @@ public class HomeFragment extends Fragment {
             //MainActivity.bottomNav.setSelectedItemId(R.id.window);
         });
 
-        //ImageView Objects
-        doorView = view.findViewById(R.id.doorInfo);
-        tempView = view.findViewById(R.id.tempInfo);
-        lightView = view.findViewById(R.id.lightInfo);
-        windowView = view.findViewById(R.id.windowInfo);
     }
 
     ////////////////////////
