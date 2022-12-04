@@ -17,6 +17,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -67,7 +68,9 @@ public class WindowFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
     ArrayList<RecyclerViewData> data;
-    public static int numberOfAlerts = 0;
+    public static int numberOfAlerts;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
 
@@ -83,9 +86,14 @@ public class WindowFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_window, container, false);
 
+        sharedPreferences = getActivity().getSharedPreferences("Number of activities",Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        numberOfAlerts = sharedPreferences.getInt("Number of Alerts",0);
         //Creating Instances
         getFromDataBase();
         putToDatabase();
+        //getSensorStatus();
 
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         alarmButton = view.findViewById(R.id.TestDeviceButton);
@@ -110,6 +118,8 @@ public class WindowFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 numberOfAlerts++;
+                editor.putInt("Number of Alerts", numberOfAlerts);
+                editor.commit();
                 alarmProcess();
             }
         });
@@ -182,10 +192,10 @@ public class WindowFragment extends Fragment {
         String time = currentTime.toString();
         //Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(dbID()).child("Time").setValue(time);
-        reference.child(dbID()).child("Device Status").setValue(sensorStatus);
-        reference.child(dbID()).child("Device Status Code").setValue("0");
-        reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);
+        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Time").setValue(time);     //This will store time of Alert
+        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue("0");    //This stores the type of Alert
+        reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is on/off/error
+        reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);  //This is number of activity/alerts
 
     }
 
@@ -226,6 +236,7 @@ public class WindowFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 sensorStatus = snapshot.child(dbID()).child("Device Status").getValue().toString();
+                numberOfAlerts = Integer.parseInt(snapshot.child(dbID()).child("Sensor Activities number").getValue().toString());
             }
 
             @Override
