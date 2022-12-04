@@ -97,11 +97,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/windows_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:layout_width="355dp"
+            android:layout_height="342dp"
+            android:layout_marginVertical="25dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="28dp"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:scrollbarStyle="insideInset" />
 
     </androidx.cardview.widget.CardView>
 
