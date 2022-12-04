@@ -67,6 +67,7 @@ public class WindowFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
     ArrayList<RecyclerViewData> data;
+    public static int numberOfAlerts = 0;
 
 
 
@@ -83,21 +84,19 @@ public class WindowFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_window, container, false);
 
         //Creating Instances
+        getFromDataBase();
         putToDatabase();
+
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         alarmButton = view.findViewById(R.id.TestDeviceButton);
         activitiesRecyclerView = view.findViewById(R.id.windows_recycler_view);
         deviceStatusTextView = view.findViewById(R.id.device_status_windows_break);
 
         //Recycler View
-        data = RecyclerViewData.createWindowsAlertList(10);
+        data = RecyclerViewData.createWindowsAlertList(numberOfAlerts);
         RecyclerAdapter adapter = new RecyclerAdapter(data);
         activitiesRecyclerView.setAdapter(adapter);
         activitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-//        activitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        adapter = new RecyclerAdapter(getContext(),sensorStatusArray);
-//        activitiesRecyclerView.setAdapter(adapter);
 
         //If SDK is lower than oreo then creating channel for notification process
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
@@ -110,37 +109,8 @@ public class WindowFragment extends Fragment {
         alarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                numberOfAlerts++;
                 alarmProcess();
-            }
-        });
-
-
-
-
-
-        //Getting Device status from firebase database
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Windows Break");
-        reference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                deviceState = snapshot.child(getString(R.string.status_device)).toString();
-                if(deviceState.contains("0")){
-                    deviceStatusTextView.setText(R.string.devicenotfound);
-                }else if(deviceState.contains("1")){
-                    deviceStatusTextView.setText(R.string.activedevice);
-                    deviceStatusTextView.setTextColor(Color.GREEN);
-                }else if(deviceState.contains("-1")){
-                    deviceStatusTextView.setText(R.string.errordevice);
-                    deviceStatusTextView.setTextColor(Color.RED);
-                    Toast.makeText(getContext(), R.string.reconnect, Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -210,12 +180,45 @@ public class WindowFragment extends Fragment {
     private void putToDatabase(){
         Date currentTime = Calendar.getInstance().getTime();
         String time = currentTime.toString();
-        Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child(dbID()).child("Time").setValue(time);
         reference.child(dbID()).child("Device Status").setValue(sensorStatus);
+        reference.child(dbID()).child("Device Status Code").setValue("0");
+        reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);
 
     }
+
+    private void getFromDataBase(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                deviceState = snapshot.child(dbID()).child("Device Status Code").toString();
+                if(deviceState.contains("0")){
+                    deviceStatusTextView.setText(R.string.devicenotfound);
+                    sensorStatus ="Device not Available";
+                    deviceStatusTextView.setTextColor(Color.BLACK);
+                }else if(deviceState.contains("1")){
+                    deviceStatusTextView.setText(R.string.activedevice);
+                    deviceStatusTextView.setTextColor(Color.GREEN);
+                }else if(deviceState.contains("2")){
+                    deviceStatusTextView.setText(R.string.device_deactivated);
+                    deviceStatusTextView.setTextColor(Color.RED);
+                    sensorStatus = "Device turned OFF";
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
 
     private void getSensorStatus(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();

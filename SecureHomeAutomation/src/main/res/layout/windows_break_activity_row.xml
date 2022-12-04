@@ -30,7 +30,7 @@
                 android:src="@drawable/ic_windows_break_acknowledge_icon" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/windows_break_alarm_date"
                 android:layout_width="116dp"
                 android:layout_height="70dp"
                 android:gravity="center|start"
