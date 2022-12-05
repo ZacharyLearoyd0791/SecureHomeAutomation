@@ -226,7 +226,13 @@ public class WindowFragment extends Fragment {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Time").setValue(time);     //This will store time of Alert
         reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue(alertCodeData);    //This stores the type of Alert
-        reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is on/off/error
+       if(alertCode==0) {
+           reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is off
+       }else if(alertCode ==1){
+           reference.child(dbID()).child("Device Status Code").setValue("1");  //This code will get the status of the device, if device is on
+       }else if(alertCode == 4){
+           reference.child(dbID()).child("Device Status Code").setValue("-1");  //This code will get the status of the device, if device is error
+       }
         reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);  //This is number of activity/alerts
 
     }
@@ -238,9 +244,13 @@ public class WindowFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 deviceState = snapshot.child(dbID()).child("Device Status Code").toString();
-                if(deviceState.contains("0")){
+                if(deviceState.contains("-2")){
                     deviceStatusTextView.setText(R.string.devicenotfound);
                     sensorStatus ="Device not Available";
+                    deviceStatusTextView.setTextColor(Color.BLACK);
+                }else if (deviceState.contains("0")){
+                    deviceStatusTextView.setText("Turned OFF");
+                    sensorStatus ="Device turned off";
                     deviceStatusTextView.setTextColor(Color.BLACK);
                 }else if(deviceState.contains("1")){
                     deviceStatusTextView.setText(R.string.activedevice);
