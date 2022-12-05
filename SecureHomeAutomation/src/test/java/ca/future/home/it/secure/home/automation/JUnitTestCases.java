@@ -29,7 +29,18 @@ public class JUnitTestCases {
 
 
     }
+    public boolean name(String name){
 
+        char[] chars = name.toCharArray();
+
+        for (char c : chars) {
+            if(!Character.isLetter(c)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
     public Boolean email() {
 
         String inputs = "akash@gmail.com    ";
@@ -125,7 +136,8 @@ public class JUnitTestCases {
 
     @Test
     public void testE() {
-
+        Assert.assertTrue(name("Akash"));
+        Assert.assertFalse(name("Akash12123"));
 
     }
 }
