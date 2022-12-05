@@ -254,17 +254,4 @@ public class DoorFragment extends Fragment{
         removeAlert.show();
     }
 
-
-    @SuppressLint("SimpleDateFormat")
-    private void time(){
-        date = Calendar.getInstance().getTime();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat(getString(R.string.formatted));
-        }
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            strDate = dateFormat.format(date);
-        }
-        System.out.println("Converted String: " + strDate);
-    }
 }
