@@ -177,12 +177,12 @@ public class HomeFragment extends Fragment {
 
         //Light status
         if(Objects.equals(lightStatus, on)){
-            Log.d(TAG,"Light is on\t"+lightStatus);
+            Log.d(TAG,getString(R.string.LightisOn)+lightStatus);
             lightSwitch.setChecked(true);
             lightView.setVisibility(View.INVISIBLE);
         }
         else if(Objects.equals(lightStatus, off)){
-            Log.d(TAG,"Light it is off\t"+lightStatus);
+            Log.d(TAG,getString(R.string.lighIsOff)+lightStatus);
             lightSwitch.setChecked(false);
             lightView.setVisibility(View.VISIBLE);
         }
@@ -200,12 +200,12 @@ public class HomeFragment extends Fragment {
 
         //Window status
         if(Objects.equals(windowStatus, armed)){
-            Log.d(TAG, "Window is armed" + windowStatus);
+            Log.d(TAG, getString(R.string.windowArmed) + windowStatus);
             windowSwitch.setChecked(true);
             windowView.setVisibility(View.INVISIBLE);
         }
         else if(Objects.equals(windowStatus, disarmed)){
-            Log.d(TAG, "Window is disarmed" + windowStatus);
+            Log.d(TAG, getString(R.string.WIndowDisarmed) + windowStatus);
             windowSwitch.setChecked(false);
             windowView.setVisibility(View.VISIBLE);
         }
@@ -323,47 +323,7 @@ public class HomeFragment extends Fragment {
         });
 
     }
-
-    ////////////////////////
-    //Temporary fix for storing to database while DatabaseActivity is debugged
-    /////////////////////////
-    /*public void toDatabase(String status){
-        dbID(false);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((idKey));
-
-        databaseReference.setValue(status);
-        Map<String, Object> updateStatus = new HashMap<>();
-        updateStatus.put("Status ",status);
-
-        databaseReference.updateChildren(updateStatus);
-    }
-
-    private String dbID(boolean retrieveKey){
-        userInfo.typeAccount();
-        time();
-
-        localKey=userInfo.userId;
-        personalKey=userInfo.idInfo;
-
-        if(localKey!=null){
-            key=localKey;
-            Log.d(TAG,key);
-
-        }
-        if(personalKey!=null) {
-            key= personalKey;
-            Log.d(TAG, key);
-        }
-
-        if(retrieveKey){
-            return idKey=key+"/Door status/Status ";
-        }
-
-        idKey=key+getString(R.string.forwardslash)+getString(R.string.door_status)+getString(R.string.forwardslash);
-        return "";
-    }*/
-
+    
 
 
 }

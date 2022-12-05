@@ -8,6 +8,8 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     String  idKey, localKey, key, personalKey;
     String feedBackofUser;
     String ratingKey;
-    String feedBackKey;
+    String feedBackKey,userKey,userDetails;
 
     float ratingVal;
 
@@ -95,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userInfo.typeAccount();
+        userDetails=getString(R.string.UserFeedback);
+        userKey=getApplicationContext().getString(R.string.userKey);
+
         dbID();
 
 
@@ -298,10 +303,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
         time();
-        ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
+
+        ratingKey=userKey+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
         databaseReference.setValue(ratingVal);
-        feedBackKey=key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
+        feedBackKey=userKey+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
     }

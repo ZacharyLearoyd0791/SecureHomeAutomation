@@ -144,7 +144,6 @@ public class DatabaseActivity extends Fragment {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             strDate = dateFormat.format(date);
         }
-        System.out.println("Converted String: " + strDate);
     }
 
     public void getDB(){

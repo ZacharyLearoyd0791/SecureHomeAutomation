@@ -361,5 +361,14 @@
     <string name="logLightUpdate">Light Updated at:</string>
     <string name="logLightStatus">\n</string>
     <string name="device_deactivated">Device Deactivated</string>
+    <string name="logged">logged</string>
+    <string name="signedOut">Signed Out</string>
+    <string name="LightisOn">Light is on\t</string>
+    <string name="lighIsOff">Light it is off\t</string>
+    <string name="windowArmed">Window is armed</string>
+    <string name="WIndowDisarmed">Window is disarmed</string>
+    <string name="changesSaved">Changes Saved!</string>
+    <string name="minTemp">Minimum Temperature</string>
+    <string name="MaxTemp">Maximum Temperature</string>
 
 </resources>

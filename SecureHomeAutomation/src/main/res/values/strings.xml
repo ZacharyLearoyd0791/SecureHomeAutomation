@@ -388,6 +388,16 @@
     <string name="windowKey" translatable="false">/Windows Sensor/</string>
     <string name="userDetails" translatable="false">/userInfo/</string>
     <string name="userData" translatable="false">/userData/</string>
+    <string name="logged">logged</string>
+    <string name="signedOut">Signed Out</string>
+    <string name="LightisOn">Light is on\t</string>
+    <string name="lighIsOff">Light it is off\t</string>
+    <string name="windowArmed">Window is armed</string>
+    <string name="WIndowDisarmed">Window is disarmed</string>
+    <string name="changesSaved">Changes Saved!</string>
+    <string name="minTemp">Minimum Temperature</string>
+    <string name="MaxTemp">Maximum Temperature</string>
+    <string name="UserFeedback">/Feedback/</string>
     <string name="password_error_message">Have \'@\',\'!\',\'#\'... key words or have at least one letter capital</string>
 
 

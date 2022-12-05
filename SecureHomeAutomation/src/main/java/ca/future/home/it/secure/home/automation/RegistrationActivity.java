@@ -122,7 +122,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
 
-                            //databaseReference.child("Email").setValue(fullName);
 
                             Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification()
                                     .addOnCompleteListener(task1 -> {

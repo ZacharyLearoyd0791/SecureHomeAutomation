@@ -146,7 +146,7 @@ public class TempFragment extends Fragment {
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
-        String title = isMinTemperature ? "Minimum Temperature" : "Maximum Temperature";
+        String title = isMinTemperature ? getString(R.string.minTemp) : getString(R.string.MaxTemp);
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.temperature_input_dialog_box, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
