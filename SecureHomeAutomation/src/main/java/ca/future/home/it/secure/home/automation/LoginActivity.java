@@ -47,6 +47,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.Executor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -115,7 +117,9 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, R.string.enter_email, Toast.LENGTH_SHORT).show();
             } else if (passwordInput.isEmpty()) {
                 Toast.makeText(LoginActivity.this, R.string.enterpassword, Toast.LENGTH_SHORT).show();
-            } else {
+            }else if(isValidPassword(passwordInput)){
+                Toast.makeText(this, "Not proper password input!", Toast.LENGTH_SHORT).show();
+            }else {
                 boolean emailValidation = validateEmailInput(emailAddress);
                 if (emailValidation) {
                     loginUser(emailInput, passwordInput);
@@ -137,7 +141,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    
+    //Validating password format
+    public static boolean isValidPassword(final String password) {
 
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-8])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
+    }
     //Validating Email address
     private boolean validateEmailInput(EditText email) {
         String emailInput = emailAddress.getText().toString();
