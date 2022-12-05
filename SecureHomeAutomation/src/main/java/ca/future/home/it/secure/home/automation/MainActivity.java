@@ -46,7 +46,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    String key;
+    String  idKey, localKey, key, personalKey;
     String feedBackofUser;
     String ratingKey;
     String feedBackKey;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     //Fingerprint
     String fingerprintState = "";
     private int progressStatus = 0;
-
+    UserInfo userInfo=new UserInfo();
     //Bottom Navigation
     public static BottomNavigationView bottomNav;
 
@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        userInfo.typeAccount();
+        dbID();
 
 
         //Bottom navigation and fragment views
@@ -154,6 +155,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void dbID() {
+        userInfo.typeAccount();
+        localKey = userInfo.userId;
+        personalKey = userInfo.idInfo;
+
+        if (localKey != null) {
+            key = localKey;
+
+        }
+        if (personalKey != null) {
+            key = personalKey;
+        }
+    }
 
 
     //inflate action bar on first time opening app

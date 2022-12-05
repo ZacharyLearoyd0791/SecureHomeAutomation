@@ -316,8 +316,8 @@
     <string name="refreshing">Items Refreshed!</string>
     <string name="refresher">Refreshing…</string>
     <string name="discription_dialog">It won\'t take much time :)</string>
-    <string name="format">yyyy-mm-dd-hh:mm:ss</string>
-    <string name="formatted">yyyy-mm-dd-hh:mm:ss</string>
+    <string name="format">yyyy-MM-dd-hh:mm:ss</string>
+    <string name="formatted">yyyy-MM-dd-hh:mm:ss</string>
     <string name="status_device">Device Status</string>
     <string name="devicenotfound">No Device Found!</string>
     <string name="devicenotfound1">Device not found!</string>
