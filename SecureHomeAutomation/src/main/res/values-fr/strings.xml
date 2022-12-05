@@ -371,6 +371,6 @@
     <string name="minTemp">Minimum Temperature</string>
     <string name="MaxTemp">Maximum Temperature</string>
     <string name="password_error_message">Have \'@\',\'!\',\'#\'... key words or have at least one letter capital</string>
-
+    <string name="minimum_temp_first">Please set the minimum temperature first</string>
 
 </resources>

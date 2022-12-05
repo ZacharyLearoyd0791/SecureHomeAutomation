@@ -139,7 +139,11 @@ public class TempFragment extends Fragment {
         btnMaxTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogForInputTemperature(false);
+                if (minimumTemperature > 0) {
+                    showDialogForInputTemperature(false);
+                } else {
+                    showToast(getString(R.string.minimum_temp_first));
+                }
             }
         });
 
