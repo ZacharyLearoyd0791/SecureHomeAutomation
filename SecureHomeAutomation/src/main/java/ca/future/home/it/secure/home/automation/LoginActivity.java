@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(view -> {
 
 
-            editor.putBoolean("logged", checkBoxState).apply();
+            editor.putBoolean(getString(R.string.logged), checkBoxState).apply();
             String emailInput = emailAddress.getText().toString();
             String passwordInput = password.getText().toString();
             if(emailInput.isEmpty() && passwordInput.isEmpty()){
