@@ -304,10 +304,10 @@ public class MainActivity extends AppCompatActivity {
     private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
         time();
 
-        ratingKey=userKey+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
+        ratingKey=userKey+key+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
         databaseReference.setValue(ratingVal);
-        feedBackKey=userKey+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
+        feedBackKey=userKey+key+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
     }
