@@ -39,7 +39,6 @@ import com.google.firebase.database.ValueEventListener;
 public class TempFragment extends Fragment {
     String userId, localUserId, minKey, maxKey, key;
     UserInfo userInfo = new UserInfo();
-
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
     TextView tvHeater;
@@ -56,17 +55,15 @@ public class TempFragment extends Fragment {
     int minimumTemperature = 0;
     int maximumTemperature = 0;
     ProgressDialog progressDialog;
-    String tempStr,userKey,userDetails,userData;
-
+    String tempStr,userKey,userData;
 
     public TempFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_temp, container, false);
     }
 
@@ -105,10 +102,8 @@ public class TempFragment extends Fragment {
 
     private void dbID(){
         userInfo.typeAccount();
-
         localUserId =userInfo.userId;
         userId=userInfo.idInfo;
-
         if(localUserId !=null){
             key= localUserId;
         }
@@ -117,8 +112,6 @@ public class TempFragment extends Fragment {
         }
         minKey =userKey+key+userData+getString(R.string.tempmin);
         maxKey =userKey+key+userData+getString(R.string.tempmax);
-
-
     }
     private void setListeners() {
         btnMinTemp.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +131,6 @@ public class TempFragment extends Fragment {
                 }
             }
         });
-
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
@@ -185,7 +177,6 @@ public class TempFragment extends Fragment {
                             } else {
                                 showToast(getString(R.string.max_temp_text));
                             }
-
                         }
                     }
                 })
