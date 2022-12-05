@@ -7,14 +7,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -24,13 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,12 +36,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Map;
-
 public class TempFragment extends Fragment {
-    String userId, localuserId, minkey, maxkey, key;
+    String userId, localUserId, minKey, maxKey, key;
     UserInfo userInfo = new UserInfo();
-
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
     TextView tvHeater;
@@ -64,17 +55,15 @@ public class TempFragment extends Fragment {
     int minimumTemperature = 0;
     int maximumTemperature = 0;
     ProgressDialog progressDialog;
-    String tempstr,userKey,userDetails,userData;
-
+    String tempStr,userKey,userData;
 
     public TempFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_temp, container, false);
     }
 
@@ -99,8 +88,8 @@ public class TempFragment extends Fragment {
         btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
-        minTempRef = database.getReference(minkey);
-        maxTempRef = database.getReference(maxkey);
+        minTempRef = database.getReference(minKey);
+        maxTempRef = database.getReference(maxKey);
         setTemperatureView(temperatureView);
         setCurrentTemperature(23);
         setHumidity(20);
@@ -113,20 +102,16 @@ public class TempFragment extends Fragment {
 
     private void dbID(){
         userInfo.typeAccount();
-
-        localuserId=userInfo.userId;
+        localUserId =userInfo.userId;
         userId=userInfo.idInfo;
-
-        if(localuserId!=null){
-            key=localuserId;
+        if(localUserId !=null){
+            key= localUserId;
         }
         if(userId!=null) {
             key= userId;
         }
-        minkey=userKey+key+userData+getString(R.string.tempmin);
-        maxkey=userKey+key+userData+getString(R.string.tempmax);
-
-
+        minKey =userKey+key+userData+getString(R.string.tempmin);
+        maxKey =userKey+key+userData+getString(R.string.tempmax);
     }
     private void setListeners() {
         btnMinTemp.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +131,6 @@ public class TempFragment extends Fragment {
                 }
             }
         });
-
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
@@ -159,10 +143,10 @@ public class TempFragment extends Fragment {
         tvTitle.setText(title);
         EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
         if(isMinTemperature) {
-            if(minimumTemperature > 0&&minimumTemperature < 33)
+            if(minimumTemperature > 0 && minimumTemperature < 33)
                 userInput.setText(minimumTemperature+"");
         } else {
-            if (maximumTemperature > 0&&maximumTemperature  < 33)
+            if (maximumTemperature > 0 && maximumTemperature < 33)
                 userInput.setText(maximumTemperature+"");
         }
         alertDialogBuilder
@@ -171,19 +155,28 @@ public class TempFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         int temperature = Integer.parseInt(userInput.getText().toString());
                         if (isMinTemperature) {
-                            if (temperature < maximumTemperature && temperature > 0) {
-                                saveMinTemperature(temperature);
+                            if (maximumTemperature == 0) {
+                                if (temperature > 0) {
+                                    saveMinTemperature(temperature);
+                                } else {
+                                    showToast(getString(R.string.mini_temp_text));
+                                    userInput.requestFocus();
+                                }
                             } else {
-                                showToast(getString(R.string.mini_temp_text));
-                                userInput.requestFocus();
+                                if (temperature > 0 && temperature < maximumTemperature) {
+                                    saveMinTemperature(temperature);
+                                } else {
+                                    showToast(getString(R.string.mini_temp_text));
+                                    userInput.requestFocus();
+                                }
                             }
+
                         } else {
                             if (temperature > minimumTemperature && temperature > 0) {
                                 saveMaxTemperature(temperature);
                             } else {
                                 showToast(getString(R.string.max_temp_text));
                             }
-
                         }
                     }
                 })
@@ -237,8 +230,8 @@ public class TempFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue()!=null){
 
-                    tempstr = snapshot.getValue().toString();
-                    temperature= Long.parseLong(tempstr);
+                    tempStr = snapshot.getValue().toString();
+                    temperature= Long.parseLong(tempStr);
                     minimumTemperature = (int) temperature;
                     setMinTemperature(minimumTemperature);
                     maxTempRef.addListenerForSingleValueEvent(new ValueEventListener() {
