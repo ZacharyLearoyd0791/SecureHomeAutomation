@@ -201,21 +201,28 @@ public class LightFragment extends Fragment {
     }
 
     private void Status(){
+        if (LightStatus!=null) {
+            if (LightStatus.equals(on)) {
+                lightsOn.setChecked(true);
+                lightsOn.setBackgroundResource(R.drawable.status_border_green);
+                ivLightOff.setVisibility(View.INVISIBLE);
+                ivLightOn.setVisibility(View.VISIBLE);
 
-        if(LightStatus.equals(on)){
-            lightsOn.setChecked(true);
-            lightsOn.setBackgroundResource(R.drawable.status_border_green);
-            ivLightOff.setVisibility(View.INVISIBLE);
-            ivLightOn.setVisibility(View.VISIBLE);
-
+            } else if (Objects.equals(LightStatus, off)) {
+                lightsOn.setChecked(false);
+                lightsOn.setBackgroundResource(R.drawable.status_border_red);
+                ivLightOn.setVisibility(View.INVISIBLE);
+                ivLightOff.setVisibility(View.VISIBLE);
+            }
         }
-        else if(Objects.equals(LightStatus, off)){
+        else{
             lightsOn.setChecked(false);
             lightsOn.setBackgroundResource(R.drawable.status_border_red);
             ivLightOn.setVisibility(View.INVISIBLE);
             ivLightOff.setVisibility(View.VISIBLE);
         }
         lightsOn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
             if (lightsOn.isChecked()) {
                 LightStatus = on;
                 lightsOn.setBackgroundResource(R.drawable.status_border_green);

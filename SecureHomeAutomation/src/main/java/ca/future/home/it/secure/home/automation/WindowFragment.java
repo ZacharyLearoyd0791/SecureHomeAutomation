@@ -64,7 +64,7 @@ public class WindowFragment extends Fragment {
     String deviceState;
     ToggleButton sensorPowerButton;
     UserInfo userInfo=new UserInfo();
-    String key,localKey,personalKey,windowsKey,sensorKey;
+    String key,localKey,personalKey,windowsKey,sensorKey,userKey;
     String[] sensorStatusArray = {"Sensor is ON","Sensor is OFF","Sensor is Activated","Sensor is Deactivated","Sensor is in TEST mode"};
     String sensorStatus = "Sensor is off";
     RecyclerView recyclerView;
@@ -203,6 +203,7 @@ public class WindowFragment extends Fragment {
     }
     private String dbID(){
         userInfo.typeAccount();
+        userKey=getString(R.string.userKey);
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -213,10 +214,10 @@ public class WindowFragment extends Fragment {
         if(personalKey!=null) {
             key= personalKey;
         }
-        windowsKey=key+"/Windows Sensor/";
+        windowsKey=key+getString(R.string.windowKey);
         sensorKey=windowsKey;
 
-        return windowsKey;
+        return userKey+windowsKey;
     }
     private void putToDatabase(){
         Date currentTime = Calendar.getInstance().getTime();

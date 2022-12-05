@@ -43,7 +43,7 @@ public class DatabaseActivity extends Fragment {
     //Key string
     String finalDoorKey,localKey,key,personalKey,strDate,
             finalSensorKey, finalStatusKey,statusKey,SensorKey,doorKey,maxKey,minKey,finalMaxKey,finalMinKey,
-            finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey;
+            finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey,userKey;
 
     //Database String
     String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime;
@@ -92,6 +92,7 @@ public class DatabaseActivity extends Fragment {
         minKey=getApplicationContext().getString(R.string.tempmin);
         windowBKey=getApplicationContext().getString(R.string.windowBreakKey);
         scheduleKey= getApplicationContext().getString(R.string.schedKey);
+        userKey=getApplicationContext().getString(R.string.userKey);
     }
 
     public void dbID(){
@@ -107,19 +108,19 @@ public class DatabaseActivity extends Fragment {
             key= personalKey;
         }
 
-        finalDoorKey =key+doorKey;
+        finalDoorKey =userKey+key+doorKey;
 
         //Light related user key:
-        finalStatusKey =key+statusKey;
-        finalSensorKey =key+SensorKey;
-        finaldateKey=key+scheduleKey+getApplicationContext().getString(R.string.dayKey);
-        finalTimeKey=key+scheduleKey+getApplicationContext().getString(R.string.timeKey);
+        finalStatusKey =userKey+key+statusKey;
+        finalSensorKey =userKey+key+SensorKey;
+        finaldateKey=userKey+key+scheduleKey+getApplicationContext().getString(R.string.dayKey);
+        finalTimeKey=userKey+key+scheduleKey+getApplicationContext().getString(R.string.timeKey);
 
         //Temp related user key:
-        finalMaxKey=key+maxKey;
-        finalMinKey=key+minKey;
+        finalMaxKey=userKey+key+maxKey;
+        finalMinKey=userKey+key+minKey;
         //Window related user key:
-        finalWindowBreak=key+windowBKey;
+        finalWindowBreak=userKey+key+windowBKey;
     }
 
     private void time(){

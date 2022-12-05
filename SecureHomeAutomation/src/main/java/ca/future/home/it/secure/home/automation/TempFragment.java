@@ -62,7 +62,7 @@ public class TempFragment extends Fragment {
     int minimumTemperature = 0;
     int maximumTemperature = 0;
     ProgressDialog progressDialog;
-    String tempstr;
+    String tempstr,userKey;
 
     public TempFragment() {
         // Required empty public constructor
@@ -78,6 +78,8 @@ public class TempFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        userKey=getString(R.string.userKey);
+
         dbID();
         init(view);
         setListeners();
@@ -118,8 +120,8 @@ public class TempFragment extends Fragment {
         if(userId!=null) {
             key= userId;
         }
-        minkey=key+getString(R.string.tempmin);
-        maxkey=key+getString(R.string.tempmax);
+        minkey=userKey+key+getString(R.string.tempmin);
+        maxkey=userKey+key+getString(R.string.tempmax);
 
 
     }
