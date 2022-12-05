@@ -159,10 +159,10 @@ public class TempFragment extends Fragment {
         tvTitle.setText(title);
         EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
         if(isMinTemperature) {
-            if(minimumTemperature > 0&&minimumTemperature < 33)
+            if(minimumTemperature > 0 && minimumTemperature < 33)
                 userInput.setText(minimumTemperature+"");
         } else {
-            if (maximumTemperature > 0&&maximumTemperature  < 33)
+            if (maximumTemperature > 0 && maximumTemperature < 33)
                 userInput.setText(maximumTemperature+"");
         }
         alertDialogBuilder
@@ -171,12 +171,22 @@ public class TempFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         int temperature = Integer.parseInt(userInput.getText().toString());
                         if (isMinTemperature) {
-                            if (temperature < maximumTemperature && temperature > 0) {
-                                saveMinTemperature(temperature);
+                            if (maximumTemperature == 0) {
+                                if (temperature > 0) {
+                                    saveMinTemperature(temperature);
+                                } else {
+                                    showToast(getString(R.string.mini_temp_text));
+                                    userInput.requestFocus();
+                                }
                             } else {
-                                showToast(getString(R.string.mini_temp_text));
-                                userInput.requestFocus();
+                                if (temperature > 0 && temperature < maximumTemperature) {
+                                    saveMinTemperature(temperature);
+                                } else {
+                                    showToast(getString(R.string.mini_temp_text));
+                                    userInput.requestFocus();
+                                }
                             }
+
                         } else {
                             if (temperature > minimumTemperature && temperature > 0) {
                                 saveMaxTemperature(temperature);
