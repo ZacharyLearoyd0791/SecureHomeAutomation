@@ -221,7 +221,7 @@ public class WindowFragment extends Fragment {
         windowsKey=key+getString(R.string.windowKey);
         sensorKey=windowsKey;
 
-        return userKey+windowsKey+userData;
+        return userKey+userData+windowsKey;
     }
     private void putToDatabase(){
         Date currentTime = Calendar.getInstance().getTime();
