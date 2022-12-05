@@ -9,6 +9,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -46,8 +47,8 @@ public class DatabaseActivity extends Fragment {
             finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey,userKey;
 
     //Database String
-    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime;
-    String outDoor,outLight,outDist,outWindow,outMax,outMin,outScheduleDate,outScheduleTime;
+    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email;
+    String outDoor,outLight,userData,outWindow,outMax,outMin,outScheduleDate,userDetails;
 
     int min,max;
     private Handler handler;
@@ -93,6 +94,10 @@ public class DatabaseActivity extends Fragment {
         windowBKey=getApplicationContext().getString(R.string.windowBreakKey);
         scheduleKey= getApplicationContext().getString(R.string.schedKey);
         userKey=getApplicationContext().getString(R.string.userKey);
+        userDetails=getApplicationContext().getString(R.string.userDetails);
+        userData=getApplicationContext().getString(R.string.userData);
+        name=getApplicationContext().getString(R.string.name);
+        email=getApplicationContext().getString(R.string.email);
     }
 
     public void dbID(){
@@ -102,25 +107,32 @@ public class DatabaseActivity extends Fragment {
 
         if(localKey!=null){
             key=localKey;
-
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+name));
+            databaseReference.setValue(userInfo.name);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
+            databaseReference.setValue(userInfo.email);
         }
         if(personalKey!=null) {
             key= personalKey;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+name));
+            databaseReference.setValue(userInfo.personName);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
+            databaseReference.setValue(userInfo.personEmail);
         }
 
-        finalDoorKey =userKey+key+doorKey;
+        finalDoorKey =userKey+key+userData+doorKey;
 
         //Light related user key:
-        finalStatusKey =userKey+key+statusKey;
-        finalSensorKey =userKey+key+SensorKey;
-        finaldateKey=userKey+key+scheduleKey+getApplicationContext().getString(R.string.dayKey);
-        finalTimeKey=userKey+key+scheduleKey+getApplicationContext().getString(R.string.timeKey);
+        finalStatusKey =userKey+key+userData+statusKey;
+        finalSensorKey =userKey+key+userData+SensorKey;
+        finaldateKey=userKey+key+userData+scheduleKey+getApplicationContext().getString(R.string.dayKey);
+        finalTimeKey=userKey+key+userData+scheduleKey+getApplicationContext().getString(R.string.timeKey);
 
         //Temp related user key:
-        finalMaxKey=userKey+key+maxKey;
-        finalMinKey=userKey+key+minKey;
+        finalMaxKey=userKey+key+userData+maxKey;
+        finalMinKey=userKey+key+userData+minKey;
         //Window related user key:
-        finalWindowBreak=userKey+key+windowBKey;
+        finalWindowBreak=userKey+key+userData+windowBKey;
     }
 
     private void time(){

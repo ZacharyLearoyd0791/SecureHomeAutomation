@@ -10,6 +10,8 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -64,7 +66,7 @@ public class WindowFragment extends Fragment {
     String deviceState;
     ToggleButton sensorPowerButton;
     UserInfo userInfo=new UserInfo();
-    String key,localKey,personalKey,windowsKey,sensorKey,userKey;
+    String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData;
     String[] sensorStatusArray = {"Sensor is ON","Sensor is OFF","Sensor is Activated","Sensor is Deactivated","Sensor is in TEST mode"};
     String sensorStatus = "Sensor is off";
     RecyclerView recyclerView;
@@ -204,6 +206,8 @@ public class WindowFragment extends Fragment {
     private String dbID(){
         userInfo.typeAccount();
         userKey=getString(R.string.userKey);
+        userData=getApplicationContext().getString(R.string.userData);
+
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -217,7 +221,7 @@ public class WindowFragment extends Fragment {
         windowsKey=key+getString(R.string.windowKey);
         sensorKey=windowsKey;
 
-        return userKey+windowsKey;
+        return userKey+windowsKey+userData;
     }
     private void putToDatabase(){
         Date currentTime = Calendar.getInstance().getTime();

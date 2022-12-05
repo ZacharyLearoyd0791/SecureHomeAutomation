@@ -9,6 +9,8 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -62,7 +64,8 @@ public class TempFragment extends Fragment {
     int minimumTemperature = 0;
     int maximumTemperature = 0;
     ProgressDialog progressDialog;
-    String tempstr,userKey;
+    String tempstr,userKey,userDetails,userData;
+
 
     public TempFragment() {
         // Required empty public constructor
@@ -79,7 +82,7 @@ public class TempFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userKey=getString(R.string.userKey);
-
+        userData=getApplicationContext().getString(R.string.userData);
         dbID();
         init(view);
         setListeners();
@@ -120,8 +123,8 @@ public class TempFragment extends Fragment {
         if(userId!=null) {
             key= userId;
         }
-        minkey=userKey+key+getString(R.string.tempmin);
-        maxkey=userKey+key+getString(R.string.tempmax);
+        minkey=userKey+key+userData+getString(R.string.tempmin);
+        maxkey=userKey+key+userData+getString(R.string.tempmax);
 
 
     }
