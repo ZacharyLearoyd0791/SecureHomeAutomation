@@ -48,7 +48,7 @@ import com.squareup.picasso.Picasso;
 public class AccountFragment extends Fragment {
     UserInfo userInfo=new UserInfo();
     String name;
-    private TextView personName;
+    private TextView personName,personPhone;
     private Button signOutButton;
     View view;
     private int signInType;
@@ -59,6 +59,8 @@ public class AccountFragment extends Fragment {
     Animation fadeInAnimation;
     LottieAnimationView animationView;
     Uri userImage;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     //Edit profile
     FloatingActionButton editProfileButton;
@@ -90,11 +92,21 @@ public class AccountFragment extends Fragment {
         userinfo();
         btnSteps();
         imageHandler();
+        sharedPreferences = getActivity().getSharedPreferences("User New Data",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        Boolean profileEdited = sharedPreferences.getBoolean("Profile Edited",false);
+        if (profileEdited){
+            personName.setText(sharedPreferences.getString("NewUserName","No info"));
+            emailAcc.setText(sharedPreferences.getString("NewUserEmail","No info"));
+            personPhone.setText(sharedPreferences.getString("NewUsePhone","No info"));
+
+        }
 
     }
     private void init() {
         personName=view.findViewById(R.id.tv_account_person_name);
         emailAcc = view.findViewById(R.id.tv_account_person_email);
+        personPhone = view.findViewById(R.id.tv_account_person_phone);
         profileImage = view.findViewById(R.id.profile_image);
         animationView = view.findViewById(R.id.animationView);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
