@@ -297,7 +297,7 @@ public class LightFragment extends Fragment {
     private void time(){
         date = Calendar.getInstance().getTime();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh:mm:ss");
+            dateFormat = new SimpleDateFormat(getString(R.string.timeFormat));
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
