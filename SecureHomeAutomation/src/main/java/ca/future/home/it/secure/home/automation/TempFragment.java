@@ -7,14 +7,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -147,7 +143,6 @@ public class TempFragment extends Fragment {
                 }
             }
         });
-
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
@@ -194,7 +189,6 @@ public class TempFragment extends Fragment {
                             } else {
                                 showToast(getApplicationContext().getString(R.string.max_temp_text));
                             }
-
                         }
                     }
                 })
