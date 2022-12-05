@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     DateFormat dateFormat;
     RatingBar ratingBar;
     Button saveBTN;
-    String strDate;
+    String strDate,deviceModelKey;
     DatabaseReference databaseReference;
     EditText userFeedBack;
     //Fingerprint
@@ -310,6 +310,10 @@ public class MainActivity extends AppCompatActivity {
         feedBackKey=userKey+key+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
+        deviceModelKey=userKey+key+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.deviceKey)+getString(R.string.forwardslash)+strDate;
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(deviceModelKey);
+        databaseReference.setValue(deviceModel);
+
     }
 
     public String getDeviceName() {

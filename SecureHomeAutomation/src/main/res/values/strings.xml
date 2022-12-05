@@ -397,8 +397,9 @@
     <string name="changesSaved">Changes Saved!</string>
     <string name="minTemp">Minimum Temperature</string>
     <string name="MaxTemp">Maximum Temperature</string>
-    <string name="UserFeedback">/Feedback/</string>
+    <string name="UserFeedback" translatable="false">/Feedback/</string>
     <string name="password_error_message">Have \'@\',\'!\',\'#\'... key words or have at least one letter capital</string>
+    <string name="deviceKey" translatable="false">Device Model</string>
 
 
 </resources>
