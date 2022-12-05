@@ -397,6 +397,7 @@
     <string name="changesSaved">Changes Saved!</string>
     <string name="minTemp">Minimum Temperature</string>
     <string name="MaxTemp">Maximum Temperature</string>
+    <string name="UserFeedback">/Feedback/</string>
 
 
 </resources>

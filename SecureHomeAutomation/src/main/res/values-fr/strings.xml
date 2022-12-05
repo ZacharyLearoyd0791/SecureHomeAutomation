@@ -363,6 +363,7 @@
     <string name="device_deactivated">Device Deactivated</string>
     <string name="logged">logged</string>
     <string name="signedOut">Signed Out</string>
+    <string name="LightisOn">Light is on\t</string>
     <string name="lighIsOff">Light it is off\t</string>
     <string name="windowArmed">Window is armed</string>
     <string name="WIndowDisarmed">Window is disarmed</string>
