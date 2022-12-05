@@ -361,15 +361,15 @@
     <string name="logLightUpdate">Light Updated at:</string>
     <string name="logLightStatus">\n</string>
     <string name="device_deactivated">Device Deactivated</string>
-    <string name="logged">logged</string>
-    <string name="signedOut">Signed Out</string>
-    <string name="LightisOn">Light is on\t</string>
-    <string name="lighIsOff">Light it is off\t</string>
-    <string name="windowArmed">Window is armed</string>
-    <string name="WIndowDisarmed">Window is disarmed</string>
-    <string name="changesSaved">Changes Saved!</string>
-    <string name="minTemp">Minimum Temperature</string>
-    <string name="MaxTemp">Maximum Temperature</string>
+    <string name="logged">connecté</string>
+    <string name="signedOut">Se déconnecter</string>
+    <string name="LightisOn">La lumière est allumée\t</string>
+    <string name="lighIsOff">La lumière est éteinte\t</string>
+    <string name="windowArmed">La fenêtre est armée</string>
+    <string name="WIndowDisarmed">La fenêtre est désarmée</string>
+    <string name="changesSaved">Changements sauvegardés!</string>
+    <string name="minTemp">Température minimale</string>
+    <string name="MaxTemp">Température maximale</string>
     <string name="password_error_message">Have \'@\',\'!\',\'#\'... key words or have at least one letter capital</string>
     <string name="minimum_temp_first">Veuillez d\'abord régler la température minimale</string>
 
