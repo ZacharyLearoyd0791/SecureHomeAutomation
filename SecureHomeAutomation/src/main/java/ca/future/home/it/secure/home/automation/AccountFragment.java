@@ -108,7 +108,7 @@ public class AccountFragment extends Fragment {
             if(UserInfo.getSignInType()==0) {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("logged",false).apply();
+                editor.putBoolean(getString(R.string.logged),false).apply();
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
@@ -119,13 +119,13 @@ public class AccountFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         Intent intent = new Intent(getContext(), LoginActivity.class);
                         startActivity(intent);
-                        Toast.makeText(getContext(), "Signed Out", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.signedOut, Toast.LENGTH_SHORT).show();
                     }
                 });
             }else{
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
-                Toast.makeText(getContext(), "Signed Out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),  R.string.signedOut, Toast.LENGTH_SHORT).show();
             }
 
         });

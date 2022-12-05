@@ -388,6 +388,8 @@
     <string name="windowKey" translatable="false">/Windows Sensor/</string>
     <string name="userDetails" translatable="false">/userInfo/</string>
     <string name="userData" translatable="false">/userData/</string>
+    <string name="logged">logged</string>
+    <string name="signedOut">Signed Out</string>
 
 
 </resources>

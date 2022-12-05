@@ -361,5 +361,7 @@
     <string name="logLightUpdate">Light Updated at:</string>
     <string name="logLightStatus">\n</string>
     <string name="device_deactivated">Device Deactivated</string>
+    <string name="logged">logged</string>
+    <string name="signedOut">Signed Out</string>
 
 </resources>
