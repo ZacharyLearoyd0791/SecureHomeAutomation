@@ -191,9 +191,13 @@ public class LightFragment extends Fragment {
             public void run() {
                 // do something
                 LightStatus=statusOfLight;
-                StatusOut=status+LightStatus;
-                statusOfLightTV.setText(StatusOut);
-
+                if(LightStatus!=null) {
+                    StatusOut=status+LightStatus;
+                    statusOfLightTV.setText(StatusOut);
+                }
+                else{
+                    statusOfLightTV.setText(status+off);
+                }
                 handler.postDelayed(handlerTask, 1000);
             }
         };
