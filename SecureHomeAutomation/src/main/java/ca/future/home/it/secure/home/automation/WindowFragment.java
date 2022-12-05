@@ -113,8 +113,8 @@ public class WindowFragment extends Fragment {
 
         //If SDK is lower than oreo then creating channel for notification process
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel(getString(R.string.window_break),getString(R.string.windows), NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(getString(R.string.notify_window_break));
+            NotificationChannel channel = new NotificationChannel(getApplicationContext().getString(R.string.window_break),getApplicationContext().getString(R.string.windows), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(getApplicationContext().getString(R.string.notify_window_break));
             NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
@@ -161,7 +161,7 @@ public class WindowFragment extends Fragment {
 
 
     public void sendNotificationProcess(String notificationTitle, String notificationText){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getString(R.string.window_break));
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getApplicationContext().getString(R.string.window_break));
         builder.setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -172,8 +172,8 @@ public class WindowFragment extends Fragment {
     }
 
     public void alarmProcess(){
-        String notificationTitle = getString(R.string.window_on_test);
-        String notificationText = getString(R.string.window_alarm_active);
+        String notificationTitle = getApplicationContext().getString(R.string.window_on_test);
+        String notificationText = getApplicationContext().getString(R.string.window_alarm_active);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.test_device_req)
                 .setMessage(R.string.activate_window_alarm)
@@ -205,7 +205,7 @@ public class WindowFragment extends Fragment {
     }
     private String dbID(){
         userInfo.typeAccount();
-        userKey=getString(R.string.userKey);
+        userKey=getApplicationContext().getString(R.string.userKey);
         userData=getApplicationContext().getString(R.string.userData);
 
 
@@ -218,7 +218,7 @@ public class WindowFragment extends Fragment {
         if(personalKey!=null) {
             key= personalKey;
         }
-        windowsKey=key+userData+getString(R.string.windowKey);
+        windowsKey=key+userData+getApplicationContext().getString(R.string.windowKey);
         sensorKey=windowsKey;
 
         return userKey+windowsKey  ;
