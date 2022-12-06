@@ -104,14 +104,14 @@ public class AccountFragment extends Fragment {
         btnSteps();
         imageHandler();
 
-        sharedPreferences = getActivity().getSharedPreferences("User New Data",MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.user_data_new),MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        Boolean profileEdited = sharedPreferences.getBoolean("Profile Edited",false);
+        Boolean profileEdited = sharedPreferences.getBoolean(getString(R.string.editing_profile),false);
 
      if (profileEdited){
-            personName.setText(sharedPreferences.getString("NewUserName","No info"));
-            emailAcc.setText(sharedPreferences.getString("NewUserEmail","No info"));
-            personPhone.setText(sharedPreferences.getString("NewUsePhone","No info"));
+            personName.setText(sharedPreferences.getString(getString(R.string.name_new_user),getString(R.string.no_info)));
+            emailAcc.setText(sharedPreferences.getString(getString(R.string.email_new_user),getString(R.string.info_no)));
+            personPhone.setText(sharedPreferences.getString(getString(R.string.phone_new_user),getString(R.string.non_info)));
         }
 
     }
@@ -130,7 +130,7 @@ public class AccountFragment extends Fragment {
         if(personalKey!=null) {
             key= personalKey;
         }
-        windowsKey=key+userData+"/User Details/";
+        windowsKey=key+userData+getString(R.string.detailing_user);
         sensorKey=windowsKey;
 
         return userKey+windowsKey  ;
