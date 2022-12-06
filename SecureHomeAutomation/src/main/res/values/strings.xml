@@ -429,6 +429,16 @@
     <string name="device_off_turning">Device turned OFF</string>
     <string name="device_of_status">Device Status</string>
     <string name="number_sensor_activity">Sensor Activities number</string>
+    <string name="user_new_data">User New Data</string>
+    <string name="profiile_edited">Profile Edited</string>
+    <string name="user_new_name">NewUserName</string>
+    <string name="user_new_email">NewUserEmail</string>
+    <string name="user_new_phone">NewUsePhone</string>
+    <string name="user_name">Name</string>
+    <string name="user_email">Email</string>
+    <string name="user_phone">Phone</string>
+    <string name="editted">Edited</string>
+    <string name="user_details_path">/User Details/</string>
 
 
 </resources>

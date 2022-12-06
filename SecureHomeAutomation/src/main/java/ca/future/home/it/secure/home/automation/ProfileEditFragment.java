@@ -96,7 +96,7 @@ public class ProfileEditFragment extends Fragment {
         eName = view.findViewById(R.id.editProfilePersonName);
         eEmail = view.findViewById(R.id.editProfilePersonEmail);
         ePhoneNumber = view.findViewById(R.id.editProfilePersonPhone);
-        sharedPreferences = getActivity().getSharedPreferences("User New Data", Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.user_new_data), Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         userinfo();
@@ -119,15 +119,15 @@ public class ProfileEditFragment extends Fragment {
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putBoolean("Profile Edited",true);
-                editor.putString("NewUserName",eName.getText().toString());
-                editor.putString("NewUserEmail",eEmail.getText().toString());
-                editor.putString("NewUsePhone",ePhoneNumber.getText().toString());
+                editor.putBoolean(getString(R.string.profiile_edited),true);
+                editor.putString(getString(R.string.user_new_name),eName.getText().toString());
+                editor.putString(getString(R.string.user_new_email),eEmail.getText().toString());
+                editor.putString(getString(R.string.user_new_phone),ePhoneNumber.getText().toString());
                 editor.apply();
-                reference.child(dbID()).child("Name").setValue(eName);
-                reference.child(dbID()).child("Email").setValue(eEmail);
-                reference.child(dbID()).child("Phone").setValue(ePhoneNumber);
-                reference.child(dbID()).child("Edited").setValue(true);
+                reference.child(dbID()).child(getString(R.string.user_name)).setValue(eName);
+                reference.child(dbID()).child(getString(R.string.user_email)).setValue(eEmail);
+                reference.child(dbID()).child(getString(R.string.user_phone)).setValue(ePhoneNumber);
+                reference.child(dbID()).child(getString(R.string.editted)).setValue(true);
                 Toast.makeText(getContext(), R.string.changesSaved, Toast.LENGTH_SHORT).show();
             }
         });
@@ -153,7 +153,7 @@ public class ProfileEditFragment extends Fragment {
         if(personalKey!=null) {
             key= personalKey;
         }
-        windowsKey=key+userData+"/User Details/";
+        windowsKey=key+userData+getString(R.string.user_details_path);
         sensorKey=windowsKey;
 
         return userKey+windowsKey  ;
