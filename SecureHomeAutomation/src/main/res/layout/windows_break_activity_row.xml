@@ -37,7 +37,7 @@
                 android:layout_margin="0dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="18dp"
-                android:text="Date: " />
+                android:text="@string/date" />
 
             <TextView
                 android:id="@+id/windows_break_alarm_title"
@@ -45,7 +45,7 @@
                 android:layout_height="76dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="-23dp"
-                android:text="Alarm type"
+                android:text="@string/alarm_type"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 

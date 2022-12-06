@@ -448,6 +448,9 @@
     <string name="info_no">No info</string>
     <string name="non_info">No info</string>
     <string name="detailing_user">/User Details/</string>
+    <string name="date">Date:</string>
+    <string name="alarm_type">Alarm type</string>
+    <string name="activities_frag">Activities :</string>
 
 
 </resources>

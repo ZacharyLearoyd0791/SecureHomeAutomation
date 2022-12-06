@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:gravity="top|left"
-            android:text="Activities :"
+            android:text="@string/activities_frag"
             android:textColor="@color/black"
             android:textSize="17sp"
             android:textStyle="bold"
