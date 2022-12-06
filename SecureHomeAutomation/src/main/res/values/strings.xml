@@ -267,14 +267,13 @@
     <string name="id_is">\"Id of user is \"</string>
     <string name="login_info_not_avail">User login information isn\'t available now</string>
     <string name="method_selected_testing">User method has been selected for testing</string>
-    <string name="testing_001">Testing 001</string>
-    <string name="name_">\"\nName: \"</string>
-    <string name="email_">\"\nEmail: \"</string>
-    <string name="uid">\"\nUID: \"</string>
-    <string name="exception">\"Exception: \"</string>
+    <string name="testing_001" translatable="false">Testing 001</string>
+    <string name="name_" translatable="false">\"\nName: \"</string>
+    <string name="email_" translatable="false">\"\nEmail: \"</string>
+    <string name="uid" translatable="false">\"\nUID: \"</string>
+    <string name="exception" translatable="false">\"Exception: \"</string>
     <string name="error">\"Error: \"</string>
     <string name="public_profile">public_profile</string>
-    <string name="gfg">GFG</string>
     <string name="use_fingerprint_login">\"Use your fingerprint to login \"</string>
     <string name="no_fingerprint_found">No fingerprint found!</string>
     <string name="biometic_unavailable">Biometric sensor currently unavailable</string>
@@ -326,7 +325,7 @@
     <string name="Biometric_negitiveBtn">Use account password</string>
     <string name="turnOn">TurnOn</string>
     <string name="turnOff">TurnOff</string>
-    <string name="statusKeyGoogleAssist">statusType</string>
+    <string name="statusKeyGoogleAssist" translatable="false">statusType</string>
     <string name="loggedInFile">LoggedInFile</string>
 
     <string name="tempmin" translatable="false">/Temperature/Min</string>
@@ -339,8 +338,8 @@
     <string name="refreshing">Items Refreshed!</string>
     <string name="refresher">Refreshing…</string>
     <string name="discription_dialog">It won\'t take much time :)</string>
-    <string name="format">yyyy-MM-dd-hh:mm:ss</string>
-    <string name="formatted">yyyy-MM-dd-hh:mm:ss</string>
+    <string name="format" translatable="false">yyyy-MM-dd-hh:mm:ss</string>
+    <string name="formatted" translatable="false">yyyy-MM-dd-hh:mm:ss</string>
     <string name="status_device">Device Status</string>
     <string name="devicenotfound">No Device Found!</string>
     <string name="devicenotfound1">Device not found!</string>
@@ -408,7 +407,7 @@
     <string name="code_of_alert_2">Code of Alerts</string>
     <string name="power_state_2">Power state</string>
     <string name="number_of_alerts_3">Number of Alerts</string>
-    <string name="coe_of_alerts_3">Code of Alerts</string>
+    <string name="coe_of_alerts_3" translatable="false">Code of Alerts</string>
     <string name="sensor_turned_on">Sensor turned ON!</string>
     <string name="power_state_5">Power state</string>
     <string name="lert_number">Number of Alerts</string>
@@ -417,7 +416,7 @@
     <string name="alert_of_code">Code of Alerts</string>
     <string name="activities">Activities</string>
     <string name="activity">Activities</string>
-    <string name="device_code">Device Status Code</string>
+    <string name="device_code" translatable="false">Device Status Code</string>
     <string name="device_status_code">Device Status Code</string>
     <string name="device_state">Device Status Code</string>
     <string name="activity_number">Sensor Activities number</string>
@@ -438,8 +437,8 @@
     <string name="user_email">Email</string>
     <string name="user_phone">Phone</string>
     <string name="editted">Edited</string>
-    <string name="user_details_path">/User Details/</string>
-    <string name="user_data_new">User New Data</string>
+    <string name="user_details_path" translatable="false">/User Details/</string>
+    <string name="user_data_new" translatable="false">User New Data</string>
     <string name="editing_profile">Profile Edited</string>
     <string name="name_new_user">NewUserName</string>
     <string name="email_new_user">NewUserEmail</string>
@@ -448,12 +447,11 @@
     <string name="info_no">No info</string>
     <string name="non_info">No info</string>
     <string name="detailing_user">/User Details/</string>
-    <string name="date">Date:</string>
-    <string name="alarm_type">Alarm type</string>
+    <string name="date" translatable="false">Date:</string>
+    <string name="alarm_type" translatable="false">Alarm type</string>
     <string name="activities_frag">Activities :</string>
-    <string name="min_set">Min Temperature Set:</string>
-    <string name="max_set">Max Temperature Set:</string>
-    <string name="idLightStatus">ID/User/Light Status</string>
+    <string name="min_set">Minimum set value</string>
+    <string name="max_set">Maximum set value</string>
 
 
 </resources>
