@@ -163,7 +163,9 @@
     <string name="sample_1">SAMPLE - Unauthorized Key Attempt</string>
     <string name="sample_2">SAMPLE - Door Locked 8:22AM</string>
     <string name="sample_3">SAMPLE - Door Unlocked 4:58PM</string>
+
     <string name="startTimeSelect">Select Start time</string>
+
     <string name="endTimeSelect">Select the end time</string>
     <string name="saved">Saved!</string>
     <string name="endSmall">Please make sure that the Start time must be smaller than end time</string>
@@ -202,9 +204,7 @@
     <string name="cancel">Cancel</string>
     <string name="place_key_remove">Place the key you wish to remove on the RFID reader…</string>
     <string name="success">Success!</string>
-    <string name="close">Close</string>
-    <string name="Time">"Time "</string>
-    <string name="Day">"Day "</string>
+    <string name="close">Close!</string>
     <string name="timeKey" translatable="false">/Schedule/Time</string>
     <string name="empty" translatable="false" />
     <string name="FirstCheck">First Check</string>

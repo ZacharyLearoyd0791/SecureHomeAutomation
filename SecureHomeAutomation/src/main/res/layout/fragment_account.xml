@@ -8,7 +8,6 @@
     android:background="@color/white"
     tools:context=".AccountFragment">
 
-
     <ImageView
         android:id="@+id/profile_frag_bg"
         android:layout_width="wrap_content"
