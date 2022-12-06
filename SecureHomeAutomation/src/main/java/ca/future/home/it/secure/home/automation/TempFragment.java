@@ -7,12 +7,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -59,10 +57,11 @@ public class TempFragment extends Fragment {
     DatabaseReference minTempRef;
     DatabaseReference maxTempRef;
     ArcGauge temperatureView;
-    int minimumTemperature = 0;
-    int maximumTemperature = 0;
+    public static int minimumTemperature;
+    public static int maximumTemperature;
     ProgressDialog progressDialog;
-    String tempstr;
+    String tempstr,userKey,userDetails,userData;
+    View view;
 
     public TempFragment() {
         // Required empty public constructor
@@ -72,19 +71,21 @@ public class TempFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_temp, container, false);
+        view= inflater.inflate(R.layout.fragment_temp, container, false);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        userKey=getString(R.string.userKey);
+        userData=getApplicationContext().getString(R.string.userData);
         dbID();
-        init(view);
-        setListeners();
+        init();
     }
 
-    private void init(View view) {
-        tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
+    private void init() {
+        tvCurrentTemperature = (TextView) view.findViewById(R.id.CurrentTemp);
         tvHumidity = view.findViewById(R.id.Humidity);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
@@ -104,9 +105,11 @@ public class TempFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         loadTemperatureConfigurations();
+        setListeners();
+
     }
 
-    private void dbID(){
+    public void dbID(){
         userInfo.typeAccount();
 
         localuserId=userInfo.userId;
@@ -118,9 +121,8 @@ public class TempFragment extends Fragment {
         if(userId!=null) {
             key= userId;
         }
-        minkey=key+getString(R.string.tempmin);
-        maxkey=key+getString(R.string.tempmax);
-
+        minkey=userKey+key+userData+getApplicationContext().getString(R.string.tempmin);
+        maxkey=userKey+key+userData+getApplicationContext().getString(R.string.tempmax);
 
     }
     private void setListeners() {
@@ -134,14 +136,17 @@ public class TempFragment extends Fragment {
         btnMaxTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogForInputTemperature(false);
+                if (minimumTemperature > 0) {
+                    showDialogForInputTemperature(false);
+                } else {
+                    showToast(getApplicationContext().getString(R.string.minimum_temp_first));
+                }
             }
         });
-
     }
 
     private void showDialogForInputTemperature(boolean isMinTemperature) {
-        String title = isMinTemperature ? "Minimum Temperature" : "Maximum Temperature";
+        String title = isMinTemperature ? getApplicationContext().getString(R.string.minTemp) : getApplicationContext().getString(R.string.MaxTemp);
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.temperature_input_dialog_box, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -150,10 +155,10 @@ public class TempFragment extends Fragment {
         tvTitle.setText(title);
         EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
         if(isMinTemperature) {
-            if(minimumTemperature > 0&&minimumTemperature < 33)
+            if(minimumTemperature > 0 && minimumTemperature < 33)
                 userInput.setText(minimumTemperature+"");
         } else {
-            if (maximumTemperature > 0&&maximumTemperature  < 33)
+            if (maximumTemperature > 0 && maximumTemperature < 33)
                 userInput.setText(maximumTemperature+"");
         }
         alertDialogBuilder
@@ -162,19 +167,28 @@ public class TempFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         int temperature = Integer.parseInt(userInput.getText().toString());
                         if (isMinTemperature) {
-                            if (temperature < maximumTemperature && temperature > 0) {
-                                saveMinTemperature(temperature);
+                            if (maximumTemperature == 0) {
+                                if (temperature > 0) {
+                                    saveMinTemperature(temperature);
+                                } else {
+                                    showToast(getApplicationContext().getString(R.string.mini_temp_text));
+                                    userInput.requestFocus();
+                                }
                             } else {
-                                showToast(getString(R.string.mini_temp_text));
-                                userInput.requestFocus();
+                                if (temperature > 0 && temperature < maximumTemperature) {
+                                    saveMinTemperature(temperature);
+                                } else {
+                                    showToast(getApplicationContext().getString(R.string.mini_temp_text));
+                                    userInput.requestFocus();
+                                }
                             }
+
                         } else {
                             if (temperature > minimumTemperature && temperature > 0) {
                                 saveMaxTemperature(temperature);
                             } else {
-                                showToast(getString(R.string.max_temp_text));
+                                showToast(getApplicationContext().getString(R.string.max_temp_text));
                             }
-
                         }
                     }
                 })
@@ -189,14 +203,14 @@ public class TempFragment extends Fragment {
     }
 
     private void saveMinTemperature(int temp) {
-        progressDialog.setMessage(getString(R.string.savie));
+        progressDialog.setMessage(getApplicationContext().getString(R.string.savie));
         progressDialog.show();
         minTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 closeProgressDialog();
                 if (databaseError != null) {
-                    showToast(getString(R.string.min_temp_min_temp) + databaseError.getMessage());
+                    showToast(getApplicationContext().getString(R.string.min_temp_min_temp) + databaseError.getMessage());
                 } else {
                     minimumTemperature = temp;
                     setMinTemperature(minimumTemperature);
@@ -206,14 +220,14 @@ public class TempFragment extends Fragment {
     }
 
     private void saveMaxTemperature(int temp) {
-        progressDialog.setMessage(getString(R.string.savings));
+        progressDialog.setMessage(getApplicationContext().getString(R.string.savings));
         progressDialog.show();
         maxTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 closeProgressDialog();
                 if (databaseError != null) {
-                    showToast(getString(R.string.max_temp_text_temp) + databaseError.getMessage());
+                    showToast(getApplicationContext().getString(R.string.max_temp_text_temp) + databaseError.getMessage());
                 } else {
                     maximumTemperature = temp;
                     setMaxTemperature(maximumTemperature);
@@ -296,7 +310,7 @@ public class TempFragment extends Fragment {
 
 
     private void setHumidity(int value) {
-        tvHumidity.setText(getString(R.string.Humidity)+value+"%");
+        tvHumidity.setText(getApplicationContext().getString(R.string.Humidity)+value+"%");
     }
 
     private void setMinTemperature(int value) {

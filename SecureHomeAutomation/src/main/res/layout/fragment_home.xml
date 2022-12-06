@@ -235,52 +235,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Switch
-            android:id="@+id/sw_lock"
-            android:layout_width="145dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="296dp"
-            android:text="@string/unlock_lock"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
-
-        <Switch
-            android:id="@+id/sw_light"
-            android:layout_width="114dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="46dp"
-            android:layout_marginBottom="76dp"
-            android:text="@string/off_on"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/greenLight"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-        <Switch
-            android:id="@+id/sw_window"
-            android:layout_width="150dp"
-            android:layout_height="46dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="76dp"
-            android:text="@string/disarm_arm"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_press_window"
-            app:layout_constraintVertical_bias="0.016"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-
         <TextView
             android:id="@+id/tv_home"
             android:layout_width="wrap_content"
@@ -307,15 +261,39 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/DoorStatusTVH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="@string/quick_access_status"
-            android:textColor="#000000"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="313dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sw_window" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/TempStatusTVH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="276dp"
+            android:layout_marginTop="312dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/LightStatusTVH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="542dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/WindowsStatusTVH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="277dp"
+            android:layout_marginTop="538dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,11 +74,9 @@ public class UserInfo extends Fragment {
         uid = user.getUid();
 
         if (name!=null){
-            infoLocalName="Name is "+name;
             returnLocalName();
         }
         if (email!=null){
-            infoLocalEmail="Email is "+email;
             returnLocalEmail();
         }
         else{
@@ -93,12 +91,10 @@ public class UserInfo extends Fragment {
         personPhoto = acct.getPhotoUrl();
 
         if (personName!=null){
-            infoName="Name is "+personName;
             returnName();
         }
 
         if (personEmail!=null){
-            infoEmail="Email is "+personEmail;
             returnEmail();
         }
 
@@ -106,7 +102,6 @@ public class UserInfo extends Fragment {
         }
 
         if (personId!=null){
-            infoID="Id of user is "+personId;
 
             returnId();
         }
@@ -114,7 +109,6 @@ public class UserInfo extends Fragment {
         }
 
         if (personPhoto!=null){
-            photos="Person Photo is Available ";
 
             returnPhoto();
         }

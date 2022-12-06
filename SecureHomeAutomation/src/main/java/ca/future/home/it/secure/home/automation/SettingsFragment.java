@@ -53,7 +53,6 @@ public class SettingsFragment extends Fragment {
     private Switch colourSwitch;
     private Switch fingerSwitch;
     private Switch portraitSwitch;
-    private Switch faceLockSwitch;
     private Button saveButton;
     public static String SETTINGS_PREFS_NAME = "SavedSettings";
     private Boolean boldTextState ;
@@ -100,7 +99,6 @@ public class SettingsFragment extends Fragment {
         colourSwitch = view.findViewById(R.id.colour_switch);
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
-        faceLockSwitch = view.findViewById(R.id.settings_face_lock_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
         sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -125,8 +123,7 @@ public class SettingsFragment extends Fragment {
         fingerSwitch.setChecked(fingerPrintState);
         //Getting orientation switch state
         portraitSwitch.setChecked(screenOrientationState);
-        //Getting facelock switch state
-        faceLockSwitch.setChecked(faceLockState);
+
         //Bold Text
         boldSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -181,16 +178,6 @@ public class SettingsFragment extends Fragment {
                 screenOrientationState = portraitSwitch.isChecked();
             }
         });
-
-        //FaceLock
-        faceLockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                faceLockState =faceLockSwitch.isChecked();
-            }
-        });
-
-
 
     //Save Button functionality
         saveButton.setOnClickListener(new View.OnClickListener() {

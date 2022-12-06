@@ -163,7 +163,9 @@
     <string name="sample_1">SAMPLE - Unauthorized Key Attempt</string>
     <string name="sample_2">SAMPLE - Door Locked 8:22AM</string>
     <string name="sample_3">SAMPLE - Door Unlocked 4:58PM</string>
+
     <string name="startTimeSelect">Select Start time</string>
+
     <string name="endTimeSelect">Select the end time</string>
     <string name="saved">Saved!</string>
     <string name="endSmall">Please make sure that the Start time must be smaller than end time</string>
@@ -174,8 +176,8 @@
     <string name="startorendnull">Null Values in Start time or End Time</string>
     <string name="timeFormat">%02d:%02d</string>
     <string name="DatabaseStr">\"Database: \"</string>
-    <string name="sensorKey" translatable="false">/Ultrasonic Sensor/Light Status</string>
-    <string name="statusKey" translatable="false">/Ultrasonic Sensor/Light Status</string>
+    <string name="sensorKey" translatable="false">/Light Status</string>
+    <string name="statusKey" translatable="false">/Light Status</string>
 
     <string name="Timer">Timer</string>
     <string name="hourmin" translatable="false">HH:mm</string>
@@ -202,9 +204,7 @@
     <string name="cancel">Cancel</string>
     <string name="place_key_remove">Place the key you wish to remove on the RFID reader…</string>
     <string name="success">Success!</string>
-    <string name="close">Close</string>
-    <string name="Time">"Time "</string>
-    <string name="Day">"Day "</string>
+    <string name="close">Close!</string>
     <string name="timeKey" translatable="false">/Schedule/Time</string>
     <string name="empty" translatable="false" />
     <string name="FirstCheck">First Check</string>
@@ -289,7 +289,6 @@
     <string name="Lights">Lights</string>
     <string name="channelDesc">Notification to be sent when Light is on!</string>
     <string name="keyIs">Light Key is :</string>
-    <string name="idLightStatus">ID/User/Light Status</string>
     <string name="quick_access_menu">Quick Access Menu</string>
     <string name="configuration">Configuration</string>
     <string name="disarm_arm">Disarm/Arm</string>
@@ -340,8 +339,8 @@
     <string name="refreshing">Items Refreshed!</string>
     <string name="refresher">Refreshing…</string>
     <string name="discription_dialog">It won\'t take much time :)</string>
-    <string name="format">yyyy-mm-dd-hh:mm:ss</string>
-    <string name="formatted">yyyy-mm-dd-hh:mm:ss</string>
+    <string name="format">yyyy-MM-dd-hh:mm:ss</string>
+    <string name="formatted">yyyy-MM-dd-hh:mm:ss</string>
     <string name="status_device">Device Status</string>
     <string name="devicenotfound">No Device Found!</string>
     <string name="devicenotfound1">Device not found!</string>
@@ -384,6 +383,23 @@
     <string name="logLightUpdate">Light Updated at:\t</string>
     <string name="logLightStatus">\nStatus of light:\t</string>
     <string name="device_deactivated">Device Deactivated</string>
+    <string name="userKey" translatable="false">users/</string>
+    <string name="windowKey" translatable="false">/Windows Sensor/</string>
+    <string name="userDetails" translatable="false">/userInfo/</string>
+    <string name="userData" translatable="false">/userData/</string>
+    <string name="logged">logged</string>
+    <string name="signedOut">Signed Out</string>
+    <string name="LightisOn">Light is on\t</string>
+    <string name="lighIsOff">Light it is off\t</string>
+    <string name="windowArmed">Window is armed</string>
+    <string name="WIndowDisarmed">Window is disarmed</string>
+    <string name="changesSaved">Changes Saved!</string>
+    <string name="minTemp">Minimum Temperature</string>
+    <string name="MaxTemp">Maximum Temperature</string>
+    <string name="UserFeedback" translatable="false">/Feedback/</string>
+    <string name="password_error_message">Have \'@\',\'!\',\'#\'... key words or have at least one letter capital</string>
+    <string name="deviceKey" translatable="false">Device Model</string>
+    <string name="minimum_temp_first">Please set the minimum temperature first</string>
 
 
 </resources>

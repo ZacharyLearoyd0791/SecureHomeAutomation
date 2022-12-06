@@ -191,9 +191,13 @@ public class LightFragment extends Fragment {
             public void run() {
                 // do something
                 LightStatus=statusOfLight;
-                StatusOut=status+LightStatus;
-                statusOfLightTV.setText(StatusOut);
-
+                if(LightStatus!=null) {
+                    StatusOut=status+LightStatus;
+                    statusOfLightTV.setText(StatusOut);
+                }
+                else{
+                    statusOfLightTV.setText(status+off);
+                }
                 handler.postDelayed(handlerTask, 1000);
             }
         };
@@ -201,21 +205,28 @@ public class LightFragment extends Fragment {
     }
 
     private void Status(){
+        if (LightStatus!=null) {
+            if (LightStatus.equals(on)) {
+                lightsOn.setChecked(true);
+                lightsOn.setBackgroundResource(R.drawable.status_border_green);
+                ivLightOff.setVisibility(View.INVISIBLE);
+                ivLightOn.setVisibility(View.VISIBLE);
 
-        if(LightStatus.equals(on)){
-            lightsOn.setChecked(true);
-            lightsOn.setBackgroundResource(R.drawable.status_border_green);
-            ivLightOff.setVisibility(View.INVISIBLE);
-            ivLightOn.setVisibility(View.VISIBLE);
-
+            } else if (Objects.equals(LightStatus, off)) {
+                lightsOn.setChecked(false);
+                lightsOn.setBackgroundResource(R.drawable.status_border_red);
+                ivLightOn.setVisibility(View.INVISIBLE);
+                ivLightOff.setVisibility(View.VISIBLE);
+            }
         }
-        else if(Objects.equals(LightStatus, off)){
+        else{
             lightsOn.setChecked(false);
             lightsOn.setBackgroundResource(R.drawable.status_border_red);
             ivLightOn.setVisibility(View.INVISIBLE);
             ivLightOff.setVisibility(View.VISIBLE);
         }
         lightsOn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
             if (lightsOn.isChecked()) {
                 LightStatus = on;
                 lightsOn.setBackgroundResource(R.drawable.status_border_green);
@@ -286,7 +297,7 @@ public class LightFragment extends Fragment {
     private void time(){
         date = Calendar.getInstance().getTime();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat("yyyy-mm-dd-hh:mm:ss");
+            dateFormat = new SimpleDateFormat(getString(R.string.format));
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {

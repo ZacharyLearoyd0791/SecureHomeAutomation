@@ -10,6 +10,8 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -64,7 +66,7 @@ public class WindowFragment extends Fragment {
     String deviceState;
     ToggleButton sensorPowerButton;
     UserInfo userInfo=new UserInfo();
-    String key,localKey,personalKey,windowsKey,sensorKey;
+    String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData;
     String[] sensorStatusArray = {"Sensor is ON","Sensor is OFF","Sensor is Activated","Sensor is Deactivated","Sensor is in TEST mode"};
     String sensorStatus = "Sensor is off";
     RecyclerView recyclerView;
@@ -81,6 +83,7 @@ public class WindowFragment extends Fragment {
 
     public WindowFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -111,8 +114,8 @@ public class WindowFragment extends Fragment {
 
         //If SDK is lower than oreo then creating channel for notification process
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel(getString(R.string.window_break),getString(R.string.windows), NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(getString(R.string.notify_window_break));
+            NotificationChannel channel = new NotificationChannel(getApplicationContext().getString(R.string.window_break),getApplicationContext().getString(R.string.windows), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(getApplicationContext().getString(R.string.notify_window_break));
             NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
@@ -159,7 +162,7 @@ public class WindowFragment extends Fragment {
 
 
     public void sendNotificationProcess(String notificationTitle, String notificationText){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getString(R.string.window_break));
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),getApplicationContext().getString(R.string.window_break));
         builder.setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -170,8 +173,8 @@ public class WindowFragment extends Fragment {
     }
 
     public void alarmProcess(){
-        String notificationTitle = getString(R.string.window_on_test);
-        String notificationText = getString(R.string.window_alarm_active);
+        String notificationTitle = getApplicationContext().getString(R.string.window_on_test);
+        String notificationText = getApplicationContext().getString(R.string.window_alarm_active);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.test_device_req)
                 .setMessage(R.string.activate_window_alarm)
@@ -203,6 +206,9 @@ public class WindowFragment extends Fragment {
     }
     private String dbID(){
         userInfo.typeAccount();
+        userKey=getApplicationContext().getString(R.string.userKey);
+        userData=getApplicationContext().getString(R.string.userData);
+
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -213,10 +219,10 @@ public class WindowFragment extends Fragment {
         if(personalKey!=null) {
             key= personalKey;
         }
-        windowsKey=key+"/Windows Sensor/";
+        windowsKey=key+userData+getApplicationContext().getString(R.string.windowKey);
         sensorKey=windowsKey;
 
-        return windowsKey;
+        return userKey+windowsKey  ;
     }
     private void putToDatabase(){
         Date currentTime = Calendar.getInstance().getTime();
@@ -226,21 +232,31 @@ public class WindowFragment extends Fragment {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Time").setValue(time);     //This will store time of Alert
         reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue(alertCodeData);    //This stores the type of Alert
-        reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is on/off/error
+       if(alertCode==0) {
+           reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is off
+       }else if(alertCode ==1){
+           reference.child(dbID()).child("Device Status Code").setValue("1");  //This code will get the status of the device, if device is on
+       }else if(alertCode == 4){
+           reference.child(dbID()).child("Device Status Code").setValue("-1");  //This code will get the status of the device, if device is error
+       }
         reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);  //This is number of activity/alerts
 
     }
 
-    private void getFromDataBase(){
+    public void getFromDataBase(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 deviceState = snapshot.child(dbID()).child("Device Status Code").toString();
-                if(deviceState.contains("0")){
+                if(deviceState.contains("-2")){
                     deviceStatusTextView.setText(R.string.devicenotfound);
                     sensorStatus ="Device not Available";
+                    deviceStatusTextView.setTextColor(Color.BLACK);
+                }else if (deviceState.contains("0")){
+                    deviceStatusTextView.setText("Turned OFF");
+                    sensorStatus ="Device turned off";
                     deviceStatusTextView.setTextColor(Color.BLACK);
                 }else if(deviceState.contains("1")){
                     deviceStatusTextView.setText(R.string.activedevice);

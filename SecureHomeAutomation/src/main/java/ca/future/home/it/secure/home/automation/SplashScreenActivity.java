@@ -196,11 +196,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             }
             else{
-                // Log.d(TAG,"Test_Google_Assistance: V2, open close test param grabbed but error\t"+param);
             }
         }
         else{
-            //Log.d(TAG,"Test_Google_Assistance: V2, open close test is null");
         }
     }
 

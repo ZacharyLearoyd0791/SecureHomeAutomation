@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -90,6 +92,8 @@ public class RegistrationActivity extends AppCompatActivity {
             if(!passwordInput.matches(confirmPasswordInput)){
                 confirmPassword.setError(getString(R.string.password_no_match));
                 confirmPassword.requestFocus();
+            }if(!isValidPassword(passwordInput)) {
+                password.setError(getString(R.string.password_error_message));
             }
             fillChecker = 0;
         }else{
@@ -97,6 +101,17 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    public static boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-8])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
+    }
     public void registrationProcess(int CheckerId){
 
         databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.user_details));
@@ -107,7 +122,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
 
-                            //databaseReference.child("Email").setValue(fullName);
 
                             Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification()
                                     .addOnCompleteListener(task1 -> {

@@ -8,6 +8,8 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -46,10 +48,10 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    String key;
+    String  idKey, localKey, key, personalKey;
     String feedBackofUser;
     String ratingKey;
-    String feedBackKey;
+    String feedBackKey,userKey,userDetails;
 
     float ratingVal;
 
@@ -78,13 +80,13 @@ public class MainActivity extends AppCompatActivity {
     DateFormat dateFormat;
     RatingBar ratingBar;
     Button saveBTN;
-    String strDate;
+    String strDate,deviceModelKey;
     DatabaseReference databaseReference;
     EditText userFeedBack;
     //Fingerprint
     String fingerprintState = "";
     private int progressStatus = 0;
-
+    UserInfo userInfo=new UserInfo();
     //Bottom Navigation
     public static BottomNavigationView bottomNav;
 
@@ -94,7 +96,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userInfo.typeAccount();
+        userDetails=getString(R.string.UserFeedback);
+        userKey=getApplicationContext().getString(R.string.userKey);
 
+        dbID();
 
 
         //Bottom navigation and fragment views
@@ -154,6 +160,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void dbID() {
+        userInfo.typeAccount();
+        localKey = userInfo.userId;
+        personalKey = userInfo.idInfo;
+
+        if (localKey != null) {
+            key = localKey;
+
+        }
+        if (personalKey != null) {
+            key = personalKey;
+        }
+    }
 
 
     //inflate action bar on first time opening app
@@ -273,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).start();
 
-                databaseRatingInfo(ratingVal, feedBackofUser);
+                databaseRatingInfo(ratingVal, feedBackofUser,getDeviceName());
             });
         });
         dialog.show();
@@ -282,16 +301,43 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
-    private void databaseRatingInfo(float ratingVal,String feedbackOfUser) {
+    private void databaseRatingInfo(float ratingVal,String feedbackOfUser,String deviceModel) {
         time();
-        ratingKey=getString(R.string.forwardslash)+key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
+
+        ratingKey=userKey+key+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(ratingKey);
         databaseReference.setValue(ratingVal);
-        feedBackKey=key+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
+        feedBackKey=userKey+key+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.feedback)+getString(R.string.forwardslash)+strDate;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(feedBackKey);
         databaseReference.setValue(feedbackOfUser);
+        deviceModelKey=userKey+key+userDetails+getString(R.string.forwardslash)+getString(R.string.rating)+getString(R.string.forwardslash)+getString(R.string.deviceKey)+getString(R.string.forwardslash)+strDate;
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(deviceModelKey);
+        databaseReference.setValue(deviceModel);
+
     }
 
+    public String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.toLowerCase().startsWith(manufacturer.toLowerCase())) {
+            return capitalize(model);
+        } else {
+            return capitalize(manufacturer) + " " + model;
+        }
+    }
+
+
+    private String capitalize(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        char first = s.charAt(0);
+        if (Character.isUpperCase(first)) {
+            return s;
+        } else {
+            return Character.toUpperCase(first) + s.substring(1);
+        }
+    }
     public void onBackPressed() {
 
         AlertDialog.Builder builder

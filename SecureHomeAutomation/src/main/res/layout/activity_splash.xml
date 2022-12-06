@@ -14,5 +14,5 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/animation"
-        app:lottie_speed="0.65" />
+        app:lottie_speed="0.75" />
 </RelativeLayout>

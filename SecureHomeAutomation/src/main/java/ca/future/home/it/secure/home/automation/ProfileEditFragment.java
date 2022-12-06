@@ -9,7 +9,9 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -43,6 +45,8 @@ public class ProfileEditFragment extends Fragment {
     Uri imageUri;
     View view;
     UserInfo userInfo=new UserInfo();
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     String DBName,DBEmail,DBPhone,DBImage;
 
 
@@ -87,6 +91,9 @@ public class ProfileEditFragment extends Fragment {
         eName = view.findViewById(R.id.editProfilePersonName);
         eEmail = view.findViewById(R.id.editProfilePersonEmail);
         ePhoneNumber = view.findViewById(R.id.editProfilePersonPhone);
+        sharedPreferences = getActivity().getSharedPreferences("User New Data", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         userinfo();
         changeProfileImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,13 +107,19 @@ public class ProfileEditFragment extends Fragment {
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startActivity(new Intent(getActivity(),ForgotPasswordActivity.class));
             }
         });
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_SHORT).show();
+                editor.putBoolean("Profile Edited",true);
+                editor.putString("NewUserName",eName.getText().toString());
+                editor.putString("NewUserEmail",eEmail.getText().toString());
+                editor.putString("NewUsePhone",ePhoneNumber.getText().toString());
+                editor.apply();
+                Toast.makeText(getContext(), R.string.changesSaved, Toast.LENGTH_SHORT).show();
             }
         });
 

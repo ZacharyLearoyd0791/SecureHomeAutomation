@@ -9,6 +9,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,11 +44,11 @@ public class DatabaseActivity extends Fragment {
     //Key string
     String finalDoorKey,localKey,key,personalKey,strDate,
             finalSensorKey, finalStatusKey,statusKey,SensorKey,doorKey,maxKey,minKey,finalMaxKey,finalMinKey,
-            finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey;
+            finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey,userKey;
 
     //Database String
-    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime;
-    String outDoor,outLight,outDist,outWindow,outMax,outMin,outScheduleDate,outScheduleTime;
+    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email;
+    String outDoor,outLight,userData,outWindow,outMax,outMin,outScheduleDate,userDetails;
 
     int min,max;
     private Handler handler;
@@ -92,6 +93,11 @@ public class DatabaseActivity extends Fragment {
         minKey=getApplicationContext().getString(R.string.tempmin);
         windowBKey=getApplicationContext().getString(R.string.windowBreakKey);
         scheduleKey= getApplicationContext().getString(R.string.schedKey);
+        userKey=getApplicationContext().getString(R.string.userKey);
+        userDetails=getApplicationContext().getString(R.string.userDetails);
+        userData=getApplicationContext().getString(R.string.userData);
+        name=getApplicationContext().getString(R.string.name);
+        email=getApplicationContext().getString(R.string.email);
     }
 
     public void dbID(){
@@ -101,25 +107,32 @@ public class DatabaseActivity extends Fragment {
 
         if(localKey!=null){
             key=localKey;
-
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+name));
+            databaseReference.setValue(userInfo.name);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
+            databaseReference.setValue(userInfo.email);
         }
         if(personalKey!=null) {
             key= personalKey;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+name));
+            databaseReference.setValue(userInfo.personName);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
+            databaseReference.setValue(userInfo.personEmail);
         }
 
-        finalDoorKey =key+doorKey;
+        finalDoorKey =userKey+key+userData+doorKey;
 
         //Light related user key:
-        finalStatusKey =key+statusKey;
-        finalSensorKey =key+SensorKey;
-        finaldateKey=key+scheduleKey+getApplicationContext().getString(R.string.dayKey);
-        finalTimeKey=key+scheduleKey+getApplicationContext().getString(R.string.timeKey);
+        finalStatusKey =userKey+key+userData+statusKey;
+        finalSensorKey =userKey+key+userData+SensorKey;
+        finaldateKey=userKey+key+userData+scheduleKey+getApplicationContext().getString(R.string.dayKey);
+        finalTimeKey=userKey+key+userData+scheduleKey+getApplicationContext().getString(R.string.timeKey);
 
         //Temp related user key:
-        finalMaxKey=key+maxKey;
-        finalMinKey=key+minKey;
+        finalMaxKey=userKey+key+userData+maxKey;
+        finalMinKey=userKey+key+userData+minKey;
         //Window related user key:
-        finalWindowBreak=key+windowBKey;
+        finalWindowBreak=userKey+key+userData+windowBKey;
     }
 
     private void time(){
@@ -131,7 +144,6 @@ public class DatabaseActivity extends Fragment {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             strDate = dateFormat.format(date);
         }
-        System.out.println("Converted String: " + strDate);
     }
 
     public void getDB(){
