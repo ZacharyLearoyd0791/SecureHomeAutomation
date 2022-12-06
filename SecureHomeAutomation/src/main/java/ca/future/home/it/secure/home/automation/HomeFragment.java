@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
                 maxStatus= String.valueOf(tempFragment.maximumTemperature);
 
                 if(minStatus!=null){
-                    TempStatusTV.setText(getString(R.string.min_set)+minStatus);
+                    TempStatusTV.setText("Min Temperature Set:"+"\n"+minStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment {
                     TempStatusTV.setTextSize(15);
                 }
                 if(maxStatus!=null){
-                    TempStatusTV.append("\n"+getString(R.string.max_set)+maxStatus);
+                    TempStatusTV.append("\n"+"Max Temperature Set:"+"\n"+maxStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
@@ -187,6 +187,7 @@ public class HomeFragment extends Fragment {
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
+
 
                 //Log.d(TAG,"Testing remove 10m \n 2002 \n"+doorStatus+"\n"+lightStatus);
 
