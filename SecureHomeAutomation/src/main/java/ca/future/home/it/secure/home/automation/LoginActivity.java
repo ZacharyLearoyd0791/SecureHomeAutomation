@@ -150,12 +150,11 @@ public class LoginActivity extends AppCompatActivity {
         final String PASSWORD_PATTERN = "^(?=.*[0-8])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
-
         return matcher.matches();
 
     }
     //Validating Email address
-    private boolean validateEmailInput(EditText email) {
+    public boolean validateEmailInput(EditText email) {
         String emailInput = emailAddress.getText().toString();
 
         if (!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {

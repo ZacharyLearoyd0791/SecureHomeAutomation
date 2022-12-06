@@ -8,6 +8,8 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,10 +43,12 @@ public class ProfileEditFragment extends Fragment {
     private Button saveChanges;
     private Button changePassword;
     private EditText eName;
+    String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData;
     private EditText eEmail;
     private EditText ePhoneNumber;
     Uri imageUri;
     View view;
+    DatabaseReference reference;
     UserInfo userInfo=new UserInfo();
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -119,6 +124,10 @@ public class ProfileEditFragment extends Fragment {
                 editor.putString("NewUserEmail",eEmail.getText().toString());
                 editor.putString("NewUsePhone",ePhoneNumber.getText().toString());
                 editor.apply();
+                reference.child(dbID()).child("Name").setValue(eName);
+                reference.child(dbID()).child("Email").setValue(eEmail);
+                reference.child(dbID()).child("Phone").setValue(ePhoneNumber);
+                reference.child(dbID()).child("Edited").setValue(true);
                 Toast.makeText(getContext(), R.string.changesSaved, Toast.LENGTH_SHORT).show();
             }
         });
@@ -128,6 +137,26 @@ public class ProfileEditFragment extends Fragment {
 
 
         return view;
+    }
+    private String dbID(){
+        userInfo.typeAccount();
+        userKey=getApplicationContext().getString(R.string.userKey);
+        userData=getApplicationContext().getString(R.string.userData);
+
+
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+
+        if(localKey!=null){
+            key=localKey;
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+        }
+        windowsKey=key+userData+"/User Details/";
+        sensorKey=windowsKey;
+
+        return userKey+windowsKey  ;
     }
     private void userinfo() {
 

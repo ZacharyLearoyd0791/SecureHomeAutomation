@@ -9,6 +9,8 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.animation.Animator;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -43,6 +45,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class AccountFragment extends Fragment {
@@ -51,14 +58,18 @@ public class AccountFragment extends Fragment {
     private TextView personName,personPhone;
     private Button signOutButton;
     View view;
+    String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData;
     private int signInType;
 //    ImageView imgAcc;
+    String dbName, dbEmail, dbPhone;
     TextView  emailAcc;
+    Boolean dbProfileEdited;
     ImageView profileImage;
     final Handler handler = new Handler();
     Animation fadeInAnimation;
     LottieAnimationView animationView;
     Uri userImage;
+
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -92,16 +103,37 @@ public class AccountFragment extends Fragment {
         userinfo();
         btnSteps();
         imageHandler();
+
         sharedPreferences = getActivity().getSharedPreferences("User New Data",MODE_PRIVATE);
         editor = sharedPreferences.edit();
         Boolean profileEdited = sharedPreferences.getBoolean("Profile Edited",false);
-        if (profileEdited){
+
+     if (profileEdited){
             personName.setText(sharedPreferences.getString("NewUserName","No info"));
             emailAcc.setText(sharedPreferences.getString("NewUserEmail","No info"));
             personPhone.setText(sharedPreferences.getString("NewUsePhone","No info"));
-
         }
 
+    }
+    private String dbID(){
+        userInfo.typeAccount();
+        userKey=getApplicationContext().getString(R.string.userKey);
+        userData=getApplicationContext().getString(R.string.userData);
+
+
+        localKey=userInfo.userId;
+        personalKey=userInfo.idInfo;
+
+        if(localKey!=null){
+            key=localKey;
+        }
+        if(personalKey!=null) {
+            key= personalKey;
+        }
+        windowsKey=key+userData+"/User Details/";
+        sensorKey=windowsKey;
+
+        return userKey+windowsKey  ;
     }
     private void init() {
         personName=view.findViewById(R.id.tv_account_person_name);
