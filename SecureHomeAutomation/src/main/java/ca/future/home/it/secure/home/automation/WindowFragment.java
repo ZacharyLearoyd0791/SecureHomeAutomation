@@ -83,6 +83,7 @@ public class WindowFragment extends Fragment {
 
     public WindowFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -242,7 +243,7 @@ public class WindowFragment extends Fragment {
 
     }
 
-    private void getFromDataBase(){
+    public void getFromDataBase(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")

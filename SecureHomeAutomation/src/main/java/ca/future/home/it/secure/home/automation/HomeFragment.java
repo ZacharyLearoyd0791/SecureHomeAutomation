@@ -53,10 +53,7 @@ public class HomeFragment extends Fragment {
     AlphaAnimation fadeIn, fadeOut;
 
     //Switches
-    public Switch lockSwitch;
-    public Switch tempSwitch;
-    public Switch lightSwitch;
-    public Switch windowSwitch;
+
 
     //Buttons
     public ImageButton lockBtn;
@@ -65,7 +62,7 @@ public class HomeFragment extends Fragment {
     public ImageButton windowBtn;
 
     //Text View
-    public TextView greetingsText;
+    public TextView greetingsText,DoorStatusTV,LightStatusTV,TempStatusTV,WindowsStatusTV;
 
     //ImageView
     public ImageView doorView;
@@ -81,11 +78,10 @@ public class HomeFragment extends Fragment {
     final Handler handler = new Handler();
 
     //Database
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    WindowFragment windowFragment=new WindowFragment();
+    TempFragment tempFragment=new TempFragment();
     DatabaseActivity databaseActivity = new DatabaseActivity();
-    LightFragment lightFragment = new LightFragment();
-    DoorFragment doorFragment = new DoorFragment();
+
 
     //Date
     DateFormat dateFormat;
@@ -95,8 +91,8 @@ public class HomeFragment extends Fragment {
     int hour;
 
     //Misc Strings
-    String doorStatus, lightStatus, MinVal, MaxVal, windowStatus,
-            idKey, localKey, key, personalKey, strDate, doorKey, lock,
+    String doorStatus, lightStatus, maxStatus,windowStatus,
+            minStatus, lock,
             unlock, armed, disarmed;
 
     private Handler handlerRun;
@@ -116,6 +112,8 @@ public class HomeFragment extends Fragment {
         lightView = view.findViewById(R.id.lightInfo);
         windowView = view.findViewById(R.id.windowInfo);
         databaseActivity.Activity();
+        windowFragment.getFromDataBase();
+        tempFragment.dbID();
         init();
         greeting();
         StartTimer();
@@ -131,11 +129,66 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void run() {
-                doorStatus = databaseActivity.outDoor;
-                lightStatus = databaseActivity.outLight;
-                MinVal = databaseActivity.outMin;
-                MaxVal = databaseActivity.outMax;
-                windowStatus = databaseActivity.outWindow;
+
+                doorStatus = databaseActivity.DBDoor;
+                if(doorStatus!=null) {
+                    DoorStatusTV.setText(doorStatus);
+                    DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    DoorStatusTV.setTextSize(20);
+                }
+                else{
+                    DoorStatusTV.setText(R.string.NoVal);
+                    DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    DoorStatusTV.setTextSize(20);
+                }
+                lightStatus = databaseActivity.DBLight;
+                if (lightStatus!=null){
+                    LightStatusTV.setText(lightStatus);
+                    LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    LightStatusTV.setTextSize(20);
+                }
+
+                else{
+                    LightStatusTV.setText(R.string.NoVal);
+                    LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    LightStatusTV.setTextSize(20);
+                }
+                windowStatus = String.valueOf(windowFragment.numberOfAlerts);
+                if(windowStatus!=null){
+                    WindowsStatusTV.setText(windowStatus);
+                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    WindowsStatusTV.setTextSize(20);
+                }
+                else{
+                    WindowsStatusTV.setText(R.string.status_device+R.string.NoVal);
+                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    WindowsStatusTV.setTextSize(20);
+                }
+                minStatus= String.valueOf(tempFragment.minimumTemperature);
+                maxStatus= String.valueOf(tempFragment.maximumTemperature);
+
+                if(minStatus!=null){
+                    TempStatusTV.setText("Min Temperature Set:"+"\n"+minStatus);
+                    TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    TempStatusTV.setTextSize(15);
+                }
+                else{
+                    TempStatusTV.setText(R.string.noVal);
+                    TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    TempStatusTV.setTextSize(15);
+                }
+                if(maxStatus!=null){
+                    TempStatusTV.append("\n"+"Max Temperature Set:"+"\n"+maxStatus);
+                    TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    TempStatusTV.setTextSize(15);
+                }
+                else{
+                    TempStatusTV.append(R.string.max_temp+maxStatus);
+                    TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    TempStatusTV.setTextSize(15);
+                }
+
+                //Log.d(TAG,"Testing remove 10m \n 2002 \n"+doorStatus+"\n"+lightStatus);
 
                 handler.postDelayed(handlerTask, 1000);
             }
@@ -145,86 +198,14 @@ public class HomeFragment extends Fragment {
 
     private void Status(){
 
-        //Door status
-        if(Objects.equals(doorStatus, lock)){
-            Log.d(TAG, lightStatus + lock);
-            lockSwitch.setChecked(true);
-            doorView.setVisibility(View.INVISIBLE);
-        }
-        else if(Objects.equals(doorStatus, unlock)){
-            Log.d(TAG, lightStatus + lock);
-            lockSwitch.setChecked(false);
-            doorView.setVisibility(View.VISIBLE);
-        }
 
-        //Door lock switch
-        lockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                doorStatus = lock;
-                doorView.setVisibility(View.INVISIBLE);
-                //databaseActivity.toDatabase(getString(R.string.lock_status));
-                //toDatabase(getString(R.string.lock_status));
-
-            } else {
-                doorStatus = unlock;
-                doorView.setVisibility(View.VISIBLE);
-                //toDatabase(getString(R.string.unlocked_status));
-                //databaseActivity.toDatabase(getString(R.string.unlocked_status));
-            }
-        });
-
-        /////////
-
-        //Light status
-        if(Objects.equals(lightStatus, on)){
-            Log.d(TAG,getString(R.string.LightisOn)+lightStatus);
-            lightSwitch.setChecked(true);
-            lightView.setVisibility(View.INVISIBLE);
-        }
-        else if(Objects.equals(lightStatus, off)){
-            Log.d(TAG,getString(R.string.lighIsOff)+lightStatus);
-            lightSwitch.setChecked(false);
-            lightView.setVisibility(View.VISIBLE);
-        }
-
-        //Light switch
-        lightSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                lightView.setVisibility(View.INVISIBLE);
-            } else {
-                lightView.setVisibility(View.VISIBLE);
-            }
-        });
-
-        /////////
-
-        //Window status
-        if(Objects.equals(windowStatus, armed)){
-            Log.d(TAG, getString(R.string.windowArmed) + windowStatus);
-            windowSwitch.setChecked(true);
-            windowView.setVisibility(View.INVISIBLE);
-        }
-        else if(Objects.equals(windowStatus, disarmed)){
-            Log.d(TAG, getString(R.string.WIndowDisarmed) + windowStatus);
-            windowSwitch.setChecked(false);
-            windowView.setVisibility(View.VISIBLE);
-        }
-
-        //window switch
-        windowSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                windowView.setVisibility(View.INVISIBLE);
-            } else {
-                windowView.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     private void init(){
         //Switches
-        lockSwitch = view.findViewById(R.id.sw_lock);
+       /* lockSwitch = view.findViewById(R.id.sw_lock);
         lightSwitch = view.findViewById(R.id.sw_light);
-        windowSwitch = view.findViewById(R.id.sw_window);
+        windowSwitch = view.findViewById(R.id.sw_window);*/
 
         //Buttons
         lockBtn = view.findViewById(R.id.lock_Btn);
@@ -244,6 +225,11 @@ public class HomeFragment extends Fragment {
         unlock = getString(R.string.unlocked_status);
         armed=getString(R.string.sensor_on);
         disarmed=getString(R.string.sensor_off);
+
+        DoorStatusTV=view.findViewById(R.id.DoorStatusTVH);
+        LightStatusTV=view.findViewById(R.id.LightStatusTVH);
+        TempStatusTV=view.findViewById(R.id.TempStatusTVH);
+        WindowsStatusTV=view.findViewById(R.id.WindowsStatusTVH);
     }
 
     private void greeting(){
