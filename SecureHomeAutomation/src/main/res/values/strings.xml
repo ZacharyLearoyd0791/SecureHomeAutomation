@@ -451,6 +451,9 @@
     <string name="date">Date:</string>
     <string name="alarm_type">Alarm type</string>
     <string name="activities_frag">Activities :</string>
+    <string name="min_set">Min Temperature Set:</string>
+    <string name="max_set">Max Temperature Set:</string>
+    <string name="idLightStatus">ID/User/Light Status</string>
 
 
 </resources>

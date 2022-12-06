@@ -417,4 +417,16 @@
     <string name="non_info">Pas d\'information</string>
     <string name="detailing_user">/User Details/</string>
     <string name="activities_frag">Activities :</string>
+    <string name="min_set">Min Temperature Set:</string>
+    <string name="max_set">Max Temperature Set:</string>
+    <string name="date">Date:</string>
+    <string name="alarm_type">Alarm type</string>
+    <string name="user_details_path">/User Details/</string>
+    <string name="user_data_new">User New Data</string>
+    <string name="device_code">Device Status Code</string>
+    <string name="coe_of_alerts_3">Code of Alerts</string>
+    <string name="format">yyyy-MM-dd-hh:mm:ss</string>
+    <string name="formatted">yyyy-MM-dd-hh:mm:ss</string>
+    <string name="statusKeyGoogleAssist">statusType</string>
+
 </resources>

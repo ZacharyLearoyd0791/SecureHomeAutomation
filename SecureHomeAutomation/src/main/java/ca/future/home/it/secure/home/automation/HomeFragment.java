@@ -134,24 +134,24 @@ public class HomeFragment extends Fragment {
                 if(doorStatus!=null) {
                     DoorStatusTV.setText(doorStatus);
                     DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    DoorStatusTV.setTextSize(20);
+                    DoorStatusTV.setTextSize(15);
                 }
                 else{
                     DoorStatusTV.setText(R.string.NoVal);
                     DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    DoorStatusTV.setTextSize(20);
+                    DoorStatusTV.setTextSize(15);
                 }
                 lightStatus = databaseActivity.DBLight;
                 if (lightStatus!=null){
                     LightStatusTV.setText(lightStatus);
                     LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    LightStatusTV.setTextSize(20);
+                    LightStatusTV.setTextSize(15);
                 }
 
                 else{
                     LightStatusTV.setText(R.string.NoVal);
                     LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    LightStatusTV.setTextSize(20);
+                    LightStatusTV.setTextSize(15);
                 }
                 windowStatus = String.valueOf(windowFragment.numberOfAlerts);
                 if(windowStatus!=null){
@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
                 maxStatus= String.valueOf(tempFragment.maximumTemperature);
 
                 if(minStatus!=null){
-                    TempStatusTV.setText("Min Temperature Set:"+"\n"+minStatus);
+                    TempStatusTV.setText(getString(R.string.min_set)+minStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment {
                     TempStatusTV.setTextSize(15);
                 }
                 if(maxStatus!=null){
-                    TempStatusTV.append("\n"+"Max Temperature Set:"+"\n"+maxStatus);
+                    TempStatusTV.append("\n"+getString(R.string.max_set)+maxStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
