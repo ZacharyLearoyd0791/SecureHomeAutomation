@@ -12,6 +12,8 @@ import static android.content.ContentValues.TAG;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+import static ca.future.home.it.secure.home.automation.R.string.sensor_turned_on;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -58,7 +60,6 @@ public class WindowFragment extends Fragment {
 
     //Declarations
     RecyclerView activitiesRecyclerView;
-    Button notificationButton;
     TextView deviceStatusTextView;
     Button alarmButton;
     Vibrator vibrator;
@@ -67,7 +68,6 @@ public class WindowFragment extends Fragment {
     ToggleButton sensorPowerButton;
     UserInfo userInfo=new UserInfo();
     String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData;
-    String[] sensorStatusArray = {"Sensor is ON","Sensor is OFF","Sensor is Activated","Sensor is Deactivated","Sensor is in TEST mode"};
     String sensorStatus = "Sensor is off";
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
@@ -77,10 +77,7 @@ public class WindowFragment extends Fragment {
     static SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-
-
-
-
+    //Default constructor
     public WindowFragment() {
         // Required empty public constructor
 
@@ -92,10 +89,10 @@ public class WindowFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_window, container, false);
 
-        sharedPreferences = getActivity().getSharedPreferences("Number of activities",Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.number_of_activities),Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        numberOfAlerts = sharedPreferences.getInt("Number of Alerts",0);
-        alertCode = sharedPreferences.getInt("Code of Alerts",0);
+        numberOfAlerts = sharedPreferences.getInt(getString(R.string.number_of_alerts),0);
+        alertCode = sharedPreferences.getInt(getString(R.string.code_of_alerts),0);
         getFromDataBase();
 
 
@@ -105,7 +102,7 @@ public class WindowFragment extends Fragment {
         activitiesRecyclerView = view.findViewById(R.id.windows_recycler_view);
         deviceStatusTextView = view.findViewById(R.id.device_status_windows_break);
         sensorPowerButton = view.findViewById(R.id.windows_sensor_on_off_button);
-        sensorPowerButton.setChecked( sharedPreferences.getBoolean("Power state", false));
+        sensorPowerButton.setChecked( sharedPreferences.getBoolean(getString(R.string.power_state), false));
         //Recycler View
         data = RecyclerViewData.createWindowsAlertList(numberOfAlerts);
         RecyclerAdapter adapter = new RecyclerAdapter(data);
@@ -125,8 +122,8 @@ public class WindowFragment extends Fragment {
             public void onClick(View view) {
                 numberOfAlerts++;
                 alertCode = 2;
-                editor.putInt("Number of Alerts", numberOfAlerts);
-                editor.putInt("Code of Alerts",alertCode);
+                editor.putInt(getString(R.string.number_of_alert_2), numberOfAlerts);
+                editor.putInt(getString(R.string.code_of_alert_2),alertCode);
                 editor.commit();
                 alarmProcess();
             }
@@ -139,20 +136,20 @@ public class WindowFragment extends Fragment {
                 if(sensorPowerButton.isChecked()){
                     numberOfAlerts++;
                     alertCode = 1;
-                    editor.putBoolean("Power state",sensorPowerButton.isChecked());
-                    editor.putInt("Number of Alerts", numberOfAlerts);
-                    editor.putInt("Code of Alerts",alertCode);
+                    editor.putBoolean(getString(R.string.power_state_2),sensorPowerButton.isChecked());
+                    editor.putInt(getString(R.string.number_of_alerts_3), numberOfAlerts);
+                    editor.putInt(getString(R.string.coe_of_alerts_3),alertCode);
                     editor.commit();
 
-                    Toast.makeText(getContext(), "Sensor turned ON!"+alertCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(sensor_turned_on)+alertCode, Toast.LENGTH_SHORT).show();
                 }else{
                     alertCode = 0;
                     numberOfAlerts++;
-                    editor.putBoolean("Power state",sensorPowerButton.isChecked());
-                    editor.putInt("Number of Alerts", numberOfAlerts);
-                    editor.putInt("Code of Alerts",alertCode);
+                    editor.putBoolean(getString(R.string.power_state_5),sensorPowerButton.isChecked());
+                    editor.putInt(getString(R.string.lert_number), numberOfAlerts);
+                    editor.putInt(getString(R.string.alert_code),alertCode);
                     editor.commit();
-                    Toast.makeText(getContext(), "Sensor turned OFF"+alertCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.sensor_off_now)+alertCode, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -228,18 +225,18 @@ public class WindowFragment extends Fragment {
         Date currentTime = Calendar.getInstance().getTime();
         String time = currentTime.toString();
         //Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
-        int alertCodeData =  sharedPreferences.getInt("Code of Alerts",0);
+        int alertCodeData =  sharedPreferences.getInt(getString(R.string.alert_of_code),0);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Time").setValue(time);     //This will store time of Alert
-        reference.child(dbID()).child("Activities").child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue(alertCodeData);    //This stores the type of Alert
+        reference.child(dbID()).child(getString(R.string.activities)).child(String.valueOf(numberOfAlerts)).child("Time").setValue(time);     //This will store time of Alert
+        reference.child(dbID()).child(getString(R.string.activity)).child(String.valueOf(numberOfAlerts)).child("Alert Code").setValue(alertCodeData);    //This stores the type of Alert
        if(alertCode==0) {
-           reference.child(dbID()).child("Device Status Code").setValue("0");  //This code will get the status of the device, if device is off
+           reference.child(dbID()).child(getString(R.string.device_code)).setValue("0");  //This code will get the status of the device, if device is off
        }else if(alertCode ==1){
-           reference.child(dbID()).child("Device Status Code").setValue("1");  //This code will get the status of the device, if device is on
+           reference.child(dbID()).child(getString(R.string.device_status_code)).setValue("1");  //This code will get the status of the device, if device is on
        }else if(alertCode == 4){
-           reference.child(dbID()).child("Device Status Code").setValue("-1");  //This code will get the status of the device, if device is error
+           reference.child(dbID()).child(getString(R.string.device_state)).setValue("-1");  //This code will get the status of the device, if device is error
        }
-        reference.child(dbID()).child("Sensor Activities number").setValue(numberOfAlerts);  //This is number of activity/alerts
+        reference.child(dbID()).child(getString(R.string.activity_number)).setValue(numberOfAlerts);  //This is number of activity/alerts
 
     }
 
@@ -249,14 +246,14 @@ public class WindowFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                deviceState = snapshot.child(dbID()).child("Device Status Code").toString();
+                deviceState = snapshot.child(dbID()).child(getString(R.string.code_status)).toString();
                 if(deviceState.contains("-2")){
                     deviceStatusTextView.setText(R.string.devicenotfound);
-                    sensorStatus ="Device not Available";
+                    sensorStatus =getString(R.string.not_available);
                     deviceStatusTextView.setTextColor(Color.BLACK);
                 }else if (deviceState.contains("0")){
-                    deviceStatusTextView.setText("Turned OFF");
-                    sensorStatus ="Device turned off";
+                    deviceStatusTextView.setText(R.string.turn_off);
+                    sensorStatus =getString(R.string.device_turning_off);
                     deviceStatusTextView.setTextColor(Color.BLACK);
                 }else if(deviceState.contains("1")){
                     deviceStatusTextView.setText(R.string.activedevice);
@@ -264,7 +261,7 @@ public class WindowFragment extends Fragment {
                 }else if(deviceState.contains("2")){
                     deviceStatusTextView.setText(R.string.device_deactivated);
                     deviceStatusTextView.setTextColor(Color.RED);
-                    sensorStatus = "Device turned OFF";
+                    sensorStatus = getString(R.string.device_off_turning);
                 }
 
             }
@@ -283,8 +280,8 @@ public class WindowFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sensorStatus = snapshot.child(dbID()).child("Device Status").getValue().toString();
-                numberOfAlerts = Integer.parseInt(snapshot.child(dbID()).child("Sensor Activities number").getValue().toString());
+                sensorStatus = snapshot.child(dbID()).child(getString(R.string.device_of_status)).getValue().toString();
+                numberOfAlerts = Integer.parseInt(snapshot.child(dbID()).child(getString(R.string.number_sensor_activity)).getValue().toString());
             }
 
             @Override

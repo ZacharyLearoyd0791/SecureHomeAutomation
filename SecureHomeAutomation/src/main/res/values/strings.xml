@@ -400,6 +400,35 @@
     <string name="password_error_message">Have \'@\',\'!\',\'#\'... key words or have at least one letter capital</string>
     <string name="deviceKey" translatable="false">Device Model</string>
     <string name="minimum_temp_first">Please set the minimum temperature first</string>
+    <string name="number_of_activities">Number of activities</string>
+    <string name="number_of_alerts">Number of Alerts</string>
+    <string name="code_of_alerts">Code of Alerts</string>
+    <string name="power_state">Power state</string>
+    <string name="number_of_alert_2">Number of Alerts</string>
+    <string name="code_of_alert_2">Code of Alerts</string>
+    <string name="power_state_2">Power state</string>
+    <string name="number_of_alerts_3">Number of Alerts</string>
+    <string name="coe_of_alerts_3">Code of Alerts</string>
+    <string name="sensor_turned_on">Sensor turned ON!</string>
+    <string name="power_state_5">Power state</string>
+    <string name="lert_number">Number of Alerts</string>
+    <string name="alert_code">Code of Alerts</string>
+    <string name="sensor_off_now">Sensor turned OFF</string>
+    <string name="alert_of_code">Code of Alerts</string>
+    <string name="activities">Activities</string>
+    <string name="activity">Activities</string>
+    <string name="device_code">Device Status Code</string>
+    <string name="device_status_code">Device Status Code</string>
+    <string name="device_state">Device Status Code</string>
+    <string name="activity_number">Sensor Activities number</string>
+    <string name="code_status">Device Status Code</string>
+    <string name="not_available">Device not Available</string>
+    <string name="turn_off">Turned OFF</string>
+    <string name="turn_off_device">Turn Off</string>
+    <string name="device_turning_off">Device turned off</string>
+    <string name="device_off_turning">Device turned OFF</string>
+    <string name="device_of_status">Device Status</string>
+    <string name="number_sensor_activity">Sensor Activities number</string>
 
 
 </resources>

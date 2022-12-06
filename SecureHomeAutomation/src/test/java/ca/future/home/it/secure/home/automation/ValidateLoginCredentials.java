@@ -19,7 +19,8 @@ public class ValidateLoginCredentials {
         LoginActivity validator = new LoginActivity();
         Assert.assertTrue(validator.isValidPassword("Krushang!@#002"));
     }
-    EditText email;
+    LoginActivity validator = new LoginActivity();
+    EditText email= validator.findViewById(R.id.login_page_email_textBox);
 
     @Test
     public void test_email_true(){
@@ -45,7 +46,7 @@ public class ValidateLoginCredentials {
         LoginActivity validator = new LoginActivity();
         Assert.assertTrue(validator.validateEmailInput(email));
     }
-    
+
 
 
 
