@@ -119,16 +119,23 @@ public class ProfileEditFragment extends Fragment {
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putBoolean(getString(R.string.profiile_edited),true);
-                editor.putString(getString(R.string.user_new_name),eName.getText().toString());
-                editor.putString(getString(R.string.user_new_email),eEmail.getText().toString());
-                editor.putString(getString(R.string.user_new_phone),ePhoneNumber.getText().toString());
+                editor.putBoolean(getString(R.string.profiile_edited), true);
+                editor.putString(getString(R.string.user_new_name), eName.getText().toString());
+                editor.putString(getString(R.string.user_new_email), eEmail.getText().toString());
+                editor.putString(getString(R.string.user_new_phone), ePhoneNumber.getText().toString());
                 editor.apply();
-                reference.child(dbID()).child(getString(R.string.user_name)).setValue(eName);
-                reference.child(dbID()).child(getString(R.string.user_email)).setValue(eEmail);
-                reference.child(dbID()).child(getString(R.string.user_phone)).setValue(ePhoneNumber);
+              /*  if (eName != null) {
+                    reference.child(dbID()).child(getString(R.string.user_name)).setValue(eName);
+                }
+                if (eEmail != null){
+                    reference.child(dbID()).child(getString(R.string.user_email)).setValue(eEmail);
+                }
+                if(ePhoneNumber!=null){
+                    reference.child(dbID()).child(getString(R.string.user_phone)).setValue(ePhoneNumber);
+
+                }
                 reference.child(dbID()).child(getString(R.string.editted)).setValue(true);
-                Toast.makeText(getContext(), R.string.changesSaved, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.changesSaved, Toast.LENGTH_SHORT).show();*/
             }
         });
 
