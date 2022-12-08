@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment {
         StartTimer();
         Bundle bundle = new Bundle();
         Status();
+        WindowsStatusTV.setText("0");
 
         return view;
     }
@@ -176,7 +177,7 @@ public class HomeFragment extends Fragment {
                 maxStatus= String.valueOf(tempFragment.maximumTemperature);
 
                 if(minStatus!=null){
-                    TempStatusTV.setText("Min Temperature Set:"+minStatus);
+                    TempStatusTV.setText("Min Temperature Set: "+minStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
@@ -186,7 +187,7 @@ public class HomeFragment extends Fragment {
                     TempStatusTV.setTextSize(15);
                 }
                 if(maxStatus!=null){
-                    TempStatusTV.append("\n"+"Max Temperature Set:"+maxStatus);
+                    TempStatusTV.append("\n"+"Max Temperature Set: "+maxStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }

@@ -52,13 +52,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class AccountFragment extends Fragment {
     UserInfo userInfo=new UserInfo();
     String name;
     private TextView personName,personPhone;
     private Button signOutButton;
     View view;
-    String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData;
+    String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData, accountKey, emailKey,
+        finalEmailKey;
     private int signInType;
 //    ImageView imgAcc;
     String dbName, dbEmail, dbPhone;
@@ -76,6 +79,9 @@ public class AccountFragment extends Fragment {
     //Edit profile
     FloatingActionButton editProfileButton;
     GoogleSignInClient mClient;
+
+    //Database
+    DatabaseReference databaseReference;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -108,17 +114,19 @@ public class AccountFragment extends Fragment {
         editor = sharedPreferences.edit();
         Boolean profileEdited = sharedPreferences.getBoolean(getString(R.string.editing_profile),false);
 
-     if (profileEdited){
+        if (profileEdited){
             personName.setText(sharedPreferences.getString(getString(R.string.name_new_user),getString(R.string.no_info)));
             emailAcc.setText(sharedPreferences.getString(getString(R.string.email_new_user),getString(R.string.info_no)));
             personPhone.setText(sharedPreferences.getString(getString(R.string.phone_new_user),getString(R.string.non_info)));
         }
 
+     getDB();
+
     }
     private String dbID(){
         userInfo.typeAccount();
         userKey=getApplicationContext().getString(R.string.userKey);
-        userData=getApplicationContext().getString(R.string.userData);
+        userData="/userInfo/";
 
 
         localKey=userInfo.userId;
@@ -130,10 +138,10 @@ public class AccountFragment extends Fragment {
         if(personalKey!=null) {
             key= personalKey;
         }
-        windowsKey=key+userData+getString(R.string.detailing_user);
+        windowsKey=key+userData;
         sensorKey=windowsKey;
 
-        return userKey+windowsKey  ;
+        return userKey+windowsKey;
     }
     private void init() {
         personName=view.findViewById(R.id.tv_account_person_name);
@@ -143,7 +151,27 @@ public class AccountFragment extends Fragment {
         animationView = view.findViewById(R.id.animationView);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
         editProfileButton = view.findViewById(R.id.editProfileIcon);
+        emailKey="/Email:";
+    }
 
+    public void getDB() {
+        accountKey=dbID();
+        finalEmailKey=accountKey+emailKey;
+        //door
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalEmailKey));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    emailAcc.setText(Objects.requireNonNull(snapshot.getValue()).toString());
+                } else {
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     private void btnSteps() {
@@ -194,20 +222,14 @@ public class AccountFragment extends Fragment {
                     }
                 }, 3000);
 
-
-
-
             imageAnimation();
             //Opening profile edit frag
             editProfileButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                handler.postDelayed(()-> getParentFragmentManager().beginTransaction().replace(R.id.flFragment,MainActivity.profileEditFragment).commit(),300);
-
+                    handler.postDelayed(()-> getParentFragmentManager().beginTransaction().replace(R.id.flFragment,MainActivity.profileEditFragment).commit(),300);
                 }
             });
-
-
         }
 
     private void userinfo() {
