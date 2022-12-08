@@ -73,6 +73,7 @@ public class HomeFragment extends Fragment {
     public ImageView pressTemp;
     public ImageView pressLight;
     public ImageView pressWindow;
+    public ImageView grnLight;
 
 
     final Handler handler = new Handler();
@@ -111,6 +112,7 @@ public class HomeFragment extends Fragment {
         tempView = view.findViewById(R.id.tempInfo);
         lightView = view.findViewById(R.id.lightInfo);
         windowView = view.findViewById(R.id.windowInfo);
+        grnLight = view.findViewById(R.id.greenLight);
         databaseActivity.Activity();
         windowFragment.getFromDataBase();
         tempFragment.dbID();
@@ -146,6 +148,10 @@ public class HomeFragment extends Fragment {
                     LightStatusTV.setText(lightStatus);
                     LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     LightStatusTV.setTextSize(15);
+                    if(lightStatus.equals(R.string.on)){
+
+                        grnLight.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 else{
@@ -156,19 +162,21 @@ public class HomeFragment extends Fragment {
                 windowStatus = String.valueOf(windowFragment.numberOfAlerts);
                 if(windowStatus!=null){
                     WindowsStatusTV.setText(windowStatus);
+                    if(windowStatus.equals("1"))
+                        WindowsStatusTV.setText("Armed");
                     WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    WindowsStatusTV.setTextSize(20);
+                    WindowsStatusTV.setTextSize(15);
                 }
                 else{
                     WindowsStatusTV.setText(R.string.status_device+R.string.NoVal);
                     WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    WindowsStatusTV.setTextSize(20);
+                    WindowsStatusTV.setTextSize(15);
                 }
                 minStatus= String.valueOf(tempFragment.minimumTemperature);
                 maxStatus= String.valueOf(tempFragment.maximumTemperature);
 
                 if(minStatus!=null){
-                    TempStatusTV.setText("Min Temperature Set:"+"\n"+minStatus);
+                    TempStatusTV.setText("Min Temperature Set:"+minStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
@@ -178,7 +186,7 @@ public class HomeFragment extends Fragment {
                     TempStatusTV.setTextSize(15);
                 }
                 if(maxStatus!=null){
-                    TempStatusTV.append("\n"+"Max Temperature Set:"+"\n"+maxStatus);
+                    TempStatusTV.append("\n"+"Max Temperature Set:"+maxStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
@@ -231,6 +239,9 @@ public class HomeFragment extends Fragment {
         LightStatusTV=view.findViewById(R.id.LightStatusTVH);
         TempStatusTV=view.findViewById(R.id.TempStatusTVH);
         WindowsStatusTV=view.findViewById(R.id.WindowsStatusTVH);
+        lightView.setVisibility(View.INVISIBLE);
+        tempView.setVisibility(View.INVISIBLE);
+        windowView.setVisibility(View.INVISIBLE);
     }
 
     private void greeting(){
@@ -310,7 +321,4 @@ public class HomeFragment extends Fragment {
         });
 
     }
-    
-
-
 }
