@@ -452,6 +452,9 @@
     <string name="activities_frag">Activities :</string>
     <string name="min_set">Minimum set value</string>
     <string name="max_set">Maximum set value</string>
+    <string name="user_info">/userInfo/</string>
+    <string name="slash_email">/Email:</string>
+    <string name="name_info">Name</string>
 
 
 </resources>

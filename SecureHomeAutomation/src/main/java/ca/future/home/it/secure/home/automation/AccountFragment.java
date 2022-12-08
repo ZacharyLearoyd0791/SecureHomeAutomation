@@ -60,8 +60,8 @@ public class AccountFragment extends Fragment {
     private TextView personName,personPhone;
     private Button signOutButton;
     View view;
-    String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData, accountKey, emailKey,
-        finalEmailKey;
+    String key,localKey,personalKey,profileKey,sensorKey,userKey,userData, accountKey, emailKey,
+        finalEmailKey, nameKey, finalNameKey;
     private int signInType;
 //    ImageView imgAcc;
     String dbName, dbEmail, dbPhone;
@@ -126,8 +126,7 @@ public class AccountFragment extends Fragment {
     private String dbID(){
         userInfo.typeAccount();
         userKey=getApplicationContext().getString(R.string.userKey);
-        userData="/userInfo/";
-
+        userData=getString(R.string.user_info);
 
         localKey=userInfo.userId;
         personalKey=userInfo.idInfo;
@@ -138,11 +137,12 @@ public class AccountFragment extends Fragment {
         if(personalKey!=null) {
             key= personalKey;
         }
-        windowsKey=key+userData;
-        sensorKey=windowsKey;
+        profileKey=key+userData;
+        sensorKey=profileKey;
 
-        return userKey+windowsKey;
+        return userKey+profileKey;
     }
+
     private void init() {
         personName=view.findViewById(R.id.tv_account_person_name);
         emailAcc = view.findViewById(R.id.tv_account_person_email);
@@ -151,19 +151,38 @@ public class AccountFragment extends Fragment {
         animationView = view.findViewById(R.id.animationView);
         signOutButton = view.findViewById(R.id.Settings_signOut_button);
         editProfileButton = view.findViewById(R.id.editProfileIcon);
-        emailKey="/Email:";
+        emailKey=getString(R.string.slash_email);
+        nameKey=getString(R.string.name_info);
     }
 
     public void getDB() {
         accountKey=dbID();
         finalEmailKey=accountKey+emailKey;
-        //door
+        finalNameKey=accountKey+nameKey;
+
+        //Users email
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalEmailKey));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     emailAcc.setText(Objects.requireNonNull(snapshot.getValue()).toString());
+                } else {
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        //Users name
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalNameKey));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    personName.setText(Objects.requireNonNull(snapshot.getValue()).toString());
                 } else {
                 }
             }
