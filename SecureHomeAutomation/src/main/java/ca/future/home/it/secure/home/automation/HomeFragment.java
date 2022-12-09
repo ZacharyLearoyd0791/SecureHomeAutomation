@@ -116,6 +116,16 @@ public class HomeFragment extends Fragment {
         databaseActivity.Activity();
         windowFragment.getFromDataBase();
         tempFragment.dbID();
+
+        DoorStatusTV=view.findViewById(R.id.DoorStatusTVH);
+        LightStatusTV=view.findViewById(R.id.LightStatusTVH);
+        TempStatusTV=view.findViewById(R.id.TempStatusTVH);
+        WindowsStatusTV=view.findViewById(R.id.WindowsStatusTVH);
+
+        tempView.setVisibility(View.INVISIBLE);
+        windowView.setVisibility(View.INVISIBLE);
+        lightView.setVisibility(View.INVISIBLE);
+
         init();
         greeting();
         StartTimer();
@@ -133,26 +143,38 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
 
+                //door status
                 doorStatus = databaseActivity.DBDoor;
                 if(doorStatus!=null) {
                     DoorStatusTV.setText(doorStatus);
                     DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     DoorStatusTV.setTextSize(15);
+
+                    if(doorStatus.equals("Locked"))
+                    {doorView.setVisibility(View.INVISIBLE);}
+
+                    else if(doorStatus.equals("Unlocked"))
+                    {doorView.setVisibility(View.VISIBLE);}
                 }
                 else{
                     DoorStatusTV.setText(R.string.NoVal);
                     DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     DoorStatusTV.setTextSize(15);
+                    doorView.setVisibility(View.VISIBLE);
                 }
+
+                //light status
                 lightStatus = databaseActivity.DBLight;
                 if (lightStatus!=null){
                     LightStatusTV.setText(lightStatus);
                     LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     LightStatusTV.setTextSize(15);
-                    if(lightStatus.equals(R.string.on)){
 
-                        grnLight.setVisibility(View.VISIBLE);
-                    }
+                    if(lightStatus.equals("On"))
+                    {lightView.setVisibility(View.INVISIBLE);}
+
+                    else if(lightStatus.equals("Off"))
+                    {lightView.setVisibility(View.VISIBLE);}
                 }
 
                 else{
@@ -160,11 +182,12 @@ public class HomeFragment extends Fragment {
                     LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     LightStatusTV.setTextSize(15);
                 }
+
+                //window status
                 windowStatus = String.valueOf(windowFragment.numberOfAlerts);
                 if(windowStatus!=null){
                     WindowsStatusTV.setText(windowStatus);
-                    if(windowStatus.equals("1"))
-                        WindowsStatusTV.setText("Armed");
+                    WindowsStatusTV.setText("Armed");
                     WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     WindowsStatusTV.setTextSize(15);
                 }
@@ -212,10 +235,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void init(){
-        //Switches
-       /* lockSwitch = view.findViewById(R.id.sw_lock);
-        lightSwitch = view.findViewById(R.id.sw_light);
-        windowSwitch = view.findViewById(R.id.sw_window);*/
 
         //Buttons
         lockBtn = view.findViewById(R.id.lock_Btn);
@@ -235,14 +254,6 @@ public class HomeFragment extends Fragment {
         unlock = getString(R.string.unlocked_status);
         armed=getString(R.string.sensor_on);
         disarmed=getString(R.string.sensor_off);
-
-        DoorStatusTV=view.findViewById(R.id.DoorStatusTVH);
-        LightStatusTV=view.findViewById(R.id.LightStatusTVH);
-        TempStatusTV=view.findViewById(R.id.TempStatusTVH);
-        WindowsStatusTV=view.findViewById(R.id.WindowsStatusTVH);
-        lightView.setVisibility(View.INVISIBLE);
-        tempView.setVisibility(View.INVISIBLE);
-        windowView.setVisibility(View.INVISIBLE);
     }
 
     private void greeting(){
