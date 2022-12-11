@@ -117,8 +117,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, R.string.enter_email, Toast.LENGTH_SHORT).show();
             } else if (passwordInput.isEmpty()) {
                 Toast.makeText(LoginActivity.this, R.string.enterpassword, Toast.LENGTH_SHORT).show();
-            }else if(isValidPassword(passwordInput)){
-                Toast.makeText(this, "Not proper password input!", Toast.LENGTH_SHORT).show();
             }else {
                 boolean emailValidation = validateEmailInput(emailAddress);
                 if (emailValidation) {
