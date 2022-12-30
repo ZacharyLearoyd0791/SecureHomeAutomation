@@ -68,7 +68,7 @@ public class DatabaseActivity extends Fragment {
             public void run() {
                 // do something
                 sendDataStrings();
-                handler.postDelayed(handlerTask, 1000);
+                handler.postDelayed(handlerTask, 1);
             }
         };
         handlerTask.run();

@@ -198,7 +198,7 @@ public class LightFragment extends Fragment {
                 else{
                     statusOfLightTV.setText(status+off);
                 }
-                handler.postDelayed(handlerTask, 1000);
+                handler.postDelayed(handlerTask, 1);
             }
         };
         handlerTask.run();
