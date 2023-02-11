@@ -46,7 +46,6 @@ import java.util.Objects;
 public class DoorFragment extends Fragment{
 
     View view;
-    //Door status
     ToggleButton doorLock;
     TextView status;
     ImageView locked;
