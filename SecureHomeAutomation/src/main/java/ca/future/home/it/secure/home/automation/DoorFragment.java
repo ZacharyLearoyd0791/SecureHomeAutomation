@@ -88,7 +88,7 @@ public class DoorFragment extends Fragment{
                 statusDoor=statusofDoor;
                 status.setText(statusDoor);
 
-                handler.postDelayed(handlerTask, 1000);
+                handler.postDelayed(handlerTask, 1);
             }
         };
         handlerTask.run();
