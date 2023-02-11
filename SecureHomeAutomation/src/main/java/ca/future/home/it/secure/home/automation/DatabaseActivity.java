@@ -2,6 +2,7 @@ package ca.future.home.it.secure.home.automation;
 
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.icu.text.DateFormat;
@@ -9,6 +10,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -171,13 +173,14 @@ public class DatabaseActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     DBMax= Objects.requireNonNull(snapshot.getValue().toString());
-
+                    Log.d(TAG,"Max Value:" +DBMax);
                     databaseReference = FirebaseDatabase.getInstance().getReference().child((finalMinKey));
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()) {
                                 DBMin= Objects.requireNonNull(snapshot.getValue().toString());
+                                Log.d(TAG,"Max Value:" +DBMin);
                                 TemperatureDBAction();
                             }
                             else {
@@ -304,18 +307,7 @@ public class DatabaseActivity extends Fragment {
 
     //Temperature action
     private void TemperatureDBAction() {
-        try{
-            max = Integer.parseInt(DBMax);
-        }
-        catch (NumberFormatException ex){
-            ex.printStackTrace();
-        }
-        try{
-            min = Integer.parseInt(DBMin);
-        }
-        catch (NumberFormatException ex){
-            ex.printStackTrace();
-        }
+
     }
     //Door action
     private void DoorDBAction() {

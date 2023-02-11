@@ -14,7 +14,7 @@ android {
         applicationId "ca.future.home.it.secure.home.automation"
         minSdk 23
         targetSdk 32
-        versionCode 6
+        versionCode 7
         versionName "Secure Home Automation"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -48,10 +48,11 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
     UserInfo userInfo = new UserInfo();
+    TempFragment tempFragment=new TempFragment();
     StringBuilder stringBuilder;
     public View view;
     AlphaAnimation fadeIn, fadeOut;
-
+    int min,max;
     //Switches
 
 
@@ -80,7 +81,6 @@ public class HomeFragment extends Fragment {
 
     //Database
     WindowFragment windowFragment=new WindowFragment();
-    TempFragment tempFragment=new TempFragment();
     DatabaseActivity databaseActivity = new DatabaseActivity();
 
 
@@ -92,8 +92,8 @@ public class HomeFragment extends Fragment {
     int hour;
 
     //Misc Strings
-    String doorStatus, lightStatus, maxStatus,windowStatus,
-            minStatus, lock,
+    String doorStatus, lightStatus, maxStatus,windowStatus,minStatus,
+             lock,
             unlock, armed, disarmed;
 
     private Handler handlerRun;
@@ -116,6 +116,10 @@ public class HomeFragment extends Fragment {
         databaseActivity.Activity();
         windowFragment.getFromDataBase();
         tempFragment.dbID();
+        max=tempFragment.maximumTemperature;
+        min=tempFragment.minimumTemperature;
+
+        Log.d(TAG,"testing max and min values "+max+" and "+min);
 
         DoorStatusTV=view.findViewById(R.id.DoorStatusTVH);
         LightStatusTV=view.findViewById(R.id.LightStatusTVH);
@@ -162,7 +166,9 @@ public class HomeFragment extends Fragment {
                     DoorStatusTV.setTextSize(15);
                     doorView.setVisibility(View.VISIBLE);
                 }
-
+                //Temp status
+                minStatus=databaseActivity.DBMin;
+                maxStatus=databaseActivity.DBMax;
                 //light status
                 lightStatus = databaseActivity.DBLight;
                 if (lightStatus!=null){
@@ -196,8 +202,7 @@ public class HomeFragment extends Fragment {
                     WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     WindowsStatusTV.setTextSize(15);
                 }
-                minStatus= String.valueOf(tempFragment.minimumTemperature);
-                maxStatus= String.valueOf(tempFragment.maximumTemperature);
+
 
                 if(minStatus!=null){
                     TempStatusTV.setText("Min Temperature Set: "+minStatus);
