@@ -8,12 +8,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.icu.text.DateFormat;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -30,15 +28,13 @@ import android.widget.ToggleButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-
-
 import java.util.Date;
-
 import java.util.Objects;
 
 public class DoorFragment extends Fragment{
 
     View view;
+    //Door status
     ToggleButton doorLock;
     TextView status;
     ImageView locked;
@@ -58,7 +54,7 @@ public class DoorFragment extends Fragment{
 
 
     //String
-    String idKey,localKey,key,personalKey,strDate,statusDoor;
+    String idKey, localKey, key, personalKey, strDate, statusDoor, lockedStr, unlockedStr;
     public static String statusofDoor;
 
     //Date
@@ -72,15 +68,35 @@ public class DoorFragment extends Fragment{
     }
     void StartTimer(){
         handlerRun = new Handler();
-        handlerTask = new Runnable()
-        {
-            @Override
-            public void run() {
+        handlerTask = new Runnable() {
+  /*          public void run() {
                 // do something
                 statusDoor=statusofDoor;
                 status.setText(statusDoor);
 
-                handler.postDelayed(handlerTask, 1);
+                handler.postDelayed(handlerTask, 1000);
+            }
+        };
+        handlerTask.run();
+    }*/
+
+            @Override
+
+            public void run() {
+                // do something
+                statusDoor = statusofDoor;
+                if (statusDoor != null) {
+                    if (statusDoor.equals(lockedStr)) {
+                        doorLock.setChecked(true);
+                    } else {
+                        status.setText(statusDoor);
+                        doorLock.setChecked(false);
+
+                    }
+
+                }
+                status.setText(statusDoor);
+                handler.postDelayed(handlerTask, 1000);
             }
         };
         handlerTask.run();
@@ -172,17 +188,20 @@ public class DoorFragment extends Fragment{
 
 
     private void init() {
-        doorLock=view.findViewById(R.id.doorLockBtn);
-        status=view.findViewById(R.id.statusofDoor);
-        locked=view.findViewById(R.id.iv_locked);
-        unlocked=view.findViewById(R.id.iv_unlocked);
+        doorLock = view.findViewById(R.id.doorLockBtn);
+        status = view.findViewById(R.id.statusofDoor);
+        locked = view.findViewById(R.id.iv_locked);
+        unlocked = view.findViewById(R.id.iv_unlocked);
 
         //Manage keys
-        cardView=view.findViewById(R.id.cv_keys);
+        cardView = view.findViewById(R.id.cv_keys);
         cardView.setBackgroundResource(R.drawable.cardview_border);
-        addKey=view.findViewById(R.id.add_key_btn);
-        removeKey=view.findViewById(R.id.remove_key_btn);
+        addKey = view.findViewById(R.id.add_key_btn);
+        removeKey = view.findViewById(R.id.remove_key_btn);
+        lockedStr = getString(R.string.lock);
+        unlockedStr = getString(R.string.unlock);
     }
+
     public void addHistory(String info){
         TextView textView = new TextView(getContext());
         textView.setText(info);

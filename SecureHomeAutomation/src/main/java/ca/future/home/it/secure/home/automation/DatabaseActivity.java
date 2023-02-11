@@ -9,7 +9,6 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -68,7 +67,7 @@ public class DatabaseActivity extends Fragment {
             public void run() {
                 // do something
                 sendDataStrings();
-                handler.postDelayed(handlerTask, 1);
+                handler.postDelayed(handlerTask, 1000);
             }
         };
         handlerTask.run();
@@ -247,8 +246,8 @@ public class DatabaseActivity extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
-                              DBScheduleTime=Objects.requireNonNull(snapshot.getValue()).toString();
-                              ScheduleDBAction();
+                                DBScheduleTime = Objects.requireNonNull(snapshot.getValue()).toString();
+                                ScheduleDBAction();
                             }
                         }
                         @Override
