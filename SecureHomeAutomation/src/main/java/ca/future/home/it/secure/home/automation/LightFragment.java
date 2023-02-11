@@ -40,7 +40,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 public class LightFragment extends Fragment {
     public int counter;
@@ -53,7 +52,6 @@ public class LightFragment extends Fragment {
     private Handler handler;
     private Runnable handlerTask;
 
-    //Strings
 
     String value;
     String LightStatus;
