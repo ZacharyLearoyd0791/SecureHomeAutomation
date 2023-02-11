@@ -208,7 +208,7 @@ public class LightFragment extends Fragment {
             }
         };
         handlerTask.run();
-    } 
+    }
 
     private void Status(){
         if (LightStatus!=null) {

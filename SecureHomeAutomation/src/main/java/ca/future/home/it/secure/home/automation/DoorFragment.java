@@ -215,7 +215,6 @@ public class DoorFragment extends Fragment{
         lockedStr=getString(R.string.lock);
         unlockedStr=getString(R.string.unlock);
     }
-
     public void addHistory(String info){
         TextView textView = new TextView(getContext());
         textView.setText(info);
