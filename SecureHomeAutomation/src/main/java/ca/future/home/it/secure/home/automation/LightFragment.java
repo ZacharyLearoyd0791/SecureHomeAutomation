@@ -189,18 +189,12 @@ public class LightFragment extends Fragment {
                 // do something
                 LightStatus=statusOfLight;
                 if(LightStatus!=null) {
-                    if (LightStatus.equals(on)){
-                        lightsOn.setChecked(true);
-                    }
-                    else{
-                        statusOfLightTV.setText(status+off);
-                        lightsOn.setChecked(false);
-
-                    }
-
+                    StatusOut=status+LightStatus;
+                    statusOfLightTV.setText(StatusOut);
                 }
-                StatusOut=status+LightStatus;
-                statusOfLightTV.setText(StatusOut);
+                else{
+                    statusOfLightTV.setText(status+off);
+                }
                 handler.postDelayed(handlerTask, 1000);
             }
         };
@@ -214,15 +208,12 @@ public class LightFragment extends Fragment {
                 lightsOn.setBackgroundResource(R.drawable.status_border_green);
                 ivLightOff.setVisibility(View.INVISIBLE);
                 ivLightOn.setVisibility(View.VISIBLE);
-                lightsOn.setChecked(true);
-            }
-            else if (LightStatus.equals(off)) {
 
+            } else if (Objects.equals(LightStatus, off)) {
                 lightsOn.setChecked(false);
                 lightsOn.setBackgroundResource(R.drawable.status_border_red);
                 ivLightOn.setVisibility(View.INVISIBLE);
                 ivLightOff.setVisibility(View.VISIBLE);
-
             }
         }
         else{
