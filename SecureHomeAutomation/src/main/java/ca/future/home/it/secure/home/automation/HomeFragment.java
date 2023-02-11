@@ -223,7 +223,7 @@ public class HomeFragment extends Fragment {
 
                 //Log.d(TAG,"Testing remove 10m \n 2002 \n"+doorStatus+"\n"+lightStatus);
 
-                handler.postDelayed(handlerTask, 1000);
+                handler.postDelayed(handlerTask, 1);
             }
         };
         handlerTask.run();
