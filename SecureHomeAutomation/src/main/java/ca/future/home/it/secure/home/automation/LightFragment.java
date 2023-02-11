@@ -43,7 +43,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class LightFragment extends Fragment {
-
     public int counter;
     TextView timerTV, statusOfLightTV;
     ScrollView scroll;
