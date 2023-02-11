@@ -58,7 +58,7 @@ public class DoorFragment extends Fragment{
 
 
     //String
-    String idKey,localKey,key,personalKey,strDate,statusDoor,lockedStr,unlockedStr;
+    String idKey,localKey,key,personalKey,strDate,statusDoor;
     public static String statusofDoor;
 
     //Date
@@ -74,35 +74,13 @@ public class DoorFragment extends Fragment{
         handlerRun = new Handler();
         handlerTask = new Runnable()
         {
-  /*          public void run() {
+            @Override
+            public void run() {
                 // do something
                 statusDoor=statusofDoor;
                 status.setText(statusDoor);
 
                 handler.postDelayed(handlerTask, 1);
-            }
-        };
-        handlerTask.run();
-    }*/
-
-    @Override
-
-            public void run() {
-                // do something
-        statusDoor=statusofDoor;
-                if(statusDoor!=null) {
-                    if (statusDoor.equals(lockedStr)){
-                        doorLock.setChecked(true);
-                    }
-                    else{
-                        status.setText(statusDoor);
-                        doorLock.setChecked(false);
-
-                    }
-
-                }
-                status.setText(statusDoor);
-                handler.postDelayed(handlerTask, 1000);
             }
         };
         handlerTask.run();
@@ -204,8 +182,6 @@ public class DoorFragment extends Fragment{
         cardView.setBackgroundResource(R.drawable.cardview_border);
         addKey=view.findViewById(R.id.add_key_btn);
         removeKey=view.findViewById(R.id.remove_key_btn);
-        lockedStr=getString(R.string.lock);
-        unlockedStr=getString(R.string.unlock);
     }
     public void addHistory(String info){
         TextView textView = new TextView(getContext());
