@@ -39,7 +39,6 @@ import java.util.Objects;
 public class DoorFragment extends Fragment{
 
     View view;
-    //Door status
     ToggleButton doorLock;
     TextView status;
     ImageView locked;
@@ -80,7 +79,7 @@ public class DoorFragment extends Fragment{
                 statusDoor=statusofDoor;
                 status.setText(statusDoor);
 
-                handler.postDelayed(handlerTask, 1000);
+                handler.postDelayed(handlerTask, 1);
             }
         };
         handlerTask.run();
@@ -208,7 +207,6 @@ public class DoorFragment extends Fragment{
         lockedStr=getString(R.string.lock);
         unlockedStr=getString(R.string.unlock);
     }
-
     public void addHistory(String info){
         TextView textView = new TextView(getContext());
         textView.setText(info);

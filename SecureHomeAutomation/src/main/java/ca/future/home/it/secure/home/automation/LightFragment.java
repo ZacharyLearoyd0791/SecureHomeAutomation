@@ -53,7 +53,6 @@ public class LightFragment extends Fragment {
     private Handler handler;
     private Runnable handlerTask;
 
-    //Strings
 
     String value;
     String LightStatus;
