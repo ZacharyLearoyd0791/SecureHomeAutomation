@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e8e8e8"
+    tools:context=".AccountFragment">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/account_profile_image"
+        android:layout_width="135dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/default_account_image_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/account_profile_photo_edit_icon"
+        android:layout_width="32dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="84dp"
+        android:contentDescription="TODO"
+        app:layout_constraintStart_toStartOf="@+id/account_profile_image"
+        app:layout_constraintTop_toTopOf="@+id/account_profile_image"
+        app:srcCompat="@drawable/camera_icon_profile_image_4" />
+
+    <TextView
+        android:id="@+id/account_person_name"
+        android:layout_width="250dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="124dp"
+        android:text="Krushang Parekh"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account_profile_image" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/account_card_view"
+        android:layout_width="400dp"
+        android:layout_height="254dp"
+        android:layout_marginStart="0.11dp"
+        android:layout_marginEnd="0.11dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="27dp"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account_person_name">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/account_recyclerview"
+            android:layout_width="322dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:divider="@drawable/divider_design"
+            android:dividerHeight="1dp"
+            tools:ignore="InvalidId" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/account_card_view_other"
+        android:layout_width="407dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="0.11dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0.11dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="27dp"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account_card_view" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/account_recyclerview_other"
+            android:layout_width="336dp"
+            android:layout_height="104dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:divider="@drawable/divider_design"
+            android:dividerHeight="1dp"
+            tools:ignore="InvalidId" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/account_card_view_sign_out"
+        android:layout_width="414dp"
+        android:layout_height="116dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="27dp"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account_card_view_other" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/account_recyclerview_sign_out"
+            android:layout_width="349dp"
+            android:layout_height="67dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:divider="@drawable/divider_design"
+            android:dividerHeight="1dp"
+            tools:ignore="InvalidId" />
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

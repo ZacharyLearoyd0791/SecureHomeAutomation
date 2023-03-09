@@ -33,7 +33,11 @@ import android.widget.Toast;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -52,52 +56,40 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class AccountFragment extends Fragment {
-    UserInfo userInfo=new UserInfo();
-    String name;
-    private TextView personName,personPhone;
-    private Button signOutButton;
     View view;
-    String key,localKey,personalKey,profileKey,sensorKey,userKey,userData, accountKey, emailKey,
-        finalEmailKey, nameKey, finalNameKey;
-    private int signInType;
-//    ImageView imgAcc;
-    String dbName, dbEmail, dbPhone;
-    TextView  emailAcc;
-    Boolean dbProfileEdited;
-    ImageView profileImage;
-    final Handler handler = new Handler();
-    Animation fadeInAnimation;
-    LottieAnimationView animationView;
-    Uri userImage;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-
-    //Edit profile
-    FloatingActionButton editProfileButton;
-    GoogleSignInClient mClient;
-
-    //Database
-    DatabaseReference databaseReference;
-
+    //RecyclerView
+    RecyclerView recyclerView;
+    private List<AccountFragmentData> accountFragmentDataList;
+    private AccountFragmentRecyclerViewAdapter adapter;
     public AccountFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_account, container, false);
-        //Google details
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mClient = GoogleSignIn.getClient(getContext(),gso);
-        GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(getContext());
+        view = inflater.inflate(R.layout.fragment_account_new, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.account_recyclerview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        accountFragmentDataList = new ArrayList<>();
+        accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account,"Name","Krushang Parekh"));
+        accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account,"Email","krushang002@gmail.com"));
+        accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone","+1 1234567890"));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
+        adapter = new AccountFragmentRecyclerViewAdapter(accountFragmentDataList);
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -105,186 +97,19 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
-        userinfo();
-        btnSteps();
-        imageHandler();
 
-        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.user_data_new),MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        Boolean profileEdited = sharedPreferences.getBoolean(getString(R.string.editing_profile),false);
-
-        if (profileEdited){
-            personName.setText(sharedPreferences.getString(getString(R.string.name_new_user),getString(R.string.no_info)));
-            emailAcc.setText(sharedPreferences.getString(getString(R.string.email_new_user),getString(R.string.info_no)));
-            personPhone.setText(sharedPreferences.getString(getString(R.string.phone_new_user),getString(R.string.non_info)));
-        }
-
-     getDB();
 
     }
-    private String dbID(){
-        userInfo.typeAccount();
-        userKey=getApplicationContext().getString(R.string.userKey);
-        userData=getString(R.string.user_info);
-
-        localKey=userInfo.userId;
-        personalKey=userInfo.idInfo;
-
-        if(localKey!=null){
-            key=localKey;
-        }
-        if(personalKey!=null) {
-            key= personalKey;
-        }
-        profileKey=key+userData;
-        sensorKey=profileKey;
-
-        return userKey+profileKey;
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
-
-    private void init() {
-        personName=view.findViewById(R.id.tv_account_person_name);
-        emailAcc = view.findViewById(R.id.tv_account_person_email);
-        personPhone = view.findViewById(R.id.tv_account_person_phone);
-        profileImage = view.findViewById(R.id.profile_image);
-        animationView = view.findViewById(R.id.animationView);
-        signOutButton = view.findViewById(R.id.Settings_signOut_button);
-        editProfileButton = view.findViewById(R.id.editProfileIcon);
-        emailKey=getString(R.string.slash_email);
-        nameKey=getString(R.string.name_info);
-    }
-
-    public void getDB() {
-        accountKey=dbID();
-        finalEmailKey=accountKey+emailKey;
-        finalNameKey=accountKey+nameKey;
-
-        //Users email
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalEmailKey));
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    emailAcc.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-                } else {
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        //Users name
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalNameKey));
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    personName.setText(Objects.requireNonNull(snapshot.getValue()).toString());
-                } else {
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
-    private void btnSteps() {
-
-        signOutButton.setOnClickListener(view1 -> {
-            if(UserInfo.getSignInType()==0) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(getString(R.string.logged),false).apply();
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(), R.string.signed_out, Toast.LENGTH_SHORT).show();
-            }else if(signInType == 1){
-                mClient.signOut().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Intent intent = new Intent(getContext(), LoginActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(getContext(), R.string.signedOut, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }else{
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(),  R.string.signedOut, Toast.LENGTH_SHORT).show();
-            }
-
-        });
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
 
-    private void imageHandler(){
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if (userImage!=null){
-                            animationView.setVisibility(View.INVISIBLE);
-
-                            Picasso.get().load(userImage).into(profileImage);
-
-                        }
-                        else {
-                            animationView.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }, 3000);
-
-            imageAnimation();
-            //Opening profile edit frag
-            editProfileButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    handler.postDelayed(()-> getParentFragmentManager().beginTransaction().replace(R.id.flFragment,MainActivity.profileEditFragment).commit(),300);
-                }
-            });
-        }
-
-    private void userinfo() {
-
-        userInfo.typeAccount();
-
-        if (userInfo.localEmail!=null){
-            emailAcc.setText(userInfo.localEmail);
-        }
-        if (userInfo.personEmail!=null){
-            emailAcc.setText(userInfo.emailInfo);
-        }
-        else
-            emailAcc.setText(R.string.noInfo);
-
-        if (userInfo.localName!=null){
-            personName.setText(userInfo.localName);
-        }
-        if (userInfo.nameInfo!=null){
-            personName.setText(userInfo.nameInfo);
-            if(userInfo.personPhoto!=null) {
-                userImage=userInfo.personPhoto;
-            }
-            else {
-                userImage=null;
-            }
-        }
-        else{
-            personName.setText(R.string.noInfo);
-        }
-        imageHandler();
     }
-    public void imageAnimation(){
-        profileImage.setVisibility(View.VISIBLE);
-        fadeInAnimation = AnimationUtils.loadAnimation(getContext(),R.anim.profile_image_anim);
-        profileImage.startAnimation(fadeInAnimation);
-
-    }
-}
