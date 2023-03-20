@@ -17,8 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_speed="1.5"
-        app:lottie_rawRes="@raw/new_wave_animation" />
+        app:lottie_rawRes="@raw/new_wave_animation"
+        app:lottie_speed="1.5" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/account_profile_image"
@@ -115,30 +115,17 @@
             tools:ignore="InvalidId" />
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/account_card_view_sign_out"
-        android:layout_width="414dp"
-        android:layout_height="116dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="27dp"
-        app:cardElevation="2dp"
-        app:cardMaxElevation="5dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="218dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="637dp"
+        android:backgroundTint="#6256EB"
+        android:text="Sign out"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_card_view_other">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/account_recyclerview_sign_out"
-            android:layout_width="349dp"
-            android:layout_height="67dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:divider="@drawable/divider_design"
-            android:dividerHeight="1dp"
-            tools:ignore="InvalidId" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
