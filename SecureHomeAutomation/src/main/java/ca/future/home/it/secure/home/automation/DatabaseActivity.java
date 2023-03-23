@@ -31,6 +31,8 @@ public class DatabaseActivity extends Fragment {
     LightFragment lightFragment=new LightFragment();
     DoorFragment doorFragment=new DoorFragment();
 
+    SettingsFragment settingsFragment= new SettingsFragment();
+
 
     //Database
     FirebaseDatabase firebaseDatabase;
@@ -40,6 +42,7 @@ public class DatabaseActivity extends Fragment {
 
     //Date
     Date date;
+    int valueLimit;
     DateFormat dateFormat;
 
     //Key string
@@ -48,7 +51,7 @@ public class DatabaseActivity extends Fragment {
             finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey,userKey;
 
     //Database String
-    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email;
+    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email,keySettingsTimeLimit,finalLightTimer;
     String outDoor,outLight,userData,outWindow,outMax,outMin,outScheduleDate,userDetails;
 
     int min,max;
@@ -120,8 +123,9 @@ public class DatabaseActivity extends Fragment {
             databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
             databaseReference.setValue(userInfo.personEmail);
         }
-
+        keySettingsTimeLimit=getApplicationContext().getString(R.string.settingsKey)+getApplicationContext().getString(R.string.lightLimitKey);
         finalDoorKey =userKey+key+userData+doorKey;
+        finalLightTimer= userKey+key+keySettingsTimeLimit;
 
         //Light related user key:
         finalStatusKey =userKey+key+userData+statusKey;
@@ -148,6 +152,29 @@ public class DatabaseActivity extends Fragment {
     }
 
     public void getDB(){
+
+        databaseReference= FirebaseDatabase.getInstance().getReference().child(finalLightTimer);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Integer value = snapshot.getValue(Integer.class);
+                    if (value != null) {
+                        valueLimit=value;
+                        timeLimit();
+                    }
+                else {
+                        valueLimit = 5;
+                        timeLimit();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         //door
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -173,14 +200,12 @@ public class DatabaseActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     DBMax= Objects.requireNonNull(snapshot.getValue().toString());
-                    Log.d(TAG,"Max Value:" +DBMax);
                     databaseReference = FirebaseDatabase.getInstance().getReference().child((finalMinKey));
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()) {
                                 DBMin= Objects.requireNonNull(snapshot.getValue().toString());
-                                Log.d(TAG,"Max Value:" +DBMin);
                                 TemperatureDBAction();
                             }
                             else {
@@ -314,12 +339,18 @@ public class DatabaseActivity extends Fragment {
         doorFragment.statusofDoor=(DBDoor);
 
     }
+    private void timeLimit(){
+
+        settingsFragment.timerLight_DB=valueLimit;
+
+    }
 
     private void sendDataStrings(){
 
         outLight=lightFragment.statusOfLight;
         outScheduleDate=lightFragment.scheduleDate;
         outDoor=doorFragment.statusofDoor;
+        valueLimit=settingsFragment.timerLight_DB;
 
 
         if (outLight!=null) {
@@ -332,6 +363,7 @@ public class DatabaseActivity extends Fragment {
             toDatabase();
         }
 
+
     }
     //FOR DOOR LOCK
     public void toDatabase(){
@@ -343,5 +375,9 @@ public class DatabaseActivity extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
         databaseReference.setValue(outLight);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(finalLightTimer);
+        databaseReference.setValue(valueLimit);
+
     }
 }
