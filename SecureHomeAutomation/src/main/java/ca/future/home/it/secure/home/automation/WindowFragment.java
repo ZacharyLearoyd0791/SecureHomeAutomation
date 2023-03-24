@@ -66,9 +66,13 @@ public class WindowFragment extends Fragment {
 
     //Declarations
     View view;
+    AlertDialog dialog;
     RecyclerView activityRecyclerView;
     private List<WindowsFragmentData> windowsFragmentDataList;
     private WindowsFragmentRecyclerViewAdapter adapter;
+
+    //Clearing Activity
+    ImageView clearActivityButton;
 
     //Database Declarations
     Date currentTime;
@@ -80,9 +84,14 @@ public class WindowFragment extends Fragment {
     Boolean alarmStatus;
     int numberOfActivities;
 
-    //Power on/off Button
+    //Power on/off
+    TextView deviceStatusTV;
     ImageView powerButton;
     boolean clicked = false;
+    String alertDialogTitle;
+    String alertDialogMessage;
+    int alertDialogCode;  // 1 -> power off, 2 -> power on, 3 -> clear activity data, ....
+
 
     //Default constructor
     public WindowFragment() {
@@ -103,7 +112,8 @@ public class WindowFragment extends Fragment {
 
         //Referencing
         powerButton = view.findViewById(R.id.windows_sensor_power_button);
-
+        deviceStatusTV = view.findViewById(R.id.device_status_windows_break);
+        clearActivityButton = view.findViewById(R.id.windows_clear_activity_data);
 
         currentTime = Calendar.getInstance().getTime();
         activityRecyclerView = (RecyclerView) view.findViewById(R.id.windows_recycler_view);
@@ -126,12 +136,27 @@ public class WindowFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(clicked) {
-                    displayPowerOffAlertDialog();
-                }else{
+                    alertDialogTitle = "Turn OFF the sensor";
+                    alertDialogMessage = "You are sure that you want to turn off the windows break detection sensor!";
+                    alertDialogCode = 1;
+                    displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage, alertDialogCode);
 
+                }else{
+                    alertDialogCode = 2;
                     powerButton.setImageResource(R.drawable.red_power_button1);
                     clicked = true;
                 }
+            }
+        });
+
+        //Clear Activity Button
+        clearActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialogTitle = "Clear All Activity Data";
+                alertDialogMessage = "You are sure that you want to permanently delete your sensor's Activities";
+                alertDialogCode = 3;
+                displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage, alertDialogCode);
             }
         });
         return view;
@@ -186,15 +211,23 @@ public class WindowFragment extends Fragment {
 
     }
 
-    private void displayPowerOffAlertDialog(){
+    private void displayPowerOffAlertDialog(String title, String message, int code){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Turn OFF the sensor")
-                .setMessage("Do you want to turn off the glass break detection sensor?")
+        builder.setTitle(title)
+                .setMessage(message)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        powerButton.setImageResource(R.drawable.green_power_button1);
-                        clicked = false;
+                        if (code == 1){
+                            powerButton.setImageResource(R.drawable.green_power_button1);
+                            clicked = false;
+                        }else if(code == 2){
+                            powerButton.setImageResource(R.drawable.red_power_button1);
+                            clicked = true;
+                        }else if (code == 3){
+                            clearActivityData(0);
+                        }
+                        dialogInterface.dismiss();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -203,7 +236,7 @@ public class WindowFragment extends Fragment {
                         dialogInterface.dismiss();
                     }
                 });
-        AlertDialog dialog = builder.create();
+        dialog = builder.create();
         dialog.show();
     }
 }
