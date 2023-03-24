@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
         windowView = view.findViewById(R.id.windowInfo);
         grnLight = view.findViewById(R.id.greenLight);
         databaseActivity.Activity();
-        windowFragment.getFromDataBase();
+//        windowFragment.getFromDataBase();
         tempFragment.dbID();
         max=tempFragment.maximumTemperature;
         min=tempFragment.minimumTemperature;
@@ -190,19 +190,19 @@ public class HomeFragment extends Fragment {
                 }
 
                 //window status
-                windowStatus = String.valueOf(windowFragment.numberOfAlerts);
-                if(windowStatus!=null){
-                    WindowsStatusTV.setText(windowStatus);
-                    WindowsStatusTV.setText("Armed");
-                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    WindowsStatusTV.setTextSize(15);
-                }
-                else{
-                    WindowsStatusTV.setText(R.string.status_device+R.string.NoVal);
-                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-                    WindowsStatusTV.setTextSize(15);
-                }
-
+//                windowStatus = String.valueOf(windowFragment.numberOfAlerts);
+//                if(windowStatus!=null){
+//                    WindowsStatusTV.setText(windowStatus);
+//                    WindowsStatusTV.setText("Armed");
+//                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+//                    WindowsStatusTV.setTextSize(15);
+//                }
+//                else{
+//                    WindowsStatusTV.setText(R.string.status_device+R.string.NoVal);
+//                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+//                    WindowsStatusTV.setTextSize(15);
+//                }
+//
 
                 if(minStatus!=null){
                     TempStatusTV.setText("Min Temperature Set: "+minStatus);

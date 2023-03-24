@@ -116,7 +116,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/accout_sign_out_button"
         android:layout_width="218dp"
         android:layout_height="54dp"
         android:layout_marginStart="97dp"

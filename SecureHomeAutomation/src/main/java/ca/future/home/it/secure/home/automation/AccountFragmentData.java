@@ -23,7 +23,7 @@ public class AccountFragmentData {
         return title;
     }
 
-    public void setTitle(String tilte){
+    public void setTitle(String title){
         this.title = title;
     }
 
