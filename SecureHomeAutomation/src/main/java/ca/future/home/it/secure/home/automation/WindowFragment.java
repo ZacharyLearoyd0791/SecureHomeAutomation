@@ -16,7 +16,6 @@ import static ca.future.home.it.secure.home.automation.R.string.sensor_turned_on
 import static ca.future.home.it.secure.home.automation.R.string.user_info;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.NotificationChannel;
 
 import android.app.NotificationManager;
@@ -28,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -43,6 +43,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -78,6 +79,11 @@ public class WindowFragment extends Fragment {
     String alarmType;
     Boolean alarmStatus;
     int numberOfActivities;
+
+    //Power on/off Button
+    ImageView powerButton;
+    boolean clicked = false;
+
     //Default constructor
     public WindowFragment() {
         // Required empty public constructor
@@ -88,12 +94,17 @@ public class WindowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_window, container, false);
+
         //Test Values
         alarmStatus = false;
         alarmType = "Null";
 
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_window, container, false);
+        //Referencing
+        powerButton = view.findViewById(R.id.windows_sensor_power_button);
+
+
         currentTime = Calendar.getInstance().getTime();
         activityRecyclerView = (RecyclerView) view.findViewById(R.id.windows_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -108,6 +119,21 @@ public class WindowFragment extends Fragment {
 
 
         sendToDB(alarmType,alarmStatus,numberOfActivities);
+
+        //PowerButton functionality
+
+        powerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clicked) {
+                    displayPowerOffAlertDialog();
+                }else{
+
+                    powerButton.setImageResource(R.drawable.red_power_button1);
+                    clicked = true;
+                }
+            }
+        });
         return view;
     }
 
@@ -160,4 +186,24 @@ public class WindowFragment extends Fragment {
 
     }
 
+    private void displayPowerOffAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Turn OFF the sensor")
+                .setMessage("Do you want to turn off the glass break detection sensor?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        powerButton.setImageResource(R.drawable.green_power_button1);
+                        clicked = false;
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
