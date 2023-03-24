@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -92,7 +94,7 @@ public class WindowFragment extends Fragment {
     String alertDialogMessage;
     int alertDialogCode;  // 1 -> power off, 2 -> power on, 3 -> clear activity data, ....
 
-
+    //
     //Default constructor
     public WindowFragment() {
         // Required empty public constructor
@@ -102,6 +104,9 @@ public class WindowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //Check if user is connected to internet
+        isConnectedToInternet();
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_window, container, false);
@@ -221,13 +226,17 @@ public class WindowFragment extends Fragment {
                         if (code == 1){
                             powerButton.setImageResource(R.drawable.green_power_button1);
                             clicked = false;
+                            numberOfActivities++;
                         }else if(code == 2){
                             powerButton.setImageResource(R.drawable.red_power_button1);
                             clicked = true;
+
                         }else if (code == 3){
                             clearActivityData(0);
+                            numberOfActivities++;
+                        }else {
+                            dialogInterface.dismiss();
                         }
-                        dialogInterface.dismiss();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -238,5 +247,20 @@ public class WindowFragment extends Fragment {
                 });
         dialog = builder.create();
         dialog.show();
+    }
+
+    //Check if the user is connected to internet or not
+    private boolean isConnectedToInternet(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        boolean connected = (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()== NetworkInfo.State.CONNECTED||connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED);
+        if(!connected){
+            alertDialogMessage = "Your device is not connected to internet. Please connect to internet to have control over the sensor";
+            alertDialogTitle = "No Internet Connection";
+            alertDialogCode = 4;
+            displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage,alertDialogCode);
+
+
+            }
+        return connected;
     }
 }
