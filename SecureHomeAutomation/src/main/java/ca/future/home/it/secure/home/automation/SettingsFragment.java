@@ -8,6 +8,8 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -24,13 +26,16 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +53,7 @@ import com.google.firebase.remoteconfig.internal.ConfigGetParameterHandler;
 public class SettingsFragment extends Fragment {
 
     //Switches and Others
-
+    public static int timerLight_DB,getTimerLight_DB;
     private Switch boldSwitch;
     private Switch colourSwitch;
     private Switch fingerSwitch;
@@ -62,6 +67,8 @@ public class SettingsFragment extends Fragment {
     private Boolean faceLockState;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    private Handler handler;
+    private Runnable handlerTask;
 
     //View
     private View view;
@@ -100,6 +107,11 @@ public class SettingsFragment extends Fragment {
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
+        StartTimer();
+/*
+        lightTimerSet();
+*/
+
         sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         boldTextState = sharedPreferences.getBoolean("BoldTextState",false);
@@ -195,5 +207,51 @@ public class SettingsFragment extends Fragment {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
+    }
+    public void lightTimerSet(){
+        int dbNum=getTimerLight_DB;
+
+        SeekBar seekBar = view.findViewById(R.id.lightTimeLimit);
+        TextView seekBarValue = view.findViewById(R.id.timelimitvalue);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                seekBar.setProgress(10);
+
+
+                    int value = dbNum + (progress * 5); // Add 5 to start at 5, then add 5 for each progress
+
+                    seekBarValue.setText(String.valueOf(value) + " minutes");
+                    getTimerLight_DB = value;
+
+
+                }
+
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+        });
+    }
+    void StartTimer(){
+        handler = new Handler();
+        handlerTask = new Runnable()
+        {
+            @Override
+            public void run() {
+                // do something
+                timerLight_DB = getTimerLight_DB;
+                lightTimerSet();
+
+                handler.postDelayed(handlerTask, 1000);
+            }
+        };
+        handlerTask.run();
     }
 }

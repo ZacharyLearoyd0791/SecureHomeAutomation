@@ -455,6 +455,8 @@
     <string name="user_info">/userInfo/</string>
     <string name="slash_email">/Email:</string>
     <string name="name_info">Name</string>
+    <string name="settingsKey">/settings</string>
+    <string name="lightLimitKey">/lightLimit</string>
 
 
 </resources>
