@@ -7,7 +7,6 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.app.ProgressDialog;
@@ -15,22 +14,19 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.ekn.gruzer.gaugelibrary.ArcGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
@@ -40,7 +36,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class TempFragment extends Fragment {
@@ -95,7 +90,7 @@ public class TempFragment extends Fragment {
     }
 
     private void init() {
-        tvCurrentTemperature = (TextView) view.findViewById(R.id.CurrentTemp);
+        tvCurrentTemperature = view.findViewById(R.id.CurrentTemp);
         //  tvHumidity = view.findViewById(R.id.Humidity);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
@@ -167,7 +162,7 @@ public class TempFragment extends Fragment {
         alertDialogBuilder.setView(promptsView);
         TextView tvTitle = promptsView.findViewById(R.id.Title);
         tvTitle.setText(title);
-        EditText userInput = (EditText) promptsView.findViewById(R.id.TemperatureValue);
+        EditText userInput = promptsView.findViewById(R.id.TemperatureValue);
         if(isMinTemperature) {
             if(minimumTemperature > 0 && minimumTemperature < 33)
                 userInput.setText(minimumTemperature+"");
@@ -364,7 +359,6 @@ public class TempFragment extends Fragment {
                 // do something
                 databaseActivity.Activity();
                 serialKeyNumber=databaseActivity.serialNumber;
-                Log.d(TAG,"Serial number from database to windows is: \t"+serialKeyNumber);
                 handler.postDelayed(handlerTask, 1000);
                 if (serialKeyNumber=="null"){
                     setTemperatureView(temperatureView);
@@ -373,7 +367,6 @@ public class TempFragment extends Fragment {
                 }
                 else{
                     String userKey=getApplicationContext().getString(R.string.userKey);
-                    Log.d(TAG,"UserTempKey"+userKey+key+"/"+serialKeyNumber+"/Temperature");
                     databaseReference=FirebaseDatabase.getInstance().getReference().child(userKey+key+"/Raspberry/"+serialKeyNumber+"/Temperature");
 
                     databaseReference.addValueEventListener(new ValueEventListener() {
@@ -382,9 +375,7 @@ public class TempFragment extends Fragment {
                             if(snapshot.exists()){
                                 tempVal=Objects.requireNonNull(snapshot.getValue().toString());
                                 setTemperatureView(temperatureView);
-                                Log.d(TAG,"Temperature Val\n\t"+tempVal);
                                 int tempValue=Integer.parseInt(tempVal);
-                                Log.d(TAG,"Temperature Val\n\t"+tempValue);
                                 setCurrentTemperature((tempValue));
 
 

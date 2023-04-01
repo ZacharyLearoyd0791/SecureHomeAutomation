@@ -9,13 +9,10 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 
-import static android.content.ContentValues.TAG;
-
 import android.graphics.Typeface;
 import android.icu.text.DateFormat;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +100,6 @@ public class HomeFragment extends Fragment {
         max = TempFragment.maximumTemperature;
         min = TempFragment.minimumTemperature;
 
-        Log.d(TAG, "testing max and min values " + max + " and " + min);
 
         DoorStatusTV = view.findViewById(R.id.DoorStatusTVH);
         LightStatusTV = view.findViewById(R.id.LightStatusTVH);

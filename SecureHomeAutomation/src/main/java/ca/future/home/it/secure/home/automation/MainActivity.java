@@ -102,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
         userKey = getApplicationContext().getString(R.string.userKey);
 
         dbID();
-        databaseActivity.Activity();
-        databaseActivity.AlertMode();
+
         Intent intent = new Intent(this, MyService.class);
         ContextCompat.startForegroundService(this, intent);
 

@@ -12,6 +12,7 @@ import android.os.IBinder;
 import androidx.core.app.NotificationCompat;
 
 public class MyService extends Service {
+    DatabaseActivity databaseActivity = new DatabaseActivity();
     private static final int NOTIFICATION_ID = 123;
     private NotificationManager notificationManager;
     private Notification notification;
@@ -22,6 +23,8 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        databaseActivity.Activity();
+
         createNotification();
     }
 
@@ -32,6 +35,7 @@ public class MyService extends Service {
     }
 
     private void createNotification() {
+        databaseActivity.AlertMode();
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         String channelId = getString(R.string.channelId);

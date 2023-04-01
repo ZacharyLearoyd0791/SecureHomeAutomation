@@ -464,6 +464,7 @@
     <string name="AppName">Secure Home Automation</string>
     <string name="foreground_text">Foreground Service Running</string>
     <string name="channelName">Foreground Service Channel</string>
+    <string name="alarmTrigger">/Alarm Triggered</string>
 
 
 </resources>

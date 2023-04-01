@@ -1,7 +1,6 @@
 package ca.future.home.it.secure.home.automation;
 
 
-import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.app.NotificationChannel;
@@ -12,7 +11,6 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -135,7 +133,6 @@ public class DatabaseActivity extends Fragment {
         }
         finalDoorKey =userKey+key+userData+doorKey;
         finalhardwareKey=userKey+key+hardwareKey;
-        Log.d(TAG, "Hardwarekey is:\t"+finalhardwareKey);
 
         //Light related user key:
         finalStatusKey =userKey+key+userData+statusKey;
@@ -320,7 +317,6 @@ public class DatabaseActivity extends Fragment {
 
     public String getserialNumber() {
         //String serialNum=serialNumber;
-        Log.d(TAG,"Serial number is \n\t"+serialNumber);
         return serialNumber;
     }
 
@@ -388,24 +384,23 @@ public class DatabaseActivity extends Fragment {
 
     public void AlertMode(){
         // Set up a listener for the node you want to monitor
-        String AlarmKey=userKey+key+"/Alarm Triggered";
-        Log.d(TAG,"Alarm key is: \t"+AlarmKey);
+        String AlarmKey = userKey + key + getString(R.string.alarmTrigger);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(AlarmKey);
-        ref.addValueEventListener(new ValueEventListener() {
+
+        ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    alertMode=Objects.requireNonNull(snapshot.getValue().toString());
-                    Log.d(TAG,"Data changed insdie");
-                    Notification();
-                }
+
+                Notification();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+        ref.addValueEventListener(listener);
 
 
     }
