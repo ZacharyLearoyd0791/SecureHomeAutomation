@@ -92,6 +92,8 @@ public class DatabaseActivity extends Fragment {
         dbID();
         getDB();
         StartTimer();
+
+
         //AlertMode();
     }
 

@@ -412,5 +412,12 @@
     <string name="activities_frag">Activities :</string>
     <string name="min_set">Valeur de consigne minimale</string>
     <string name="max_set">Valeur de consigne maximale</string>
+    <string name="slash_email">/Email:</string>
+    <string name="name_info">Name</string>
+    <string name="channelId">my_channel</string>
+    <string name="AppName">Secure Home Automation</string>
+    <string name="foreground_text">Foreground Service Running</string>
+    <string name="channelName">Foreground Service Channel</string>
+
 
 </resources>

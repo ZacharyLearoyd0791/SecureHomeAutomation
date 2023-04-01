@@ -11,6 +11,7 @@ package ca.future.home.it.secure.home.automation;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -102,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
         dbID();
         databaseActivity.Activity();
         databaseActivity.AlertMode();
-
+        Intent intent = new Intent(this, MyService.class);
+        ContextCompat.startForegroundService(this, intent);
 
         //Bottom navigation and fragment views
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);

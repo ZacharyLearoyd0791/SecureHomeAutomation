@@ -452,14 +452,18 @@
     <string name="activities_frag">Activities :</string>
     <string name="min_set">Minimum set value</string>
     <string name="max_set">Maximum set value</string>
-    <string name="user_info">/userInfo/</string>
+    <string name="user_info" translatable="false">/userInfo/</string>
     <string name="slash_email">/Email:</string>
     <string name="name_info">Name</string>
-    <string name="settingsKey">/Settings</string>
-    <string name="lightLimitKey">/Light Limit</string>
-    <string name="valueForTimer">0</string>
-    <string name="minLimit"> Minutes</string>
-    <string name="serialHardware">/userData/Hardware Device Serial Number</string>
+    <string name="settingsKey" translatable="false">/Settings</string>
+    <string name="lightLimitKey" translatable="false">/Light Limit</string>
+    <string name="valueForTimer" translatable="false">0</string>
+    <string name="minLimit" translatable="false"> Minutes</string>
+    <string name="serialHardware" translatable="false">/userData/Hardware Device Serial Number</string>
+    <string name="channelId">my_channel</string>
+    <string name="AppName">Secure Home Automation</string>
+    <string name="foreground_text">Foreground Service Running</string>
+    <string name="channelName">Foreground Service Channel</string>
 
 
 </resources>
