@@ -7,6 +7,7 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.app.ProgressDialog;
@@ -20,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,18 +41,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class TempFragment extends Fragment {
+    DatabaseActivity databaseActivity=new DatabaseActivity();
     String userId, localuserId, minkey, maxkey, key;
     UserInfo userInfo = new UserInfo();
+    DatabaseReference databaseReference;
+    String tempVal;
 
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
+    private Handler handler;
+    private Runnable handlerTask;
     TextView tvHeater;
     long temperature;
     TextView tvAC;
     TextView tvCurrentTemperature;
-    TextView tvHumidity;
+    // TextView tvHumidity;
     Button btnMaxTemp;
     Button btnMinTemp;
     FirebaseDatabase database;
@@ -61,6 +69,8 @@ public class TempFragment extends Fragment {
     public static int maximumTemperature;
     ProgressDialog progressDialog;
     String tempstr,userKey,userDetails,userData;
+
+    String serialKeyNumber;
     View view;
 
     public TempFragment() {
@@ -86,22 +96,26 @@ public class TempFragment extends Fragment {
 
     private void init() {
         tvCurrentTemperature = (TextView) view.findViewById(R.id.CurrentTemp);
-        tvHumidity = view.findViewById(R.id.Humidity);
+        //  tvHumidity = view.findViewById(R.id.Humidity);
         tvMinimumTemperature = view.findViewById(R.id.MaximumTemperature);
         tvMaximumTemperature = view.findViewById(R.id.MinimumTemperature);
-        tvAC = view.findViewById(R.id.AC);
-        tvHeater = view.findViewById(R.id.heater);
+        //tvAC = view.findViewById(R.id.AC);
+        //tvHeater = view.findViewById(R.id.heater);
         btnMaxTemp = view.findViewById(R.id.btnMaxTemperature);
         btnMinTemp = view.findViewById(R.id.btnMinTemperature);
         database = FirebaseDatabase.getInstance();
         temperatureView = view.findViewById(R.id.TemperatureView);
         minTempRef = database.getReference(minkey);
         maxTempRef = database.getReference(maxkey);
-        setTemperatureView(temperatureView);
-        setCurrentTemperature(23);
-        setHumidity(20);
-        turnOffHeater();
-        turnOnAc();
+        StartTimer();
+
+
+
+
+
+        //setHumidity(20);
+        //turnOffHeater();
+        //turnOnAc();
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         loadTemperatureConfigurations();
@@ -280,17 +294,17 @@ public class TempFragment extends Fragment {
         Range range1 = new Range();
         range1.setColor(Color.parseColor("#09B2FF"));
         range1.setFrom(0);
-        range1.setTo(19);
+        range1.setTo(18);
 
         Range range2 = new Range();
         range2.setColor(Color.parseColor("#FFC107"));
-        range2.setFrom(20);
-        range2.setTo(28);
+        range2.setFrom(19);
+        range2.setTo(29);
 
         Range range3 = new Range();
         range3.setColor(Color.parseColor("#F44336"));
-        range3.setFrom(29);
-        range3.setTo(75);
+        range3.setFrom(30);
+        range3.setTo(50);
 
         //add color ranges to gauge
         temperatureView.addRange(range1);
@@ -298,7 +312,7 @@ public class TempFragment extends Fragment {
         temperatureView.addRange(range3);
 
         temperatureView.setMinValue(0);
-        temperatureView.setMaxValue(75);
+        temperatureView.setMaxValue(50);
         temperatureView.setValueColor(Color.parseColor("#ffffff"));
         temperatureView.setVisibility(View.VISIBLE);
     }
@@ -309,9 +323,9 @@ public class TempFragment extends Fragment {
     }
 
 
-    private void setHumidity(int value) {
-        tvHumidity.setText(getApplicationContext().getString(R.string.Humidity)+value+"%");
-    }
+    //private void setHumidity(int value) {
+    //  tvHumidity.setText(getApplicationContext().getString(R.string.Humidity)+value+"%");
+    //}
 
     private void setMinTemperature(int value) {
         tvMinimumTemperature.setText(value+"\u00B0 C");
@@ -336,12 +350,57 @@ public class TempFragment extends Fragment {
         tvHeater.setTypeface(tvHeater.getTypeface(), Typeface.BOLD);
     }
 
-    private void turnOffHeater() {
-        tvHeater.setTextColor(getResources().getColor(R.color.color_off_indicator));
-        tvHeater.setTypeface(tvHeater.getTypeface(), Typeface.NORMAL);
-    }
+
 
     private void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
+    void StartTimer(){
+        handler = new Handler();
+        handlerTask = new Runnable()
+        {
+            @Override
+            public void run() {
+                // do something
+                databaseActivity.Activity();
+                serialKeyNumber=databaseActivity.serialNumber;
+                Log.d(TAG,"Serial number from database to windows is: \t"+serialKeyNumber);
+                handler.postDelayed(handlerTask, 1000);
+                if (serialKeyNumber=="null"){
+                    setTemperatureView(temperatureView);
+
+                    setCurrentTemperature(23);
+                }
+                else{
+                    String userKey=getApplicationContext().getString(R.string.userKey);
+                    Log.d(TAG,"UserTempKey"+userKey+key+"/"+serialKeyNumber+"/Temperature");
+                    databaseReference=FirebaseDatabase.getInstance().getReference().child(userKey+key+"/Raspberry/"+serialKeyNumber+"/Temperature");
+
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                tempVal=Objects.requireNonNull(snapshot.getValue().toString());
+                                setTemperatureView(temperatureView);
+                                Log.d(TAG,"Temperature Val\n\t"+tempVal);
+                                int tempValue=Integer.parseInt(tempVal);
+                                Log.d(TAG,"Temperature Val\n\t"+tempValue);
+                                setCurrentTemperature((tempValue));
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            }
+        };
+        handlerTask.run();
+    }
+
 }

@@ -1,8 +1,8 @@
 package ca.future.home.it.secure.home.automation;
 
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 import static android.content.ContentValues.TAG;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.content.Context;
 import android.icu.text.DateFormat;
@@ -31,7 +31,7 @@ public class DatabaseActivity extends Fragment {
     LightFragment lightFragment=new LightFragment();
     DoorFragment doorFragment=new DoorFragment();
 
-    SettingsFragment settingsFragment= new SettingsFragment();
+
 
 
     //Database
@@ -42,7 +42,7 @@ public class DatabaseActivity extends Fragment {
 
     //Date
     Date date;
-    int valueLimit;
+    String valueLimit;
     DateFormat dateFormat;
 
     //Key string
@@ -51,8 +51,8 @@ public class DatabaseActivity extends Fragment {
             finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey,userKey;
 
     //Database String
-    String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email,keySettingsTimeLimit,finalLightTimer;
-    String outDoor,outLight,userData,outWindow,outMax,outMin,outScheduleDate,userDetails;
+    public String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email,hardwareKey,finalhardwareKey,serialNumber;
+    String outDoor,outLight,userData,outWindow,outMax,outMin,outScheduleDate,userDetails,outLimit;
 
     int min,max;
     private Handler handler;
@@ -102,6 +102,7 @@ public class DatabaseActivity extends Fragment {
         userData=getApplicationContext().getString(R.string.userData);
         name=getApplicationContext().getString(R.string.name);
         email=getApplicationContext().getString(R.string.email);
+        hardwareKey=getApplicationContext().getString(R.string.serialHardware);
     }
 
     public void dbID(){
@@ -123,19 +124,20 @@ public class DatabaseActivity extends Fragment {
             databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
             databaseReference.setValue(userInfo.personEmail);
         }
-        keySettingsTimeLimit=getApplicationContext().getString(R.string.settingsKey)+getApplicationContext().getString(R.string.lightLimitKey);
         finalDoorKey =userKey+key+userData+doorKey;
-        finalLightTimer= userKey+key+keySettingsTimeLimit;
+        finalhardwareKey=userKey+key+hardwareKey;
+        Log.d(TAG, "Hardwarekey is:\t"+finalhardwareKey);
 
         //Light related user key:
         finalStatusKey =userKey+key+userData+statusKey;
         finalSensorKey =userKey+key+userData+SensorKey;
         finaldateKey=userKey+key+userData+scheduleKey+getApplicationContext().getString(R.string.dayKey);
-        finalTimeKey=userKey+key+userData+scheduleKey+getApplicationContext().getString(R.string.timeKey);
+
 
         //Temp related user key:
         finalMaxKey=userKey+key+userData+maxKey;
         finalMinKey=userKey+key+userData+minKey;
+
         //Window related user key:
         finalWindowBreak=userKey+key+userData+windowBKey;
     }
@@ -153,20 +155,14 @@ public class DatabaseActivity extends Fragment {
 
     public void getDB(){
 
-        databaseReference= FirebaseDatabase.getInstance().getReference().child(finalLightTimer);
+        //serial
+        databaseReference= FirebaseDatabase.getInstance().getReference().child(finalhardwareKey);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Integer value = snapshot.getValue(Integer.class);
-                    if (value != null) {
-                        valueLimit=value;
-                        timeLimit();
-                    }
-                else {
-                        valueLimit = 5;
-                        timeLimit();
-                    }
+                if(snapshot.exists()){
+                    serialNumber=Objects.requireNonNull(snapshot.getValue().toString());
+                    getserialNumber();
                 }
             }
 
@@ -313,6 +309,12 @@ public class DatabaseActivity extends Fragment {
         });
     }
 
+    public String getserialNumber() {
+        //String serialNum=serialNumber;
+        Log.d(TAG,"Serial number is \n\t"+serialNumber);
+        return serialNumber;
+    }
+
     private void ScheduleDBAction() {
 
     }
@@ -339,18 +341,13 @@ public class DatabaseActivity extends Fragment {
         doorFragment.statusofDoor=(DBDoor);
 
     }
-    private void timeLimit(){
 
-        settingsFragment.timerLight_DB=valueLimit;
-
-    }
 
     private void sendDataStrings(){
 
         outLight=lightFragment.statusOfLight;
         outScheduleDate=lightFragment.scheduleDate;
         outDoor=doorFragment.statusofDoor;
-        valueLimit=settingsFragment.timerLight_DB;
 
 
         if (outLight!=null) {
@@ -376,8 +373,7 @@ public class DatabaseActivity extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
         databaseReference.setValue(outLight);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(finalLightTimer);
-        databaseReference.setValue(valueLimit);
+
 
     }
 }

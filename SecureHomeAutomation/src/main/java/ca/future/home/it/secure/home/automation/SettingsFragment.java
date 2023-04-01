@@ -10,6 +10,8 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -28,12 +30,14 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -45,22 +49,32 @@ import com.facebook.share.Share;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.internal.ConfigGetParameterHandler;
+
+import java.util.Objects;
 
 
 public class SettingsFragment extends Fragment {
 
     //Switches and Others
-    public static int timerLight_DB,getTimerLight_DB;
+    UserInfo userInfo = new UserInfo();
+    String timeLimit;
+    String value, localKey, key, personalKey, userKey, userDetails, email, name,keySettingsTimeLimit;
+
+    public static String timerLight_DB, getTimerLight_DB;
+    String val;
     private Switch boldSwitch;
     private Switch colourSwitch;
     private Switch fingerSwitch;
     private Switch portraitSwitch;
     private Button saveButton;
     public static String SETTINGS_PREFS_NAME = "SavedSettings";
-    private Boolean boldTextState ;
+    private Boolean boldTextState;
     private Boolean darkModeState;
     private Boolean fingerPrintState;
     private Boolean screenOrientationState;
@@ -107,18 +121,18 @@ public class SettingsFragment extends Fragment {
         fingerSwitch = view.findViewById(R.id.fingerprint_switch);
         portraitSwitch = view.findViewById(R.id.portrait_switch);
         saveButton = view.findViewById(R.id.settingsSaveButton);
-        StartTimer();
-/*
+        // StartTimer();
+
         lightTimerSet();
-*/
+
 
         sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        boldTextState = sharedPreferences.getBoolean("BoldTextState",false);
-        darkModeState = sharedPreferences.getBoolean("DarkModeState",false);
-        fingerPrintState = sharedPreferences.getBoolean("FingerprintState",false);
-        screenOrientationState = sharedPreferences.getBoolean("ScreenLockState",false);
-        faceLockState = sharedPreferences.getBoolean("FaceLockState",false);
+        boldTextState = sharedPreferences.getBoolean("BoldTextState", false);
+        darkModeState = sharedPreferences.getBoolean("DarkModeState", false);
+        fingerPrintState = sharedPreferences.getBoolean("FingerprintState", false);
+        screenOrientationState = sharedPreferences.getBoolean("ScreenLockState", false);
+        faceLockState = sharedPreferences.getBoolean("FaceLockState", false);
         //TextViews
         tvBold = view.findViewById(R.id.tv_bold);
         tvColour = view.findViewById(R.id.tv_colour);
@@ -189,69 +203,100 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-    //Save Button functionality
+        //Save Button functionality
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                editor.putBoolean("BoldTextState",boldTextState).apply();
-                editor.putBoolean("DarkModeState",darkModeState).apply();
-                editor.putBoolean("FingerprintState",fingerPrintState).apply();
-                editor.putBoolean("ScreenLockState",screenOrientationState).apply();
-                editor.putBoolean("FaceLockState",faceLockState).apply();
+                editor.putBoolean("BoldTextState", boldTextState).apply();
+                editor.putBoolean("DarkModeState", darkModeState).apply();
+                editor.putBoolean("FingerprintState", fingerPrintState).apply();
+                editor.putBoolean("ScreenLockState", screenOrientationState).apply();
+                editor.putBoolean("FaceLockState", faceLockState).apply();
                 editor.apply();
                 editor.commit();
-                if(darkModeState==true)
+                if (darkModeState == true)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 else
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
     }
-    public void lightTimerSet(){
-        int dbNum=getTimerLight_DB;
 
-        SeekBar seekBar = view.findViewById(R.id.lightTimeLimit);
-        TextView seekBarValue = view.findViewById(R.id.timelimitvalue);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    public void lightTimerSet() {
+        dbID();
+        EditText editText = view.findViewById(R.id.lightTimeLimit);
+        TextView Value = view.findViewById(R.id.timelimitvalue);
+        //String userKey = getApplicationContext().getString(R.string.userKey);
+        keySettingsTimeLimit=getString(R.string.settingsKey)+getString(R.string.lightLimitKey);
+
+        String finalLightTimer = userKey + key +"/settings/LightStatus";
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(finalLightTimer);
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                seekBar.setProgress(10);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String message = snapshot.getValue(String.class);
+                    editText.setText(message);
+                    timeLimit = editText.getText().toString();
+                    databaseReference.setValue(timeLimit);
+                    Value.setText(timeLimit+" "+ getString(R.string.minLimit));
+                    saveButton.setOnClickListener(new View.OnClickListener() {
 
-
-                    int value = dbNum + (progress * 5); // Add 5 to start at 5, then add 5 for each progress
-
-                    seekBarValue.setText(String.valueOf(value) + " minutes");
-                    getTimerLight_DB = value;
+                        @Override
+                        public void onClick(View view) {
+                            String timeLimit = editText.getText().toString();
+                            databaseReference.setValue(timeLimit);
+                            Value.setText(timeLimit+ " "+getString(R.string.minLimit));
+                        }
+                    });
 
 
                 }
-
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // Do nothing
+                else{
+                    databaseReference.setValue("0");
+                }
             }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // Do nothing
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+        timeLimit = editText.getText().toString();
+        //databaseReference.setValue(timeLimit);
+        Value.setText(timeLimit +" "+ getString(R.string.minLimit));
     }
-    void StartTimer(){
+
+    void StartTimer() {
         handler = new Handler();
-        handlerTask = new Runnable()
-        {
+        handlerTask = new Runnable() {
             @Override
             public void run() {
                 // do something
-                timerLight_DB = getTimerLight_DB;
+                // getTimerLight_DB = timerLight_DB;
                 lightTimerSet();
 
-                handler.postDelayed(handlerTask, 1000);
+                handler.postDelayed(handlerTask, 1);
             }
         };
         handlerTask.run();
+    }
+
+    public void dbID() {
+        userInfo.typeAccount();
+        localKey = userInfo.userId;
+        personalKey = userInfo.idInfo;
+        userKey = getApplicationContext().getString(R.string.userKey);
+        if (localKey != null) {
+            key = localKey;
+
+        }
+        if (personalKey != null) {
+            key = personalKey;
+
+        }
     }
 }
