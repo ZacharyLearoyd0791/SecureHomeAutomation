@@ -460,11 +460,13 @@
     <string name="valueForTimer" translatable="false">0</string>
     <string name="minLimit" translatable="false"> Minutes</string>
     <string name="serialHardware" translatable="false">/userData/Hardware Device Serial Number</string>
-    <string name="channelId">my_channel</string>
-    <string name="AppName">Secure Home Automation</string>
+    <string name="channelId" translatable="false">my_channel</string>
+    <string name="AppName" translatable="false">Secure Home Automation</string>
     <string name="foreground_text">Foreground Service Running</string>
     <string name="channelName">Foreground Service Channel</string>
-    <string name="alarmTrigger">/Alarm Triggered</string>
+    <string name="alarmTrigger" translatable="false">/Alarm Triggered</string>
+    <string name="messageContent">It seems that someone has triggered motion sensor inside your building after you locked your home. Please check or report to the authorities As soon as possible.</string>
+    <string name="alert">Alert</string>
 
 
 </resources>

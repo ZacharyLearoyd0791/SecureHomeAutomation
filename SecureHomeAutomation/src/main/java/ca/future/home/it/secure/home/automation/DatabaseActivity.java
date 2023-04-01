@@ -3,19 +3,22 @@ package ca.future.home.it.secure.home.automation;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,26 +49,30 @@ public class DatabaseActivity extends Fragment {
     String valueLimit;
     DateFormat dateFormat;
 
-    //Key string
-    String finalDoorKey,localKey,key,personalKey,strDate,
-            finalSensorKey, finalStatusKey,statusKey,SensorKey,doorKey,maxKey,minKey,finalMaxKey,finalMinKey,
-            finalWindowBreak,windowBKey,finaldateKey,finalTimeKey,scheduleKey,userKey;
-
     //Database String
-    public String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email,hardwareKey,finalhardwareKey,serialNumber;
-    String outDoor,outLight,userData,outWindow,outMax,outMin,outScheduleDate,userDetails,outLimit;
+    public String DBDoor, DBLight, DBDist, DBWindow, DBMax, DBMin, DBScheduleDay, DBScheduleTime, name, email, hardwareKey, finalhardwareKey, serialNumber;
+    //Key string
+    String finalDoorKey, localKey, key, personalKey, strDate,
+            finalSensorKey, finalStatusKey, statusKey, SensorKey, doorKey, maxKey, minKey, finalMaxKey, finalMinKey,
+            finalWindowBreak, windowBKey, finaldateKey, finalTimeKey, scheduleKey, userKey;
+    String outDoor, outLight, userData, outWindow, outMax, outMin, outScheduleDate, userDetails, outLimit;
     String alertMode;
-
-    int min,max;
+    FragmentActivity viewActivity;
+    View rootView;
+    int min, max;
     private Handler handler;
     private Runnable handlerTask;
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.activity_main, container, false);
 
-        super.onCreate(savedInstanceState);
+        // Get the package name of the app
+        viewActivity = getActivity();
         Activity();
-        //startBackgroundTask();
-
+        return rootView;
     }
 
     void StartTimer(){
@@ -384,7 +391,7 @@ public class DatabaseActivity extends Fragment {
 
     public void AlertMode(){
         // Set up a listener for the node you want to monitor
-        String AlarmKey = userKey + key + getString(R.string.alarmTrigger);
+        String AlarmKey = userKey + key + getApplicationContext().getString(R.string.alarmTrigger);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(AlarmKey);
 
         ValueEventListener listener = new ValueEventListener() {
@@ -406,26 +413,24 @@ public class DatabaseActivity extends Fragment {
     }
     public void Notification() {
         Context newContext = getApplicationContext(); // Use getContext() method to get the context of the fragment
-        NotificationManager notificationManager = (NotificationManager) newContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
+
+        Uri soundUri = Uri.parse("android.resource://" + newContext.getPackageName() + "/" + R.raw.alarm);
         String channelId = "my_channel_id";
-        NotificationChannel channel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            channel = new NotificationChannel(channelId, "My Channel", NotificationManager.IMPORTANCE_HIGH);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(channel);
-        }
 
-        // Create a notification builder with the required attributes
+// Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(newContext, channelId)
                 .setSmallIcon(R.drawable.app_icon)
-                .setContentTitle("Alert")
-                .setContentText("It seems that someone has triggered motion sensor inside your building after you locked your home. Please check or report to the authorities As soon as possible. ")
+                .setContentTitle(getApplicationContext().getString(R.string.alert))
+                .setContentText(getApplicationContext().getString(R.string.messageContent))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSound(soundUri) // Set the custom sound
                 .setAutoCancel(true);
 
-        // Show the notification
+// Show the notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(newContext);
         notificationManager.notify(1, builder.build());
+
     }
 
 
