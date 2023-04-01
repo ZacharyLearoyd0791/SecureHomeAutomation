@@ -131,7 +131,6 @@ public class LightFragment extends Fragment {
 
         timerTV = view.findViewById(R.id.timerTV);
         timerBTN = view.findViewById(R.id.timerButton);
-        schedulerBTN = view.findViewById(R.id.schedulerButton);
         ivLightOff=view.findViewById(R.id.light_off);
         ivLightOn=view.findViewById(R.id.light_on);
         statusOfLightTV=view.findViewById(R.id.statusOfLight);

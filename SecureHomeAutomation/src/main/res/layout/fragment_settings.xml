@@ -59,8 +59,8 @@
         android:id="@+id/tv_bold"
         android:layout_width="110dp"
         android:layout_height="35dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="159dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="144dp"
         android:text="@string/Bold_text"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -173,19 +173,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.52" />
 
-    <SeekBar
-        android:id="@+id/lightTimeLimit"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="314dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="496dp"
-        android:max="11"
-        android:min="0"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/lightTimeLimitTV"
         android:layout_width="362dp"
@@ -206,6 +193,18 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="465dp"
         android:text=""
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/lightTimeLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="484dp"
+        android:inputType="number"
+        android:text="@string/valueForTimer"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
