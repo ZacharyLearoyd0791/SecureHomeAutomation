@@ -8,8 +8,8 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
+
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.icu.text.DateFormat;
 import android.os.Bundle;
@@ -66,7 +66,7 @@ public class DoorFragment extends Fragment{
 
     public DoorFragment() {
     }
-    void StartTimer(){
+    void StartTimer() {
         handlerRun = new Handler();
         handlerTask = new Runnable() {
   /*          public void run() {
@@ -117,19 +117,22 @@ public class DoorFragment extends Fragment{
     }
 
     private void action() {
-        if(Objects.equals(statusDoor, getString(R.string.lock))){
+        if(Objects.equals(statusDoor, getString(R.string.lock))) {
             Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
             status.setText(R.string.lock);
-            locked.setVisibility(View.VISIBLE);
-            unlocked.setVisibility(View.INVISIBLE);
+            doorLock.setChecked(true);
             doorLock.setBackgroundResource(R.drawable.status_border_green);
-            statusofDoor=getString(R.string.lock);
+            unlocked.setVisibility(View.INVISIBLE);
+            locked.setVisibility(View.VISIBLE);
+            doorLock.setChecked(true);
+            statusofDoor = getString(R.string.lock);
         }
-        else if(Objects.equals(statusDoor, getString(R.string.unlock))){
+        else if(Objects.equals(statusDoor, getString(R.string.unlock))) {
             Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
-            status.setText(R.string.unlock);
-            unlocked.setVisibility(View.VISIBLE);
+            doorLock.setChecked(false);
+            doorLock.setBackgroundResource(R.drawable.status_border_red);
             locked.setVisibility(View.INVISIBLE);
+            unlocked.setVisibility(View.VISIBLE);
             doorLock.setBackgroundResource(R.drawable.status_border_red);
 
         }
@@ -137,27 +140,29 @@ public class DoorFragment extends Fragment{
             if (isChecked) {
                 Toast.makeText(getActivity(), R.string.closedDoor, Toast.LENGTH_SHORT).show();
                 status.setText(R.string.lock);
-                locked.setVisibility(View.VISIBLE);
-                unlocked.setVisibility(View.INVISIBLE);
+                doorLock.setChecked(true);
                 doorLock.setBackgroundResource(R.drawable.status_border_green);
-                statusofDoor=getString(R.string.lock);
+                unlocked.setVisibility(View.INVISIBLE);
+                locked.setVisibility(View.VISIBLE);
+                doorLock.setChecked(true);
+                statusofDoor = getString(R.string.lock);
 
             } else {
                 Toast.makeText(getActivity(), R.string.openDoor, Toast.LENGTH_SHORT).show();
                 status.setText(R.string.unlock);
-                unlocked.setVisibility(View.VISIBLE);
-                locked.setVisibility(View.INVISIBLE);
+                doorLock.setChecked(false);
                 doorLock.setBackgroundResource(R.drawable.status_border_red);
-                statusofDoor=getString(R.string.unlock);
+                locked.setVisibility(View.INVISIBLE);
+                unlocked.setVisibility(View.VISIBLE);
+                doorLock.setChecked(false);
+
+                statusofDoor = getString(R.string.unlock);
 
 
             }
         });
 
-        //Door status unlocked by default for testing
-        locked.setVisibility(View.INVISIBLE);
-        doorLock.setBackgroundResource(R.drawable.status_border_red);
-        status.setText(R.string.unlock);
+
 
         //Door history
         linearLayout=view.findViewById(R.id.linear_history);
@@ -214,21 +219,20 @@ public class DoorFragment extends Fragment{
         linearLayout.addView(textView);
     }
 
-    public void addKey(){
+    public void addKey() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(R.string.place_key);
         builder.setTitle(R.string.add_key);
 
         //Cancel
-        builder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener)
-                (dialog, which) -> {
-                    dialog.cancel();
-                });
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> {
+            dialog.cancel();
+        });
 
         //On successful add
         AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
         successBuilder.setMessage(R.string.success);
-        successBuilder.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
+        successBuilder.setNegativeButton(R.string.close, (dialog, which) -> {
             dialog.cancel();
         });
 
@@ -245,14 +249,14 @@ public class DoorFragment extends Fragment{
         removeBuilder.setTitle(R.string.remove_key);
 
         //Cancel
-        removeBuilder.setNegativeButton(R.string.cancel, (DialogInterface.OnClickListener) (dialog, which) -> {
+        removeBuilder.setNegativeButton(R.string.cancel, (dialog, which) -> {
             dialog.cancel();
         });
 
         //On successful removal
         AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
         successBuilder.setMessage(R.string.success);
-        successBuilder.setNegativeButton(R.string.close, (DialogInterface.OnClickListener) (dialog, which) -> {
+        successBuilder.setNegativeButton(R.string.close, (dialog, which) -> {
             dialog.cancel();
         });
 
