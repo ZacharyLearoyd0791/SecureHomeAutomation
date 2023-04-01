@@ -8,8 +8,6 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -78,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     public static AddDeviceFragment addDeviceFragment;
     Date date;
     DateFormat dateFormat;
+    DatabaseActivity databaseActivity = new DatabaseActivity();
     RatingBar ratingBar;
     Button saveBTN;
     String strDate,deviceModelKey;
@@ -97,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userInfo.typeAccount();
-        userDetails=getString(R.string.UserFeedback);
-        userKey=getApplicationContext().getString(R.string.userKey);
+        userDetails = getString(R.string.UserFeedback);
+        userKey = getApplicationContext().getString(R.string.userKey);
 
         dbID();
+        databaseActivity.Activity();
+        databaseActivity.AlertMode();
 
 
         //Bottom navigation and fragment views

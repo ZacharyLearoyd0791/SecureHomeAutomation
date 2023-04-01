@@ -2,27 +2,21 @@ package ca.future.home.it.secure.home.automation;
 
 
 import static android.content.ContentValues.TAG;
-import static androidx.core.content.ContextCompat.getSystemService;
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static com.facebook.FacebookSdk.getAutoLogAppEventsEnabled;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -72,7 +66,7 @@ public class DatabaseActivity extends Fragment {
 
         super.onCreate(savedInstanceState);
         Activity();
-        startBackgroundTask();
+        //startBackgroundTask();
 
     }
 
@@ -98,7 +92,7 @@ public class DatabaseActivity extends Fragment {
         dbID();
         getDB();
         StartTimer();
-        AlertMode();
+        //AlertMode();
     }
 
     private void initString() {
@@ -338,11 +332,11 @@ public class DatabaseActivity extends Fragment {
 
     //Light Action
     private void LightStatusDBAction() {
-        lightFragment.statusOfLight=(DBLight);
+        LightFragment.statusOfLight = (DBLight);
 
     }
     private void DistDBAction() {
-        lightFragment.dist=(DBDist);
+        LightFragment.dist = (DBDist);
     }
 
     //Temperature action
@@ -351,25 +345,25 @@ public class DatabaseActivity extends Fragment {
     }
     //Door action
     private void DoorDBAction() {
-        doorFragment.statusofDoor=(DBDoor);
+        DoorFragment.statusofDoor = (DBDoor);
 
     }
 
 
-    private void sendDataStrings(){
+    private void sendDataStrings() {
 
-        outLight=lightFragment.statusOfLight;
-        outScheduleDate=lightFragment.scheduleDate;
-        outDoor=doorFragment.statusofDoor;
+        outLight = LightFragment.statusOfLight;
+        outScheduleDate = LightFragment.scheduleDate;
+        outDoor = DoorFragment.statusofDoor;
 
 
-        if (outLight!=null) {
+        if (outLight != null) {
             toDatabase();
         }
-        if (outScheduleDate!=null){
+        if (outScheduleDate != null) {
             toDatabase();
         }
-        if (outDoor!=null){
+        if (outDoor != null) {
             toDatabase();
         }
 
@@ -437,36 +431,6 @@ public class DatabaseActivity extends Fragment {
         notificationManager.notify(1, builder.build());
     }
 
-    private class MyTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            // This code will run in the background
-            myBackgroundMethod();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            // This code will run on the main thread after doInBackground() is done
-            myPostExecuteMethod();
-        }
-    }
-
-    private void myBackgroundMethod() {
-        // Do some background work here
-        Activity();
-    }
-
-    private void myPostExecuteMethod() {
-        // Update the UI or do some other work here
-    }
-
-    // Call this method to start the background task
-    private void startBackgroundTask() {
-        MyTask task = new MyTask();
-        task.execute();
-    }
 
 
 }

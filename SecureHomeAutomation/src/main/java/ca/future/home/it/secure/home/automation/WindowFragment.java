@@ -8,50 +8,26 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-import static ca.future.home.it.secure.home.automation.R.string.sensor_turned_on;
-import static ca.future.home.it.secure.home.automation.R.string.user_info;
-
-import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -121,7 +97,7 @@ public class WindowFragment extends Fragment {
         clearActivityButton = view.findViewById(R.id.windows_clear_activity_data);
 
         currentTime = Calendar.getInstance().getTime();
-        activityRecyclerView = (RecyclerView) view.findViewById(R.id.windows_recycler_view);
+        activityRecyclerView = view.findViewById(R.id.windows_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         activityRecyclerView.setLayoutManager(linearLayoutManager);
 
@@ -260,7 +236,7 @@ public class WindowFragment extends Fragment {
             displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage,alertDialogCode);
 
 
-            }
+        }
         return connected;
     }
 }

@@ -11,11 +11,8 @@ package ca.future.home.it.secure.home.automation;
 
 import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -23,27 +20,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -92,8 +76,8 @@ public class HomeFragment extends Fragment {
     int hour;
 
     //Misc Strings
-    String doorStatus, lightStatus, maxStatus,windowStatus,minStatus,
-             lock,
+    String doorStatus, lightStatus, maxStatus, windowStatus, minStatus,
+            lock,
             unlock, armed, disarmed;
 
     private Handler handlerRun;
@@ -116,15 +100,15 @@ public class HomeFragment extends Fragment {
         databaseActivity.Activity();
 //        windowFragment.getFromDataBase();
         tempFragment.dbID();
-        max=tempFragment.maximumTemperature;
-        min=tempFragment.minimumTemperature;
+        max = TempFragment.maximumTemperature;
+        min = TempFragment.minimumTemperature;
 
-        Log.d(TAG,"testing max and min values "+max+" and "+min);
+        Log.d(TAG, "testing max and min values " + max + " and " + min);
 
-        DoorStatusTV=view.findViewById(R.id.DoorStatusTVH);
-        LightStatusTV=view.findViewById(R.id.LightStatusTVH);
-        TempStatusTV=view.findViewById(R.id.TempStatusTVH);
-        WindowsStatusTV=view.findViewById(R.id.WindowsStatusTVH);
+        DoorStatusTV = view.findViewById(R.id.DoorStatusTVH);
+        LightStatusTV = view.findViewById(R.id.LightStatusTVH);
+        TempStatusTV = view.findViewById(R.id.TempStatusTVH);
+        WindowsStatusTV = view.findViewById(R.id.WindowsStatusTVH);
 
         tempView.setVisibility(View.INVISIBLE);
         windowView.setVisibility(View.INVISIBLE);
