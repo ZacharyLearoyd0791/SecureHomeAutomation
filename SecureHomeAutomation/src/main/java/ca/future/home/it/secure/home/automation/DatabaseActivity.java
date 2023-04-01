@@ -2,18 +2,27 @@ package ca.future.home.it.secure.home.automation;
 
 
 import static android.content.ContentValues.TAG;
+import static androidx.core.content.ContextCompat.getSystemService;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.facebook.FacebookSdk.getAutoLogAppEventsEnabled;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +62,7 @@ public class DatabaseActivity extends Fragment {
     //Database String
     public String DBDoor,DBLight,DBDist,DBWindow, DBMax,DBMin,DBScheduleDay,DBScheduleTime,name,email,hardwareKey,finalhardwareKey,serialNumber;
     String outDoor,outLight,userData,outWindow,outMax,outMin,outScheduleDate,userDetails,outLimit;
+    String alertMode;
 
     int min,max;
     private Handler handler;
@@ -62,6 +72,8 @@ public class DatabaseActivity extends Fragment {
 
         super.onCreate(savedInstanceState);
         Activity();
+        startBackgroundTask();
+
     }
 
     void StartTimer(){
@@ -86,6 +98,7 @@ public class DatabaseActivity extends Fragment {
         dbID();
         getDB();
         StartTimer();
+        AlertMode();
     }
 
     private void initString() {
@@ -376,4 +389,84 @@ public class DatabaseActivity extends Fragment {
 
 
     }
+
+    public void AlertMode(){
+        // Set up a listener for the node you want to monitor
+        String AlarmKey=userKey+key+"/Alarm Triggered";
+        Log.d(TAG,"Alarm key is: \t"+AlarmKey);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(AlarmKey);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    alertMode=Objects.requireNonNull(snapshot.getValue().toString());
+                    Log.d(TAG,"Data changed insdie");
+                    Notification();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+    public void Notification() {
+        Context newContext = getApplicationContext(); // Use getContext() method to get the context of the fragment
+        NotificationManager notificationManager = (NotificationManager) newContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String channelId = "my_channel_id";
+        NotificationChannel channel = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            channel = new NotificationChannel(channelId, "My Channel", NotificationManager.IMPORTANCE_HIGH);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Create a notification builder with the required attributes
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(newContext, channelId)
+                .setSmallIcon(R.drawable.app_icon)
+                .setContentTitle("Alert")
+                .setContentText("It seems that someone has triggered motion sensor inside your building after you locked your home. Please check or report to the authorities As soon as possible. ")
+                .setAutoCancel(true);
+
+        // Show the notification
+        notificationManager.notify(1, builder.build());
+    }
+
+    private class MyTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            // This code will run in the background
+            myBackgroundMethod();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // This code will run on the main thread after doInBackground() is done
+            myPostExecuteMethod();
+        }
+    }
+
+    private void myBackgroundMethod() {
+        // Do some background work here
+        Activity();
+    }
+
+    private void myPostExecuteMethod() {
+        // Update the UI or do some other work here
+    }
+
+    // Call this method to start the background task
+    private void startBackgroundTask() {
+        MyTask task = new MyTask();
+        task.execute();
+    }
+
+
 }
