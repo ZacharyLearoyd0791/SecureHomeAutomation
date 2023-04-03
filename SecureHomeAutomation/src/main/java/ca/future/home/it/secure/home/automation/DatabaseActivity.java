@@ -31,12 +31,12 @@ import java.util.Date;
 import java.util.Objects;
 
 public class DatabaseActivity extends Fragment {
-    UserInfo userInfo=new UserInfo();
-    LightFragment lightFragment=new LightFragment();
-    DoorFragment doorFragment=new DoorFragment();
+    UserInfo userInfo = new UserInfo();
+    LightFragment lightFragment = new LightFragment();
+    DoorFragment doorFragment = new DoorFragment();
 
 
-
+    String LogDB;
 
     //Database
     FirebaseDatabase firebaseDatabase;
@@ -75,10 +75,9 @@ public class DatabaseActivity extends Fragment {
         return rootView;
     }
 
-    void StartTimer(){
+    void StartTimer() {
         handler = new Handler();
-        handlerTask = new Runnable()
-        {
+        handlerTask = new Runnable() {
             @Override
             public void run() {
                 // do something
@@ -89,7 +88,7 @@ public class DatabaseActivity extends Fragment {
         handlerTask.run();
     }
 
-    public void Activity(){
+    public void Activity() {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         time();
@@ -104,58 +103,58 @@ public class DatabaseActivity extends Fragment {
 
     private void initString() {
 
-        doorKey=getApplicationContext().getString(R.string.forwardslash)+getApplicationContext().getString(R.string.door_status);
-        statusKey=getApplicationContext().getString(R.string.statusKey);
-        SensorKey=getApplicationContext().getString(R.string.db_ultrasonic_dist);
-        maxKey=getApplicationContext().getString(R.string.tempmax);
-        minKey=getApplicationContext().getString(R.string.tempmin);
-        windowBKey=getApplicationContext().getString(R.string.windowBreakKey);
-        scheduleKey= getApplicationContext().getString(R.string.schedKey);
-        userKey=getApplicationContext().getString(R.string.userKey);
-        userDetails=getApplicationContext().getString(R.string.userDetails);
-        userData=getApplicationContext().getString(R.string.userData);
-        name=getApplicationContext().getString(R.string.name);
-        email=getApplicationContext().getString(R.string.email);
-        hardwareKey=getApplicationContext().getString(R.string.serialHardware);
+        doorKey = getApplicationContext().getString(R.string.forwardslash) + getApplicationContext().getString(R.string.door_status);
+        statusKey = getApplicationContext().getString(R.string.statusKey);
+        SensorKey = getApplicationContext().getString(R.string.db_ultrasonic_dist);
+        maxKey = getApplicationContext().getString(R.string.tempmax);
+        minKey = getApplicationContext().getString(R.string.tempmin);
+        windowBKey = getApplicationContext().getString(R.string.windowBreakKey);
+        scheduleKey = getApplicationContext().getString(R.string.schedKey);
+        userKey = getApplicationContext().getString(R.string.userKey);
+        userDetails = getApplicationContext().getString(R.string.userDetails);
+        userData = getApplicationContext().getString(R.string.userData);
+        name = getApplicationContext().getString(R.string.name);
+        email = getApplicationContext().getString(R.string.email);
+        hardwareKey = getApplicationContext().getString(R.string.serialHardware);
     }
 
-    public void dbID(){
+    public void dbID() {
         userInfo.typeAccount();
-        localKey=userInfo.userId;
-        personalKey=userInfo.idInfo;
+        localKey = userInfo.userId;
+        personalKey = userInfo.idInfo;
 
-        if(localKey!=null){
-            key=localKey;
-            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+name));
+        if (localKey != null) {
+            key = localKey;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey + key + userDetails + name));
             databaseReference.setValue(userInfo.name);
-            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey + key + userDetails + email));
             databaseReference.setValue(userInfo.email);
         }
-        if(personalKey!=null) {
-            key= personalKey;
-            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+name));
+        if (personalKey != null) {
+            key = personalKey;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey + key + userDetails + name));
             databaseReference.setValue(userInfo.personName);
-            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey+key+userDetails+email));
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey + key + userDetails + email));
             databaseReference.setValue(userInfo.personEmail);
         }
-        finalDoorKey =userKey+key+userData+doorKey;
-        finalhardwareKey=userKey+key+hardwareKey;
+        finalDoorKey = userKey + key + userData + doorKey;
+        finalhardwareKey = userKey + key + hardwareKey;
 
         //Light related user key:
-        finalStatusKey =userKey+key+userData+statusKey;
-        finalSensorKey =userKey+key+userData+SensorKey;
-        finaldateKey=userKey+key+userData+scheduleKey+getApplicationContext().getString(R.string.dayKey);
+        finalStatusKey = userKey + key + userData + statusKey;
+        finalSensorKey = userKey + key + userData + SensorKey;
+        finaldateKey = userKey + key + userData + scheduleKey + getApplicationContext().getString(R.string.dayKey);
 
 
         //Temp related user key:
-        finalMaxKey=userKey+key+userData+maxKey;
-        finalMinKey=userKey+key+userData+minKey;
+        finalMaxKey = userKey + key + userData + maxKey;
+        finalMinKey = userKey + key + userData + minKey;
 
         //Window related user key:
-        finalWindowBreak=userKey+key+userData+windowBKey;
+        finalWindowBreak = userKey + key + userData + windowBKey;
     }
 
-    private void time(){
+    private void time() {
         date = Calendar.getInstance().getTime();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             dateFormat = new SimpleDateFormat(getApplicationContext().getString(R.string.formatted));
@@ -166,15 +165,15 @@ public class DatabaseActivity extends Fragment {
         }
     }
 
-    public void getDB(){
+    public void getDB() {
 
         //serial
-        databaseReference= FirebaseDatabase.getInstance().getReference().child(finalhardwareKey);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(finalhardwareKey);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    serialNumber=Objects.requireNonNull(snapshot.getValue().toString());
+                if (snapshot.exists()) {
+                    serialNumber = Objects.requireNonNull(snapshot.getValue().toString());
                     getserialNumber();
                 }
             }
@@ -189,11 +188,10 @@ public class DatabaseActivity extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    DBDoor= Objects.requireNonNull(snapshot.getValue()).toString();
+                if (snapshot.exists()) {
+                    DBDoor = Objects.requireNonNull(snapshot.getValue()).toString();
                     DoorDBAction();
-                }
-                else {
+                } else {
                 }
             }
 
@@ -207,17 +205,16 @@ public class DatabaseActivity extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    DBMax= Objects.requireNonNull(snapshot.getValue().toString());
+                if (snapshot.exists()) {
+                    DBMax = Objects.requireNonNull(snapshot.getValue().toString());
                     databaseReference = FirebaseDatabase.getInstance().getReference().child((finalMinKey));
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()) {
-                                DBMin= Objects.requireNonNull(snapshot.getValue().toString());
+                            if (snapshot.exists()) {
+                                DBMin = Objects.requireNonNull(snapshot.getValue().toString());
                                 TemperatureDBAction();
-                            }
-                            else {
+                            } else {
                             }
                         }
 
@@ -225,8 +222,7 @@ public class DatabaseActivity extends Fragment {
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
-                }
-                else {
+                } else {
                 }
             }
 
@@ -240,11 +236,10 @@ public class DatabaseActivity extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    DBLight= Objects.requireNonNull(snapshot.getValue()).toString();
+                if (snapshot.exists()) {
+                    DBLight = Objects.requireNonNull(snapshot.getValue()).toString();
                     LightStatusDBAction();
-                }
-                else {
+                } else {
                 }
             }
 
@@ -257,11 +252,10 @@ public class DatabaseActivity extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    DBDist= Objects.requireNonNull(snapshot.getValue()).toString();//on or off
+                if (snapshot.exists()) {
+                    DBDist = Objects.requireNonNull(snapshot.getValue()).toString();//on or off
                     DistDBAction();
-                }
-                else {
+                } else {
                 }
             }
 
@@ -275,8 +269,8 @@ public class DatabaseActivity extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    DBScheduleDay= Objects.requireNonNull(snapshot.getValue()).toString();
+                if (snapshot.exists()) {
+                    DBScheduleDay = Objects.requireNonNull(snapshot.getValue()).toString();
 
                     databaseReference = FirebaseDatabase.getInstance().getReference().child((finalTimeKey));
                     databaseReference.addValueEventListener(new ValueEventListener() {
@@ -287,13 +281,13 @@ public class DatabaseActivity extends Fragment {
                                 ScheduleDBAction();
                             }
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
 
-                }
-                else {
+                } else {
 
                 }
             }
@@ -308,11 +302,10 @@ public class DatabaseActivity extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    DBWindow= Objects.requireNonNull(snapshot.getValue()).toString();
+                if (snapshot.exists()) {
+                    DBWindow = Objects.requireNonNull(snapshot.getValue()).toString();
                     WindowDBAction();
-                }
-                else {
+                } else {
                 }
             }
 
@@ -324,6 +317,7 @@ public class DatabaseActivity extends Fragment {
 
     public String getserialNumber() {
         //String serialNum=serialNumber;
+
         return serialNumber;
     }
 
@@ -340,6 +334,7 @@ public class DatabaseActivity extends Fragment {
         LightFragment.statusOfLight = (DBLight);
 
     }
+
     private void DistDBAction() {
         LightFragment.dist = (DBDist);
     }
@@ -348,6 +343,7 @@ public class DatabaseActivity extends Fragment {
     private void TemperatureDBAction() {
 
     }
+
     //Door action
     private void DoorDBAction() {
         DoorFragment.statusofDoor = (DBDoor);
@@ -356,6 +352,7 @@ public class DatabaseActivity extends Fragment {
 
 
     private void sendDataStrings() {
+
 
         outLight = LightFragment.statusOfLight;
         outScheduleDate = LightFragment.scheduleDate;
@@ -374,8 +371,9 @@ public class DatabaseActivity extends Fragment {
 
 
     }
+
     //FOR DOOR LOCK
-    public void toDatabase(){
+    public void toDatabase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseActivity.context = getApplicationContext();
 
@@ -386,10 +384,9 @@ public class DatabaseActivity extends Fragment {
         databaseReference.setValue(outLight);
 
 
-
     }
 
-    public void AlertMode(){
+    public void AlertMode() {
         // Set up a listener for the node you want to monitor
         String AlarmKey = userKey + key + getApplicationContext().getString(R.string.alarmTrigger);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(AlarmKey);
@@ -411,6 +408,7 @@ public class DatabaseActivity extends Fragment {
 
 
     }
+
     public void Notification() {
         Context newContext = getApplicationContext(); // Use getContext() method to get the context of the fragment
 

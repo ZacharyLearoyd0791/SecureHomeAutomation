@@ -124,16 +124,6 @@
                 android:textSize="42sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_marginTop="10dp"
-                android:id="@+id/Humidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Humidity: 15%"
-                android:textColor="#686868"
-                android:textSize="16sp" />
-
-
 
         </LinearLayout>
 
@@ -143,51 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
 
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:padding="8dp"
-                android:background="#323232"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/AC"
-                    android:text="AC"
-                    android:textStyle="bold"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_width="80dp"
-                    android:textColor="#72FF78"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
-
-                <View
-                    android:id="@+id/separator"
-                    android:layout_toEndOf="@id/AC"
-                    android:layout_width="0.3dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/white"
-                    android:layout_height="20dp"/>
-
-                <TextView
-                    android:id="@+id/heater"
-                    android:layout_toEndOf="@id/separator"
-                    android:text="Heater"
-                    android:textColor="#979797"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_width="80dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
-
-
-            </RelativeLayout>
-
-
-
-        </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

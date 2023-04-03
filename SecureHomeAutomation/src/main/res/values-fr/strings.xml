@@ -350,7 +350,7 @@
     <string name="quick_access_status"><![CDATA[*État des capteurs et activer/désactiver les options rapides*]]></string>
     <string name="sensor_on">Le capteur est allumé</string>
     <string name="sensor_off">Le capteur est éteint</string>
-    <string name="light_log">Bûche légère</string>
+    <string name="light_log">Journal de déclenchement du capteur</string>
     <string name="logLightUpdate">Lumière mise à jour à:\t</string>
     <string name="logLightStatus">\nÉtat de la lumière:\t</string>
     <string name="device_deactivated">Appareil désactivé</string>

@@ -35,13 +35,14 @@ public class MyService extends Service {
     }
 
     private void createNotification() {
+
         databaseActivity.AlertMode();
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         String channelId = getString(R.string.channelId);
         NotificationChannel channel = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            channel = new NotificationChannel(channelId, getString(R.string.channelName), NotificationManager.IMPORTANCE_DEFAULT);
+            channel = new NotificationChannel(channelId, getString(R.string.channelName), NotificationManager.IMPORTANCE_HIGH);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(channel);
@@ -51,6 +52,8 @@ public class MyService extends Service {
                 .setContentTitle(getString(R.string.AppName))
                 .setContentText(getString(R.string.foreground_text))
                 .setSmallIcon(R.drawable.app_icon)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setOngoing(true)
                 .build();
 
         startForeground(NOTIFICATION_ID, notification);

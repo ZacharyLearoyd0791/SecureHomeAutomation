@@ -13,8 +13,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -35,9 +33,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,6 +51,7 @@ public class LightFragment extends Fragment {
     DateFormat dateFormat;
     private Handler handler;
     private Runnable handlerTask;
+    static String getLog;
 
     //Strings
 
@@ -75,7 +75,7 @@ public class LightFragment extends Fragment {
     Vibrator vibrator;
 
     Boolean cancelTimer;
-
+    String log;
     ImageButton timerBTN, schedulerBTN;
     int hour, minute;
 
@@ -92,6 +92,8 @@ public class LightFragment extends Fragment {
     ToggleButton lightsOn;
 
     CardView cardView;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     public LightFragment() {
     }
@@ -100,31 +102,29 @@ public class LightFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_light, container, false);
-        time();
         initString();
         init();
         StartTimer();
         Status();
-
-        //SAMPLE DATA
-        addHistory(on);
-        addHistory(off);
-        addHistory(on);
-        addHistory(off);
-
         return view;
+    }
+
+    public String saveString(String str) {
+
+
+        return str;
     }
 
     private void initString() {
 
-        on=getString(R.string.on);
-        off=getString(R.string.off);
-        status=getString(R.string.lightStatusMSG)+getString(R.string.empty);
-        light_status=getString(R.string.LightStatus);
-        lightState=getString(R.string.Lights);
-        chanelDes=getString(R.string.channelDesc);
-        value=getString(R.string.distance_from_ultra);
-        noVal=getString(R.string.NoVal);
+        on = getString(R.string.on);
+        off = getString(R.string.off);
+        status = getString(R.string.lightStatusMSG) + getString(R.string.empty);
+        light_status = getString(R.string.LightStatus);
+        lightState = getString(R.string.Lights);
+        chanelDes = getString(R.string.channelDesc);
+        value = getString(R.string.distance_from_ultra);
+        noVal = getString(R.string.NoVal);
     }
 
     private void init() {
@@ -147,22 +147,10 @@ public class LightFragment extends Fragment {
         ivLightOn.setVisibility(View.INVISIBLE);
         ivLightOff.setVisibility(View.VISIBLE);
         lightsOn.setBackgroundResource(R.drawable.status_border_red);
-        scroll=view.findViewById(R.id.scheduleLog);
-        linearLayout=scroll.findViewById(R.id.linearScroll);
 
     }
 
-    private void addHistory(String string) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(getString(R.string.logLightUpdate)+strTime+getString(R.string.logLightStatus)+string);
-        textView.setBackgroundResource(R.drawable.scroll_view_item_border);
-        textView.setTypeface(null, Typeface.BOLD);
-        textView.setTextColor(0xFF000000);
-        textView.setTextSize(14);
-        textView.setFontFeatureSettings("sans-serif");
-        textView.setPadding(10,19,10,19);
-        linearLayout.addView(textView);
-    }
+
 
 
     @Override
@@ -182,11 +170,15 @@ public class LightFragment extends Fragment {
 
 
     void StartTimer(){
+
         handler = new Handler();
         handlerTask = new Runnable()
         {
+
             @Override
             public void run() {
+                saveString(getLog);
+
                 // do something
                 LightStatus = statusOfLight;
                 if (LightStatus != null) {
@@ -246,7 +238,6 @@ public class LightFragment extends Fragment {
                 ivLightOff.setVisibility(View.VISIBLE);
                 statusOfLight=off;
             }
-            addHistory(LightStatus);
 
         });
     }
@@ -299,15 +290,6 @@ public class LightFragment extends Fragment {
         timePickerDialog.show();
 
     }
-    private void time(){
-        date = Calendar.getInstance().getTime();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormat = new SimpleDateFormat(getString(R.string.format));
-        }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            strTime = dateFormat.format(date);
-        }
-    }
 
 }

@@ -378,7 +378,7 @@
     <string name="quick_access_status"><![CDATA[*Status of sensors & enable/disable quick options*]]></string>
     <string name="sensor_on">Sensor is on</string>
     <string name="sensor_off">Sensor is off</string>
-    <string name="light_log">Light Log</string>
+    <string name="light_log">Sensor Trigger Log</string>
     <string name="logLightUpdate">Light Updated at:\t</string>
     <string name="logLightStatus">\nStatus of light:\t</string>
     <string name="device_deactivated">Device Deactivated</string>
@@ -467,6 +467,7 @@
     <string name="alarmTrigger" translatable="false">/Alarm Triggered</string>
     <string name="messageContent">It seems that someone has triggered motion sensor inside your building after you locked your home. Please check or report to the authorities As soon as possible.</string>
     <string name="alert">Alert</string>
+    <string name="ultrasonic" translatable="false">Ultrasonic</string>
 
 
 </resources>

@@ -9,10 +9,15 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.graphics.Typeface;
 import android.icu.text.DateFormat;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,28 +28,34 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
     UserInfo userInfo = new UserInfo();
-    TempFragment tempFragment=new TempFragment();
+    private static final String API_KEY = "09e78cfa6940f49cd214a821f7bd9850";
     StringBuilder stringBuilder;
     public View view;
     AlphaAnimation fadeIn, fadeOut;
-    int min,max;
+    private static final String API_URL = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric";
     //Switches
-
-
+    private final String cityName = "Brampton";
     //Buttons
     public ImageButton lockBtn;
     public ImageButton tempBtn;
     public ImageButton lightBtn;
     public ImageButton windowBtn;
-
     //Text View
-    public TextView greetingsText,DoorStatusTV,LightStatusTV,TempStatusTV,WindowsStatusTV;
+    public TextView greetingsText, DoorStatusTV, LightStatusTV, TempStatusTV, WindowsStatusTV;
 
     //ImageView
     public ImageView doorView;
@@ -56,27 +67,30 @@ public class HomeFragment extends Fragment {
     public ImageView pressLight;
     public ImageView pressWindow;
     public ImageView grnLight;
-
-
+    TempFragment tempFragment = new TempFragment();
+    int min, max;
     final Handler handler = new Handler();
-
-    //Database
-    WindowFragment windowFragment=new WindowFragment();
+    String apiUrl;
     DatabaseActivity databaseActivity = new DatabaseActivity();
-
 
     //Date
     DateFormat dateFormat;
     String morning, afternoon, evening, night, on, off;
     Date date;
     Calendar cal;
+    LocationManager locationManager;
     int hour;
 
     //Misc Strings
     String doorStatus, lightStatus, maxStatus, windowStatus, minStatus,
             lock,
             unlock, armed, disarmed;
-
+    Location location;
+    //Database
+    WindowFragment windowFragment = new WindowFragment();
+    ImageView weatherIconImageView;
+    private ImageView weatherImageView;
+    private TextView temperatureTextView;
     private Handler handlerRun;
     private Runnable handlerTask;
 
@@ -115,7 +129,7 @@ public class HomeFragment extends Fragment {
         StartTimer();
         Bundle bundle = new Bundle();
         Status();
-        WindowsStatusTV.setText("0");
+        WeatherData();
 
         return view;
     }
@@ -129,41 +143,40 @@ public class HomeFragment extends Fragment {
 
                 //door status
                 doorStatus = databaseActivity.DBDoor;
-                if(doorStatus!=null) {
+                if (doorStatus != null) {
                     DoorStatusTV.setText(doorStatus);
                     DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     DoorStatusTV.setTextSize(15);
 
-                    if(doorStatus.equals("Locked"))
-                    {doorView.setVisibility(View.INVISIBLE);}
-
-                    else if(doorStatus.equals("Unlocked"))
-                    {doorView.setVisibility(View.VISIBLE);}
-                }
-                else{
+                    if (doorStatus.equals("Locked")) {
+                        doorView.setVisibility(View.INVISIBLE);
+                    } else if (doorStatus.equals("Unlocked")) {
+                        doorView.setVisibility(View.VISIBLE);
+                    }
+                } else {
                     DoorStatusTV.setText(R.string.NoVal);
                     DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     DoorStatusTV.setTextSize(15);
                     doorView.setVisibility(View.VISIBLE);
                 }
                 //Temp status
-                minStatus=databaseActivity.DBMin;
-                maxStatus=databaseActivity.DBMax;
+                minStatus = databaseActivity.DBMin;
+                maxStatus = databaseActivity.DBMax;
                 //light status
                 lightStatus = databaseActivity.DBLight;
-                if (lightStatus!=null){
+                if (lightStatus != null) {
                     LightStatusTV.setText(lightStatus);
                     LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     LightStatusTV.setTextSize(15);
 
-                    if(lightStatus.equals("On"))
-                    {lightView.setVisibility(View.INVISIBLE);}
-
-                    else if(lightStatus.equals("Off"))
-                    {lightView.setVisibility(View.VISIBLE);}
-                }
-
-                else{
+                    if (lightStatus.equals("On")) {
+                        lightView.setVisibility(View.INVISIBLE);
+                        LightStatusTV.setTextSize(15);
+                    } else if (lightStatus.equals("Off")) {
+                        lightView.setVisibility(View.VISIBLE);
+                        LightStatusTV.setTextSize(15);
+                    }
+                } else {
                     LightStatusTV.setText(R.string.NoVal);
                     LightStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     LightStatusTV.setTextSize(15);
@@ -184,23 +197,21 @@ public class HomeFragment extends Fragment {
 //                }
 //
 
-                if(minStatus!=null){
-                    TempStatusTV.setText("Min Temperature Set: "+minStatus);
+                if (minStatus != null) {
+                    TempStatusTV.setText("Min Temperature Set: " + minStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
-                }
-                else{
+                } else {
                     TempStatusTV.setText(R.string.noVal);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
-                if(maxStatus!=null){
-                    TempStatusTV.append("\n"+"Max Temperature Set: "+maxStatus);
+                if (maxStatus != null) {
+                    TempStatusTV.append("\n" + "Max Temperature Set: " + maxStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
-                }
-                else{
-                    TempStatusTV.append(R.string.max_temp+maxStatus);
+                } else {
+                    TempStatusTV.append(R.string.max_temp + maxStatus);
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
@@ -214,12 +225,12 @@ public class HomeFragment extends Fragment {
         handlerTask.run();
     }
 
-    private void Status(){
+    private void Status() {
 
 
     }
 
-    private void init(){
+    private void init() {
 
         //Buttons
         lockBtn = view.findViewById(R.id.lock_Btn);
@@ -233,15 +244,17 @@ public class HomeFragment extends Fragment {
         pressLight = view.findViewById(R.id.iv_press_light);
         pressWindow = view.findViewById(R.id.iv_press_window);
 
-        on=getString(R.string.on);
-        off=getString(R.string.off);
+        on = getString(R.string.on);
+        off = getString(R.string.off);
         lock = getString(R.string.lock_status);
         unlock = getString(R.string.unlocked_status);
-        armed=getString(R.string.sensor_on);
-        disarmed=getString(R.string.sensor_off);
+        armed = getString(R.string.sensor_on);
+        disarmed = getString(R.string.sensor_off);
+        weatherImageView = view.findViewById(R.id.weatherIcon);
+        temperatureTextView = view.findViewById(R.id.temperature_text_view);
     }
 
-    private void greeting(){
+    private void greeting() {
         date = new Date();
         cal = Calendar.getInstance();
         cal.setTime(date);
@@ -249,28 +262,25 @@ public class HomeFragment extends Fragment {
         greetingsText = view.findViewById(R.id.Greetings);
         greetingsText.setText(null);
 
-        morning=getString(R.string.greetingMorning);
-        afternoon=getString(R.string.greetingAfternoon);
-        evening=getString(R.string.greetingEvening);
-        night=getString(R.string.greetingNight);
+        morning = getString(R.string.greetingMorning);
+        afternoon = getString(R.string.greetingAfternoon);
+        evening = getString(R.string.greetingEvening);
+        night = getString(R.string.greetingNight);
         greetingsText.setTypeface(Typeface.DEFAULT_BOLD);
         greetingsText.setTextSize(20);
         if (hour >= 6 && hour < 12) {
             greetingsText.setText(morning);
-        }
-        else if (hour >= 12 && hour < 17) {
+        } else if (hour >= 12 && hour < 17) {
             greetingsText.setText(afternoon);
-        }
-        else if (hour >= 17 && hour < 21) {
+        } else if (hour >= 17 && hour < 21) {
             greetingsText.setText(evening);
-        }
-        else {
+        } else {
             greetingsText.setText(night);
         }
     }
 
     @Override
-    public void onViewCreated (View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
         pressLock.setVisibility(View.INVISIBLE);
         pressTemp.setVisibility(View.INVISIBLE);
@@ -318,4 +328,58 @@ public class HomeFragment extends Fragment {
         });
 
     }
+
+    public void WeatherData() {
+
+        Log.d(TAG, API_URL + cityName + API_KEY);
+        weatherIconImageView = view.findViewById(R.id.weatherIcon);
+        temperatureTextView = view.findViewById(R.id.temperature_text_view);
+
+        String apiUrl = String.format(API_URL, cityName, API_KEY);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiUrl, null,
+                response -> {
+                    try {
+                        JSONArray weatherArray = response.getJSONArray("weather");
+                        JSONObject weatherObject = weatherArray.getJSONObject(0);
+                        String weatherCondition = weatherObject.getString("main");
+
+                        int weatherIconResId = R.drawable.unknown; // Default icon if no condition matches
+
+                        JSONObject main = response.getJSONObject("main");
+                        double temperature = main.getDouble("temp");
+                        String temperatureString = String.format("%.1f°C", temperature);
+                        temperatureTextView.setText("Temperature at " + cityName + "\n\t" + temperatureString);
+
+
+                        switch (weatherCondition) {
+                            case "Clear":
+                                weatherIconResId = R.drawable.clearsky;
+                                break;
+                            case "Clouds":
+                                weatherIconResId = R.drawable.cloud;
+                                break;
+                            case "Rain":
+                                weatherIconResId = R.drawable.rain;
+                                break;
+                            case "Snow":
+                                weatherIconResId = R.drawable.snow;
+                                break;
+                            case "Thunderstorm":
+                                weatherIconResId = R.drawable.lightning;
+                                break;
+                            // Add more cases for other weather conditions as needed
+                        }
+
+                        weatherIconImageView.setImageResource(weatherIconResId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Log.e("WeatherFragment", "Error getting weather data: " + error.getMessage())
+        );
+
+        Volley.newRequestQueue(requireContext()).add(jsonObjectRequest);
+    }
+
+
 }
