@@ -8,64 +8,42 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import com.facebook.share.Share;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.remoteconfig.internal.ConfigGetParameterHandler;
-
-import java.util.Objects;
 
 
 public class SettingsFragment extends Fragment {
 
     //Switches and Others
     UserInfo userInfo = new UserInfo();
-    String timeLimit;
-    String value, localKey, key, personalKey, userKey, userDetails, email, name,keySettingsTimeLimit;
-
+    String city;
+    String value, localKey, key, personalKey, userKey, userDetails, email, name, cityKey;
+    EditText editText;
+    TextView Value;
     public static String timerLight_DB, getTimerLight_DB;
     String val;
     private Switch boldSwitch;
@@ -77,6 +55,7 @@ public class SettingsFragment extends Fragment {
     private Boolean boldTextState;
     private Boolean darkModeState;
     private Boolean fingerPrintState;
+    String finalCityKey;
     private Boolean screenOrientationState;
     private Boolean faceLockState;
     SharedPreferences sharedPreferences;
@@ -124,7 +103,7 @@ public class SettingsFragment extends Fragment {
         saveButton = view.findViewById(R.id.settingsSaveButton);
         // StartTimer();
 
-        lightTimerSet();
+
 
 
         sharedPreferences = getActivity().getSharedPreferences(SettingsFragment.SETTINGS_PREFS_NAME, Context.MODE_PRIVATE);
@@ -139,6 +118,8 @@ public class SettingsFragment extends Fragment {
         tvColour = view.findViewById(R.id.tv_colour);
         tvFinger = view.findViewById(R.id.tv_finger);
         tvPortrait = view.findViewById(R.id.tv_Portrait);
+        editText = view.findViewById(R.id.city);
+        Value = view.findViewById(R.id.timelimitvalue);
 
         //Getting Switch states from sharedPreferences
         //Getting bold text switch state
@@ -222,42 +203,39 @@ public class SettingsFragment extends Fragment {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         });
+        setCity();
     }
 
-    public void lightTimerSet() {
+    public void setCity() {
         dbID();
-        EditText editText = view.findViewById(R.id.lightTimeLimit);
-        TextView Value = view.findViewById(R.id.timelimitvalue);
+
         //String userKey = getApplicationContext().getString(R.string.userKey);
-        keySettingsTimeLimit=getString(R.string.settingsKey)+getString(R.string.lightLimitKey);
-
-        String finalLightTimer = userKey + key +"/settings/LightStatus";
+        // cityKey =getApplicationContext().getString(R.string.settingsKey)+getApplicationContext().getString(R.string.CityKey);
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(finalLightTimer);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(finalCityKey);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String message = snapshot.getValue(String.class);
                     editText.setText(message);
-                    timeLimit = editText.getText().toString();
-                    databaseReference.setValue(timeLimit);
-                    Value.setText(timeLimit+" "+ getString(R.string.minLimit));
+                    city = editText.getText().toString();
+                    databaseReference.setValue(city);
+                    Value.setText("City of User:\t" + city);
                     saveButton.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View view) {
-                            String timeLimit = editText.getText().toString();
-                            databaseReference.setValue(timeLimit);
-                            Value.setText(timeLimit+ " "+getString(R.string.minLimit));
+                            String cityName = editText.getText().toString();
+                            databaseReference.setValue(cityName);
+                            Value.setText(cityName);
                         }
                     });
 
 
-                }
-                else{
-                    databaseReference.setValue("0");
+                } else {
+                    databaseReference.setValue("City Unknown");
                 }
             }
 
@@ -266,9 +244,9 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-        timeLimit = editText.getText().toString();
+        city = editText.getText().toString();
         //databaseReference.setValue(timeLimit);
-        Value.setText(timeLimit +" "+ getString(R.string.minLimit));
+        Value.setText(city);
     }
 
     void StartTimer() {
@@ -278,7 +256,7 @@ public class SettingsFragment extends Fragment {
             public void run() {
                 // do something
                 // getTimerLight_DB = timerLight_DB;
-                lightTimerSet();
+                setCity();
 
                 handler.postDelayed(handlerTask, 1);
             }
@@ -299,5 +277,6 @@ public class SettingsFragment extends Fragment {
             key = personalKey;
 
         }
+        finalCityKey = userKey + key + "/settings/City";
     }
 }

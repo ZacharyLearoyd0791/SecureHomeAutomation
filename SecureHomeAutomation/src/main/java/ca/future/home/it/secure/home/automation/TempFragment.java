@@ -15,11 +15,13 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.ekn.gruzer.gaugelibrary.ArcGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
 import com.google.firebase.database.DataSnapshot;
@@ -36,15 +41,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 public class TempFragment extends Fragment {
-    DatabaseActivity databaseActivity=new DatabaseActivity();
+    DatabaseActivity databaseActivity = new DatabaseActivity();
     String userId, localuserId, minkey, maxkey, key;
+    private static final String API_KEY = "09e78cfa6940f49cd214a821f7bd9850";
     UserInfo userInfo = new UserInfo();
     DatabaseReference databaseReference;
     String tempVal;
-
+    private static final String API_URL = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric";
+    String city;
+    ImageView weatherIconImageView;
+    private String cityName;
+    private TextView temperatureTextView;
     TextView tvMinimumTemperature;
     TextView tvMaximumTemperature;
     private Handler handler;
@@ -102,10 +116,9 @@ public class TempFragment extends Fragment {
         temperatureView = view.findViewById(R.id.TemperatureView);
         minTempRef = database.getReference(minkey);
         maxTempRef = database.getReference(maxkey);
+        weatherIconImageView = view.findViewById(R.id.weatherIcon);
+        temperatureTextView = view.findViewById(R.id.temperature_text_view);
         StartTimer();
-
-
-
 
 
         //setHumidity(20);
@@ -358,24 +371,24 @@ public class TempFragment extends Fragment {
             public void run() {
                 // do something
                 databaseActivity.Activity();
-                serialKeyNumber=databaseActivity.serialNumber;
+                WeatherData();
+                serialKeyNumber = databaseActivity.serialNumber;
                 handler.postDelayed(handlerTask, 1000);
-                if (serialKeyNumber=="null"){
+                if (serialKeyNumber == "null") {
                     setTemperatureView(temperatureView);
 
                     setCurrentTemperature(23);
-                }
-                else{
-                    String userKey=getApplicationContext().getString(R.string.userKey);
-                    databaseReference=FirebaseDatabase.getInstance().getReference().child(userKey+key+"/Raspberry/"+serialKeyNumber+"/Temperature");
+                } else {
+                    String userKey = getApplicationContext().getString(R.string.userKey);
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/Raspberry/" + serialKeyNumber + "/Temperature");
 
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                tempVal=Objects.requireNonNull(snapshot.getValue().toString());
+                            if (snapshot.exists()) {
+                                tempVal = Objects.requireNonNull(snapshot.getValue().toString());
                                 setTemperatureView(temperatureView);
-                                int tempValue=Integer.parseInt(tempVal);
+                                int tempValue = Integer.parseInt(tempVal);
                                 setCurrentTemperature((tempValue));
 
 
@@ -389,9 +402,75 @@ public class TempFragment extends Fragment {
                     });
 
                 }
+                handler.postDelayed(this, 10000);
+
             }
+
         };
         handlerTask.run();
+    }
+
+    public void WeatherData() {
+
+        if (!isAdded()) {
+            // Fragment is not attached to an activity, do not proceed
+            return;
+        }
+        databaseActivity.setCity();
+
+        weatherIconImageView = view.findViewById(R.id.weatherIcon);
+        temperatureTextView = view.findViewById(R.id.temperature_text_view);
+        cityName = databaseActivity.city;
+
+        if (cityName == (city)) {
+        } else {
+            String apiUrl = String.format(API_URL, cityName, API_KEY);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiUrl, null,
+                    response -> {
+                        try {
+                            JSONArray weatherArray = response.getJSONArray("weather");
+                            JSONObject weatherObject = weatherArray.getJSONObject(0);
+                            String weatherCondition = weatherObject.getString("main");
+
+                            int weatherIconResId = R.drawable.unknown; // Default icon if no condition matches
+
+                            JSONObject main = response.getJSONObject("main");
+                            double temperature = main.getDouble("temp");
+                            String temperatureString = String.format("%.1f°C", temperature);
+                            temperatureTextView.setText("Temperature at " + cityName + "\n\t" + temperatureString);
+
+
+                            switch (weatherCondition) {
+                                case "Clear":
+                                    weatherIconResId = R.drawable.clearsky;
+                                    break;
+                                case "Clouds":
+                                    weatherIconResId = R.drawable.cloud;
+                                    break;
+                                case "Rain":
+                                    weatherIconResId = R.drawable.rain;
+                                    break;
+                                case "Snow":
+                                    weatherIconResId = R.drawable.snow;
+                                    break;
+                                case "Thunderstorm":
+                                    weatherIconResId = R.drawable.lightning;
+                                    break;
+                                // Add more cases for other weather conditions as needed
+                            }
+
+                            weatherIconImageView.setImageResource(weatherIconResId);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    error -> Log.e("WeatherFragment", "Error getting weather data: " + error.getMessage())
+            );
+
+
+            Volley.newRequestQueue(getActivity()).add(jsonObjectRequest);
+            city = cityName;
+        }
     }
 
 }

@@ -9,51 +9,38 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 package ca.future.home.it.secure.home.automation;
 
 
-import static android.content.ContentValues.TAG;
-
+import android.content.Context;
 import android.graphics.Typeface;
-import android.icu.text.DateFormat;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class HomeFragment extends Fragment {
 
-    UserInfo userInfo = new UserInfo();
     private static final String API_KEY = "09e78cfa6940f49cd214a821f7bd9850";
-    StringBuilder stringBuilder;
     public View view;
-    AlphaAnimation fadeIn, fadeOut;
+    Context context; // before onCreate in MainActivity
+
     private static final String API_URL = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric";
     //Switches
-    private final String cityName = "Brampton";
     //Buttons
     public ImageButton lockBtn;
     public ImageButton tempBtn;
     public ImageButton lightBtn;
     public ImageButton windowBtn;
+
     //Text View
     public TextView greetingsText, DoorStatusTV, LightStatusTV, TempStatusTV, WindowsStatusTV;
 
@@ -70,15 +57,11 @@ public class HomeFragment extends Fragment {
     TempFragment tempFragment = new TempFragment();
     int min, max;
     final Handler handler = new Handler();
-    String apiUrl;
     DatabaseActivity databaseActivity = new DatabaseActivity();
 
-    //Date
-    DateFormat dateFormat;
     String morning, afternoon, evening, night, on, off;
     Date date;
     Calendar cal;
-    LocationManager locationManager;
     int hour;
 
     //Misc Strings
@@ -88,9 +71,7 @@ public class HomeFragment extends Fragment {
     Location location;
     //Database
     WindowFragment windowFragment = new WindowFragment();
-    ImageView weatherIconImageView;
-    private ImageView weatherImageView;
-    private TextView temperatureTextView;
+
     private Handler handlerRun;
     private Runnable handlerTask;
 
@@ -101,6 +82,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
+
 
         //ImageView Objects
         doorView = view.findViewById(R.id.doorInfo);
@@ -129,7 +111,6 @@ public class HomeFragment extends Fragment {
         StartTimer();
         Bundle bundle = new Bundle();
         Status();
-        WeatherData();
 
         return view;
     }
@@ -140,6 +121,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void run() {
+                databaseActivity.Activity();
 
                 //door status
                 doorStatus = databaseActivity.DBDoor;
@@ -182,20 +164,19 @@ public class HomeFragment extends Fragment {
                     LightStatusTV.setTextSize(15);
                 }
 
-                //window status
-//                windowStatus = String.valueOf(windowFragment.numberOfAlerts);
-//                if(windowStatus!=null){
-//                    WindowsStatusTV.setText(windowStatus);
-//                    WindowsStatusTV.setText("Armed");
-//                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-//                    WindowsStatusTV.setTextSize(15);
-//                }
-//                else{
-//                    WindowsStatusTV.setText(R.string.status_device+R.string.NoVal);
-//                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
-//                    WindowsStatusTV.setTextSize(15);
-//                }
-//
+               /* windowStatus = String.valueOf(windowFragment.numberOfAlerts);
+                if(windowStatus!=null){
+                    WindowsStatusTV.setText(windowStatus);
+                    WindowsStatusTV.setText("Armed");
+                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    WindowsStatusTV.setTextSize(15);
+                }
+                else{
+                    WindowsStatusTV.setText(R.string.status_device+R.string.NoVal);
+                    WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
+                    WindowsStatusTV.setTextSize(15);
+                }*/
+
 
                 if (minStatus != null) {
                     TempStatusTV.setText("Min Temperature Set: " + minStatus);
@@ -217,10 +198,9 @@ public class HomeFragment extends Fragment {
                 }
 
 
-                //Log.d(TAG,"Testing remove 10m \n 2002 \n"+doorStatus+"\n"+lightStatus);
-
-                handler.postDelayed(handlerTask, 1);
+                handler.postDelayed(handlerTask, 1000);
             }
+
         };
         handlerTask.run();
     }
@@ -250,8 +230,7 @@ public class HomeFragment extends Fragment {
         unlock = getString(R.string.unlocked_status);
         armed = getString(R.string.sensor_on);
         disarmed = getString(R.string.sensor_off);
-        weatherImageView = view.findViewById(R.id.weatherIcon);
-        temperatureTextView = view.findViewById(R.id.temperature_text_view);
+
     }
 
     private void greeting() {
@@ -327,58 +306,6 @@ public class HomeFragment extends Fragment {
             //MainActivity.bottomNav.setSelectedItemId(R.id.window);
         });
 
-    }
-
-    public void WeatherData() {
-
-        Log.d(TAG, API_URL + cityName + API_KEY);
-        weatherIconImageView = view.findViewById(R.id.weatherIcon);
-        temperatureTextView = view.findViewById(R.id.temperature_text_view);
-
-        String apiUrl = String.format(API_URL, cityName, API_KEY);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiUrl, null,
-                response -> {
-                    try {
-                        JSONArray weatherArray = response.getJSONArray("weather");
-                        JSONObject weatherObject = weatherArray.getJSONObject(0);
-                        String weatherCondition = weatherObject.getString("main");
-
-                        int weatherIconResId = R.drawable.unknown; // Default icon if no condition matches
-
-                        JSONObject main = response.getJSONObject("main");
-                        double temperature = main.getDouble("temp");
-                        String temperatureString = String.format("%.1f°C", temperature);
-                        temperatureTextView.setText("Temperature at " + cityName + "\n\t" + temperatureString);
-
-
-                        switch (weatherCondition) {
-                            case "Clear":
-                                weatherIconResId = R.drawable.clearsky;
-                                break;
-                            case "Clouds":
-                                weatherIconResId = R.drawable.cloud;
-                                break;
-                            case "Rain":
-                                weatherIconResId = R.drawable.rain;
-                                break;
-                            case "Snow":
-                                weatherIconResId = R.drawable.snow;
-                                break;
-                            case "Thunderstorm":
-                                weatherIconResId = R.drawable.lightning;
-                                break;
-                            // Add more cases for other weather conditions as needed
-                        }
-
-                        weatherIconImageView.setImageResource(weatherIconResId);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                },
-                error -> Log.e("WeatherFragment", "Error getting weather data: " + error.getMessage())
-        );
-
-        Volley.newRequestQueue(requireContext()).add(jsonObjectRequest);
     }
 
 

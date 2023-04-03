@@ -36,7 +36,7 @@ public class DatabaseActivity extends Fragment {
     DoorFragment doorFragment = new DoorFragment();
 
 
-    String LogDB;
+    String finalCityKey, city;
 
     //Database
     FirebaseDatabase firebaseDatabase;
@@ -166,6 +166,7 @@ public class DatabaseActivity extends Fragment {
     }
 
     public void getDB() {
+        setCity();
 
         //serial
         databaseReference = FirebaseDatabase.getInstance().getReference().child(finalhardwareKey);
@@ -431,6 +432,25 @@ public class DatabaseActivity extends Fragment {
 
     }
 
+    public void setCity() {
 
+        finalCityKey = userKey + key + "/settings/City";
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(finalCityKey);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    city = snapshot.getValue().toString();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
 }

@@ -456,9 +456,8 @@
     <string name="slash_email">/Email:</string>
     <string name="name_info">Name</string>
     <string name="settingsKey" translatable="false">/Settings</string>
-    <string name="lightLimitKey" translatable="false">/Light Limit</string>
+    <string name="CityKey" translatable="false">/City Location</string>
     <string name="valueForTimer" translatable="false">0</string>
-    <string name="minLimit" translatable="false"> Minutes</string>
     <string name="serialHardware" translatable="false">/userData/Hardware Device Serial Number</string>
     <string name="channelId" translatable="false">my_channel</string>
     <string name="AppName" translatable="false">Secure Home Automation</string>
