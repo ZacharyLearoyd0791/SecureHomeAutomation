@@ -35,7 +35,7 @@
         android:layout_marginStart="124dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="124dp"
-        android:text="Krushang Parekh"
+        android:text=""
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25sp"
@@ -103,7 +103,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/accout_sign_out_button"
+        android:id="@+id/account_sign_out_button"
         android:layout_width="218dp"
         android:layout_height="54dp"
         android:layout_marginStart="97dp"

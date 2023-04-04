@@ -33,6 +33,15 @@ public class AccountFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         holder.accountRVIcon.setImageResource(itemText.getIcon());
         holder.accountRVTitle.setText(itemText.getTitle());
         holder.accountRVDetails.setText(itemText.getDetail());
+//
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(onClickListner != null){
+//                    onClickListner.onClick(position, item);
+//                }
+    //          }
+       // });
     }
 
     @Override
