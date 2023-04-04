@@ -50,12 +50,13 @@ public class DatabaseActivity extends Fragment {
     DateFormat dateFormat;
 
     //Database String
-    public String DBDoor, DBLight, DBDist, DBWindow, DBMax, DBMin, DBScheduleDay, DBScheduleTime, name, email, hardwareKey, finalhardwareKey, serialNumber;
+    public String DBDoor, DBLight, DBDist, DBWindow, DBMax, DBAddKey, DBRemoveKey, DBMin, DBScheduleDay, DBScheduleTime, name, email, hardwareKey,
+            finalhardwareKey, serialNumber, finalAddKey, finalRemoveKey;
     //Key string
     String finalDoorKey, localKey, key, personalKey, strDate,
             finalSensorKey, finalStatusKey, statusKey, SensorKey, doorKey, maxKey, minKey, finalMaxKey, finalMinKey,
-            finalWindowBreak, windowBKey, finaldateKey, finalTimeKey, scheduleKey, userKey;
-    String outDoor, outLight, userData, outWindow, outMax, outMin, outScheduleDate, userDetails, outLimit;
+            finalWindowBreak, windowBKey, finaldateKey, finalTimeKey, scheduleKey, userKey, addKey, removeKey;
+    String outDoor, outLight, userData, outAddKey, outRemoveKey, outWindow, outMax, outMin, outScheduleDate, userDetails, outLimit;
     String alertMode;
     FragmentActivity viewActivity;
     View rootView;
@@ -116,6 +117,8 @@ public class DatabaseActivity extends Fragment {
         name = getApplicationContext().getString(R.string.name);
         email = getApplicationContext().getString(R.string.email);
         hardwareKey = getApplicationContext().getString(R.string.serialHardware);
+        addKey = getApplicationContext().getString(R.string.addKeyStatus);
+        removeKey = getApplicationContext().getString(R.string.removeKeyDB);
     }
 
     public void dbID() {
@@ -137,7 +140,12 @@ public class DatabaseActivity extends Fragment {
             databaseReference = FirebaseDatabase.getInstance().getReference().child((userKey + key + userDetails + email));
             databaseReference.setValue(userInfo.personEmail);
         }
+
+        //Door Fragment
         finalDoorKey = userKey + key + userData + doorKey;
+        finalAddKey = userKey + key + userData + addKey;
+        finalRemoveKey = userKey + key + userData + removeKey;
+
         finalhardwareKey = userKey + key + hardwareKey;
 
         //Light related user key:
@@ -184,6 +192,7 @@ public class DatabaseActivity extends Fragment {
 
             }
         });
+
         //door
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -192,6 +201,40 @@ public class DatabaseActivity extends Fragment {
                 if (snapshot.exists()) {
                     DBDoor = Objects.requireNonNull(snapshot.getValue()).toString();
                     DoorDBAction();
+                } else {
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        //Door Add Key
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalAddKey));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DBAddKey = Objects.requireNonNull(snapshot.getValue()).toString();
+                    AddKeyDBAction();
+                } else {
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        //Door Remove Key
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalRemoveKey));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DBRemoveKey = Objects.requireNonNull(snapshot.getValue()).toString();
+                    RemoveKeyDBAction();
                 } else {
                 }
             }
@@ -350,15 +393,21 @@ public class DatabaseActivity extends Fragment {
         DoorFragment.statusofDoor = (DBDoor);
 
     }
+    private void AddKeyDBAction() {
+        DoorFragment.statusAdd = (DBAddKey);
+    }
 
+    private void RemoveKeyDBAction() {
+        DoorFragment.statusRemove = (DBRemoveKey);
+    }
 
     private void sendDataStrings() {
-
 
         outLight = LightFragment.statusOfLight;
         outScheduleDate = LightFragment.scheduleDate;
         outDoor = DoorFragment.statusofDoor;
-
+        outAddKey = DoorFragment.statusAdd;
+        outRemoveKey = DoorFragment.statusRemove;
 
         if (outLight != null) {
             toDatabase();
@@ -369,8 +418,12 @@ public class DatabaseActivity extends Fragment {
         if (outDoor != null) {
             toDatabase();
         }
-
-
+        if (outAddKey != null){
+            toDatabase();
+        }
+        if (outRemoveKey != null){
+            toDatabase();
+        }
     }
 
     //FOR DOOR LOCK
@@ -381,9 +434,14 @@ public class DatabaseActivity extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
         databaseReference.setValue(outDoor);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalAddKey));
+        databaseReference.setValue(outAddKey);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalRemoveKey));
+        databaseReference.setValue(outRemoveKey);
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
         databaseReference.setValue(outLight);
-
 
     }
 

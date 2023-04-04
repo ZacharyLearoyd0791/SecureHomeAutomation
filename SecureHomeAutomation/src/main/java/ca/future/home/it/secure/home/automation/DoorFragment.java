@@ -55,7 +55,7 @@ public class DoorFragment extends Fragment{
 
     //String
     String idKey, localKey, key, personalKey, strDate, statusDoor, lockedStr, unlockedStr;
-    public static String statusofDoor;
+    public static String statusofDoor, statusAdd, statusRemove;
 
     //Date
     Date date;
@@ -224,20 +224,25 @@ public class DoorFragment extends Fragment{
         builder.setMessage(R.string.place_key);
         builder.setTitle(R.string.add_key);
 
-        //Cancel
-        builder.setNegativeButton(R.string.cancel, (dialog, which) -> {
+        statusAdd=getString(R.string.addTrue);
+
+        //Done
+        builder.setNegativeButton(R.string.done, (dialog, which) -> {
             dialog.cancel();
+            statusAdd=getString(R.string.addFalse);
         });
 
+        /*
         //On successful add
         AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
         successBuilder.setMessage(R.string.success);
         successBuilder.setNegativeButton(R.string.close, (dialog, which) -> {
             dialog.cancel();
+            statusAdd=getString(R.string.addFalse);
         });
 
         AlertDialog addSuccess = successBuilder.create();
-        addSuccess.show();
+        addSuccess.show();*/
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
@@ -248,11 +253,15 @@ public class DoorFragment extends Fragment{
         removeBuilder.setMessage(R.string.place_key_remove);
         removeBuilder.setTitle(R.string.remove_key);
 
-        //Cancel
-        removeBuilder.setNegativeButton(R.string.cancel, (dialog, which) -> {
+        statusRemove = getString(R.string.addTrue);
+
+        //Done
+        removeBuilder.setNegativeButton(R.string.done, (dialog, which) -> {
             dialog.cancel();
+            statusRemove=getString(R.string.addFalse);
         });
 
+        /*
         //On successful removal
         AlertDialog.Builder successBuilder = new AlertDialog.Builder(getContext());
         successBuilder.setMessage(R.string.success);
@@ -261,7 +270,7 @@ public class DoorFragment extends Fragment{
         });
 
         AlertDialog removeSuccess = successBuilder.create();
-        removeSuccess.show();
+        removeSuccess.show();*/
 
         //Remove alert
         AlertDialog removeAlert = removeBuilder.create();
