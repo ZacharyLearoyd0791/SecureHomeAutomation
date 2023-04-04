@@ -467,6 +467,10 @@
     <string name="messageContent">It seems that someone has triggered motion sensor inside your building after you locked your home. Please check or report to the authorities As soon as possible.</string>
     <string name="alert">Alert</string>
     <string name="ultrasonic" translatable="false">Ultrasonic</string>
+    <string name="addTrue">true</string>
+    <string name="addFalse">false</string>
+    <string name="addKeyStatus">/Add Key</string>
+    <string name="removeKeyDB">/Remove Key</string>
 
 
 </resources>
