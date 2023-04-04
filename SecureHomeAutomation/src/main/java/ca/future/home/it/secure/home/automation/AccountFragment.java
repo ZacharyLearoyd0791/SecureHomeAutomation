@@ -65,6 +65,8 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     String key,localKey,personalKey,profileKey,sensorKey,windowsKey,userKey,userData, accountKey, emailKey,
             finalEmailKey, nameKey, finalNameKey;
     SharedPreferences sharedPreferences;
+    SharedPreferences userSharedPref;
+    SharedPreferences.Editor userSharedPrefEditor;
     SharedPreferences.Editor editor;
     GoogleSignInClient mClient;
     DatabaseReference databaseReference;
@@ -86,6 +88,9 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         recyclerView = (RecyclerView) view.findViewById(R.id.account_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         sharedPreferences = getActivity().getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+        userSharedPref = getActivity().getSharedPreferences("Users Data", MODE_PRIVATE);
+        userSharedPrefEditor = userSharedPref.edit();
+
         editor = sharedPreferences.edit();
         userNameTV = view.findViewById(R.id.account_person_name);
 
