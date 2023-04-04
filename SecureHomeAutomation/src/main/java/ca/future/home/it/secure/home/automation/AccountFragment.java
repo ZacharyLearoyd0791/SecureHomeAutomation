@@ -134,11 +134,11 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     userName = snapshot.getValue().toString();
-                    userNameTV.setText(userName);
+
                 }else{
                     Toast.makeText(getContext(), "Cannot found Name!", Toast.LENGTH_SHORT).show();
                     userName = "No Name found";
-                    userNameTV.setText(userName);
+
                 }
             }
 
@@ -161,7 +161,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         accountFragmentDataList = new ArrayList<>();
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account,"Name",userName));
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account,"Email",userEmail));
-        accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone","Null"));
+        accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone",userPhone));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         adapter = new AccountFragmentRecyclerViewAdapter(accountFragmentDataList,this);
@@ -196,7 +196,17 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     @Override
     public void onResume() {
         super.onResume();
+        userNameTV.setText(userName);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        accountFragmentDataList = new ArrayList<>();
+        accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account,"Name",userName));
+        accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account,"Email",userEmail));
+        accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone",userPhone));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
+        adapter = new AccountFragmentRecyclerViewAdapter(accountFragmentDataList,this);
+        recyclerView.setAdapter(adapter);
+
     }
     @Override
     public void onStop() {
@@ -238,6 +248,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                 public void onClick(DialogInterface dialogInterface, int i) {
                     userName = alertEditText.getText().toString();
                     userNameTV.setText(userName);
+                    sendEditDataToDB(position,userName);
                 }
             });
         }else if(position == 1){
@@ -248,21 +259,23 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     userEmail = alertEditText.getText().toString();
-
+                    sendEditDataToDB(position,userEmail);
                 }
             });
         } else if (position == 2) {
-            alertEditText.setText(userPhone);
-            alert.setMessage("Edit your phone number");
-            alert.setTitle("Change Name");
-            alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    userPhone = alertEditText.getText().toString();
-
-                }
-            });
+            Toast.makeText(getApplicationContext(), "You cannot change the Email Address!", Toast.LENGTH_LONG).show();
+//            alertEditText.setText(userPhone);
+//            alert.setMessage("Edit your phone number");
+//            alert.setTitle("Change Name");
+//            alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    userPhone = alertEditText.getText().toString();
+//                    sendEditDataToDB(position,userPhone);
+//                }
+//            });
         }
+        //sendEditDataToDB(userName,userEmail,userPhone);
         alert.setView(alertEditText);
         alert.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
             // If user click no then dialog box is canceled.
@@ -270,5 +283,21 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         });
         AlertDialog alertDialog = alert.create();
         alertDialog.show();
+    }
+    public void sendEditDataToDB(int pos, String userEdit){
+        if(pos == 0){
+            //databaseReference = FirebaseDatabase.getInstance().getReference().child(finalNameKey);
+            databaseReference.setValue(userEdit);
+        }else if(pos == 1){
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalEmailKey);
+            databaseReference.setValue(userEdit);
+        }else if(pos == 2){
+
+            //databaseReference.child("Phone").setValue(userEdit);
+        }
+
+
+
+
     }
 }
