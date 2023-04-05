@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     Boolean checkBoxState;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    SharedPreferences loginTypeSP;
+    SharedPreferences.Editor loginTypeSPEditor;
     //Google login
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
@@ -90,6 +92,8 @@ public class LoginActivity extends AppCompatActivity {
         checkBoxState = rememberMeCheckBox.isChecked();
         sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        loginTypeSP = getSharedPreferences("Login User Type",MODE_PRIVATE);
+        loginTypeSPEditor = loginTypeSP.edit();
 
 
         //CheckBox functionality
@@ -171,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         if(mAuth.getCurrentUser().isEmailVerified()){
+                            loginTypeSPEditor.putBoolean("Google SignIn", false);
                             Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_LONG).show();
                             //Starting main activity
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -199,6 +204,7 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 task.getResult(ApiException.class);
+
                 changingActivity();
             } catch (ApiException e) {
                 Log.d(getString(R.string.exception), String.valueOf(e));
@@ -209,6 +215,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void changingActivity(){
         finish();
+        loginTypeSPEditor.putBoolean("Google SignIn", true);
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
     }
 }
