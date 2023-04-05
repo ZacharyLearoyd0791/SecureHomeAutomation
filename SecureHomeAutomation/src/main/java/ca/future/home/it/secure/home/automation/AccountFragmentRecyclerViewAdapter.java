@@ -12,10 +12,13 @@ import java.util.List;
 
 public class AccountFragmentRecyclerViewAdapter extends RecyclerView.Adapter<AccountFragmentViewHolder> {
     private List<AccountFragmentData> accountFragmentDataset;
+    private View.OnClickListener onClickListener;
+    private final AccountRecyclerViewInterface accountRecyclerViewInterface;
 
-
-    public AccountFragmentRecyclerViewAdapter(List<AccountFragmentData> dataset){
+    public AccountFragmentRecyclerViewAdapter(List<AccountFragmentData> dataset, AccountRecyclerViewInterface accountRecyclerViewInterface){
+        this.accountRecyclerViewInterface = accountRecyclerViewInterface;
         accountFragmentDataset = dataset;
+
     }
 
 
@@ -33,7 +36,43 @@ public class AccountFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         holder.accountRVIcon.setImageResource(itemText.getIcon());
         holder.accountRVTitle.setText(itemText.getTitle());
         holder.accountRVDetails.setText(itemText.getDetail());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(accountRecyclerViewInterface!=null){
+                    int pos = holder.getAdapterPosition();
+                   if(pos!= RecyclerView.NO_POSITION){
+//                       AccountRecyclerViewInterface.onItemClick(pos);
+                       accountRecyclerViewInterface.onItemClick(pos);
+                   }
+                }
+            }
+        });
+
+
+
+
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onClickListener.onClick(position, itemText);
+//            }
+//        });
+
     }
+//    public void setOnClickListener(View.OnClickListener onClickListener){
+//        this.onClickListener = onClickListener;
+//    }
+//    public interface OnClickListener{
+//        void onClick(int position, AccountFragmentData model);
+//    }
+//    static class ViewHolder extends RecyclerView.ViewHolder{
+//        ItemRowBinding binding;
+//
+//        public ViewHolder(@NonNull View itemView) {
+//            super(itemView);
+//        }
+//    }
 
     @Override
     public int getItemCount() {

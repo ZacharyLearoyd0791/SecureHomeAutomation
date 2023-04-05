@@ -17,5 +17,6 @@ public class AccountFragmentViewHolder extends RecyclerView.ViewHolder {
         accountRVIcon = itemView.findViewById(R.id.account_recyclerView_icon);
         accountRVTitle = itemView.findViewById(R.id.account_recyclerview_title);
         accountRVDetails = itemView.findViewById(R.id.account_recyclerview_details);
+
     }
 }
