@@ -50,7 +50,7 @@ import java.util.Objects;
 public class TempFragment extends Fragment {
     DatabaseActivity databaseActivity = new DatabaseActivity();
     String userId, localuserId, minkey, maxkey, key;
-    private static final String API_KEY = "09e78cfa6940f49cd214a821f7bd9850";
+    private static final String API_KEY = "db71cb34bb99ff25f7899f694e6b6fe9";
     UserInfo userInfo = new UserInfo();
     DatabaseReference databaseReference;
     String tempVal;
@@ -90,15 +90,18 @@ public class TempFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_temp, container, false);
+        view = inflater.inflate(R.layout.fragment_temp, container, false);
+        city = null;
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userKey=getString(R.string.userKey);
-        userData=getApplicationContext().getString(R.string.userData);
+        userKey = getString(R.string.userKey);
+        city = null;
+        userData = getApplicationContext().getString(R.string.userData);
         dbID();
         init();
     }
@@ -244,16 +247,13 @@ public class TempFragment extends Fragment {
     private void saveMaxTemperature(int temp) {
         progressDialog.setMessage(getApplicationContext().getString(R.string.savings));
         progressDialog.show();
-        maxTempRef.setValue(temp, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                closeProgressDialog();
-                if (databaseError != null) {
-                    showToast(getApplicationContext().getString(R.string.max_temp_text_temp) + databaseError.getMessage());
-                } else {
-                    maximumTemperature = temp;
-                    setMaxTemperature(maximumTemperature);
-                }
+        maxTempRef.setValue(temp, (databaseError, databaseReference) -> {
+            closeProgressDialog();
+            if (databaseError != null) {
+                showToast(getApplicationContext().getString(R.string.max_temp_text_temp) + databaseError.getMessage());
+            } else {
+                maximumTemperature = temp;
+                setMaxTemperature(maximumTemperature);
             }
         });
     }
@@ -420,9 +420,14 @@ public class TempFragment extends Fragment {
 
         weatherIconImageView = view.findViewById(R.id.weatherIcon);
         temperatureTextView = view.findViewById(R.id.temperature_text_view);
+
+/*        if (temperatureTextView.getText().toString()==null){
+            city=null;
+        }*/
         cityName = databaseActivity.city;
 
         if (cityName == (city)) {
+
         } else {
             String apiUrl = String.format(API_URL, cityName, API_KEY);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiUrl, null,
@@ -462,9 +467,12 @@ public class TempFragment extends Fragment {
                             weatherIconImageView.setImageResource(weatherIconResId);
                         } catch (JSONException e) {
                             e.printStackTrace();
+
+
                         }
                     },
                     error -> Log.e("WeatherFragment", "Error getting weather data: " + error.getMessage())
+
             );
 
 
