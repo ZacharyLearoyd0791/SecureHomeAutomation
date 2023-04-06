@@ -127,7 +127,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         public void onAuthenticationSucceeded(
                                 @NonNull BiometricPrompt.AuthenticationResult result) {
                             super.onAuthenticationSucceeded(result);
-                            homelayout.setVisibility(View.VISIBLE);
+                            //homelayout.setVisibility(View.VISIBLE);
                             Toast.makeText(getApplicationContext(),
                                     R.string.Auth_succeed, Toast.LENGTH_SHORT).show();
                         }

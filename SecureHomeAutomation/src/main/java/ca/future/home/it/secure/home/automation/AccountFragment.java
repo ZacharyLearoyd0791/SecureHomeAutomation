@@ -67,8 +67,8 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     Button signoutButton;
     SharedPreferences loginTypeSP;
     SharedPreferences.Editor loginTypeSPEditor;
-    String key,localKey,personalKey,profileKey,sensorKey,windowsKey,userKey,userData, accountKey, emailKey,
-            finalEmailKey, nameKey, finalNameKey;
+    String key,localKey,personalKey,profileKey,sensorKey,phoneKey,userKey,userData, accountKey, emailKey,
+            finalEmailKey, nameKey, finalNameKey, finalPhoneKey;
     SharedPreferences sharedPreferences;
     SharedPreferences userSharedPref;
     SharedPreferences.Editor userSharedPrefEditor;
@@ -79,6 +79,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     boolean editable;
     ImageView editProfileImage;
     ImageView profileImage;
+    DatabaseReference dbref;
 
 
 
@@ -117,11 +118,13 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         //Getting Email address
         emailKey = getString(R.string.slash_email);
         nameKey = getString(R.string.name_info);
+        phoneKey = "Phone";
+
 
         accountKey = dbID();
         finalEmailKey = accountKey + emailKey;
         finalNameKey = accountKey + nameKey;
-
+        finalPhoneKey = accountKey+ phoneKey;
         Toast.makeText(getContext(), "Login Type"+loggedWithGoogle, Toast.LENGTH_SHORT).show();
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalEmailKey));
         if(!loggedWithGoogle) {
@@ -156,6 +159,25 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                         userName = "No Name found";
 
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((finalPhoneKey));
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        userPhone = snapshot.getValue().toString();
+                    }else{
+                        Toast.makeText(getContext(), "Cannot found Phone Number!", Toast.LENGTH_SHORT).show();
+                        userPhone = "No Phone Number found";
+
+                    }
+
                 }
 
                 @Override
@@ -317,17 +339,6 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                     dialog.cancel();
                 });
             }
-
-//            alertEditText.setText(userEmail);
-//            alert.setMessage("Edit your email");
-//            alert.setTitle("Change Email");
-//            alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    userEmail = alertEditText.getText().toString();
-//                    sendEditDataToDB(position,userEmail);
-//                }
-//            });
             else if (position == 2) {
 
                 alertEditText.setText(userPhone);
@@ -364,8 +375,8 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             databaseReference = FirebaseDatabase.getInstance().getReference().child(finalEmailKey);
             databaseReference.setValue(userEdit);
         }else if(pos == 2){
-
-            databaseReference.child("Phone").setValue(userEdit);
+            dbref = FirebaseDatabase.getInstance().getReference().child((finalPhoneKey));
+            dbref.setValue(userEdit);
         }
 
 
