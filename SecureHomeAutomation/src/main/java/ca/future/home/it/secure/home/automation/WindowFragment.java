@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -101,13 +102,6 @@ public class WindowFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         activityRecyclerView.setLayoutManager(linearLayoutManager);
 
-        windowsFragmentDataList = new ArrayList<>();
-        windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon,"Alarm Type \n"+alarmType,"Date \n"+currentTime));
-        activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
-        adapter = new WindowsFragmentRecyclerViewAdapter(windowsFragmentDataList);
-        activityRecyclerView.setAdapter(adapter);
-
 
         sendToDB(alarmType,alarmStatus,numberOfActivities);
 
@@ -120,11 +114,14 @@ public class WindowFragment extends Fragment {
                     alertDialogTitle = "Turn OFF the sensor";
                     alertDialogMessage = "You are sure that you want to turn off the windows break detection sensor!";
                     alertDialogCode = 1;
+                    createRecyclerViewItems(2);
                     displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage, alertDialogCode);
 
                 }else{
                     alertDialogCode = 2;
                     powerButton.setImageResource(R.drawable.red_power_button1);
+                    Toast.makeText(getContext(), "Sensor Activated!", Toast.LENGTH_SHORT).show();
+                    createRecyclerViewItems(3);
                     clicked = true;
                 }
             }
@@ -140,7 +137,40 @@ public class WindowFragment extends Fragment {
                 displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage, alertDialogCode);
             }
         });
+
+
+        //Setting value to recyclerView
+        windowsFragmentDataList = new ArrayList<>();
+        //windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon,"Alarm Type \n"+alarmType,"Date \n"+currentTime));
+        //windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon,"Alarm Type \nTest","Date \n"+currentTime));
+//        activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+//                DividerItemDecoration.VERTICAL));
+//        adapter = new WindowsFragmentRecyclerViewAdapter(windowsFragmentDataList);
+//        activityRecyclerView.setAdapter(adapter);
+
         return view;
+    }
+    public void createRecyclerViewItems(int dataCode){
+
+            if(dataCode == 1) {
+                alarmType = "Device Tested";
+                windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
+            } else if (dataCode == 2) {
+                alarmType = "Device Turned OFF";
+                windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_warning_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
+            } else if (dataCode == 3) {
+                alarmType = "Device Turned ON";
+                windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
+            } else if (dataCode == 4) {
+                alarmType = "Windows Sensor Activated!";
+                windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_high_alert_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
+            }
+        activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
+        adapter = new WindowsFragmentRecyclerViewAdapter(windowsFragmentDataList);
+        activityRecyclerView.setAdapter(adapter);
+
+
     }
 
     //Getting User ID
