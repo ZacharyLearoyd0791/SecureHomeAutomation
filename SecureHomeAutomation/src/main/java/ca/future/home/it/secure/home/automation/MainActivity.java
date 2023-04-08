@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     String feedBackKey,userKey,userDetails;
 
     float ratingVal;
-
+    BottomNavigationView bottomNavigationView;
 
     //Fragments
     private HomeFragment homeFragment;
@@ -101,12 +101,29 @@ public class MainActivity extends AppCompatActivity {
         userKey = getApplicationContext().getString(R.string.userKey);
         databaseActivity.Activity();
         dbID();
+        setBottomNav();
 
+
+        //Fingerprint
+        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.fingerprint));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                fingerprintState = snapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public void setBottomNav(){
         Intent intent = new Intent(this, MyService.class);
         ContextCompat.startForegroundService(this, intent);
 
         //Bottom navigation and fragment views
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         homeFragment = new HomeFragment();
         settingsFragment = new SettingsFragment();
         doorFragment = new DoorFragment();
@@ -144,19 +161,6 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
                     return true;
-            }
-        });
-
-        //Fingerprint
-        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.fingerprint));
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                fingerprintState = snapshot.getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }

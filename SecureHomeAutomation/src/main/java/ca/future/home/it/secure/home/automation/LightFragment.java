@@ -184,13 +184,13 @@ public class LightFragment extends Fragment {
                     if (LightStatus.equals(on)) {
                         lightsOn.setChecked(true);
                     } else {
-                        statusOfLightTV.setText(status + off);
+                        statusOfLightTV.setText(status +"\n"+ off);
                         lightsOn.setChecked(false);
 
                     }
 
                 }
-                StatusOut = status + LightStatus;
+                StatusOut = status +"\n"+ LightStatus;
                 statusOfLightTV.setText(StatusOut);
                 System.gc();
 

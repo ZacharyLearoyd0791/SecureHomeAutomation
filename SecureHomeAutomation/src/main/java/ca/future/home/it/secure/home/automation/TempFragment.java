@@ -7,14 +7,11 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
-import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -37,7 +34,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ekn.gruzer.gaugelibrary.ArcGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -390,14 +386,32 @@ public class TempFragment extends Fragment {
 
                 serialKeyNumber = databaseActivity.serialNumber;
                 if (serialKeyNumber!=null){
-                    sethardwareTemp();
+                    String userKey = getApplicationContext().getString(R.string.userKey);
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/Raspberry/" + serialKeyNumber + "/Temperature");
+
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                tempVal = Objects.requireNonNull(snapshot.getValue().toString());
+                                setTemperatureView(temperatureView);
+                                int tempValue = Integer.parseInt(tempVal);
+                                setCurrentTemperature((tempValue));
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
-                else{
-                    //Log.d(TAG,"NoHardwareKey");
-                }
-                handler.postDelayed(handlerTask, 50);
+
+                handler.postDelayed(this, 5000);
                 WeatherData();
-                handler.postDelayed(this,10000);
+                //sethardwareTemp();
             }
 
         };

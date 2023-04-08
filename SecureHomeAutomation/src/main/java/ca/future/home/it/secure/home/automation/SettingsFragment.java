@@ -264,6 +264,7 @@ public class SettingsFragment extends Fragment {
         handlerTask.run();
     }
 
+
     public void dbID() {
         userInfo.typeAccount();
         localKey = userInfo.userId;

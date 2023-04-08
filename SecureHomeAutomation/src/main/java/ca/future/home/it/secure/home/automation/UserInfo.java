@@ -67,7 +67,7 @@ public class UserInfo extends Fragment {
             return -1;
         }
     }
-    private void LocalUsers() {
+    public void LocalUsers() {
 
         name = user.getDisplayName();
         email = user.getEmail();
@@ -84,7 +84,7 @@ public class UserInfo extends Fragment {
         returnLocalId();
     }
 
-    private void googleLoginUsers(){
+    public void googleLoginUsers(){
         personName = acct.getDisplayName();
         personId=acct.getId();
         personEmail= acct.getEmail();
@@ -116,21 +116,21 @@ public class UserInfo extends Fragment {
         }
     }
 
-    private String returnEmail() {
+    public String returnEmail() {
         emailInfo=personEmail;
         return emailInfo;
     }
-    private String returnLocalEmail() {
+    public String returnLocalEmail() {
         localEmail=email;
         return localEmail;
     }
 
-    private Uri returnPhoto() {
+    public Uri returnPhoto() {
         photOut=personPhoto;
         return photOut;
     }
 
-    private String returnLocalName() {
+    public String returnLocalName() {
         localName=infoLocalName;
         return localName;
     }
@@ -144,8 +144,9 @@ public class UserInfo extends Fragment {
         return idInfo;
     }
 
-    private String returnName() {
+    public String returnName() {
         nameInfo=personName;
         return nameInfo;
     }
+
 }

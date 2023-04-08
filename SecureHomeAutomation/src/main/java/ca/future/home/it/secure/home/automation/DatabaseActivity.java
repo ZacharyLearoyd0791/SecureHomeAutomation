@@ -431,8 +431,6 @@ public class DatabaseActivity extends Fragment {
     //FOR DOOR LOCK
     public void toDatabase() {
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseActivity.context = getApplicationContext();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalDoorKey));
         databaseReference.setValue(outDoor);
