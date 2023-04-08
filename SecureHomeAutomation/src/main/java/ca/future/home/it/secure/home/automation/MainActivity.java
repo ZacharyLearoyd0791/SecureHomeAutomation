@@ -200,8 +200,7 @@ public class MainActivity extends AppCompatActivity {
             runner.execute(sleepTime);
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
         }
-        if (item.getItemId() == R.id.ab_add) {
-        }
+
         if (item.getItemId() == R.id.ab_feedback) {
             showBottomDialog();
         }
