@@ -478,6 +478,7 @@
     <string name="change">Change</string>
     <string name="cannotchangeemail">You cannot change the Email Address!</string>
     <string name="googleProfileChange">Edit your google profile to change!</string>
+    <string name="cityCheck">No Value, Check Setting if City is set</string>
 
 
 </resources>

@@ -435,7 +435,7 @@ public class TempFragment extends Fragment {
 
         weatherIconImageView = view.findViewById(R.id.weatherIcon);
         temperatureTextView = view.findViewById(R.id.temperature_text_view);
-
+        temperatureTextView.setText(R.string.cityCheck);
 /*        if (temperatureTextView.getText().toString()==null){
             city=null;
         }*/

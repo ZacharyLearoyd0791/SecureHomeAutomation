@@ -143,8 +143,8 @@
         android:id="@+id/weatherIcon"
         android:layout_width="237dp"
         android:layout_height="135dp"
-        android:layout_marginTop="516dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginTop="504dp"
+        android:layout_marginEnd="104dp"
         android:src="@drawable/unknown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -153,8 +153,8 @@
         android:id="@+id/temperature_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="516dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginTop="636dp"
+        android:layout_marginEnd="228dp"
 
         android:textAlignment="center"
         android:textSize="15sp"
