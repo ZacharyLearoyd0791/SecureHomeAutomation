@@ -254,7 +254,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
                         }
                         else{
-                            userName="No Name Found";
+                            userName=getString(R.string.nameNotFound);
 
                         }
 
@@ -266,7 +266,6 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                     }
                 });
             }
-            Log.d(TAG,"User name is "+userNameDb);
             userName=userNameDb;
             userEmail=userInfo.returnLocalEmail();
             Log.d(TAG,userKey+key+"/userInfo/Phone");
@@ -285,7 +284,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                 }
             });
             if(userPhone==null){
-                userPhone="No Phone Number Found";
+                userPhone=getString(R.string.noPhone);
             }
         }
         if(personalKey !=null){
@@ -293,7 +292,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             userInfo.googleLoginUsers();
             userName= userInfo.returnName();
             userEmail=userInfo.returnEmail();
-            userPhone="No Phone Number Found";
+            userPhone=getString(R.string.noPhone);
 
 
 
@@ -308,9 +307,9 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             final EditText alertEditText = new EditText(getApplicationContext());
             if (position == 0) {
                 alertEditText.setText(userName);
-                alert.setMessage("Edit your name");
-                alert.setTitle("Change Name");
-                alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                alert.setMessage(R.string.EditName);
+                alert.setTitle(R.string.ChangeName);
+                alert.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         userName = alertEditText.getText().toString();
@@ -319,7 +318,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                     }
                 });
                 alert.setView(alertEditText);
-                alert.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                alert.setNegativeButton(getString(R.string.no), (DialogInterface.OnClickListener) (dialog, which) -> {
                     // If user click no then dialog box is canceled.
                     dialog.cancel();
                 });
@@ -342,14 +341,15 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                     dialog.cancel();
                 });
             }else{
-                Toast.makeText(getApplicationContext(), "You cannot change the Email Address!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.cannotchangeemail, Toast.LENGTH_LONG).show();
             }
             //sendEditDataToDB(userName,userEmail,userPhone);
 
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }else{
-            Toast.makeText(getContext(), "Edit your google profile to change!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.googleProfileChange, Toast.LENGTH_LONG).show();
+
         }
     }
     public void sendEditDataToDB(int pos, String userEdit){

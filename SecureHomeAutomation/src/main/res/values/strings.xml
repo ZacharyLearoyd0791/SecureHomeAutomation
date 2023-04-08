@@ -467,10 +467,17 @@
     <string name="messageContent">It seems that someone has triggered motion sensor inside your building after you locked your home. Please check or report to the authorities As soon as possible.</string>
     <string name="alert">Alert</string>
     <string name="ultrasonic" translatable="false">Ultrasonic</string>
-    <string name="addTrue">true</string>
-    <string name="addFalse">false</string>
-    <string name="addKeyStatus">/Add Key</string>
-    <string name="removeKeyDB">/Remove Key</string>
+    <string name="addTrue" translatable="false">true</string>
+    <string name="addFalse" translatable="false">false</string>
+    <string name="addKeyStatus" translatable="false">/Add Key</string>
+    <string name="removeKeyDB" translatable="false">/Remove Key</string>
+    <string name="nameNotFound">No Name Found</string>
+    <string name="noPhone">No Phone Number Found</string>
+    <string name="EditName">Edit your name</string>
+    <string name="ChangeName">Change Name</string>
+    <string name="change">Change</string>
+    <string name="cannotchangeemail">You cannot change the Email Address!</string>
+    <string name="googleProfileChange">Edit your google profile to change!</string>
 
 
 </resources>

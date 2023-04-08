@@ -418,6 +418,13 @@
     <string name="channelName">Canal de service de premier plan</string>
     <string name="messageContent">Il semble que quelqu\'un ait déclenché un détecteur de mouvement à l\'intérieur de votre immeuble après que vous ayez verrouillé votre maison. Veuillez vérifier ou signaler aux autorités dès que possible.</string>
     <string name="alert">Alerte</string>
+    <string name="nameNotFound">No Name Found</string>
+    <string name="noPhone">No Phone Number Found</string>
+    <string name="EditName">Edit your name</string>
+    <string name="ChangeName">Change Name</string>
+    <string name="change">Change</string>
+    <string name="cannotchangeemail">You cannot change the Email Address!</string>
+    <string name="googleProfileChange">Edit your google profile to change!</string>
 
 
 </resources>
