@@ -44,11 +44,10 @@ public class LightFragment extends Fragment {
 
     public int counter;
     TextView timerTV, statusOfLightTV;
-    ScrollView scroll;
-    LinearLayout linearLayout;
+
     View view;
     Date date;
-    DateFormat dateFormat;
+
     private Handler handler;
     private Runnable handlerTask;
     static String getLog;
@@ -193,10 +192,19 @@ public class LightFragment extends Fragment {
                 }
                 StatusOut = status + LightStatus;
                 statusOfLightTV.setText(StatusOut);
-                handler.postDelayed(handlerTask, 1000);
+                System.gc();
+
+                handler.postDelayed(this, 1000);
             }
         };
         handlerTask.run();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Pause the timer by removing callbacks from the handler
+        handler.removeCallbacks(handlerTask);
+
     }
 
     private void Status(){

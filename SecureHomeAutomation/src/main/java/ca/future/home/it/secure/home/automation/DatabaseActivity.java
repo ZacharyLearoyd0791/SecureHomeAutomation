@@ -72,7 +72,7 @@ public class DatabaseActivity extends Fragment {
 
         // Get the package name of the app
         viewActivity = getActivity();
-        Activity();
+        //Activity();
         return rootView;
     }
 
@@ -83,7 +83,9 @@ public class DatabaseActivity extends Fragment {
             public void run() {
                 // do something
                 sendDataStrings();
-                handler.postDelayed(handlerTask, 1000);
+                System.gc();
+
+                handler.postDelayed(this, 1000);
             }
         };
         handlerTask.run();
@@ -184,6 +186,7 @@ public class DatabaseActivity extends Fragment {
                 if (snapshot.exists()) {
                     serialNumber = Objects.requireNonNull(snapshot.getValue().toString());
                     getserialNumber();
+
                 }
             }
 
@@ -404,7 +407,6 @@ public class DatabaseActivity extends Fragment {
     private void sendDataStrings() {
 
         outLight = LightFragment.statusOfLight;
-        outScheduleDate = LightFragment.scheduleDate;
         outDoor = DoorFragment.statusofDoor;
         outAddKey = DoorFragment.statusAdd;
         outRemoveKey = DoorFragment.statusRemove;
@@ -412,9 +414,7 @@ public class DatabaseActivity extends Fragment {
         if (outLight != null) {
             toDatabase();
         }
-        if (outScheduleDate != null) {
-            toDatabase();
-        }
+
         if (outDoor != null) {
             toDatabase();
         }
@@ -424,10 +424,13 @@ public class DatabaseActivity extends Fragment {
         if (outRemoveKey != null){
             toDatabase();
         }
+        System.gc();
+
     }
 
     //FOR DOOR LOCK
     public void toDatabase() {
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseActivity.context = getApplicationContext();
 
@@ -442,6 +445,8 @@ public class DatabaseActivity extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child((finalStatusKey));
         databaseReference.setValue(outLight);
+        System.gc();
+
 
     }
 

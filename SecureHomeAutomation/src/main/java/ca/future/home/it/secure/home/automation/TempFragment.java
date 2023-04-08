@@ -7,12 +7,14 @@ Krushang Parekh (N01415355) - CENG-322-0NC
 */
 package ca.future.home.it.secure.home.automation;
 
+import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,6 +37,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ekn.gruzer.gaugelibrary.ArcGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -99,6 +102,7 @@ public class TempFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        databaseActivity.Activity();
         userKey = getString(R.string.userKey);
         city = null;
         userData = getApplicationContext().getString(R.string.userData);
@@ -121,7 +125,10 @@ public class TempFragment extends Fragment {
         maxTempRef = database.getReference(maxkey);
         weatherIconImageView = view.findViewById(R.id.weatherIcon);
         temperatureTextView = view.findViewById(R.id.temperature_text_view);
+
+
         StartTimer();
+        WeatherData();
 
 
         //setHumidity(20);
@@ -257,7 +264,30 @@ public class TempFragment extends Fragment {
             }
         });
     }
+    public void sethardwareTemp(){
+    String userKey = getApplicationContext().getString(R.string.userKey);
+    databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/Raspberry/" + serialKeyNumber + "/Temperature");
 
+    databaseReference.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+                tempVal = Objects.requireNonNull(snapshot.getValue().toString());
+                setTemperatureView(temperatureView);
+                int tempValue = Integer.parseInt(tempVal);
+                setCurrentTemperature((tempValue));
+
+
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
+
+}
     private void loadTemperatureConfigurations() {
         minTempRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -343,20 +373,7 @@ public class TempFragment extends Fragment {
 
     }
 
-    private void turnOnAc() {
-        tvAC.setTextColor(getResources().getColor(R.color.color_ac_indicator));
-        tvAC.setTypeface(tvAC.getTypeface(), Typeface.BOLD);
-    }
 
-    private void turnOffAc() {
-        tvAC.setTextColor(getResources().getColor(R.color.color_off_indicator));
-        tvAC.setTypeface(tvAC.getTypeface(), Typeface.NORMAL);
-    }
-
-    private void turnOnHeater() {
-        tvHeater.setTextColor(getResources().getColor(R.color.color_heater_indicator));
-        tvHeater.setTypeface(tvHeater.getTypeface(), Typeface.BOLD);
-    }
 
 
 
@@ -370,44 +387,28 @@ public class TempFragment extends Fragment {
             @Override
             public void run() {
                 // do something
-                databaseActivity.Activity();
-                WeatherData();
+
                 serialKeyNumber = databaseActivity.serialNumber;
-                handler.postDelayed(handlerTask, 1000);
-                if (serialKeyNumber == "null") {
-                    setTemperatureView(temperatureView);
-
-                    setCurrentTemperature(23);
-                } else {
-                    String userKey = getApplicationContext().getString(R.string.userKey);
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/Raspberry/" + serialKeyNumber + "/Temperature");
-
-                    databaseReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                tempVal = Objects.requireNonNull(snapshot.getValue().toString());
-                                setTemperatureView(temperatureView);
-                                int tempValue = Integer.parseInt(tempVal);
-                                setCurrentTemperature((tempValue));
-
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
+                if (serialKeyNumber!=null){
+                    sethardwareTemp();
                 }
-                handler.postDelayed(this, 10000);
-
+                else{
+                    //Log.d(TAG,"NoHardwareKey");
+                }
+                handler.postDelayed(handlerTask, 50);
+                WeatherData();
+                handler.postDelayed(this,10000);
             }
 
         };
         handlerTask.run();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Pause the timer by removing callbacks from the handler
+        handler.removeCallbacks(handlerTask);
+
     }
 
     public void WeatherData() {

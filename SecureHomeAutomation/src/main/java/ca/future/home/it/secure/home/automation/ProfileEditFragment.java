@@ -35,7 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileEditFragment extends Fragment {
+public class
+ProfileEditFragment extends Fragment {
 
     //Declarations
     private CircleImageView profileImage;

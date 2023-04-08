@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     String time = "5";
     private AccountFragment accountFragment;
-    public static AddDeviceFragment addDeviceFragment;
     Date date;
     DateFormat dateFormat;
     DatabaseActivity databaseActivity = new DatabaseActivity();
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         userInfo.typeAccount();
         userDetails = getString(R.string.UserFeedback);
         userKey = getApplicationContext().getString(R.string.userKey);
-
+        databaseActivity.Activity();
         dbID();
 
         Intent intent = new Intent(this, MyService.class);
@@ -115,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         lightFragment = new LightFragment();
         windowFragment = new WindowFragment();
         accountFragment = new AccountFragment();
-        addDeviceFragment = new AddDeviceFragment();
         profileEditFragment = new ProfileEditFragment();
         forgotPasswordActivity = new ForgotPasswordActivity();
 
@@ -203,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, homeFragment).commit();
         }
         if (item.getItemId() == R.id.ab_add) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, addDeviceFragment).commit();
         }
         if (item.getItemId() == R.id.ab_feedback) {
             showBottomDialog();

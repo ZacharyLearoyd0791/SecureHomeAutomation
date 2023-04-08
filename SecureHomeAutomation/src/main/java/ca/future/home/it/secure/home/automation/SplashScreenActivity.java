@@ -54,7 +54,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     Uri data;
     ConstraintLayout homelayout;
     String onLights, param,key,localKey,personalKey,lightKey,sensorKey,on,off,offLights;
-    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     boolean hasLoggedIn;
 
@@ -65,7 +64,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         run();
         dbID();
-        shortCuts();
+
 
     }
 
@@ -90,15 +89,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                     switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
 
                         case BiometricManager.BIOMETRIC_SUCCESS:
-//                            Log.d("MY_APP_TAG", "App can authenticate using biometrics.");
                             break;
 
                         case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-//                            Log.e("MY_APP_TAG", "No biometric features available on this device.");
                             break;
 
                         case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-//                            Log.e("MY_APP_TAG", "Biometric features are currently unavailable.");
                             break;
 
                         case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
@@ -172,35 +168,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
-    private void shortCuts() {
 
-        intent = getIntent();
-        data = intent.getData();
-
-        on=getString(R.string.on);
-        off=getString(R.string.off);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(lightKey);
-        if(data!=null){
-            param=intent.getData().getQueryParameter("statusType");
-            //Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
-
-            if (param.equalsIgnoreCase(on)){
-                databaseReference.setValue(on);
-                //Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
-
-            }
-            else if (param.equalsIgnoreCase(off)){
-                databaseReference.setValue(off);
-                //Log.d(TAG,"Test_Google_Assistance: V2, open close test\t"+param);
-
-            }
-            else{
-            }
-        }
-        else{
-        }
-    }
 
     private void dbID() {
         userInfo.typeAccount();

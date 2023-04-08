@@ -88,11 +88,18 @@ public class DoorFragment extends Fragment{
                 if (statusDoor != null) {
                     if (statusDoor.equals(lockedStr)) {
                         doorLock.setChecked(true);
-                    } else {
+                    }
+                    else {
                         status.setText(statusDoor);
                         doorLock.setChecked(false);
 
                     }
+
+
+                }
+                else {
+                    status.setText(null);
+                    doorLock.setChecked(false);
 
                 }
                 status.setText(statusDoor);

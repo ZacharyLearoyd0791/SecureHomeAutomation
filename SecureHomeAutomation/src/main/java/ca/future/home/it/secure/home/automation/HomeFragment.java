@@ -108,9 +108,10 @@ public class HomeFragment extends Fragment {
 
         init();
         greeting();
+       // databaseActivity.Activity();
+
         StartTimer();
         Bundle bundle = new Bundle();
-        Status();
 
         return view;
     }
@@ -121,7 +122,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void run() {
-                databaseActivity.Activity();
 
                 //door status
                 doorStatus = databaseActivity.DBDoor;
@@ -129,6 +129,7 @@ public class HomeFragment extends Fragment {
                     DoorStatusTV.setText(doorStatus);
                     DoorStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     DoorStatusTV.setTextSize(15);
+
 
                     if (doorStatus.equals("Locked")) {
                         doorView.setVisibility(View.INVISIBLE);
@@ -164,7 +165,7 @@ public class HomeFragment extends Fragment {
                     LightStatusTV.setTextSize(15);
                 }
 
-               /* windowStatus = String.valueOf(windowFragment.numberOfAlerts);
+                windowStatus = String.valueOf(windowFragment.alarmStatus);
                 if(windowStatus!=null){
                     WindowsStatusTV.setText(windowStatus);
                     WindowsStatusTV.setText("Armed");
@@ -175,7 +176,7 @@ public class HomeFragment extends Fragment {
                     WindowsStatusTV.setText(R.string.status_device+R.string.NoVal);
                     WindowsStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     WindowsStatusTV.setTextSize(15);
-                }*/
+                }
 
 
                 if (minStatus != null) {
@@ -196,19 +197,22 @@ public class HomeFragment extends Fragment {
                     TempStatusTV.setTypeface(Typeface.DEFAULT_BOLD);
                     TempStatusTV.setTextSize(15);
                 }
+                System.gc();
 
-
-                handler.postDelayed(handlerTask, 1000);
+                handler.postDelayed(this, 5000);
             }
 
         };
         handlerTask.run();
     }
-
-    private void Status() {
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Pause the timer by removing callbacks from the handler
+        handler.removeCallbacks(handlerTask);
 
     }
+
 
     private void init() {
 

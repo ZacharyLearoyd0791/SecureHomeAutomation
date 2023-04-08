@@ -32,7 +32,7 @@
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
 
         </service>
 
@@ -45,36 +45,8 @@
                 android:value="" />
         </activity>
 
-        <receiver
-            android:name=".Widgets"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widgets_info" />
-        </receiver>
-
-        <activity
-            android:name=".WidgetsConfigureActivity"
-            android:exported="false"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ForgotPasswordActivity"
-            android:exported="false"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".SchedulerActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -109,20 +81,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="secure-home-automation.futurehome"
-                    android:scheme="https" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".MainActivity"
@@ -163,30 +121,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".QuickTiles"
-            android:exported="true"
-            android:icon="@drawable/app_icon"
-            android:label="Secure Home Auto"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".homeAutomationTitlesService"
-            android:exported="true"
-            android:icon="@drawable/ic_window_icon"
-            android:label="Window break sensor"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.service.quicksettings.ACTIVE_TILE"
-                android:value="true" />
-        </service>
     </application>
 
 </manifest>
