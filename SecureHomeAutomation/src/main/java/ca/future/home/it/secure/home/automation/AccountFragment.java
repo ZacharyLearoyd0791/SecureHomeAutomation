@@ -253,6 +253,10 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                             userNameDb = Objects.requireNonNull(snapshot.getValue().toString());
 
                         }
+                        else{
+                            userName="No Name Found";
+
+                        }
 
                     }
 
