@@ -112,6 +112,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         loggedWithGoogle = loginTypeSP.getBoolean("Google SignIn",false);
         editProfileImage = view.findViewById(R.id.account_profile_photo_edit_icon);
         profileImage = view.findViewById(R.id.account_profile_image);
+
         //Setting up google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mClient = GoogleSignIn.getClient(getContext(),gso);
@@ -136,8 +137,8 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
         //RecyclerView
         recyclerView.setLayoutManager(linearLayoutManager);
-
         accountFragmentDataList = new ArrayList<>();
+        dbID();
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account,"Name",userName));
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account,"Email",userEmail));
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone",userPhone));
@@ -205,12 +206,13 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        dbID();
 
     }
     @Override
     public void onResume() {
         super.onResume();
+        dbID();
         userNameTV.setText(userName);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         accountFragmentDataList = new ArrayList<>();
@@ -238,6 +240,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         personalKey = userInfo.idInfo;
 
         if(localKey!=null){
+            editable = true;
             key = localKey;
             userInfo.LocalUsers();
 
@@ -288,14 +291,12 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             }
         }
         if(personalKey !=null){
+            editable = false;
             key = personalKey;
             userInfo.googleLoginUsers();
             userName= userInfo.returnName();
             userEmail=userInfo.returnEmail();
             userPhone=getString(R.string.noPhone);
-
-
-
         }
     }
 
@@ -327,7 +328,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
                 alertEditText.setText(userPhone);
                 alert.setMessage("Edit your phone number");
-                alert.setTitle("Change Name");
+                alert.setTitle("Change Phone Number");
                 alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -354,7 +355,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     }
     public void sendEditDataToDB(int pos, String userEdit){
         if(pos == 0){
-            //databaseReference = FirebaseDatabase.getInstance().getReference().child(finalNameKey);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalNameKey);
             databaseReference.setValue(userEdit);
         }else if(pos == 1){
             databaseReference = FirebaseDatabase.getInstance().getReference().child(finalEmailKey);
@@ -363,9 +364,5 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             dbref = FirebaseDatabase.getInstance().getReference().child((finalPhoneKey));
             dbref.setValue(userEdit);
         }
-
-
-
-
     }
 }
