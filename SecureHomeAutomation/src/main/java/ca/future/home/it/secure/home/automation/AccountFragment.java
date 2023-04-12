@@ -124,7 +124,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         emailKey = getString(R.string.slash_email);
         nameKey = getString(R.string.name_info);
         phoneKey = "Phone";
-        dbID();
+        accountKey = dbID();
 
 
 
@@ -133,6 +133,79 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         finalPhoneKey = accountKey+ phoneKey;
         Toast.makeText(getContext(), "Login Type"+loggedWithGoogle, Toast.LENGTH_SHORT).show();
 
+        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalEmailKey));
+        if(!loggedWithGoogle) {
+            editable = true;
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        userEmail = snapshot.getValue().toString();
+                    } else {
+                        Toast.makeText(getContext(), "Cannot find email!", Toast.LENGTH_SHORT).show();
+                        userEmail = "No Email Found";
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            //Getting user name
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalNameKey);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        userName = snapshot.getValue().toString();
+
+                    } else {
+                        Toast.makeText(getContext(), "Cannot found Name!", Toast.LENGTH_SHORT).show();
+                        userName = "No Name found";
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            databaseReference = FirebaseDatabase.getInstance().getReference().child((finalPhoneKey));
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        userPhone = snapshot.getValue().toString();
+                    }else{
+                        Toast.makeText(getContext(), "Cannot found Phone Number!", Toast.LENGTH_SHORT).show();
+                        userPhone = "No Phone Number found";
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        } else if (loggedWithGoogle) {
+            editable = false;
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+            if(account!= null){
+                String personName = account.getDisplayName();
+                String personFamilyName = account.getFamilyName();
+                String personEmail = account.getEmail();
+                //String personPhone = account.get
+                Uri personPhoto = account.getPhotoUrl();
+                userName = personName+" "+personFamilyName;
+                userEmail = personEmail;
+
+            }
+        }
 
 
         //RecyclerView
@@ -197,7 +270,8 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
                     // update the preview image in the layout
-                    profileImage.setImageURI(userInfo.photOut);
+                    //profileImage.setImageURI(userInfo.photOut);
+                    profileImage.setImageURI(selectedImageUri);
                 }
             }
         }
@@ -231,7 +305,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
-    private void dbID(){
+    private String dbID(){
         userInfo.typeAccount();
         userKey = getApplicationContext().getString(R.string.userKey);
         userData = getString(R.string.user_info);
@@ -239,65 +313,66 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         localKey = userInfo.userId;
         personalKey = userInfo.idInfo;
 
-        if(localKey!=null){
-            editable = true;
+        if(localKey!=null) {
+            //editable = true;
             key = localKey;
             userInfo.LocalUsers();
-
-            userName= userInfo.returnLocalName();
-            Log.d(TAG,"User Name is"+userName);
-            Log.d(TAG,"User Nam is  key "+(userKey + key + "/userInfo/Name:"));
-            if(userName==null) {
-                databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/userInfo/Name:");
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            userNameDb = Objects.requireNonNull(snapshot.getValue().toString());
-
-                        }
-                        else{
-                            userName=getString(R.string.nameNotFound);
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-            userName=userNameDb;
-            userEmail=userInfo.returnLocalEmail();
-            Log.d(TAG,userKey+key+"/userInfo/Phone");
-            databaseReference=FirebaseDatabase.getInstance().getReference().child(userKey+key+"/userInfo/Phone");
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                        userPhone=Objects.requireNonNull(snapshot.getValue().toString());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            if(userPhone==null){
-                userPhone=getString(R.string.noPhone);
-            }
         }
-        if(personalKey !=null){
-            editable = false;
+//            userName= userInfo.returnLocalName();
+//            Log.d(TAG,"User Name is"+userName);
+//            Log.d(TAG,"User Nam is  key "+(userKey + key + "/userInfo/Name:"));
+//            if(userName==null) {
+//                databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/userInfo/Name:");
+//                databaseReference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if (snapshot.exists()) {
+//                            userNameDb = Objects.requireNonNull(snapshot.getValue().toString());
+//
+//                        }
+//                        else{
+//                            userName=getString(R.string.nameNotFound);
+//
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//            }
+//            userName=userNameDb;
+//            userEmail=userInfo.returnLocalEmail();
+//            Log.d(TAG,userKey+key+"/userInfo/Phone");
+//            databaseReference=FirebaseDatabase.getInstance().getReference().child(userKey+key+"/userInfo/Phone");
+//            databaseReference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if (snapshot.exists()){
+//                        userPhone=Objects.requireNonNull(snapshot.getValue().toString());
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//            if(userPhone==null){
+//                userPhone=getString(R.string.noPhone);
+//            }
+//        }
+        if(personalKey !=null) {
+//            editable = false;
             key = personalKey;
-            userInfo.googleLoginUsers();
-            userName= userInfo.returnName();
-            userEmail=userInfo.returnEmail();
-            userPhone=getString(R.string.noPhone);
         }
+//            userInfo.googleLoginUsers();
+//            userName= userInfo.returnName();
+//            userEmail=userInfo.returnEmail();
+//            userPhone=getString(R.string.noPhone);
+        return userKey+profileKey;
     }
 
 
@@ -325,6 +400,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                 });
             }
             else if (position == 2) {
+
 
                 alertEditText.setText(userPhone);
                 alert.setMessage("Edit your phone number");
@@ -355,13 +431,13 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     }
     public void sendEditDataToDB(int pos, String userEdit){
         if(pos == 0){
-            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalNameKey);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalNameKey);
             databaseReference.setValue(userEdit);
         }else if(pos == 1){
             databaseReference = FirebaseDatabase.getInstance().getReference().child(finalEmailKey);
             databaseReference.setValue(userEdit);
         }else if(pos == 2){
-            dbref = FirebaseDatabase.getInstance().getReference().child((finalPhoneKey));
+            dbref = FirebaseDatabase.getInstance().getReference().child("userInfo").child((finalPhoneKey));
             dbref.setValue(userEdit);
         }
     }
