@@ -133,14 +133,17 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         finalPhoneKey = accountKey+ phoneKey;
         Toast.makeText(getContext(), "Login Type"+loggedWithGoogle, Toast.LENGTH_SHORT).show();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child((finalEmailKey));
+
         if(!loggedWithGoogle) {
             editable = true;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalEmailKey);
+            databaseReference.setValue("Krishna");
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        userEmail = snapshot.getValue().toString();
+                        userEmail = snapshot.child("userInfo").child("Email:").getValue().toString();
+                        Toast.makeText(getContext(), userEmail, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), "Cannot find email!", Toast.LENGTH_SHORT).show();
                         userEmail = "No Email Found";
@@ -154,7 +157,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             });
 
             //Getting user name
-            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalNameKey);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalNameKey);
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -173,7 +176,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
                 }
             });
-            databaseReference = FirebaseDatabase.getInstance().getReference().child((finalPhoneKey));
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalPhoneKey);
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -211,7 +214,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         //RecyclerView
         recyclerView.setLayoutManager(linearLayoutManager);
         accountFragmentDataList = new ArrayList<>();
-        dbID();
+        //dbID();
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account,"Name",userName));
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account,"Email",userEmail));
         accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone",userPhone));

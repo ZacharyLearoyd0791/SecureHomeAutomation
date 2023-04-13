@@ -12,6 +12,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -49,19 +50,21 @@ public class WindowFragment extends Fragment {
     RecyclerView activityRecyclerView;
     private List<WindowsFragmentData> windowsFragmentDataList;
     private WindowsFragmentRecyclerViewAdapter adapter;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     //Clearing Activity
     ImageView clearActivityButton;
 
     //Database Declarations
-    Date currentTime;
+    String currentTime;
 
     UserInfo userInfo = new UserInfo();
     String key, localKey, personalKey, windowsKey,sensorKey, userKey, userData;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference reference;
     String alarmType;
     Boolean alarmStatus;
-    int numberOfActivities;
+    int numberOfActivities=0;
 
     //Power on/off
     TextView deviceStatusTV;
@@ -69,6 +72,7 @@ public class WindowFragment extends Fragment {
     boolean clicked = false;
     String alertDialogTitle;
     String alertDialogMessage;
+
     int alertDialogCode;  // 1 -> power off, 2 -> power on, 3 -> clear activity data, ....
 
     //
@@ -88,6 +92,13 @@ public class WindowFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_window, container, false);
 
+        sharedPreferences = getActivity().getSharedPreferences("numberActivities", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        numberOfActivities = sharedPreferences.getInt("numberOfActivities",1);
+        Toast.makeText(getContext(),"Activity Num: "+ numberOfActivities, Toast.LENGTH_SHORT).show();
+        //Database init
+        reference = FirebaseDatabase.getInstance().getReference();
+
         //Test Values
         alarmStatus = false;
         alarmType = "Null";
@@ -97,13 +108,14 @@ public class WindowFragment extends Fragment {
         deviceStatusTV = view.findViewById(R.id.device_status_windows_break);
         clearActivityButton = view.findViewById(R.id.windows_clear_activity_data);
 
-        currentTime = Calendar.getInstance().getTime();
+        currentTime = Calendar.getInstance().getTime().toString();
         activityRecyclerView = view.findViewById(R.id.windows_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         activityRecyclerView.setLayoutManager(linearLayoutManager);
 
-
-        sendToDB(alarmType,alarmStatus,numberOfActivities);
+        //Getting Activities from DB
+        initRecyclerViewItems(numberOfActivities);
+        //sendToDB(alarmType,alarmStatus,numberOfActivities);
 
         //PowerButton functionality
 
@@ -127,6 +139,7 @@ public class WindowFragment extends Fragment {
             }
         });
 
+
         //Clear Activity Button
         clearActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +147,9 @@ public class WindowFragment extends Fragment {
                 alertDialogTitle = "Clear All Activity Data";
                 alertDialogMessage = "You are sure that you want to permanently delete your sensor's Activities";
                 alertDialogCode = 3;
+                numberOfActivities = 1;
+                editor.putInt("numberOfActivities",numberOfActivities);
+                editor.commit();
                 displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage, alertDialogCode);
             }
         });
@@ -150,19 +166,75 @@ public class WindowFragment extends Fragment {
 
         return view;
     }
+    public void initRecyclerViewItems(int numActivity){
+
+        for(int i = numActivity; i==1;i--) {
+            reference.child(dbID()).child("Activities");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    alarmType = snapshot.child(String.valueOf(numActivity)).child("Alarm Type").getValue().toString();
+                    currentTime = snapshot.child(String.valueOf(numActivity)).child("Time").getValue().toString();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            if(alarmType.equalsIgnoreCase("Device Turned ON")){
+                createRecyclerViewItems(3);
+            }else if(alarmType.equalsIgnoreCase("Device Turned OFF")){
+                createRecyclerViewItems(2);
+            }else if(alarmType.equalsIgnoreCase("Device Tested")){
+                createRecyclerViewItems(1);
+            }else if(alarmType.equalsIgnoreCase("Windows Sensor Activated!")){
+                createRecyclerViewItems(4);
+            }else{
+                Toast.makeText(getContext(), "Cannot get History \nSomething went wrong :(", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+        }
+    }
     public void createRecyclerViewItems(int dataCode){
 
             if(dataCode == 1) {
+                numberOfActivities ++;
                 alarmType = "Device Tested";
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Alarm Type").setValue(alarmType);
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Time").setValue(currentTime);
+//                reference.child(dbID()).child("Number of Activities").setValue(String.valueOf(numberOfActivities));
+                editor.putInt("numberOfActivities",numberOfActivities);
+                editor.commit();
                 windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
             } else if (dataCode == 2) {
+                numberOfActivities++;
                 alarmType = "Device Turned OFF";
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Alarm Type").setValue(alarmType);
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Time").setValue(currentTime);
+                //reference.child(dbID()).child("Number of Activities").setValue(String.valueOf(numberOfActivities));
+                editor.putInt("numberOfActivities",numberOfActivities);
+                editor.commit();
                 windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_warning_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
             } else if (dataCode == 3) {
+                numberOfActivities++;
                 alarmType = "Device Turned ON";
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Alarm Type").setValue(alarmType);
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Time").setValue(currentTime);
+                //reference.child(dbID()).child("Number of Activities").setValue(String.valueOf(numberOfActivities));
+                editor.putInt("numberOfActivities",numberOfActivities);
+                editor.commit();
                 windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
             } else if (dataCode == 4) {
+                numberOfActivities++;
                 alarmType = "Windows Sensor Activated!";
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Alarm Type").setValue(alarmType);
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Time").setValue(currentTime);
+                //reference.child(dbID()).child("Number of Activities").setValue(String.valueOf(numberOfActivities));
+                editor.putInt("numberOfActivities",numberOfActivities);
+                editor.commit();
                 windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_high_alert_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
             }
         activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
@@ -172,6 +244,7 @@ public class WindowFragment extends Fragment {
 
 
     }
+
 
     //Getting User ID
     private String dbID(){
