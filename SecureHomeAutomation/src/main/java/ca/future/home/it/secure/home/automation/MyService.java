@@ -24,6 +24,7 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
         databaseActivity.Activity();
+        databaseActivity.AlertMode();
 
         createNotification();
     }

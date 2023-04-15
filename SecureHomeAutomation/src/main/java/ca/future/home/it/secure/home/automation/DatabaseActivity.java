@@ -1,8 +1,12 @@
 package ca.future.home.it.secure.home.automation;
 
 
+import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -10,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +40,9 @@ public class DatabaseActivity extends Fragment {
     LightFragment lightFragment = new LightFragment();
     DoorFragment doorFragment = new DoorFragment();
 
-
+    private static final int NOTIFICATION_ID = 123;
+    private NotificationManagerCompat notificationManager;
+    private Notification notification;
     String finalCityKey, city;
 
     //Database
@@ -450,14 +457,25 @@ public class DatabaseActivity extends Fragment {
 
     public void AlertMode() {
         // Set up a listener for the node you want to monitor
-        String AlarmKey = userKey + key + getApplicationContext().getString(R.string.alarmTrigger);
+        String AlarmKey = userKey + key + ("/userData/Windows Sensor/Alarm Triggered");
+        Log.d(TAG,AlarmKey);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(AlarmKey);
 
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    Log.d(TAG,(snapshot.getValue().toString()));
 
-                Notification();
+                    if (Objects.requireNonNull(snapshot.getValue().toString()).equals("On")){
+                        Log.d(TAG,"adad");
+                    WindowBreakNotification();
+
+                    }
+                    else{
+
+                    }
+                }
 
             }
 
@@ -471,11 +489,24 @@ public class DatabaseActivity extends Fragment {
 
     }
 
+    public void WindowBreakNotification() {
+
+        Context newContext = getApplicationContext(); // Use getContext() method to get the context of the fragment
+        String channelId = "my_channel";
+
+        notification = new NotificationCompat.Builder(newContext, channelId)
+                .setContentTitle(getApplicationContext().getString(R.string.alert))
+                .setContentText(getApplicationContext().getString(R.string.messageContentBreak))
+                .setSmallIcon(R.drawable.app_icon)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build();
+        
+    }
+
     public void Notification() {
         Context newContext = getApplicationContext(); // Use getContext() method to get the context of the fragment
 
 
-        Uri soundUri = Uri.parse("android.resource://" + newContext.getPackageName() + "/" + R.raw.alarm);
         String channelId = "my_channel_id";
 
 // Build the notification
@@ -484,7 +515,6 @@ public class DatabaseActivity extends Fragment {
                 .setContentTitle(getApplicationContext().getString(R.string.alert))
                 .setContentText(getApplicationContext().getString(R.string.messageContent))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setSound(soundUri) // Set the custom sound
                 .setAutoCancel(true);
 
 // Show the notification

@@ -66,6 +66,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     String userEmail;
     TextView userNameTV;
     String userPhone;
+    String phoneNumber;
     private AccountFragmentRecyclerViewAdapter adapter;
     Button signoutButton;
     SharedPreferences loginTypeSP;
@@ -124,94 +125,15 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         emailKey = getString(R.string.slash_email);
         nameKey = getString(R.string.name_info);
         phoneKey = "Phone";
-        accountKey = dbID();
+        dbID();
+        accountKey=userKey+key;
 
 
 
-        finalEmailKey = accountKey + emailKey;
-        finalNameKey = accountKey + nameKey;
-        finalPhoneKey = accountKey+ phoneKey;
-        Toast.makeText(getContext(), "Login Type"+loggedWithGoogle, Toast.LENGTH_SHORT).show();
 
 
-        if(!loggedWithGoogle) {
-            editable = true;
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalEmailKey);
-            databaseReference.setValue("Krishna");
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        userEmail = snapshot.child("userInfo").child("Email:").getValue().toString();
-                        Toast.makeText(getContext(), userEmail, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Cannot find email!", Toast.LENGTH_SHORT).show();
-                        userEmail = "No Email Found";
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            //Getting user name
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalNameKey);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        userName = snapshot.getValue().toString();
-
-                    } else {
-                        Toast.makeText(getContext(), "Cannot found Name!", Toast.LENGTH_SHORT).show();
-                        userName = "No Name found";
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalPhoneKey);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                        userPhone = snapshot.getValue().toString();
-                    }else{
-                        Toast.makeText(getContext(), "Cannot found Phone Number!", Toast.LENGTH_SHORT).show();
-                        userPhone = "No Phone Number found";
-
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        } else if (loggedWithGoogle) {
-            editable = false;
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-            if(account!= null){
-                String personName = account.getDisplayName();
-                String personFamilyName = account.getFamilyName();
-                String personEmail = account.getEmail();
-                //String personPhone = account.get
-                Uri personPhoto = account.getPhotoUrl();
-                userName = personName+" "+personFamilyName;
-                userEmail = personEmail;
-
-            }
-        }
 
 
-        //RecyclerView
         recyclerView.setLayoutManager(linearLayoutManager);
         accountFragmentDataList = new ArrayList<>();
         //dbID();
@@ -258,6 +180,92 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
 
         return view;
+    }
+    public void Database(){
+
+
+        finalEmailKey = accountKey +"/userInfo/"+ emailKey;
+        finalNameKey = accountKey +"/userInfo/"+ nameKey;
+        finalPhoneKey = accountKey+"/userInfo/"+phoneKey;
+        Log.d(TAG,finalEmailKey+"\n"+finalNameKey+"\n"+finalPhoneKey);
+        Toast.makeText(getContext(), "Login Type"+loggedWithGoogle, Toast.LENGTH_SHORT).show();
+
+
+        if(!loggedWithGoogle) {
+            editable = true;
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalEmailKey);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        userEmail = Objects.requireNonNull(snapshot.getValue().toString());
+                        Toast.makeText(getContext(), userEmail, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Cannot find email!", Toast.LENGTH_SHORT).show();
+                        userEmail = "No Email Found";
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            //Getting user name
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalNameKey);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        userName = Objects.requireNonNull(snapshot.getValue().toString());
+
+                    } else {
+                        Toast.makeText(getContext(), "Cannot found Name!", Toast.LENGTH_SHORT).show();
+                        userName = "No Name found";
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            databaseReference = FirebaseDatabase.getInstance().getReference().child(finalPhoneKey);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        userPhone = Objects.requireNonNull(snapshot.getValue().toString());
+                    }else{
+                        userPhone=phoneNumber;
+                        databaseReference.setValue(userPhone);
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        } else if (loggedWithGoogle) {
+            editable = false;
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+            if(account!= null){
+                String personName = account.getDisplayName();
+                String personFamilyName = account.getFamilyName();
+                String personEmail = account.getEmail();
+                //String personPhone = account.get
+                Uri personPhoto = account.getPhotoUrl();
+                userName = personName+" "+personFamilyName;
+                userEmail = personEmail;
+
+
+            }
+        }
     }
     // this function is triggered when user
     // selects the image from the imageChooser
@@ -308,7 +316,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
-    private String dbID(){
+    private void dbID(){
         userInfo.typeAccount();
         userKey = getApplicationContext().getString(R.string.userKey);
         userData = getString(R.string.user_info);
@@ -317,65 +325,14 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         personalKey = userInfo.idInfo;
 
         if(localKey!=null) {
-            //editable = true;
             key = localKey;
-            userInfo.LocalUsers();
         }
-//            userName= userInfo.returnLocalName();
-//            Log.d(TAG,"User Name is"+userName);
-//            Log.d(TAG,"User Nam is  key "+(userKey + key + "/userInfo/Name:"));
-//            if(userName==null) {
-//                databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/userInfo/Name:");
-//                databaseReference.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        if (snapshot.exists()) {
-//                            userNameDb = Objects.requireNonNull(snapshot.getValue().toString());
-//
-//                        }
-//                        else{
-//                            userName=getString(R.string.nameNotFound);
-//
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//            }
-//            userName=userNameDb;
-//            userEmail=userInfo.returnLocalEmail();
-//            Log.d(TAG,userKey+key+"/userInfo/Phone");
-//            databaseReference=FirebaseDatabase.getInstance().getReference().child(userKey+key+"/userInfo/Phone");
-//            databaseReference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.exists()){
-//                        userPhone=Objects.requireNonNull(snapshot.getValue().toString());
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//            if(userPhone==null){
-//                userPhone=getString(R.string.noPhone);
-//            }
-//        }
+
         if(personalKey !=null) {
-//            editable = false;
             key = personalKey;
         }
-//            userInfo.googleLoginUsers();
-//            userName= userInfo.returnName();
-//            userEmail=userInfo.returnEmail();
-//            userPhone=getString(R.string.noPhone);
-        return userKey+profileKey;
+
+
     }
 
 
@@ -406,13 +363,19 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
 
                 alertEditText.setText(userPhone);
+
+
                 alert.setMessage("Edit your phone number");
                 alert.setTitle("Change Phone Number");
                 alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         userPhone = alertEditText.getText().toString();
-                        sendEditDataToDB(position, userPhone);
+                        phoneNumber=userPhone;
+                        Database();
+
+
+                        //sendEditDataToDB(position, userPhone);
                     }
                 });
                 alert.setView(alertEditText);

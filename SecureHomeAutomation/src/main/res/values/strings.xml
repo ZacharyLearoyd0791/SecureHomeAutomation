@@ -479,6 +479,7 @@
     <string name="cannotchangeemail">You cannot change the Email Address!</string>
     <string name="googleProfileChange">Edit your google profile to change!</string>
     <string name="cityCheck">No Value, Check Setting if City is set</string>
+    <string name="messageContentBreak">It seems that the Window has been open or broken after you Locked your home. If it is you, make sure that you put the door status as Unlocked</string>
 
 
 </resources>

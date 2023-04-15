@@ -122,6 +122,7 @@ public class TempFragment extends Fragment {
         weatherIconImageView = view.findViewById(R.id.weatherIcon);
         temperatureTextView = view.findViewById(R.id.temperature_text_view);
 
+        temperatureTextView.setText(R.string.cityCheck);
 
         StartTimer();
         WeatherData();
@@ -259,29 +260,6 @@ public class TempFragment extends Fragment {
                 setMaxTemperature(maximumTemperature);
             }
         });
-    }
-    public void sethardwareTemp(){
-    String userKey = getApplicationContext().getString(R.string.userKey);
-    databaseReference = FirebaseDatabase.getInstance().getReference().child(userKey + key + "/Raspberry/" + serialKeyNumber + "/Temperature");
-
-    databaseReference.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if (snapshot.exists()) {
-                tempVal = Objects.requireNonNull(snapshot.getValue().toString());
-                setTemperatureView(temperatureView);
-                int tempValue = Integer.parseInt(tempVal);
-                setCurrentTemperature((tempValue));
-
-
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    });
 
 }
     private void loadTemperatureConfigurations() {
@@ -328,11 +306,11 @@ public class TempFragment extends Fragment {
         Range range1 = new Range();
         range1.setColor(Color.parseColor("#09B2FF"));
         range1.setFrom(0);
-        range1.setTo(18);
+        range1.setTo(22);
 
         Range range2 = new Range();
         range2.setColor(Color.parseColor("#FFC107"));
-        range2.setFrom(19);
+        range2.setFrom(23);
         range2.setTo(29);
 
         Range range3 = new Range();
@@ -433,9 +411,8 @@ public class TempFragment extends Fragment {
         }
         databaseActivity.setCity();
 
-        weatherIconImageView = view.findViewById(R.id.weatherIcon);
-        temperatureTextView = view.findViewById(R.id.temperature_text_view);
-        temperatureTextView.setText(R.string.cityCheck);
+
+
 /*        if (temperatureTextView.getText().toString()==null){
             city=null;
         }*/
