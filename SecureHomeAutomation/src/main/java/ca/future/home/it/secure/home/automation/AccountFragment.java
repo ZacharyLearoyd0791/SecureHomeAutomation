@@ -51,6 +51,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -95,6 +96,8 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     String editedName;
     String editedEmail;
     String editedPhone;
+    Uri imageUriNew;
+    String editedImage;
 
 
     UserInfo userInfo = new UserInfo();
@@ -129,6 +132,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         editedEmail = profileDataSP.getString("NewUserEmail","No Email found");
         editedName =  profileDataSP.getString("NewUserName","No Name found");
         editedPhone =  profileDataSP.getString("NewUsePhone","No Phone found");
+        editedImage = profileDataSP.getString("ImageURL",null);
 
 
         //Change Password
@@ -180,6 +184,10 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         }
         if(editedPhone!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4, "Phone", editedPhone));
+        }
+        if(editedImage !=null){
+            imageUriNew = Uri.parse(editedImage);
+            profileImage.setImageURI(imageUriNew);
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
@@ -324,6 +332,10 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
                     // update the preview image in the layout
                     //profileImage.setImageURI(userInfo.photOut);
                     profileImage.setImageURI(selectedImageUri);
+                    profilDataEditor.putString("ImageURL",selectedImageUri.toString());
+                    profilDataEditor.apply();
+                    profilDataEditor.commit();
+
                 }
             }
         }
@@ -350,6 +362,10 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         }
         if(editedPhone!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4, "Phone", editedPhone));
+        }
+        if(editedImage !=null){
+            imageUriNew = Uri.parse(editedImage);
+            profileImage.setImageURI(imageUriNew);
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
@@ -386,61 +402,66 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
     @Override
     public void onItemClick(int position) {
-        if(editable) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-            final EditText alertEditText = new EditText(getApplicationContext());
-            if (position == 0) {
-                alertEditText.setText(userName);
-                alert.setMessage(R.string.EditName);
-                alert.setTitle(R.string.ChangeName);
-                alert.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        userName = alertEditText.getText().toString();
-                        userNameTV.setText(userName);
-                        sendEditDataToDB(position, userName);
-                    }
-                });
-                alert.setView(alertEditText);
-                alert.setNegativeButton(getString(R.string.no), (DialogInterface.OnClickListener) (dialog, which) -> {
-                    // If user click no then dialog box is canceled.
-                    dialog.cancel();
-                });
-            }
-            else if (position == 2) {
-
-
-                alertEditText.setText(userPhone);
-
-
-                alert.setMessage("Edit your phone number");
-                alert.setTitle("Change Phone Number");
-                alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        userPhone = alertEditText.getText().toString();
-                        phoneNumber=userPhone;
-                        Database();
-
-
-                        //sendEditDataToDB(position, userPhone);
-                    }
-                });
-                alert.setView(alertEditText);
-                alert.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    // If user click no then dialog box is canceled.
-                    dialog.cancel();
-                });
-            }else{
-                Toast.makeText(getApplicationContext(), R.string.cannotchangeemail, Toast.LENGTH_LONG).show();
-            }
-            //sendEditDataToDB(userName,userEmail,userPhone);
-
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+//        if(editable) {
+//            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+//            final EditText alertEditText = new EditText(getApplicationContext());
+//            if (position == 0) {
+//                alertEditText.setText(userName);
+//                alert.setMessage(R.string.EditName);
+//                alert.setTitle(R.string.ChangeName);
+//                alert.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        userName = alertEditText.getText().toString();
+//                        userNameTV.setText(userName);
+//                        sendEditDataToDB(position, userName);
+//                    }
+//                });
+//                alert.setView(alertEditText);
+//                alert.setNegativeButton(getString(R.string.no), (DialogInterface.OnClickListener) (dialog, which) -> {
+//                    // If user click no then dialog box is canceled.
+//                    dialog.cancel();
+//                });
+//            }
+//            else if (position == 2) {
+//
+//
+//                alertEditText.setText(userPhone);
+//
+//
+//                alert.setMessage("Edit your phone number");
+//                alert.setTitle("Change Phone Number");
+//                alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        userPhone = alertEditText.getText().toString();
+//                        phoneNumber=userPhone;
+//                        Database();
+//
+//
+//                        //sendEditDataToDB(position, userPhone);
+//                    }
+//                });
+//                alert.setView(alertEditText);
+//                alert.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+//                    // If user click no then dialog box is canceled.
+//                    dialog.cancel();
+//                });
+//            }else{
+//                Toast.makeText(getApplicationContext(), R.string.cannotchangeemail, Toast.LENGTH_LONG).show();
+//            }
+//            //sendEditDataToDB(userName,userEmail,userPhone);
+//
+//            AlertDialog alertDialog = alert.create();
+//            alertDialog.show();
+//        }else{
+//            Toast.makeText(getContext(), R.string.googleProfileChange, Toast.LENGTH_LONG).show();
+//
+//        }
+        if(position ==0){
+            Toast.makeText(getContext(), "You can edit profile Details by clicking on edit profile button!", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(getContext(), R.string.googleProfileChange, Toast.LENGTH_LONG).show();
-
+            Toast.makeText(getContext(), "You can edit profile Details by clicking on edit profile button!", Toast.LENGTH_SHORT).show();
         }
     }
     public void sendEditDataToDB(int pos, String userEdit){

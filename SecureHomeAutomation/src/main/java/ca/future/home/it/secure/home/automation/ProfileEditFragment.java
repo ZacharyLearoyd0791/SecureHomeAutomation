@@ -118,6 +118,7 @@ ProfileEditFragment extends Fragment {
                 editor.putString(getString(R.string.user_new_phone), ePhoneNumber.getText().toString());
                 editor.apply();
                 editor.commit();
+
               /*  if (eName != null) {
                     reference.child(dbID()).child(getString(R.string.user_name)).setValue(eName);
                 }
