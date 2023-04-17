@@ -20,6 +20,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,10 +41,13 @@ ProfileEditFragment extends Fragment {
 
     //Declarations
     private CircleImageView profileImage;
-    private FloatingActionButton changeProfileImageButton;
+    //private FloatingActionButton changeProfileImageButton;
     private Button saveChanges;
     private Button changePassword;
     private EditText eName;
+    final Handler handler = new Handler();
+    static AccountFragment accountFragment = new AccountFragment();
+
     String key,localKey,personalKey,windowsKey,sensorKey,userKey,userData;
     private EditText eEmail;
     private EditText ePhoneNumber;
@@ -92,7 +96,7 @@ ProfileEditFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
         profileImage = view.findViewById(R.id.profile_image);
-        changeProfileImageButton = view.findViewById(R.id.editProfileImageIcon);
+        //changeProfileImageButton = view.findViewById(R.id.editProfileImageIcon);
         changePassword = view.findViewById(R.id.editProfileChangePasswordButton);
         saveChanges = view.findViewById(R.id.editProfileSaveChanges);
         eName = view.findViewById(R.id.editProfilePersonName);
@@ -101,7 +105,26 @@ ProfileEditFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(getString(R.string.user_new_data), Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        userinfo();
+        String neweditedEmail = sharedPreferences.getString("NewUserEmail","No Email found");
+        String neweditedName =  sharedPreferences.getString("NewUserName","No Name found");
+        String neweditedPhone =  sharedPreferences.getString("NewUsePhone","No Phone found");
+        String neweditedImage = sharedPreferences.getString("ImageURL",null);
+
+        if(neweditedName!=null) {
+            eName.setText(neweditedName);
+        }
+        if(neweditedEmail!=null) {
+            eEmail.setText(neweditedEmail);
+        }
+        if(neweditedPhone!=null) {
+            ePhoneNumber.setText(neweditedPhone);
+        }
+        if(neweditedImage!=null) {
+            Uri uri = Uri.parse(neweditedImage);
+            profileImage.setImageURI(uri);
+        }
+
+        //userinfo();
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +141,7 @@ ProfileEditFragment extends Fragment {
                 editor.putString(getString(R.string.user_new_phone), ePhoneNumber.getText().toString());
                 editor.apply();
                 editor.commit();
-
+                handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, ProfileEditFragment.accountFragment).commit(), 300);
               /*  if (eName != null) {
                     reference.child(dbID()).child(getString(R.string.user_name)).setValue(eName);
                 }

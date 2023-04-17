@@ -98,6 +98,10 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     String editedPhone;
     Uri imageUriNew;
     String editedImage;
+    String personNameG;
+    String personFamilyNameG;
+    String personEmailG;
+    Uri personPhotoG;
 
 
     UserInfo userInfo = new UserInfo();
@@ -156,7 +160,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mClient = GoogleSignIn.getClient(getContext(),gso);
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(getContext());
-
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
         //Getting user data from database if not logged in with google
         //Getting Email address
@@ -167,7 +171,17 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         accountKey=userKey+key;
 
 
-
+        if(account!= null){
+             personNameG = account.getDisplayName();
+             personFamilyNameG = account.getFamilyName();
+             personEmailG = account.getEmail();
+             personPhotoG = account.getPhotoUrl();
+        }else{
+            personNameG = null;
+            personEmailG = null;
+            personPhotoG = null;
+            personFamilyNameG =null;
+        }
 
 
 
@@ -175,19 +189,43 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         recyclerView.setLayoutManager(linearLayoutManager);
         accountFragmentDataList = new ArrayList<>();
         //dbID();
-        if(editedName!=null) {
+
+        //Setting person name
+        if(personNameG!=null){
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account, "Name", personNameG));
+            userNameTV.setText(personNameG);
+            editAccount.setClickable(false);
+        }else if(editedName!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account, "Name", editedName));
             userNameTV.setText(editedName);
+            editAccount.setClickable(true);
         }
-        if(editedEmail!=null) {
+
+        //Setting person email
+        if(personEmailG!=null){
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account, "Email", personEmailG));
+            editAccount.setClickable(false);
+        }else if(editedEmail!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account, "Email", editedEmail));
+            editAccount.setClickable(true);
+
         }
+        //Setting person phone numbe
         if(editedPhone!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4, "Phone", editedPhone));
         }
-        if(editedImage !=null){
+
+        //Setting person profile photo
+        if(personPhotoG!=null){
+            //imageUriNew = Uri.parse(personPhotoG);
+            profileImage.setImageURI(personPhotoG);
+            editAccount.setClickable(false);
+            editProfileImage.setClickable(false);
+        }else if(editedImage !=null){
             imageUriNew = Uri.parse(editedImage);
             profileImage.setImageURI(imageUriNew);
+            editAccount.setClickable(true);
+            editProfileImage.setClickable(true);
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
@@ -302,18 +340,8 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
             });
         } else if (loggedWithGoogle) {
             editable = false;
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-            if(account!= null){
-                String personName = account.getDisplayName();
-                String personFamilyName = account.getFamilyName();
-                String personEmail = account.getEmail();
-                //String personPhone = account.get
-                Uri personPhoto = account.getPhotoUrl();
-                userName = personName+" "+personFamilyName;
-                userEmail = personEmail;
 
 
-            }
         }
     }
     // this function is triggered when user
@@ -353,22 +381,43 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         dbID();
         userNameTV.setText(userName);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        if(editedName!=null) {
+        //Setting person name
+        if(personNameG!=null){
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account, "Name", personNameG));
+            userNameTV.setText(personNameG);
+            editAccount.setClickable(false);
+        }else if(editedName!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account, "Name", editedName));
             userNameTV.setText(editedName);
+            editAccount.setClickable(true);
         }
-        if(editedEmail!=null) {
+
+        //Setting person email
+        if(personEmailG!=null){
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account, "Email", personEmailG));
+            editAccount.setClickable(false);
+        }else if(editedEmail!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account, "Email", editedEmail));
+            editAccount.setClickable(true);
         }
+        //Setting person phone numbe
         if(editedPhone!=null) {
             accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4, "Phone", editedPhone));
         }
-        if(editedImage !=null){
+
+        //Setting person profile photo
+        if(personPhotoG!=null){
+            //imageUriNew = Uri.parse(personEmailG);
+            profileImage.setImageURI(personPhotoG);
+            editAccount.setClickable(false);
+            editProfileImage.setClickable(false);
+        }else if(editedImage !=null){
             imageUriNew = Uri.parse(editedImage);
             profileImage.setImageURI(imageUriNew);
+            editAccount.setClickable(true);
+            editProfileImage.setClickable(true);
         }
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         adapter = new AccountFragmentRecyclerViewAdapter(accountFragmentDataList,this);
         recyclerView.setAdapter(adapter);
 
