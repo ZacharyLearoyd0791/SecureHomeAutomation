@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#e8e8e8"
     tools:context=".AccountFragment">
+
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="405dp"
         android:layout_height="76dp"
@@ -85,35 +86,6 @@
             tools:ignore="InvalidId" />
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/account_card_view_other"
-        android:layout_width="407dp"
-        android:layout_height="155dp"
-        android:layout_marginStart="0.11dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0.11dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="27dp"
-        app:cardElevation="2dp"
-        app:cardMaxElevation="5dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_card_view">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/account_recyclerview_other"
-            android:layout_width="336dp"
-            android:layout_height="104dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:divider="@drawable/divider_design"
-            android:dividerHeight="1dp"
-            tools:ignore="InvalidId" />
-    </androidx.cardview.widget.CardView>
-
     <Button
         android:id="@+id/account_sign_out_button"
         android:layout_width="218dp"
@@ -125,6 +97,30 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/account_change_password"
+        android:layout_width="139dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="#6256EB"
+        android:textColor="@color/black"
+        android:text="Change Password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account_card_view" />
+
+    <Button
+        android:id="@+id/account_edit_profile_details"
+        android:layout_width="139dp"
+        android:backgroundTint="#6256EB"
+        android:layout_height="51dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginTop="84dp"
+        android:textColor="@color/black"
+        android:text="Edit profile details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account_card_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

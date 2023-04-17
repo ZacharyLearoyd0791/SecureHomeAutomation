@@ -56,6 +56,7 @@ ProfileEditFragment extends Fragment {
     String DBName,DBEmail,DBPhone,DBImage;
 
 
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -101,15 +102,6 @@ ProfileEditFragment extends Fragment {
         editor = sharedPreferences.edit();
 
         userinfo();
-        changeProfileImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Opening Gallary
-                Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(openGallery,200);
-            }
-        });
-
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +117,7 @@ ProfileEditFragment extends Fragment {
                 editor.putString(getString(R.string.user_new_email), eEmail.getText().toString());
                 editor.putString(getString(R.string.user_new_phone), ePhoneNumber.getText().toString());
                 editor.apply();
+                editor.commit();
               /*  if (eName != null) {
                     reference.child(dbID()).child(getString(R.string.user_name)).setValue(eName);
                 }
@@ -195,14 +188,14 @@ ProfileEditFragment extends Fragment {
             eName.setText(R.string.noInfo);
         }
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 200){
-            if(resultCode == Activity.RESULT_OK){
-                imageUri = data.getData();
-                profileImage.setImageURI(imageUri);
-            }
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == 200){
+//            if(resultCode == Activity.RESULT_OK){
+//                imageUri = data.getData();
+//                profileImage.setImageURI(imageUri);
+//            }
+//        }
+//    }
 }

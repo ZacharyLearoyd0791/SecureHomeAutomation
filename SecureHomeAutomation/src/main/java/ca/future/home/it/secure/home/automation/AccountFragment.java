@@ -13,11 +13,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,8 +86,15 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
     ImageView editProfileImage;
     ImageView profileImage;
     DatabaseReference dbref;
+    Button changePassword,editAccount;
+   public static ProfileEditFragment profileEditFragment = new ProfileEditFragment();
+    final Handler handler = new Handler();
     String userNameDb;
-
+    SharedPreferences profileDataSP;
+    SharedPreferences.Editor profilDataEditor;
+    String editedName;
+    String editedEmail;
+    String editedPhone;
 
 
     UserInfo userInfo = new UserInfo();
@@ -100,7 +109,7 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_account_new, container, false);
 
-        recyclerViewOthers = (RecyclerView) view.findViewById(R.id.account_recyclerview_other);
+        //recyclerViewOthers = (RecyclerView) view.findViewById(R.id.account_recyclerview_other);
         recyclerView = (RecyclerView) view.findViewById(R.id.account_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         sharedPreferences = getActivity().getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
@@ -113,7 +122,32 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         loggedWithGoogle = loginTypeSP.getBoolean("Google SignIn",false);
         editProfileImage = view.findViewById(R.id.account_profile_photo_edit_icon);
         profileImage = view.findViewById(R.id.account_profile_image);
+        changePassword = view.findViewById(R.id.account_change_password);
+        editAccount = view.findViewById(R.id.account_edit_profile_details);
+        profileDataSP =  getActivity().getSharedPreferences(getString(R.string.user_new_data), Context.MODE_PRIVATE);
 
+        editedEmail = profileDataSP.getString("NewUserEmail","No Email found");
+        editedName =  profileDataSP.getString("NewUserName","No Name found");
+        editedPhone =  profileDataSP.getString("NewUsePhone","No Phone found");
+
+
+        //Change Password
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                Intent intent = new Intent(getActivity(), ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Opening profile Edit
+        editAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handler.postDelayed(() -> getParentFragmentManager().beginTransaction().replace(R.id.flFragment, AccountFragment.profileEditFragment).commit(), 300);
+            }
+        });
         //Setting up google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mClient = GoogleSignIn.getClient(getContext(),gso);
@@ -137,9 +171,16 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         recyclerView.setLayoutManager(linearLayoutManager);
         accountFragmentDataList = new ArrayList<>();
         //dbID();
-        accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account,"Name",userName));
-        accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account,"Email",userEmail));
-        accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone",userPhone));
+        if(editedName!=null) {
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account, "Name", editedName));
+            userNameTV.setText(editedName);
+        }
+        if(editedEmail!=null) {
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account, "Email", editedEmail));
+        }
+        if(editedPhone!=null) {
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4, "Phone", editedPhone));
+        }
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         adapter = new AccountFragmentRecyclerViewAdapter(accountFragmentDataList,this);
@@ -300,14 +341,21 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
         dbID();
         userNameTV.setText(userName);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        accountFragmentDataList = new ArrayList<>();
-        accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account,"Name",userName));
-        accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account,"Email",userEmail));
-        accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4,"Phone",userPhone));
+        if(editedName!=null) {
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.person_icon_account, "Name", editedName));
+            userNameTV.setText(editedName);
+        }
+        if(editedEmail!=null) {
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.email_icon_account, "Email", editedEmail));
+        }
+        if(editedPhone!=null) {
+            accountFragmentDataList.add(new AccountFragmentData(R.drawable.phone_icon_account_4, "Phone", editedPhone));
+        }
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         adapter = new AccountFragmentRecyclerViewAdapter(accountFragmentDataList,this);
         recyclerView.setAdapter(adapter);
+
 
     }
     @Override
