@@ -15,16 +15,22 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,9 +58,11 @@ public class WindowFragment extends Fragment {
     View view;
     AlertDialog dialog;
     RecyclerView activityRecyclerView;
+    Vibrator vibrator;
     private List<WindowsFragmentData> windowsFragmentDataList;
     private WindowsFragmentRecyclerViewAdapter adapter;
     SharedPreferences sharedPreferences;
+    String buzzerValueDb="Off";
     SharedPreferences.Editor editor;
 
     //Clearing Activity
@@ -67,7 +76,7 @@ public class WindowFragment extends Fragment {
     DatabaseReference reference;
     String alarmType;
     Boolean alarmStatus;
-    int numberOfActivities=0;
+    int numberOfActivities;
 
     //Power on/off
     TextView deviceStatusTV;
@@ -76,6 +85,7 @@ public class WindowFragment extends Fragment {
     String alertDialogTitle;
     String alertDialogMessage;
     int history=0;
+    Button alarmButton;
 
     int alertDialogCode;  // 1 -> power off, 2 -> power on, 3 -> clear activity data, ....
 
@@ -106,21 +116,38 @@ public class WindowFragment extends Fragment {
         alarmStatus = false;
         alarmType = "Null";
 
+
         //Referencing
         powerButton = view.findViewById(R.id.windows_sensor_power_button);
         deviceStatusTV = view.findViewById(R.id.device_status_windows_break);
         clearActivityButton = view.findViewById(R.id.windows_clear_activity_data);
-
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        alarmButton = view.findViewById(R.id.TestDeviceButton);
         currentTime = Calendar.getInstance().getTime().toString();
         activityRecyclerView = view.findViewById(R.id.windows_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         activityRecyclerView.setLayoutManager(linearLayoutManager);
+        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference();
+
 
         //Getting Activities from DB
         getFromDb();
         //initRecyclerViewItems(numberOfActivities);
         //sendToDB(alarmType,alarmStatus,numberOfActivities);
 
+
+        //Alarm Test Button
+        alarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alarmProcess();
+                alertDialogTitle = "Sensor Tested";
+                alertDialogMessage = "You are sure that you want to turn off the windows break detection sensor!";
+                alertDialogCode = 1;
+                createRecyclerViewItems(5);
+                //displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage, alertDialogCode);
+            }
+        });
         //PowerButton functionality
 
         powerButton.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +181,9 @@ public class WindowFragment extends Fragment {
                 numberOfActivities = 1;
                 editor.putInt("numberOfActivities",numberOfActivities);
                 editor.commit();
+                createRecyclerViewItems(99);
                 displayPowerOffAlertDialog(alertDialogTitle,alertDialogMessage, alertDialogCode);
+               // linearLayoutManager.removeView(activityRecyclerView);
             }
         });
 
@@ -247,6 +276,26 @@ public class WindowFragment extends Fragment {
                 editor.putInt("numberOfActivities",numberOfActivities);
                 editor.commit();
                 windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_high_alert_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
+            } else if (dataCode == 5) {
+                numberOfActivities++;
+                alarmType= "Windows Sensor Tested!";
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Alarm Type").setValue(alarmType);
+                reference.child(dbID()).child("Activities").child(String.valueOf(numberOfActivities)).child("Time").setValue(currentTime);
+                reference.child(dbID()).child("Alarm Triggered").setValue("On");
+                try {
+                    Thread.sleep(5000); // Sleep for 5 seconds (5000 milliseconds)
+                    reference.child(dbID()).child("Alarm Triggered").setValue("Off");
+                } catch (InterruptedException e) {
+                    // Handle the exception if necessary
+                }
+                editor.putInt("numberOfActivities",numberOfActivities);
+
+                editor.commit();
+                windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_high_alert_icon, "Alarm Type \n" + alarmType, "Date \n" + currentTime));
+            } else{
+                numberOfActivities =0;
+                windowsFragmentDataList.clear();
+
             }
         activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
@@ -256,15 +305,18 @@ public class WindowFragment extends Fragment {
 
     }
     private void getFromDb(){
+        DatabaseReference getDbRef = FirebaseDatabase.getInstance().getReference();
+
+
         while(history<=numberOfActivities) {
-            DatabaseReference getDbRef = FirebaseDatabase.getInstance().getReference();
+
             getDbRef.child(dbID()).child("Activities").child(String.valueOf(history)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String alarmTypeHistoryDb = snapshot.child("Alarm Type").getValue(String.class);
                         String timeHistoryDb = snapshot.child("Time").getValue(String.class);
-                        Toast.makeText(getContext(), "AT: " + alarmTypeHistoryDb, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "AT: " + alarmTypeHistoryDb, Toast.LENGTH_SHORT).show();
                         windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon, "Alarm Type \n" + alarmTypeHistoryDb, "Date \n" + timeHistoryDb));
                         activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
                         adapter = new WindowsFragmentRecyclerViewAdapter(windowsFragmentDataList);
@@ -282,6 +334,7 @@ public class WindowFragment extends Fragment {
             });
             history++;
         }
+
 //        DatabaseReference getDbRef = FirebaseDatabase.getInstance().getReference();
 //        getDbRef.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -306,8 +359,48 @@ public class WindowFragment extends Fragment {
 //            }
 //        });
     }
-
-
+    public void sendNotificationProcess(String notificationTitle, String notificationText) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), getApplicationContext().getString(R.string.window_break));
+        builder.setContentTitle(notificationTitle)
+                .setContentText(notificationText)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+        NotificationManagerCompat mangerCompat = NotificationManagerCompat.from(getContext());
+        mangerCompat.notify(1, builder.build());
+    }
+    public void alarmProcess(){
+        String notificationTitle = getApplicationContext().getString(R.string.window_on_test);
+        String notificationText = getApplicationContext().getString(R.string.window_alarm_active);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.test_device_req)
+                .setMessage(R.string.activate_window_alarm)
+                .setPositiveButton(R.string.yes,(DialogInterface.OnClickListener)(dialog, which) ->{
+                    sendNotificationProcess(notificationTitle,notificationText);
+                    createSnackBar();
+                })
+                .setNegativeButton(R.string.no,(DialogInterface.OnClickListener)(dialog, which)->{
+                    dialog.cancel();
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        VibrationEffect vibrationEffect;
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+            vibrationEffect = VibrationEffect.createOneShot(10000,VibrationEffect.EFFECT_HEAVY_CLICK);
+            vibrator.cancel();
+            vibrator.vibrate(vibrationEffect);
+        }
+    }
+    public void createSnackBar(){
+        Snackbar snackbar = Snackbar.make(view.findViewById(R.id.frameLayout5), R.string.turn_off_req,Snackbar.LENGTH_LONG)
+                .setAction(R.string.off, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getContext(), R.string.alarm_terminated, Toast.LENGTH_LONG).show();
+                    }
+                });
+        snackbar.show();
+    }
     //Getting User ID
     private String dbID(){
         userInfo.typeAccount();
@@ -374,7 +467,12 @@ public class WindowFragment extends Fragment {
 
                         }else if (code == 3){
                             clearActivityData(0);
+                            createRecyclerViewItems(5);
                             numberOfActivities++;
+                        }else if(code == 6){
+                            DatabaseReference getDbRef = FirebaseDatabase.getInstance().getReference();
+
+                            getDbRef.child(dbID()).child("Alarm Triggered").setValue("Off");
                         }else {
                             dialogInterface.dismiss();
                         }
