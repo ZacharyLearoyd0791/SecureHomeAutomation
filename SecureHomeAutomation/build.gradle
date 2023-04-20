@@ -120,6 +120,7 @@ dependencies {
 
 
     ////////////
+    implementation 'com.google.firebase:firebase-messaging:23.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'

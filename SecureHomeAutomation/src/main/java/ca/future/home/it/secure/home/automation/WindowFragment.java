@@ -30,12 +30,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,6 +75,7 @@ public class WindowFragment extends Fragment {
     boolean clicked = false;
     String alertDialogTitle;
     String alertDialogMessage;
+    int history=0;
 
     int alertDialogCode;  // 1 -> power off, 2 -> power on, 3 -> clear activity data, ....
 
@@ -85,7 +89,6 @@ public class WindowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         //Check if user is connected to internet
         isConnectedToInternet();
 
@@ -114,7 +117,8 @@ public class WindowFragment extends Fragment {
         activityRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Getting Activities from DB
-        initRecyclerViewItems(numberOfActivities);
+        getFromDb();
+        //initRecyclerViewItems(numberOfActivities);
         //sendToDB(alarmType,alarmStatus,numberOfActivities);
 
         //PowerButton functionality
@@ -166,6 +170,12 @@ public class WindowFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getFromDb();
+    }
     public void initRecyclerViewItems(int numActivity){
 
         for(int i = numActivity; i==1;i--) {
@@ -198,6 +208,7 @@ public class WindowFragment extends Fragment {
 
         }
     }
+
     public void createRecyclerViewItems(int dataCode){
 
             if(dataCode == 1) {
@@ -243,6 +254,57 @@ public class WindowFragment extends Fragment {
         activityRecyclerView.setAdapter(adapter);
 
 
+    }
+    private void getFromDb(){
+        while(history<=numberOfActivities) {
+            DatabaseReference getDbRef = FirebaseDatabase.getInstance().getReference();
+            getDbRef.child(dbID()).child("Activities").child(String.valueOf(history)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String alarmTypeHistoryDb = snapshot.child("Alarm Type").getValue(String.class);
+                        String timeHistoryDb = snapshot.child("Time").getValue(String.class);
+                        Toast.makeText(getContext(), "AT: " + alarmTypeHistoryDb, Toast.LENGTH_SHORT).show();
+                        windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon, "Alarm Type \n" + alarmTypeHistoryDb, "Date \n" + timeHistoryDb));
+                        activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                        adapter = new WindowsFragmentRecyclerViewAdapter(windowsFragmentDataList);
+                        activityRecyclerView.setAdapter(adapter);
+                    } else {
+                        // handle case where data does not exist
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // handle error
+                }
+            });
+            history++;
+        }
+//        DatabaseReference getDbRef = FirebaseDatabase.getInstance().getReference();
+//        getDbRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                while(snapshot.exists()){
+//                    String alarmTypeHistoryDb = snapshot.child(dbID()).child("Activities").child(String.valueOf(history)).child("Alarm Type").getValue(String.class);
+//                    String timeHistoryDb = snapshot.child(dbID()).child("Activities").child(String.valueOf(history)).child("Time").getValue(String.class);
+//                    Toast.makeText(getContext(), "AT: "+alarmTypeHistoryDb, Toast.LENGTH_SHORT).show();
+//                    windowsFragmentDataList.add(new WindowsFragmentData(R.drawable.ic_windows_break_acknowledge_icon, "Alarm Type \n" + alarmTypeHistoryDb, "Date \n" + timeHistoryDb));
+//                    activityRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+//                            DividerItemDecoration.VERTICAL));
+//                    adapter = new WindowsFragmentRecyclerViewAdapter(windowsFragmentDataList);
+//                    activityRecyclerView.setAdapter(adapter);
+//                    history++;
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
 
 

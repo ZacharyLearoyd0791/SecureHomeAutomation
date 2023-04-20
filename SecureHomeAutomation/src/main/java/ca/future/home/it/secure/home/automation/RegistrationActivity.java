@@ -10,6 +10,7 @@ package ca.future.home.it.secure.home.automation;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private int fillChecker= 1;
     DatabaseReference databaseReference;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.Registration_page_confirm_password_text);
         phoneNumber = findViewById(R.id.Registration_page_phone_number_text);
         mAuth = FirebaseAuth.getInstance();
+        sharedPreferences = getSharedPreferences("User Data", MODE_PRIVATE);
+        editor=sharedPreferences.edit();
 
         registerButton.setOnClickListener(view -> loginProcess());
     }
@@ -113,7 +118,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
     public void registrationProcess(int CheckerId){
-
+        editor.putString("NewUserName",nameInput);
+        editor.putString("NewUserEmail",emailInput);
+        editor.putString("NewUserPhone",phoneNumberInput);
+        editor.apply();
+        editor.commit();
         databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.user_details));
         UserHelperClass helperClass = new UserHelperClass(nameInput,emailInput,phoneNumberInput,passwordInput);
         databaseReference.child(phoneNumberInput).setValue(helperClass);

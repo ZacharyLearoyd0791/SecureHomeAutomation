@@ -451,68 +451,13 @@ public class AccountFragment extends Fragment implements AccountRecyclerViewInte
 
     @Override
     public void onItemClick(int position) {
-//        if(editable) {
-//            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-//            final EditText alertEditText = new EditText(getApplicationContext());
-//            if (position == 0) {
-//                alertEditText.setText(userName);
-//                alert.setMessage(R.string.EditName);
-//                alert.setTitle(R.string.ChangeName);
-//                alert.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        userName = alertEditText.getText().toString();
-//                        userNameTV.setText(userName);
-//                        sendEditDataToDB(position, userName);
-//                    }
-//                });
-//                alert.setView(alertEditText);
-//                alert.setNegativeButton(getString(R.string.no), (DialogInterface.OnClickListener) (dialog, which) -> {
-//                    // If user click no then dialog box is canceled.
-//                    dialog.cancel();
-//                });
-//            }
-//            else if (position == 2) {
-//
-//
-//                alertEditText.setText(userPhone);
-//
-//
-//                alert.setMessage("Edit your phone number");
-//                alert.setTitle("Change Phone Number");
-//                alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        userPhone = alertEditText.getText().toString();
-//                        phoneNumber=userPhone;
-//                        Database();
-//
-//
-//                        //sendEditDataToDB(position, userPhone);
-//                    }
-//                });
-//                alert.setView(alertEditText);
-//                alert.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-//                    // If user click no then dialog box is canceled.
-//                    dialog.cancel();
-//                });
-//            }else{
-//                Toast.makeText(getApplicationContext(), R.string.cannotchangeemail, Toast.LENGTH_LONG).show();
-//            }
-//            //sendEditDataToDB(userName,userEmail,userPhone);
-//
-//            AlertDialog alertDialog = alert.create();
-//            alertDialog.show();
-//        }else{
-//            Toast.makeText(getContext(), R.string.googleProfileChange, Toast.LENGTH_LONG).show();
-//
-//        }
         if(position ==0){
             Toast.makeText(getContext(), "You can edit profile Details by clicking on edit profile button!", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getContext(), "You can edit profile Details by clicking on edit profile button!", Toast.LENGTH_SHORT).show();
         }
     }
+
     public void sendEditDataToDB(int pos, String userEdit){
         if(pos == 0){
             databaseReference = FirebaseDatabase.getInstance().getReference().child("userInfo").child(finalNameKey);
